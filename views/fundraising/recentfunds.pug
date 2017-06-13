@@ -7,7 +7,9 @@
             li.list-group-item.text-muted No recent funds for #[b= user.location.name]
         else
             each f in recentFunds
-                a.list-group-item(href="/fundraising/") $#{f.amount} #{f.form}
-                    span.text-muted.right submitted by #{f.submittedBy.name.first}
+                a.list-group-item(href="/fundraising/")
+                    b #{moment(f.dateAdded).fromNow()} | 
+                    | $#{f.amount} #{f.form}
+                    span.text-muted.right submitted by #{f.submittedBy.rankName} #{f.submittedBy.name.first}
         
         a.list-group-item.list-group-item-info(href="/fundraising/list") View All

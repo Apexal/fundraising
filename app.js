@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helpers = require('./server/modules/helpers.js');
 const fs = require('fs');
+const moment = require('moment');
 const recursiveReadSync = require('recursive-readdir-sync');
 const session = require('express-session');
 const config = require('./server/config.js');
@@ -47,6 +48,7 @@ for (var h in helpers) {
 }
 
 // ALL REQUESTS PASS THROUGH HERE FIRST
+app.locals.moment = moment;
 app.locals.defaultTitle = 'Kids Tales';
 app.locals.appDescription = package.description;
 app.use((req, res, next) => {
