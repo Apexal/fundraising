@@ -1,8 +1,8 @@
 .panel.panel-success
     .panel-heading
-        span.panel-title New Funds
+        span.panel-title Add Funds
     .panel-body
-        form.form(method="POST", action="/fundraising/newfunds")
+        form.form(method="POST", action="/fundraising/addfunds")
             .form-group.col-xs-12.col-md-6
                 label(for="amount") Amount
                 .input-group
@@ -15,8 +15,11 @@
                     option Check
                     option Other
             .form-group.col-xs-12
+                label(for="method") Method of Raising
+                input.form-control#method(type="text", name="method", placeholder="How did you raise it?", required)
+            .form-group.col-xs-12
                 label(for="source") Source
-                input.form-control#source(type="text", placeholder="Optional")
+                input.form-control#source(type="text", name="source", placeholder="Optional")
             .col-xs-12
                 hr
                 button.btn.btn-success Submit
