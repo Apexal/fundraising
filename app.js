@@ -78,6 +78,14 @@ requireVerified = function(req, res, next) {
     res.redirect('/');
 }
 
+// To be used by routes
+requireAdmin = function(req, res, next) {
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated() && req.user.accountStatus > 1 && req.user.rank > 2) return next();
+    req.flash('error', 'You must be an Administrator to view that page.');
+    res.redirect('/');
+}
+
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {

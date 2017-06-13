@@ -35,6 +35,8 @@ userSchema.virtual('rankName').get(function() {
             return 'Program Director';
         case 2:
             return 'Ambassador';
+        case 3:
+            return 'Administrator';
     }
 });
 

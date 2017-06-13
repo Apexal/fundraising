@@ -6,11 +6,6 @@ router.get('/', (req, res) => {
     res.render('index/index');
 });
 
-router.get('/about', (req, res) => {
-    res.locals.pageTitle = 'About';
-    res.render('index/about');
-});
-
 router.get('/setup', requireLogin, (req, res, next) => {
     if (req.user.accountStatus > 0) { req.flash('warning', 'You have already set up your account!'); res.redirect('/'); }
 
