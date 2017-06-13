@@ -46,7 +46,7 @@ for (var h in helpers) {
 }
 
 // ALL REQUESTS PASS THROUGH HERE FIRST
-app.locals.defaultTitle = 'App Name';
+app.locals.defaultTitle = 'Kids Tales';
 app.locals.appDescription = package.description;
 app.use((req, res, next) => {
     res.locals.pageTitle = app.locals.defaultTitle;

@@ -1,5 +1,5 @@
 {
-  "name": "app_name",
+  "name": "kidstales",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@
     "recursive-readdir-sync": "^1.0.6",
     "serve-favicon": "~2.3.0"
   },
-  "description": "A short description of the app.",
+  "description": "For the children",
   "main": "./bin/www",
   "devDependencies": {},
   "repository": {
