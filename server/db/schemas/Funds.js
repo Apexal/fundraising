@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const depositSchema = new Schema({
+const fundsSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
     teacher: { type: Number, ref: 'User', required: true },
     amount: { type: Number, min: 0, required: true },
@@ -10,4 +10,4 @@ const depositSchema = new Schema({
     source: String
 });
 
-module.exports = { name: 'Deposit', schema: depositSchema };
+module.exports = { name: 'Funds', schema: fundsSchema };
