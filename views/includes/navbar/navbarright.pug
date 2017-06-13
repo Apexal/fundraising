@@ -2,7 +2,7 @@ ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
         li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #{user.rankName} #{user.name.full}
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #[b= user.rankName] #{user.name.full}
                 span.caret
             ul.dropdown-menu
                 if user.accountStatus == 0

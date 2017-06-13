@@ -12,6 +12,8 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/setup', requireLogin, (req, res, next) => {
+    if (req.user.accountStatus > 0) { req.flash('warning', 'You have already set up your account!'); res.redirect('/'); }
+
     res.locals.pageTitle = 'Setup';
     /* Get list of possible superiors (all non-Teachers), and locations */
 
@@ -32,7 +34,22 @@ router.get('/setup', requireLogin, (req, res, next) => {
 
 /* Set all new user data and set accountStatus to 1 */
 router.post('/setup', requireLogin, (req, res, next) => {
+    // Get all body values
+    const phoneNumber = req.body.phoneNumber;
+    const userType = req.body.userType;
+    const locationId = req.body.locationId;
+    const superiorId = req.body.superiorId;
 
+    req.user.phoneNumber = phoneNumber;
+    req.user.rank = parseInt(userType);
+    if (locationId && locationId !== 'None') req.user.location = locationId;
+    if (superiorId && superiorId !== 'None') req.user.superior = superiorId;
+    req.user.accountStatus = 1;
+    req.user.save().then(() => {
+        req.flash('success', 'Successfully setup account!')
+        res.redirect('/');
+    })
+    .catch(next);
 });
 
 router.get('/login', (req, res) => {
