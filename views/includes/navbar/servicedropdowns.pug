@@ -1,15 +1,18 @@
 // FUNDRAISING
-if user.location
+if user.accountStatus > 1
+    if user.location
+        li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')= user.location.name
+                span.caret
+            ul.dropdown-menu
+                li
+                    a(href='/locations/' + user.location._id) Overview
+
     li.dropdown
-        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')= user.location.name
+        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Fundraising
             span.caret
         ul.dropdown-menu
             li
-                a(href='/locations/' + user.location._id) Overview
-
-li.dropdown
-    a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Fundraising
-        span.caret
-    ul.dropdown-menu
-        li
-            a(href='/fundraising') Home
+                a(href='/fundraising') Home
+else
+    i.navbar-text You will be able to use services once verified.
