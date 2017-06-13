@@ -32,7 +32,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 1000 * 60 * 60 * 5 }
-}))
+}));
+app.use(require('flash')());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client/public')));
@@ -65,7 +66,7 @@ app.use((req, res, next) => {
 requireLogin = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
-
+    req.flash('error', 'You must be logged in to view that page.');
     res.redirect('/');
 }
 

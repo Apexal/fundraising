@@ -18,7 +18,7 @@ router.get('/setup', requireLogin, (req, res) => {
 
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
-      //req.flash('warning', 'You are already logged in!');
+      req.flash('warning', 'You are already logged in!');
       return res.redirect('/');
     }
 
