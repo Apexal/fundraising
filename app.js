@@ -108,11 +108,11 @@ app.get('/auth/google/callback',
 // Dynamically load routes
 const routePath = path.join(__dirname, 'server/routes') + '/';
 const files = recursiveReadSync(routePath);
-for (var index in files) {
+for (let index in files) {
     const path = files[index].replace(`${__dirname}/server/routes/`, '');
 
-    var router = require(files[index]);
-    var name = ( path == 'index.js' ? '' : path.replace('.js', '') );
+    const router = require(files[index]);
+    const name = ( path == 'index.js' ? '' : path.replace('.js', '') ).replace('/index', '');
     try {
         app.use('/' + name, router);
         console.log(`Using ${path} for '/${name}'.`);
