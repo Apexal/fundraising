@@ -1,0 +1,22 @@
+.panel.panel-success
+    .panel-heading
+        span.panel-title New Funds
+    .panel-body
+        form.form(method="POST", action="/fundraising/newfunds")
+            .form-group.col-xs-12.col-md-6
+                label(for="amount") Amount
+                .input-group
+                    .input-group-addon $
+                    input.form-control#amount(name="amount", type="number", min="0", max="100000", step="0.01", value="10", placeholder="0.00")
+            .form-group.col-xs-12.col-md-6
+                label(for="form") Form
+                select.form-control#form(name="form")
+                    option Cash
+                    option Check
+                    option Other
+            .form-group.col-xs-12
+                label(for="source") Source
+                input.form-control#source(type="text", placeholder="Optional")
+            .col-xs-12
+                hr
+                button.btn.btn-success Submit

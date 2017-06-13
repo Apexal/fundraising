@@ -1,0 +1,12 @@
+.panel.panel-info
+    .panel-heading
+        span.panel-title Recent Funds
+    
+    ol.list-group
+        if recentFunds.length == 0
+            li.list-group-item.text-muted No recent funds for #[b= user.location.name]
+        else
+            each f in recentFunds
+                a.list-group-item(href="/fundraising/")= f.amount
+        
+        a.list-group-item.list-group-item-info(href="/fundraising/list") View All
