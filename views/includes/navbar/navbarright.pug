@@ -2,15 +2,19 @@ ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
         li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #{user.name.first} #{user.name.last}
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #{user.rankName} #{user.name.full}
                 span.caret
             ul.dropdown-menu
-                li
-                    a(href='/profile') Profile
-                li
-                    a(href='#') Another action
-                li
-                    a(href='#') Something else here
+                if user.accountStatus == 0
+                    li
+                        a(href='/setup') Setup
+                else
+                    li
+                        a(href='/profile') Profile
+                    li
+                        a(href='#') Another action
+                    li
+                        a(href='#') Something else here
                 li.divider(role='separator')
                 li
                     a(href='/logout') Logout

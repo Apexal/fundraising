@@ -1,4 +1,34 @@
 extends /layout
 
 block content
-    h1 Setup Account
+    .row
+        .page-header
+            h1 Setup Account
+
+    .row
+        .col-xs-12
+            form.form(method="POST")
+                .form-group
+                    label(for="phone-number") Personal Phone Number
+                    input#phone-number.form-control(name="phoneNumber", type="text", placeholder="Enter phone number", required)
+                .form-group
+                    label(for="user-type") User Type
+                    select#user-type.form-control(name="user-type")
+                        option(value=0) Teacher
+                        option(value=1) Program Director
+                        option(value=2) Ambassador
+                .form-group
+                    label(for="exampleInputFile") Location
+                    select.form-control#location-select(name="location-select")
+                        for l in locations
+                            option(value=l._id) #{l.name}
+                        option None
+                
+                .form-group
+                    label(for="superior-select") Superior
+                    select.form-control#superior-select(name="superior-select")
+                        for s in superiors
+                            option(value=s._id) #{s.name.first} #{s.name.last} (#{s.email})
+                        option None
+
+                button.btn.btn-default(type="submit") Submit

@@ -12,5 +12,6 @@ nav.navbar.navbar-inverse.navbar-fixed-top
                     a(href='/') Home
                 li
                     a(href='/about') About
-                include servicedropdowns
+                if loggedIn
+                    include servicedropdowns
             include navbarright
