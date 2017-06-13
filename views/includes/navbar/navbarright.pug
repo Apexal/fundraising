@@ -1,0 +1,20 @@
+ul.nav.navbar-nav.navbar-right
+    if loggedIn
+        // Logged in indicator with user actions
+        li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #{user.name.first} #{user.name.last}
+                span.caret
+            ul.dropdown-menu
+                li
+                    a(href='/profile') Profile
+                li
+                    a(href='#') Another action
+                li
+                    a(href='#') Something else here
+                li.divider(role='separator')
+                li
+                    a(href='/logout') Logout
+
+    else
+        li
+            a(href='/login') Login
