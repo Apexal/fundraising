@@ -10,15 +10,15 @@ ul.nav.navbar-nav.navbar-right
                         a(href='/setup') Setup
                 else
                     li
-                        a(href='/profile') Profile
-                    li
-                        a(href='#') Another action
-                    li
-                        a(href='#') Something else here
+                        a(href='/profile') Edit Profile
+                    li.divider(role='separator')
+                    if user.superior
+                        li.dropdown-header Your Superior
+                        li
+                            a.text-muted(href='#') #[b= user.superior.rankName] #{user.superior.name.full}
                 li.divider(role='separator')
                 li
                     a(href='/logout') Logout
-
     else
         li
             a(href='/login') Login

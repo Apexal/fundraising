@@ -17,7 +17,7 @@ router.get('/setup', requireLogin, (req, res, next) => {
     res.locals.pageTitle = 'Setup';
     /* Get list of possible superiors (all non-Teachers), and locations */
 
-    req.db.User.find({ rank: { $gt: 0 } }) // Greater than 0 because 0 means Teacher
+    req.db.User.find({ rank: { $gt: 0 }, accountStatus: { $gt: 1 } }) // Greater than 0 because 0 means Teacher and greater than 1 for setup and verified
         .exec()
         .then(superiors => {
             res.locals.superiors = superiors;

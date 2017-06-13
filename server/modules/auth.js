@@ -9,7 +9,14 @@ module.exports = (User) => {
 
     // Get user by ID
     passport.deserializeUser((id, done) => {
-        User.findById(id, done);
+        User.findById(id)
+        .populate('superior')
+        .populate('location')
+        .exec()
+        .then(user => {
+            done(null, user);
+        })
+        .catch(done);
     });
 
     passport.use(new GoogleStrategy(config, 
@@ -18,6 +25,8 @@ module.exports = (User) => {
 
             // Find user
             User.findById(profile.id)
+            .populate('superior')
+            .populate('location')
             .exec()
             .then(user => {
                 if (!user) {
