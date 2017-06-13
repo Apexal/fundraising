@@ -6,8 +6,4 @@ const locationSchema = new Schema({
     address: { type: String, required: true }
 });
 
-userSchema.virtual('name.full').get(() => { 
-    return this.name.first + ' ' + this.name.last;
-});
-
 module.exports = { name: 'Location', schema: locationSchema };
