@@ -14,10 +14,28 @@ const userSchema = new Schema({
     registeredDate: { type: Date, default: Date.now },
     superior: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     accountStatus: { type: Number, default: 0 }
+}, {
+    toObject: {
+        virtuals: true
+    },
+    toJSON: {
+        virtuals: true 
+    }
 });
 
-userSchema.virtual('name.full').get(() => { 
+userSchema.virtual('name.full').get(function() { 
     return this.name.first + ' ' + this.name.last;
+});
+
+userSchema.virtual('rankName').get(function() { 
+    switch(this.rank) {
+        case 0:
+            return 'Teacher';
+        case 1:
+            return 'Program Director';
+        case 2:
+            return 'Ambassador';
+    }
 });
 
 module.exports = { name: 'User', schema: userSchema };
