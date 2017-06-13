@@ -6,7 +6,7 @@ ul.nav.navbar-nav.navbar-right
                 span.caret
             ul.dropdown-menu
                 if user.accountStatus == 0
-                    li
+                    li(class=helpers.activeLink('/setup', pagePath))
                         a(href='/setup') Setup
                 else
                     li
