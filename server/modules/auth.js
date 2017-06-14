@@ -12,6 +12,7 @@ module.exports = (User) => {
         User.findById(id)
         .populate('superior')
         .populate('location')
+        .populate('locations')
         .exec()
         .then(user => {
             done(null, user);
@@ -27,6 +28,7 @@ module.exports = (User) => {
             User.findById(profile.id)
             .populate('superior')
             .populate('location')
+            .populate('locations')
             .exec()
             .then(user => {
                 if (!user) {
@@ -34,6 +36,7 @@ module.exports = (User) => {
                     user = new User({
                         _id: profile.id,
                         email,
+                        locations: [],
                         name: {
                             first: profile.name.givenName,
                             last: profile.name.familyName

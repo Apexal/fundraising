@@ -1,5 +1,5 @@
 // FUNDRAISING
-if user.accountStatus > 1
+if user.verified
     if user.rank > 2
         li.dropdown(class=helpers.activeLink('/administration', pagePath))
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Administration
@@ -7,22 +7,12 @@ if user.accountStatus > 1
             ul.dropdown-menu
                 li
                     a(href='/administration') Overview
-    if user.location
-        li.dropdown(class=helpers.activeLink('/locations', pagePath))
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')= user.location.name
-                span.caret
-            ul.dropdown-menu
-                li
-                    a(href='/locations/' + user.location._id) Overview
                 li.divider(role='separator')
-                li
-                    a(href='/locations') All Locations
-
-    li.dropdown(class=helpers.activeLink('/fundraising', pagePath))
-        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Fundraising
-            span.caret
-        ul.dropdown-menu
-            li
-                a(href='/fundraising') Overview
+                li(class=helpers.activeLink('/administration/unverified', pagePath))
+                    a(href="/administration/unverified") Unverified Users
+    li(class=helpers.activeLink('/locations', pagePath))
+        a(href='/locations') Locations
+    li(class=helpers.activeLink('/users', pagePath))
+        a(href='/users') Users
 else
     i.navbar-text You will be able to use services once verified.

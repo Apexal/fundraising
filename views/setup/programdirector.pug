@@ -1,0 +1,20 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Program Director Setup
+    .row
+        .col-xs-12
+            form.form(method="POST")
+                .form-group
+                    label(for="phone-number") Personal Phone Number
+                    input#phone-number.form-control(name="phoneNumber", type="text", placeholder="Enter phone number", required)
+                .form-group
+                    label(for="location-select") Location
+                    select.form-control#location-select(name="locationId")
+                        for l in locationsNoDirector
+                            option(value=l._id) #{l.name}
+                        option None
+                button.btn.btn-default(type="submit") Submit

@@ -2,10 +2,5 @@ while message = flash.shift()
     .alert.alert-dismissible(role='alert', class='alert-' + (message.type == 'error' ? 'danger' : message.type))= message.message
 
 if user
-    if user.accountStatus == 0
-        .alert.alert-danger(role='alert') You have not yet setup your account! You will not be able to use any services until you are setup. #[a(href='/setup') Setup Account]
-    if user.accountStatus == 1
-        .alert.alert-danger(role='alert') You are setup, your account now needs to be approved by your superior
-            if user.superior
-                |  #[b= user.superior.rankName + ' ' + user.superior.name.full] 
-            | before you can use the site.
+    if !user.verified
+        .alert.alert-danger(role='alert') Your account needs to be approved by an administrator before you can use the site.

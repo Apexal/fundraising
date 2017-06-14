@@ -75,7 +75,7 @@ requireLogin = function(req, res, next) {
 // To be used by routes
 requireVerified = function(req, res, next) {
     // if user is authenticated in the session, carry on
-    if (req.isAuthenticated() && req.user.accountStatus > 1) return next();
+    if (req.isAuthenticated() && req.user.verified) return next();
     req.flash('error', 'You must be logged in and verified to view that page.');
     return res.redirect('/');
 }
@@ -83,7 +83,7 @@ requireVerified = function(req, res, next) {
 // To be used by routes
 requireAdmin = function(req, res, next) {
     // if user is authenticated in the session, carry on
-    if (req.isAuthenticated() && req.user.accountStatus > 1 && req.user.rank > 2) return next();
+    if (req.isAuthenticated() && req.user.verified && req.user.rank > 2) return next();
     req.flash('error', 'You must be logged in as an Administrator to view that page.');
     return res.redirect('/');
 }
@@ -91,7 +91,7 @@ requireAdmin = function(req, res, next) {
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: '/setup',
         failureRedirect: '/',
         failureFlash: true
     }),

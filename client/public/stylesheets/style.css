@@ -9,3 +9,7 @@ body {
 .left {
     float: left;
 }
+
+.location {
+    padding-right: 20px;
+}

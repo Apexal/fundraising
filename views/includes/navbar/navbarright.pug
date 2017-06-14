@@ -2,20 +2,14 @@ ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
         li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') #[b= user.rankName] #{user.name.full}
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                if user.verified
+                    b= user.rankName
+                else
+                    b Unverified
+                |  #{user.name.full}
                 span.caret
             ul.dropdown-menu
-                if user.accountStatus == 0
-                    li(class=helpers.activeLink('/setup', pagePath))
-                        a(href='/setup') Setup
-                else
-                    li
-                        a(href='/profile') Edit Profile
-                    li.divider(role='separator')
-                    if user.superior
-                        li.dropdown-header Your Superior
-                        li
-                            a.text-muted(href='#') #[b= user.superior.rankName] #{user.superior.name.full}
                 li.divider(role='separator')
                 li
                     a(href='/logout') Logout

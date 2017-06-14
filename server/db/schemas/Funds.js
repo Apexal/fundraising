@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const fundsSchema = new Schema({
-    location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
+    camp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' },
     submittedBy: { type: Number, ref: 'User', required: true },
     amount: { type: Number, min: 0, required: true },
     method: { type: String, required: true },
