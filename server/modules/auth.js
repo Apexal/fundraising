@@ -36,7 +36,7 @@ module.exports = (User) => {
                     user = new User({
                         _id: profile.id,
                         email,
-                        locations: [],
+                        camps: [],
                         name: {
                             first: profile.name.givenName,
                             last: profile.name.familyName
