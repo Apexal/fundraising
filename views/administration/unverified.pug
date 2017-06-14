@@ -7,7 +7,7 @@ mixin unverified(user)
                 h1.panel-title= user.name.full
                     span.text-muted.right(title=moment(user.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= "registered " + moment(user.registeredDate).fromNow()
             .panel-body
-                form.form(method="POST")
+                form.form(method="POST", action="/administration/verify/" + user._id)
                     .form-group
                         label Email
                         input.form-control.disabled(type="text", value=user.email, disabled)
