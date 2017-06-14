@@ -10,9 +10,8 @@ module.exports = (User) => {
     // Get user by ID
     passport.deserializeUser((id, done) => {
         User.findById(id)
-        .populate('superior')
-        .populate('location')
-        .populate('locations')
+        .populate('camp')
+        .populate('camps')
         .exec()
         .then(user => {
             done(null, user);
@@ -26,9 +25,8 @@ module.exports = (User) => {
 
             // Find user
             User.findById(profile.id)
-            .populate('superior')
-            .populate('location')
-            .populate('locations')
+            .populate('camp')
+            .populate('camps')
             .exec()
             .then(user => {
                 if (!user) {
