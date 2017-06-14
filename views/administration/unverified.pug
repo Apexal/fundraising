@@ -13,7 +13,7 @@ mixin unverified(user)
                         input.form-control.disabled(type="text", value=user.email, disabled)
                     .form-group
                         label Rank
-                        select.form-control
+                        select.form-control(name="rank")
                             option(value=0) Teacher
                             option(value=1) Program Director
                             option(value=2) Ambassador
