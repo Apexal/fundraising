@@ -20,4 +20,22 @@ router.get('/unverified', (req, res, next) => {
         .catch(next);
 });
 
+router.post('/verify/:id', (req, res, next) => {
+    req.db.User.findById(req.params.id)
+        .exec()
+        .then(user => {
+            user.verified = true;
+            const rank = req.body.rank;
+            if(rank < 0 || rank > 3) return next('Invalid rank!');
+            
+            user.rank = rank;
+            return user.save();
+        })
+        .then(() => {
+            req.flash('success', 'Successfully verified user.');
+            res.redirect('/unverified');
+        })
+        .catch(next);
+});
+
 module.exports = router;
