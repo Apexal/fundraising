@@ -22,7 +22,7 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
             return req.camp.getDirector();
         })
         .then(director => {
-            req.director = director;s
+            req.director = director;
             return req.camp.getAmbassador();
         })
         .then(ambassador => {
