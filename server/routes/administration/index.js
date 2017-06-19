@@ -33,7 +33,7 @@ router.post('/verify/:id', (req, res, next) => {
         })
         .then(() => {
             req.flash('success', 'Successfully verified user.');
-            res.redirect('/unverified');
+            res.redirect('/administration/unverified');
         })
         .catch(next);
 });
