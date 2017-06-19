@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.locals.basedir = path.join(__dirname, 'views');
 
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); TODO: add favicon
+app.use(favicon(path.join(__dirname, 'client/public', 'favicon.png')));
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -49,7 +49,7 @@ for (var h in helpers) {
 
 // ALL REQUESTS PASS THROUGH HERE FIRST
 app.locals.moment = moment;
-app.locals.defaultTitle = packageInfo.name;
+app.locals.defaultTitle = 'Kids Tales';//packageInfo.name;
 app.locals.appDescription = packageInfo.description;
 app.use((req, res, next) => {
     res.locals.pageTitle = app.locals.defaultTitle;
