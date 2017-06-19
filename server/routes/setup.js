@@ -39,6 +39,7 @@ router.post('/', (req, res, next) => {
     const phoneNumber = req.body.phoneNumber;
     const rank = req.body.rank;
 
+    if(!phoneNumber) return next(new Error('Invalid phone number.'));
     req.user.phoneNumber = phoneNumber;
 
     req.user.setup = true;

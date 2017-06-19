@@ -26,7 +26,7 @@ router.post('/verify/:id', (req, res, next) => {
         .then(user => {
             user.verified = true;
             const rank = req.body.rank;
-            if(rank < 0 || rank > 3) return next('Invalid rank!');
+            if(rank < 0 || rank > 3) return next(new Error('Invalid rank!'));
             
             user.rank = rank;
             return user.save();

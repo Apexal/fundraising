@@ -11,7 +11,7 @@ const moment = require('moment');
 const recursiveReadSync = require('recursive-readdir-sync');
 const session = require('express-session');
 const config = require('./server/config.js');
-const package = require('./package.json');
+const packageInfo = require('./package.json');
 const mongodb = require('./server/db');
 
 const app = express();
@@ -49,8 +49,8 @@ for (var h in helpers) {
 
 // ALL REQUESTS PASS THROUGH HERE FIRST
 app.locals.moment = moment;
-app.locals.defaultTitle = 'Kids Tales';
-app.locals.appDescription = package.description;
+app.locals.defaultTitle = packageInfo.name;
+app.locals.appDescription = packageInfo.description;
 app.use((req, res, next) => {
     res.locals.pageTitle = app.locals.defaultTitle;
     res.locals.pagePath = req.path;
@@ -131,7 +131,7 @@ app.use((req, res, next) => {
 });
 
 // Error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
