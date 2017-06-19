@@ -10,6 +10,8 @@ ul.nav.navbar-nav.navbar-right
                 |  #{user.name.full}
                 span.caret
             ul.dropdown-menu
+                li
+                    a(href='/users/' + user.email) Your Profile
                 li.divider(role='separator')
                 li
                     a(href='/logout') Logout
