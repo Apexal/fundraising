@@ -6,7 +6,7 @@ router.use(requireVerified);
 /* GET home page. */
 router.get('/', (req, res, next) => {
     // Get recent funds for this location
-    req.db.Funds.find({ location: req.user.location._id })
+    req.db.Funds.find({ location: req.user.camp._id })
         .limit(10)
         .populate('submittedBy')
         .exec()
@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/addfunds', (req, res, next) => {
-    const locationId = req.user.location._id;
+    const locationId = req.user.camp._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
     const method = req.body.method;
@@ -35,7 +35,7 @@ router.post('/addfunds', (req, res, next) => {
     });
 
     newFunds.save().then(() => {
-        req.flash('success', 'Added new funds for ' + req.user.location.name);
+        req.flash('success', 'Added new funds for ' + req.user.camp.name);
         res.redirect('/fundraising');
     }).catch(next);
 });

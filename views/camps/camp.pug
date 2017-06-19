@@ -3,10 +3,10 @@ extends /layout
 block content
     .row
         .page-header
-            h1= location.name
+            h1= camp.name
                 small.right Running from #[b START] to #[b END]
-        if location.description
-            p= location.description
+        if camp.description
+            p= camp.description
 
     .row
         .col-xs-12.col-lg-5
@@ -25,10 +25,10 @@ block content
                     h1.panel-title Teachers
 
                 ol.list-group
-                    if teachers.length == 0
-                        span.list-group-item.text-muted There are no teachers assigned yet.
-                    else
-                        each t in teachers
-                            a.list-group-item(href="#")= t.name.full
+                    //- if teachers.length == 0
+                    //-     span.list-group-item.text-muted There are no teachers assigned yet.
+                    //- else
+                    //-     each t in teachers
+                    //-         a.list-group-item(href="#")= t.name.full
         .col-xs-12.col-lg-7
-            iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
+            iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + camp.address, allowfullscreen)

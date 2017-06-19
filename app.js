@@ -56,8 +56,7 @@ app.use((req, res, next) => {
     res.locals.pagePath = req.path;
     req.db = mongodb;
     
-    if (req.user)
-        res.locals.user = req.user;
+    if (req.user) res.locals.user = req.user;
 
     res.locals.loggedIn = req.isAuthenticated();
 
@@ -132,6 +131,7 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use((err, req, res) => {
+    console.log('There was an error...');
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
