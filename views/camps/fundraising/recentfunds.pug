@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-warning
     .panel-heading
         span.panel-title Recent Funds
     
@@ -11,5 +11,3 @@
                     b #{moment(f.dateAdded).fromNow()} | 
                     | $#{f.amount} #{f.form}
                     span.text-muted.right submitted by #{f.submittedBy.rankName} #{f.submittedBy.name.first}
-        
-        a.list-group-item.list-group-item-info(href="/fundraising/list") View All

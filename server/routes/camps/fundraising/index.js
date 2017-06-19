@@ -6,7 +6,7 @@ router.use(requireVerified);
 /* GET home page. */
 router.get('/', (req, res, next) => {
     // Get recent funds for this location
-    req.db.Funds.find({ location: req.user.camp._id })
+    req.db.Funds.find({ camp: req.user.camp._id })
         .limit(10)
         .populate('submittedBy')
         .exec()

@@ -34,6 +34,13 @@ router.get('/:campId', (req, res, next) => {
         .then(ambassador => {
             console.log(ambassador);
             req.ambassador = ambassador;
+            return req.db.Funds.find({ camp: req.camp._id })
+                .limit(10)
+                .populate('submittedBy')
+                .exec()
+        })
+        .then(fundsList => {
+            req.recentFunds = fundsList;
             next();
         })
         .catch(err => {
@@ -47,6 +54,8 @@ router.get('/:campId', (req, res) => {
     res.locals.teachers = req.teachers;
     res.locals.director = req.director;
     res.locals.ambassador = req.ambassador;
+    res.locals.recentFunds = req.recentFunds;
+
     res.render('camps/camp');
 });
 
