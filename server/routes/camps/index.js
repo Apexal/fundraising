@@ -10,27 +10,43 @@ router.get('/', (req, res, next) => {
 
 router.get('/:campId', (req, res, next) => {
     req.db.Camp.findById(req.params.campId)
-        .lean()
+        .populate('location')
         .exec()
         .then(camp => {
+            if (!camp) throw new Error('Failed to find camp. It may not exist.');
+            req.camp = camp;
+
             res.locals.apiKey = require('../../config').googleAuth.apiKey;
             res.locals.ofUser = camp == req.user.camp; // If its the teacher or program director's location
 
-            res.locals.camp = camp;
-            next();
-            //return camp.getTeachers();
+            return camp.getTeachers();
         })
-        //.then(teachers => {
-        //    req.teachers = teachers;
-        //    next();
-        //})
+        .then(teachers => {
+            console.log(teachers);
+            req.teachers = teachers;
+            return req.camp.getDirector();
+        })
+        .then(director => {
+            console.log(director);
+            req.director = director;
+            return req.camp.getAmbassador();
+        })
+        .then(ambassador => {
+            console.log(ambassador);
+            req.ambassador = ambassador;
+            next();
+        })
         .catch(err => {
             req.flash('error', err.message);
             return res.redirect('/');
         });
 });
 
-router.get('/:campId', (req, res, next) => {
+router.get('/:campId', (req, res) => {
+    res.locals.camp = req.camp;
+    res.locals.teachers = req.teachers;
+    res.locals.director = req.director;
+    res.locals.ambassador = req.ambassador;
     res.render('camps/camp');
 });
 

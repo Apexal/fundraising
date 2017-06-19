@@ -3,32 +3,53 @@ extends /layout
 block content
     .row
         .page-header
-            h1= camp.name
-                small.right Running from #[b START] to #[b END]
-        if camp.description
-            p= camp.description
-
+            h1 🔒 Camp at #[b(title=camp.location.address)= camp.location.name]
+                small.right Starting in #[b= moment(camp.startDate).fromNow()]
+        if camp.info
+            .col-xs-12
+                blockquote
+                    b Camp Info
+                    p= camp.info
+                hr
     .row
+        .col-xs-12
+            h3.camp-dates.text-center Running from #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
+            
+            hr
+        br
         .col-xs-12.col-lg-5
-            .panel.panel-danger
+            .panel.panel-danger.ambassador-panel
                 .panel-heading
                     h1.panel-title Ambassador
-                .panel-body
-
-            .panel.panel-success
+                ol.list-group
+                    if ambassador
+                        a.list-group-item(href="#")= ambassador.name.full
+                    else
+                        span.list-group-item.text-muted No Ambassador has been assigned yet.
+            .panel.panel-success.director-panel
                 .panel-heading
                     h1.panel-title Program Director
-                .panel-body
-
-            .panel.panel-info
-                .panel-heading
-                    h1.panel-title Teachers
 
                 ol.list-group
-                    //- if teachers.length == 0
-                    //-     span.list-group-item.text-muted There are no teachers assigned yet.
-                    //- else
-                    //-     each t in teachers
-                    //-         a.list-group-item(href="#")= t.name.full
+                    if director
+                        a.list-group-item(href="#")= director.name.full
+                    else
+                        span.list-group-item.text-muted No Director has been assigned yet.
+            .panel.panel-info.teachers-panel
+                .panel-heading
+                    h1.panel-title Teachers
+                        span.right= teachers.length + ' total'
+
+                ol.list-group
+                    if teachers.length == 0
+                        span.list-group-item.text-muted There are no Teachers assigned yet.
+                    else
+                        each t in teachers
+                            a.list-group-item(href="#")= t.name.full
         .col-xs-12.col-lg-7
-            iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + camp.address, allowfullscreen)
+            iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + camp.location.address, allowfullscreen)
+    .row
+        .col-xs-12
+            hr
+            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising") View Fundraising
+            
