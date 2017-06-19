@@ -67,6 +67,7 @@ app.use((req, res, next) => {
 requireLogin = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
+    req.session.redirect = req.originalUrl;
     req.flash('error', 'You must be logged in to view that page.');
     return res.redirect('/');
 }
@@ -75,6 +76,7 @@ requireLogin = function(req, res, next) {
 requireVerified = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated() && req.user.verified) return next();
+    req.session.redirect = req.originalUrl;
     req.flash('error', 'You must be logged in and verified to view that page.');
     return res.redirect('/');
 }
@@ -83,6 +85,7 @@ requireVerified = function(req, res, next) {
 requireAdmin = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated() && req.user.verified && req.user.rank > 2) return next();
+    req.session.redirect = req.originalUrl;
     req.flash('error', 'You must be logged in as an Administrator to view that page.');
     return res.redirect('/');
 }
@@ -90,17 +93,16 @@ requireAdmin = function(req, res, next) {
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/setup',
+        successRedirect: '/',
         failureRedirect: '/',
         failureFlash: true
     }),
     (req, res) => {
         if (req.session.redirect !== undefined) {
             // Redirect to page after login if specified
-            const redir = req.session['redirect'];
+            const redir = req.session.redirect;
 
-            delete req.session['redirect'];
-            req.session['redirect'] = undefined;
+            delete req.session.redirect;
             
             res.redirect(redir);
         }
@@ -131,7 +133,6 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use((err, req, res) => {
-    console.log('There was an error...');
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
