@@ -68,9 +68,6 @@ router.get('/:campId/fundraising', (req, res, next) => {
 });
 
 router.post('/:campId/addfunds', (req, res, next) => {
-    console.log(req.body);
-    console.log(req.camp);
-
     const campId = req.camp._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
