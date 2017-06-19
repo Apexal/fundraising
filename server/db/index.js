@@ -3,10 +3,10 @@ const config = require('../config.js');
 const path = require('path');
 
 const mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+mongoose.Promise = global.Promise;
 
 const dbURL = `mongodb://${config.database.host}:${config.database.port}/${config.database.name}`;
-const basename = path.basename(module.filename);
+// const basename = path.basename(module.filename);
 
 let models = {};
 
