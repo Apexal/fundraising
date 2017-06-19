@@ -133,13 +133,10 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
+    req.flash('error', err.message);
+    console.error(err);
     res.status(err.status || 500);
-    res.render('error');
+    res.redirect('/');
 });
 
 module.exports = app;
