@@ -7,6 +7,7 @@ const userSchema = new Schema({
     phoneNumber: { type: String },
     currentCamp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' },
     currentCamps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }],
+    pastCamps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }],
     name: {
         first: { type: String, trim: true },
         last: { type: String, trim: true }
