@@ -71,7 +71,20 @@ router.get('/:campId/fundraising', (req, res, next) => {
     if (1 == 1/*req.user.rank > 2 || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
         res.locals.camp = req.camp;
         res.locals.recentFunds = req.recentFunds;
-        res.render('camps/fundraising/index');
+
+        req.db.Funds.find({ camp: req.camp._id })
+            .populate('submittedBy')
+            .sort('-dateAdded')
+            .exec()
+            .then(fundsList => {
+                res.locals.funds = fundsList;
+                
+                let total = 0;
+                fundsList.forEach(f => total += f.amount);
+                res.locals.total = total;
+                res.render('camps/fundraising/index');
+            })
+            .catch(next);
     } else {
         return next(new Error('You don\'t have permission to view this camp\'s finances.'));
     }

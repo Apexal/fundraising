@@ -5,9 +5,34 @@ block content
         .col-xs-12
             .jumbotron
                 h1 Fundraising for #[b Camp #{camp.location.name}]
+                .well.well-sm.fundraising-well.text-center
+                    h3 $#{total} raised total
             hr
     .row
         .col-xs-12.col-md-6
             include addfunds
         .col-xs-12.col-md-6
             include recentfunds
+    .row
+        .col-xs-12
+            hr
+            h2 All Funds
+            table.table
+                thead
+                    tr
+                        th Date Added
+                        th Amount/Form
+                        th Method
+                        th Submitted By
+                tbody
+                    each f in funds
+                        tr
+                            th(title=moment(f.dateAdded).fromNow()) #{moment(f.dateAdded).format("MMMM Do")}
+                            td $#{f.amount} #{f.form}
+                            td= f.method
+                            td
+                                a(href="/users/" + f.submittedBy.email)
+                                    b #{f.submittedBy.rankName} 
+                                    | #{f.submittedBy.name.full}
+                            td
+                                a.btn.btn-danger.right Remove

@@ -18,3 +18,11 @@ body {
 .camp-dates {
     margin-top: 0;
 }
+
+.fundraising-well {
+    margin-bottom: 0;
+}
+
+.fundraising-well h3 {
+    margin: 10px;
+}
