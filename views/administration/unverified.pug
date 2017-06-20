@@ -25,6 +25,11 @@ block content
             .page-header
                 h1 Unverified Users
                     small.right #{unverifiedUsers.length} pending
+                blockquote
+                    p New users that login are restricted from doing anything until an #[b Administrator] verifies them and sets their rank for them here.
     .row
-        each u in unverifiedUsers
-            +unverified(u)
+        if unverifiedUsers.length > 0
+            each u in unverifiedUsers
+                +unverified(u)
+        else
+            p.text-muted.text-center There are no pending unverified users.
