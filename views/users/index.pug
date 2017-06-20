@@ -6,10 +6,19 @@ block content
             .page-header
                 h1 User List
                     small.right #{users.length} total
+                blockquote
+                    p Verified users are given one of four possible ranks: 
+                        b
+                            a(href="#teachers") Teacher, 
+                            a(href="#directors") Program Director, 
+                            a(href="#ambassadors") Ambassador, 
+                            a(href="#administrators") Administrator
     .row
-        .col-xs-12
+        .col-xs-12#administrators
             .page-header
                 h2 Administrators
+                blockquote
+                    p Administrators can view and manage all users, camps, and locations.
             if administrators.length > 0
                 each a in administrators
                     .col-xs-12.col-md-6.col-lg-4
@@ -29,9 +38,11 @@ block content
             else
                 p.text-muted.text-center There are currently no #[b Administrators] registered.
     .row
-        .col-xs-12
+        .col-xs-12#ambassadors
             .page-header
                 h2 Ambassadors
+                blockquote
+                    p Ambassadors can view and manage all camps and locations under their domain.
             if ambassadors.length > 0
                 each a in ambassadors
                     .col-xs-12.col-md-6.col-lg-4
@@ -58,9 +69,11 @@ block content
         .col-xs-12
             hr
     .row
-        .col-xs-12
+        .col-xs-12#directors
             .page-header
                 h2 Program Directors
+                blockquote
+                    p Program Directors can view and manage their one assigned camp.
             if directors.length > 0
                 each d in directors
                     .col-xs-12.col-md-6.col-lg-4
@@ -87,9 +100,11 @@ block content
         .col-xs-12
             hr
     .row
-        .col-xs-12
+        .col-xs-12#teachers
             .page-header
                 h2 Teachers
+                blockquote
+                    p Teachers can view and manage (to an extent) their one assigned camp.
             if teachers.length > 0
                 each t in teachers
                     .col-xs-12.col-md-6.col-lg-4
