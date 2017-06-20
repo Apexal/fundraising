@@ -2,7 +2,7 @@ ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
         li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false', title="You are currently a " + user.rankName)
                 if user.verified
                     b= user.rankName
                 else
@@ -10,7 +10,7 @@ ul.nav.navbar-nav.navbar-right
                 |  #{user.name.full}
                 span.caret
             ul.dropdown-menu
-                li
+                li(title="View your public profile.")
                     a(href='/users/' + user.email) Your Profile
                 li.divider(role='separator')
                 li
