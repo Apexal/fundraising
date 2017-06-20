@@ -4,8 +4,16 @@ block content
     .row
         .col-xs-12
             .page-header
-                h1 🔒 Camp at #[b(title=camp.location.address)= camp.location.name]
-                    small.right Starting in #[b= moment(camp.startDate).fromNow()]
+                h1 
+                    if !camp.active
+                        span(title="This camp has ended.") 🔒 Past 
+                    | Camp at #[b(title=camp.location.address)= camp.location.name]
+                    small.right
+                        if !camp.active
+                            | Ended 
+                        else
+                            | Started 
+                        b= moment(camp.startDate).fromNow()
         if camp.info
             .col-xs-12
                 blockquote
@@ -14,8 +22,13 @@ block content
                 hr
     .row
         .col-xs-12
-            h3.camp-dates.text-center Running from #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
-            
+            h3.camp-dates.text-center
+                if camp.active
+                    | Running from
+                else
+                    span.text-muted Ran from 
+                | #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
+                
             hr
         br
         .col-xs-12.col-lg-5
@@ -25,6 +38,7 @@ block content
                 ol.list-group
                     if ambassador
                         a.list-group-item(href="/users/" + ambassador.email)= ambassador.name.full
+                            span.right.badge= ambassador.email
                     else
                         span.list-group-item.text-muted No Ambassador has been assigned yet.
             .panel.panel-success.director-panel
@@ -34,6 +48,7 @@ block content
                 ol.list-group
                     if director
                         a.list-group-item(href="/users/" + director.email)= director.name.full
+                            span.right.badge= director.email
                     else
                         span.list-group-item.text-muted No Director has been assigned yet.
             .panel.panel-info.teachers-panel
@@ -44,18 +59,22 @@ block content
                 ol.list-group
                     if teachers.length == 0
                         span.list-group-item.text-muted There are no Teachers assigned yet.
+                            
                     else
                         each t in teachers
                             a.list-group-item(href="/users/" + t.email)= t.name.full
+                                span.right.badge= t.email
         .col-xs-12.col-lg-7
             iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + camp.location.address, allowfullscreen)
-    .row
-        .col-xs-12.col-lg-5
-            hr
-            include fundraising/recentfunds
+    
+    if camp.active
+        .row
+            .col-xs-12.col-lg-5
+                hr
+                include fundraising/recentfunds
     //if ofUser
     .row
         .col-xs-12
             hr
-            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising") Manage Fundraising
+            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising")= (camp.active ? "Manage" : "View") + " Fundraising"
             

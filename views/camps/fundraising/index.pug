@@ -3,16 +3,21 @@ extends /layout
 block content
     .row
         .col-xs-12
-            .jumbotron
+            .jumbotron.clearfix
                 h1 Fundraising for #[b Camp #{camp.location.name}]
                 .well.well-sm.fundraising-well.text-center
                     h3 $#{total} raised total
+                br
+                a.btn.btn-lg.btn-default.right(href="/camps/" + camp._id) Camp Details
             hr
-    .row
-        .col-xs-12.col-md-6
-            include addfunds
-        .col-xs-12.col-md-6
-            include recentfunds
+    if camp.active
+        .row
+            .col-xs-12.col-md-6
+                include addfunds
+            .col-xs-12.col-md-6
+                include recentfunds
+    else
+        h3.text-muted.text-center This camp has ended so no more fundraising data can be added.
     .row
         .col-xs-12
             hr
@@ -30,7 +35,7 @@ block content
                             th(title=moment(f.dateAdded).fromNow()) #{moment(f.dateAdded).format("MMMM Do")}
                             td $#{f.amount} #{f.form}
                             td= f.method
-                            td
+                            td(title=f.submittedBy.email)
                                 a(href="/users/" + f.submittedBy.email)
                                     b #{f.submittedBy.rankName} 
                                     | #{f.submittedBy.name.full}

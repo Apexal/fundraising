@@ -25,6 +25,7 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .then(camp => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
+            if (!req.camp.active) req.flash('error', 'This camp has ended the following saved information and fundraising data cannot be edited afterwards.');
             return camp.getTeachers();
         })
         .then(teachers => {
