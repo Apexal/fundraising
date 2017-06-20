@@ -33,7 +33,7 @@ campSchema.methods.getAmbassador = function() {
 
 campSchema.virtual('active').get(function() { 
     // Determine whether camp is going on right now
-    return moment().isBetween(moment(self.startDate), moment(self.endDate));
+    return moment().isBetween(moment(this.startDate), moment(this.endDate));
 });
 
 module.exports = { name: 'Camp', schema: campSchema };
