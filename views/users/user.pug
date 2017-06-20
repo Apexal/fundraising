@@ -52,6 +52,7 @@ block content
     .row
         .col-xs-12
             hr
-            if rank == 3
-                a.btn.btn-danger.disabled(href="#") Unverify #{targetUser.name.first}
             a.btn.btn-lg.btn-primary.right(href="mailto:" + targetUser.email) Email #{targetUser.name.first}
+    
+            if user.rank == 3
+                a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}

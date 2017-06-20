@@ -22,7 +22,7 @@ block content
             if administrators.length > 0
                 each a in administrators
                     .col-xs-12.col-md-6.col-lg-4
-                        .panel.panel-danger
+                        .panel.panel-warning
                             .panel-heading
                                 a.panel-title(href="/users/" + a.email) #{a.name.full}
                             .panel-body
