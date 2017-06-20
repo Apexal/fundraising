@@ -1,1 +1,37 @@
 extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Active Camps
+                    small.right #{activeCamps.length} total
+                blockquote
+                    p Active camps are either starting soon or are currently in session.
+    
+        if activeCamps.length > 0
+
+        else
+            p.text-muted.text-center There are currently no #[b active camps].
+    .row
+        .col-xs-12
+            .page-header
+                h1 Past Camps
+                    small.right #{pastCamps.length} total
+        .col-xs-12
+            if pastCamps.length > 0
+                table.table.table-striped
+                    thead
+                        tr
+                            th End Date
+                            th Camp Location
+                            th Info
+                    tbody
+                        each c in pastCamps
+                            th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("dddd, MMMM Do YYYY")
+                            td(title=c.location.address)= c.location.name
+                            td= helpers.limit(c.info, 100)
+                            td
+                                a.btn.btn-default(href="/camps/" + c._id) View
+            else
+                p.text-muted.text-center There are no #[b past camps].

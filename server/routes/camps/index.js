@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 
 router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    res.render('camps/index');
+    req.db.Camp.find()
+        .populate('location')
+        .exec()
+        .then(camps => {
+            res.locals.camps = camps;
+            res.locals.activeCamps = camps.filter(c => c.active);
+            res.locals.pastCamps = camps.filter(c => moment(c.endDate).isBefore(moment()))
+            res.render('camps/index');
+        })
+        .catch(next);
 });
 
 router.all(['/:campId', '/:campId/*'], (req, res, next) => {
