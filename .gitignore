@@ -41,3 +41,5 @@ server/config.js
 .eslintrc.json
 
 client/public/images/user-*.png
+client/public/images/user-*.jpg
+client/public/images/user-*.jpeg
