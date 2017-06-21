@@ -7,6 +7,13 @@ block content
                 h1 Account Setup
     .row
         .col-xs-12
+            form.form-inline(method="POST", action="/setup/profilepicture", enctype="multipart/form-data")
+                label(for="profile-img-picker") Profile Picture
+                br
+                input.form-control#profile-img-picker(type="file", name="profileImage", accept="image/*")
+                button.btn.btn-danger Upload
+                hr
+
             form.form(method="POST")
                 .form-group
                     label Email

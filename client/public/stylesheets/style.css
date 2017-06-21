@@ -26,3 +26,21 @@ body {
 .fundraising-well h3 {
     margin: 10px;
 }
+
+.user-image-link {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+img.user-image {
+    max-height: 42px;
+}
+
+img.large-profile-image {
+    max-width: 100px;
+}
+
+img.user-profile {
+    max-width: 250px;
+    border: 5px solid #222;
+}

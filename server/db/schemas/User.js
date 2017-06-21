@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     _id: { type: Number },
+    profileImageName: { type: String, default: 'default.png' },
     email: { type: String, unique: true },
     phoneNumber: { type: String },
     currentCamp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' },

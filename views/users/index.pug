@@ -29,7 +29,7 @@ block content
                                 .media
                                     .media-left
                                         a(href="/users/" + a.email)
-                                            img(src="http://via.placeholder.com/120x150")
+                                            img.large-profile-image(src="/images/" + a.profileImageName)
                                     .media-right
                                         .email
                                             b Email
@@ -53,7 +53,7 @@ block content
                                 .media
                                     .media-left
                                         a(href="/users/" + a.email)
-                                            img(src="http://via.placeholder.com/120x150")
+                                            img.large-profile-image(alt="Image of " + a.name.first, src="/images/" + a.profileImageName)
                                     .media-right
                                         .email
                                             b Email
@@ -84,7 +84,7 @@ block content
                                 .media
                                     .media-left
                                         a(href="/users/" + d.email)
-                                            img(src="http://via.placeholder.com/120x150")
+                                            img.large-profile-image(alt="Image of " + d.name.first, src="/images/" + d.profileImageName)
                                     .media-right
                                         .email
                                             b Email
@@ -115,7 +115,7 @@ block content
                                 .media
                                     .media-left
                                         a(href="/users/" + t.email)
-                                            img(src="http://via.placeholder.com/120x150")
+                                            img.large-profile-image(alt="Image of " + t.name.first, src="/images/" + t.profileImageName)
                                     .media-right
                                         .email
                                             b Email

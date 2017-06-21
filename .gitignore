@@ -39,3 +39,5 @@ jspm_packages
 server/config.js
 
 .eslintrc.json
+
+client/public/images/user-*.png
