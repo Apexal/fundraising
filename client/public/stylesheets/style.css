@@ -33,14 +33,17 @@ body {
 }
 
 img.user-image {
+    height: 42px;
     max-height: 42px;
 }
 
 img.large-profile-image {
+    width: 100px;
     max-width: 100px;
 }
 
 img.user-profile {
+    width: 250px;
     max-width: 250px;
     border: 5px solid #222;
 }
