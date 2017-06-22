@@ -8,7 +8,10 @@ module.exports = {
         clientID: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com',
         clientSecret: 'XXXXXXXXXXXXXXXXXXX',
         callbackURL: 'http://localhost:3000/auth/google/callback',
-        passReqToCallback: true
+        passReqToCallback: true,
+        apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
+        email: 'xxxxxxxxxxx@gmail.com',
+        password: 'xxxxxxxxxxxxxxxxxxxxxxxx'
     },
     secret: 'app secret'
 };

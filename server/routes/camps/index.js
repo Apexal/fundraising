@@ -166,6 +166,8 @@ router.get('/:campId/fundraising', (req, res, next) => {
 });
 
 router.post('/:campId/addfunds', (req, res, next) => {
+    // Check permission
+    //if (!req.user.admin && !helpers.isInvolved(res.locals.activeInvolvements, req.user)) return next(new Error('You are not involved in this camp!'));
     const campId = req.camp._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
