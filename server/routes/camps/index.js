@@ -73,6 +73,10 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .catch(next);
 });
 
+const hasRank = (camp, user) => {
+    return camp.teachers.map(t => t._id).includes(user._id) || (!!camp.director && camp.director._id == user.id) || (!!camp.ambassador && camp.ambassador._id == user.id);
+}
+
 router.get('/:campId', (req, res, next) => {
     // CHECK IF NEEDS TO ASSING TO CAMP
     res.locals.recentFunds = req.recentFunds;
@@ -81,6 +85,8 @@ router.get('/:campId', (req, res, next) => {
 
     if (req.query.assign) {
         const rank = req.query.assign;
+        // Make sure they aren't anything else already
+        if(hasRank(req.camp, req.user)) return next(new Error('You already have a position in this camp.'));
 
         if(rank === 'teacher') {
             if (req.camp.teachers.map(t => t._id).includes(req.user._id)) {

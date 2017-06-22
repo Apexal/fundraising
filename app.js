@@ -60,6 +60,37 @@ app.use((req, res, next) => {
 
     res.locals.loggedIn = req.isAuthenticated();
 
+    // Involvements
+    if (req.user) {
+        return mongodb.Camp.find()
+            .or([{ teachers: req.user._id }, { director: req.user._id }, { ambassador: req.user._id }])
+            .populate('location')
+            .populate('teachers')
+            .populate('director')
+            .populate('ambassador')
+            .exec()
+            .then(camps => {
+                req.session.involvements = camps.map(camp => {
+                    let rank;
+                    if (camp.teachers.map(t => t._id).includes(req.user._id)) rank = 'teacher';
+                    if (!!camp.director && camp.director._id == req.user._id) rank = 'director';
+                    if (!!camp.ambassador && camp.ambassador._id == req.user._id) rank = 'ambassador';
+                     
+                    return {
+                        rank,
+                        camp,
+                        active: camp.active
+                    }
+                });
+
+                console.log(req.session.involvements);
+                res.locals.involvements = req.session.involvements;
+                res.locals.activeInvolvements = req.session.involvements.filter(i => i.active);
+                next();
+            })
+            .catch(next);
+    }
+
     next();
 });
 

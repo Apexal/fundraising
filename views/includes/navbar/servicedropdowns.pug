@@ -1,35 +1,18 @@
 // FUNDRAISING
 if user.verified
 
-    // Actions for current camp (if assigned to one)
-        if user.currentCamp
-            li.dropdown(class=helpers.activeLink("/camps/" + user.currentCamp._id, pagePath))
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                    b Current Camp
-                    span.caret
-                ul.dropdown-menu
-                    li
-                        a(href="/camps/" + user.currentCamp._id) Overview
-                    li.divider(role='separator')
-                    li
-                        a(href="/camps/" + user.currentCamp._id + "/fundraising") Fundraising
-        else
-            li.disabled(title="You are not currently assigned to a camp.")
-                a Current Camp
-    
-    // If Ambassador, show links for all camps
-        if user.currentCamps.length > 0
-            li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                    b Current Camps
-                    span.caret
-                ul.dropdown-menu
-                    each camp in user.currentCamps
-                        li
-                            a(href="/camps/" + camp._id) Camp
-        else
-            li.disabled(title="You are not currently assigned to any camps.")
-                a Current Camps
+    each i in activeInvolvements
+        li.dropdown(class=helpers.activeLink("/camps/" + i.camp._id, pagePath))
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                b Camp #{i.camp.location.name}
+                span.caret
+            ul.dropdown-menu
+                li.dropdown-header.rank-name= i.rank
+                li
+                    a(href="/camps/" + i.camp._id) Overview
+                li.divider(role='separator')
+                li
+                    a(href="/camps/" + i.camp._id + "/fundraising") Fundraising
 
     // Administrator actions (if admin)
     if user.admin
