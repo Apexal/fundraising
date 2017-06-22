@@ -1,0 +1,14 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1= location.name
+   
+    if user.admin
+        .row
+            .col-xs-12
+                hr
+                form(action="/locations/" + location._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this location (AND ALL ASSOCIATED CAMPS)?');")
+                    button.btn.btn-danger Delete Location

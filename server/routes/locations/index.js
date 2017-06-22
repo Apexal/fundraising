@@ -14,6 +14,18 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/:locationId', (req, res, next) => {
+    req.db.Location.findById(req.params.locationId)
+        .exec()
+        .then(location => {
+            if (!location) throw new Error('Location doesn\'t exist!');
+
+            res.locals.location = location;
+            res.render('locations/location');
+        })
+        .catch(next);
+});
+
 router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
     req.db.Location.findById(req.params.locationId)
         .exec()
