@@ -27,6 +27,25 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+router.post('/schedule', (req, res, next) => {
+    const locationId = req.body.locationId;
+    const info = req.body.info;
+    const startDate = new Date();
+    const endDate = new Date();
+
+    const newCamp = new req.db.Camp({
+        location: locationId,
+        info,
+        startDate,
+        endDate
+    });
+
+    newCamp.save().then((camp) => {
+        req.flash('success', `Scheduled new camp on ${startDate}.`);
+        res.redirect(`/camps/${camp._id}`);
+    }).catch(next);
+});
+
 router.all(['/:campId', '/:campId/*'], (req, res, next) => {
     req.db.Camp.findById(req.params.campId)
         .populate('location')
