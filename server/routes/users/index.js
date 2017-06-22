@@ -34,6 +34,8 @@ router.get('/:email', (req, res, next) => {
 });
 
 router.get('/:email/edit', requireAdmin, (req, res, next) => {
+    if (req.params.email == req.user.email) return res.redirect('/setup');
+
     req.db.User.findOne({ email: req.params.email })
         .populate('currentCamp')
         .populate('currentCamps')
@@ -52,6 +54,33 @@ router.get('/:email/edit', requireAdmin, (req, res, next) => {
             res.locals.noAmbassador = camps.filter(c => !c.ambassador);
 
             res.render('users/edit');
+        })
+        .catch(next);
+});
+
+router.post('/:email/edit', requireAdmin, (req, res, next) => {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const phoneNumber = req.body.phoneNumber;
+    const verified = !!req.body.verified;
+    const admin = !!req.body.admin;
+
+    if (req.params.email == req.user.email) return next(new Error('You can\'t edit yourself!'));
+
+    req.db.User.findOne({ email: req.params.email })
+        .exec()
+        .then(user => {
+            user.name.first = firstName;
+            user.name.last = lastName;
+            user.phoneNumber = phoneNumber;
+            user.verified = verified;
+            user.admin = admin;
+
+            return user.save();
+        })
+        .then(user => {
+            req.flash('success', `Updated ${user.name.full}.`);
+            res.redirect('/users/' + user.email);
         })
         .catch(next);
 });
