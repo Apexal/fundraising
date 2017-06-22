@@ -9,6 +9,13 @@
                     each l in openLocations
                         option(value=l._id) #{l.name} (#{l.address})
             .form-group
+                label(for="schedule-camp-start") Start Date
+                input.form-control#schedule-camp-start(type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="startDate", required)
+
+                label(for="schedule-camp-end") End Date
+                input.form-control#schedule-camp-end(type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="endDate", required)
+                
+            .form-group
                 label(for="schedule-camp-info") Camp Info
                     small.text-muted  (Optional)
                 textarea.form-control#schedule-camp-description(name="info", placeholder="Add any important information here.", rows="5")

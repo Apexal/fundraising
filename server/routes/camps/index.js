@@ -30,14 +30,17 @@ router.get('/', (req, res, next) => {
 router.post('/schedule', (req, res, next) => {
     const locationId = req.body.locationId;
     const info = req.body.info;
-    const startDate = new Date();
-    const endDate = new Date();
+    const startDate = moment(req.body.startDate, "YYYY-MM-DD");
+    const endDate = moment(req.body.endDate, "YYYY-MM-DD");
+
+    // Validate
+    if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
     const newCamp = new req.db.Camp({
         location: locationId,
         info,
-        startDate,
-        endDate
+        startDate: startDate.toDate(),
+        endDate: endDate.toDate()
     });
 
     newCamp.save().then((camp) => {
