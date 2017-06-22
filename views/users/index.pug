@@ -12,7 +12,7 @@ block content
             .col-xs-12.col-md-6.col-lg-4
                 .panel.panel-primary
                     .panel-heading
-                        a.panel-title(href="/users/" + u.email) #{u.name.full}
+                        h1.panel-title #{u.name.full}
                     .panel-body
                         .media
                             .media-left
@@ -23,9 +23,10 @@ block content
                                     b Email
                                     br
                                     a(href="mailto:" + u.email) #{u.email}
-                                .camps
+                                .phone-number
                                     br
-                                    b Past Camp Count
+                                    a.btn.btn-primary.right(href="/users/" + u.email) View
+                                    b Phone Number
                                     br
-                                    span #{u.pastCamps.length} total
+                                    span= u.phoneNumber
     
