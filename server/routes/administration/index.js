@@ -28,7 +28,9 @@ router.post('/verify/:id', (req, res, next) => {
             return user.save();
         })
         .then((user) => {
-            req.flash('success', `Successfully verified ${user.name.full}.`);
+            const message = "<h3>Your account has just been verified by an Administrator!</h3><p>You can now use the services on the KidsTales web app.</p>";
+            sendEmail(user.email, "You've Been Verified", message);
+            req.flash('success', `Successfully verified and emailed ${user.name.full}.`);
             res.redirect('/administration/unverified');
         })
         .catch(next);

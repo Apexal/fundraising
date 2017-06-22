@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'client/public')));
 
 // View helper methods
 helpers = require('./server/modules/helpers.js');
-
+sendEmail = require('./server/modules/email.js');
 app.locals.helpers = {};
 for (var h in helpers) {
     if (typeof(helpers[h]) === 'function') {

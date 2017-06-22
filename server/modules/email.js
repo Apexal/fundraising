@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = (from, to, subject, html) => {
-    transporter.sendMail({ from, to, subject, html }, (error, info) => {
+module.exports = (to, subject, html) => {
+    transporter.sendMail({ from: `KidsTales <${config.googleAuth.email}>`, to, subject, html }, (error, info) => {
         if (error) {
             console.log(error);
             return error;
