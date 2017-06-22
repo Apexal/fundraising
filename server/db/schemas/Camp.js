@@ -21,7 +21,7 @@ const campSchema = new Schema({
 
 campSchema.virtual('ready').get(function() { 
     // Determine whether camp is ready to start
-    return ((this.teachers ? this.teachers : []).length > 0 && !!this.director && !!this.ambassador);
+    return (this.teachers.length > 0 && !!this.director && !!this.ambassador);
 });
 
 campSchema.virtual('active').get(function() { 
