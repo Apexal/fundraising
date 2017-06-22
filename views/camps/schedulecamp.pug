@@ -1,0 +1,17 @@
+.panel.panel-success
+    .panel-heading
+        h1.panel-title Schedule Camp
+    .panel-body
+        form.from.schedule-camp-form(action="/camps/schedule", method="POST")
+            .form-group
+                label(for="schedule-camp-location") Location
+                select.form-control#schedule-camp-location(name="locationId")
+                    each l in openLocations
+                        option(value=l._id) #{l.name} (#{l.address})
+            .form-group
+                label(for="schedule-camp-info") Camp Info
+                    small.text-muted  (Optional)
+                textarea.form-control#schedule-camp-description(name="info", placeholder="Add any important information here.", rows="5")
+            
+            hr
+            button.btn.btn-success.right Schedule Camp

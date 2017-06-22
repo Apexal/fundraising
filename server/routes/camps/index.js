@@ -8,11 +8,20 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     req.db.Camp.find()
         .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
         .exec()
         .then(camps => {
             res.locals.camps = camps;
             res.locals.activeCamps = camps.filter(c => c.active);
             res.locals.pastCamps = camps.filter(c => moment(c.endDate).isBefore(moment()))
+
+
+            return req.db.Location.find().exec();
+        })
+        .then(locations => {
+            res.locals.openLocations = locations;
             res.render('camps/index');
         })
         .catch(next);
@@ -21,23 +30,15 @@ router.get('/', (req, res, next) => {
 router.all(['/:campId', '/:campId/*'], (req, res, next) => {
     req.db.Camp.findById(req.params.campId)
         .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
         .exec()
         .then(camp => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
             if (!req.camp.active) req.flash('error', 'This camp has ended the following saved information and fundraising data cannot be edited afterwards.');
-            return camp.getTeachers();
-        })
-        .then(teachers => {
-            req.teachers = teachers;
-            return req.camp.getDirector();
-        })
-        .then(director => {
-            req.director = director;
-            return req.camp.getAmbassador();
-        })
-        .then(ambassador => {
-            req.ambassador = ambassador;
+
             return req.db.Funds.find({ camp: req.camp._id })
                 .limit(10)
                 .populate('submittedBy')
@@ -52,9 +53,6 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
 
 router.get('/:campId', (req, res) => {
     res.locals.camp = req.camp;
-    res.locals.teachers = req.teachers;
-    res.locals.director = req.director;
-    res.locals.ambassador = req.ambassador;
     res.locals.recentFunds = req.recentFunds;
 
     res.locals.apiKey = require('../../config').googleAuth.apiKey;
