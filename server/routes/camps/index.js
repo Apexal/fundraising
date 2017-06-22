@@ -73,14 +73,60 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .catch(next);
 });
 
-router.get('/:campId', (req, res) => {
-    res.locals.camp = req.camp;
+router.get('/:campId', (req, res, next) => {
+    // CHECK IF NEEDS TO ASSING TO CAMP
     res.locals.recentFunds = req.recentFunds;
-
     res.locals.apiKey = require('../../config').googleAuth.apiKey;
     res.locals.ofUser = (req.user.admin); // If its the teacher or program director's location
 
-    res.render('camps/camp');
+    if (req.query.assign) {
+        const rank = req.query.assign;
+
+        if(rank === 'teacher') {
+            if (req.camp.teachers.map(t => t._id).includes(req.user._id)) {
+                req.flash('error', 'You are already a teacher!');
+                return res.redirect('/camps/' + req.camp._id);
+            }
+            
+            req.camp.teachers.push(req.user._id);
+        } else if (rank == 'director') {
+            req.camp.director = req.user._id;
+        } else if (rank == 'ambassador') {
+            req.camp.ambassador = req.user._id;
+        } else {
+            req.flash('error', 'Invalid rank to assign!');
+        }
+
+        return req.camp.save()
+            .then(camp => {
+                req.flash('success', 'You have become ' + rank + '.');
+                res.redirect('/camps/' + camp._id);
+            })
+            .catch(next);
+    } else if (req.query.unassign) {
+        // For unassign make sure they are the rank before removing it
+        const rank = req.query.unassign;
+
+        if(rank === 'teacher') {
+            req.camp.teachers = req.camp.teachers.filter(t => t._id != req.user._id);
+        } else if (rank == 'director' && req.camp.director._id == req.user._id) {
+            req.camp.director = undefined;
+        } else if (rank == 'ambassador' && req.camp.ambassador._id == req.user._id) {
+            req.camp.ambassador = undefined;
+        } else {
+            req.flash('error', 'Invalid rank to unassign!');
+        }
+
+        return req.camp.save()
+            .then(camp => {
+                req.flash('success', 'You are no longer ' + rank + '.');
+                res.redirect("/camps/" + camp._id);
+            })
+            .catch(next);
+    }
+
+    res.locals.camp = req.camp;
+    return res.render('camps/camp');
 });
 
 router.get('/:campId/fundraising', (req, res, next) => {

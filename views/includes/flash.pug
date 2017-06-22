@@ -1,6 +1,6 @@
 while message = flash.shift()
     .alert.alert-dismissible(role='alert', class='alert-' + (message.type == 'error' ? 'danger' : message.type))
-        b #{message.type.toUpperCase()}: 
+        b #{message.type.toUpperCase()} 
         span= message.message
 
 if user

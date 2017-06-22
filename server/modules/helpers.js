@@ -9,5 +9,6 @@ module.exports = {
     },
     limit: (string, maxLength) => {
         return (string.length > maxLength ? string.substring(0, maxLength) + '...' : string);
-    }
+    },
+    isTeacher: (camp, user) => camp.teachers.map(t => t._id).includes(user._id)
 };

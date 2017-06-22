@@ -34,6 +34,10 @@ block content
         .col-xs-12.col-lg-5
             .panel.panel-danger.ambassador-panel
                 .panel-heading
+                    if !camp.ambassador
+                        a.badge.right(href="?assign=ambassador") Assign
+                    else if camp.ambassador._id == user._id
+                        a.badge.right(href="?unassign=ambassador") Unassign
                     h1.panel-title Ambassador
                 ol.list-group
                     if camp.ambassador
@@ -43,6 +47,10 @@ block content
                         span.list-group-item.text-muted No Ambassador has been assigned yet.
             .panel.panel-success.director-panel
                 .panel-heading
+                    if !camp.director
+                        a.badge.right(href="?assign=director") Assign
+                    else if camp.director._id == user._id
+                        a.badge.right(href="?unassign=director") Unassign
                     h1.panel-title Program Director
 
                 ol.list-group
@@ -53,8 +61,12 @@ block content
                         span.list-group-item.text-muted No Director has been assigned yet.
             .panel.panel-info.teachers-panel
                 .panel-heading
-                    h1.panel-title Teachers
-                        span.right= camp.teachers.length + ' total'
+                    if helpers.isTeacher(camp, user)
+                        a.badge.right(href="?unassign=teacher") Leave
+                    else
+                        a.badge.right(href="?assign=teacher") Join
+                    h1.panel-title Teachers 
+                        span.text-muted= camp.teachers.length + ' total '
 
                 ol.list-group
                     if camp.teachers.length == 0
