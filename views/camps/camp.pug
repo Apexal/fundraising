@@ -24,7 +24,7 @@ block content
         .col-xs-12
             h3.camp-dates.text-center
                 if camp.active
-                    | Running from
+                    | Running from 
                 else
                     span.text-muted Ran from 
                 | #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
