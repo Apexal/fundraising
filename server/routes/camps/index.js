@@ -78,7 +78,7 @@ router.get('/:campId', (req, res) => {
     res.locals.recentFunds = req.recentFunds;
 
     res.locals.apiKey = require('../../config').googleAuth.apiKey;
-    res.locals.ofUser = (req.user.admin || req.user.currentCamps.includes(req.camp) || req.camp == req.user.camp); // If its the teacher or program director's location
+    res.locals.ofUser = (req.user.admin); // If its the teacher or program director's location
 
     res.render('camps/camp');
 });

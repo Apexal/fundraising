@@ -6,9 +6,6 @@ const userSchema = new Schema({
     profileImageName: { type: String, default: 'default.png' },
     email: { type: String, unique: true },
     phoneNumber: { type: String },
-    currentCamp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' },
-    currentCamps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }],
-    pastCamps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }],
     name: {
         first: { type: String, trim: true },
         last: { type: String, trim: true }

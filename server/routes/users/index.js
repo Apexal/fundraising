@@ -20,9 +20,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/:email', (req, res, next) => {
     req.db.User.findOne({ email: req.params.email })
-        .populate('currentCamp')
-        .populate('currentCamps')
-        .populate('pastCamps')
         .exec()
         .then(user => {
             if (!user) return next(new Error('Failed to find user.'));
@@ -37,8 +34,6 @@ router.get('/:email/edit', requireAdmin, (req, res, next) => {
     if (req.params.email == req.user.email) return res.redirect('/setup');
 
     req.db.User.findOne({ email: req.params.email })
-        .populate('currentCamp')
-        .populate('currentCamps')
         .exec()
         .then(user => {
             if (!user) throw new Error('Failed to find user.');

@@ -13,43 +13,13 @@ block content
             blockquote
                 p= targetUser.phoneNumber
                  footer #{targetUser.name.first}'s Phone Number
-        .col-xs-12.col-md-6.col-lg-9
-
-            if targetUser.currentCamp
-                .col-xs-12.col-md-6
-                    .panel.panel-info
-                        .panel-heading
-                            span.panel-title Current Camp
-                        .panel-body
-                            span
-                                b Camp At: 
-                                | #{targetUser.currentCamp.location}
-                            hr
-                            a.btn.btn-default.right(href="/camps/" + targetUser.currentCamp._id) Details
-            
-            if targetUser.currentCamps
-                each camp in targetUser.currentCamps
-                    .col-xs-12.col-md-6
-                        .panel.panel-default
-                            .panel-heading
-                                span.panel-title Camp 1
-                            .panel-body
-                                span
-                                    b Camp At: 
-                                    | #{camp.location}
-                                hr
-                                a.btn.btn-default.right(href="/camps/" + camp._id) Details
+          
     .row.past-camps
         .col-xs-12
             .page-header
                 h2 Past Camps
-                    small.right #{targetUser.pastCamps.length} total
-        .col-xs-12
-            if targetUser.pastCamps.length > 0
-                //each camp in targetUser.pastCamps
-
-            else
-                p.text-center.text-muted #[b= targetUser.name.first] has not finished any camps yet.
+                    small.right 0 total
+        
     .row
         .col-xs-12
             hr
