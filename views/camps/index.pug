@@ -7,7 +7,7 @@ block content
                 h1 Camps
                     small.right #{camps.length} total
                 p Camps info here...
-                a.btn.btn-primary.right(href="#locations") All Camps
+                a.btn.btn-primary.right(href="#camps") All Camps
         hr
     if user.admin
         include schedulecamp
@@ -35,7 +35,7 @@ block content
                             a.btn.btn-primary.right(href="/camps/" + c._id) View Details
         else
             p.text-muted.text-center There are currently no #[b active camps].
-    .row
+    .row#camps
         .col-xs-12
             .page-header
                 h1 Past Camps

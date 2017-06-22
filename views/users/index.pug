@@ -10,9 +10,12 @@ block content
     .row#users
         each u in users
             .col-xs-12.col-md-6.col-lg-4
-                .panel.panel-primary
+                .panel(class=(u.admin ? 'panel-primary' : 'panel-default'))
                     .panel-heading
-                        h1.panel-title #{u.name.full}
+                        h1.panel-title
+                            if u.admin
+                                b Administrator 
+                            | #{u.name.full}
                     .panel-body
                         .media
                             .media-left
@@ -25,7 +28,14 @@ block content
                                     a(href="mailto:" + u.email) #{u.email}
                                 .phone-number
                                     br
-                                    a.btn.btn-primary.right(href="/users/" + u.email) View
+                                    
                                     b Phone Number
                                     br
-                                    span= u.phoneNumber
+                                    if u.phoneNumber
+                                        span= u.phoneNumber
+                                    else
+                                        span.text-muted None given.
+                            br
+                            a.btn(href="/users/" + u.email, class=(u.admin ? 'btn-primary' : 'btn-default')) View
+                            if user.admin
+                                a.btn.btn-danger.right(href="/users/" + u.email + "/edit") Edit
