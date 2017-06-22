@@ -84,6 +84,8 @@ router.get('/:campId', (req, res, next) => {
     res.locals.ofUser = (req.user.admin); // If its the teacher or program director's location
 
     if (req.query.assign) {
+        if (!req.camp.active) return next(new Error('This camp in inactive.'));
+        
         const rank = req.query.assign;
         // Make sure they aren't anything else already
         if(hasRank(req.camp, req.user)) return next(new Error('You already have a position in this camp.'));
