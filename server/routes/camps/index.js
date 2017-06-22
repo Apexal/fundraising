@@ -63,6 +63,7 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
 
             return req.db.Funds.find({ camp: req.camp._id })
                 .limit(10)
+                .sort('-dateAdded')
                 .populate('submittedBy')
                 .exec()
         })
@@ -185,6 +186,10 @@ router.post('/:campId/addfunds', (req, res, next) => {
     });
 
     newFunds.save().then(() => {
+        // Email program director
+        const message = `<h3>Teacher ${req.user.name.full} Added Funds to Camp ${req.camp.location.name}</h3><p>${req.user.name.first} just added <b>$${amount} in ${form}</b> by <b>${method}</b></p><a href="http://localhost:3000/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
+        sendEmail(req.camp.director.email, "New Funds", message);
+
         req.flash('success', 'Added new funds for camp.');
         res.redirect(`/camps/${req.camp._id}/fundraising`);
     }).catch(next);
