@@ -10,10 +10,8 @@ router.get('/', (req, res, next) => {
         .then(users => {
             res.locals.users = users;
             
-            res.locals.teachers = users.filter(u => u.rank == 0);
-            res.locals.directors = users.filter(u => u.rank == 1);
-            res.locals.ambassadors = users.filter(u => u.rank == 2);
-            res.locals.administrators = users.filter(u => u.rank == 3);
+            // Users in a active camp
+            res.locals.activeUsers = [];
 
             res.render('users/index');
         })

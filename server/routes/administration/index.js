@@ -25,14 +25,10 @@ router.post('/verify/:id', (req, res, next) => {
         .exec()
         .then(user => {
             user.verified = true;
-            const rank = req.body.rank;
-            if(rank < 0 || rank > 3) return next(new Error('Invalid rank!'));
-            
-            user.rank = rank;
             return user.save();
         })
-        .then(() => {
-            req.flash('success', 'Successfully verified user.');
+        .then((user) => {
+            req.flash('success', `Successfully verified ${user.name.full}.`);
             res.redirect('/administration/unverified');
         })
         .catch(next);

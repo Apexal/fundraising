@@ -5,10 +5,10 @@ ul.nav.navbar-nav.navbar-right
             a.user-image-link(href="/setup")
                 img.user-image(src="/images/" + user.profileImageName)
         li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false', title="You are currently a " + user.rankName)
-                if user.verified
-                    b= user.rankName
-                else
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                if user.admin
+                    b Administrator
+                else if !user.verified
                     b Unverified
                 |  #{user.name.full}
                 span.caret

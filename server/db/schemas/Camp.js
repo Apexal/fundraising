@@ -16,21 +16,6 @@ const campSchema = new Schema({
     }
 });
 
-campSchema.methods.getTeachers = function() {
-    console.log('Getting teachers for ...' + this._id);
-    return this.model('User').find({ rank: 0, currentCamp: this._id }).exec();
-}
-
-campSchema.methods.getDirector = function() {
-    console.log('Getting director...');
-    return this.model('User').findOne({ rank: 1, currentCamp: this._id }).exec();
-}
-
-campSchema.methods.getAmbassador = function() {
-    console.log('Getting ambassador...');
-    return this.model('User').findOne({ rank: 2, currentCamps: this._id }).exec();
-}
-
 campSchema.virtual('active').get(function() { 
     // Determine whether camp is going on right now
     return moment().isBetween(moment(this.startDate), moment(this.endDate));

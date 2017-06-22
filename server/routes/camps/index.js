@@ -58,7 +58,7 @@ router.get('/:campId', (req, res) => {
     res.locals.recentFunds = req.recentFunds;
 
     res.locals.apiKey = require('../../config').googleAuth.apiKey;
-    res.locals.ofUser = (req.user.rank > 2 || req.user.currentCamps.includes(req.camp) || req.camp == req.user.camp); // If its the teacher or program director's location
+    res.locals.ofUser = (req.user.admin || req.user.currentCamps.includes(req.camp) || req.camp == req.user.camp); // If its the teacher or program director's location
 
     res.render('camps/camp');
 });
@@ -69,7 +69,7 @@ router.get('/:campId/fundraising', (req, res, next) => {
     // Make sure has permission to view
     // User is Administrator OR Ambassador of camp OR Program Director of camp OR Teacher of camp
     
-    if (1 == 1/*req.user.rank > 2 || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
+    if (1 == 1/*req.user.admin || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
         res.locals.camp = req.camp;
         res.locals.recentFunds = req.recentFunds;
 

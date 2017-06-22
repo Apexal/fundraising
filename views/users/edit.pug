@@ -4,27 +4,10 @@ block content
     .row
         .col-xs-12
             .page-header
-                h1 Edit #[b #{targetUser.rankName}] #{targetUser.name.full}
+                h1 Edit #{targetUser.name.full}
     .row
         .col-xs-12
             form.form
-                .form-group
-                    label(for="new-rank") Change Rank
-                    select#new-rank.form-control(name="newRank")
-                        option(value=0) Teacher
-                        option(value=1) Program Director
-                        option(value=2) Ambassador
-                        option(value=3) Administrator
-                button.btn.btn-primary Update #{targetUser.name.first}
-            
-            if targetUser.rank < 2
-                hr
-                form.form
-                    .form-group
-                        label(for="new-rank") Change Current Camp
-                        select#new-rank.form-control(name="newRank")
-                            each c in camps
-                                option(value=c._id) Camp #{c.location.name} (#{moment(c.startDate).format("dddd, MMMM Do YYYY")})
-                    button.btn.btn-primary Update #{targetUser.name.first}
+                
 
             a.btn.btn-danger(href="#") Unverify #{targetUser.name.first}

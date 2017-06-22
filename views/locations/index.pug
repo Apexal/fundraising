@@ -9,7 +9,7 @@ block content
                 p Locations info here...
                 a.btn.btn-primary.right(href="#locations") All Locations
         hr
-    if user.rank == 3
+    if user.admin
         include addlocation
     
     .row
