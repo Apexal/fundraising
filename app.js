@@ -5,7 +5,6 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const helpers = require('./server/modules/helpers.js');
 const fs = require('fs');
 const moment = require('moment');
 const recursiveReadSync = require('recursive-readdir-sync');
@@ -40,13 +39,14 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client/public')));
 
 // View helper methods
+helpers = require('./server/modules/helpers.js');
+
 app.locals.helpers = {};
 for (var h in helpers) {
     if (typeof(helpers[h]) === 'function') {
         app.locals.helpers[h] = helpers[h];
     }
 }
-
 // ALL REQUESTS PASS THROUGH HERE FIRST
 app.locals.moment = moment;
 app.locals.defaultTitle = 'Kids Tales';//packageInfo.name;
