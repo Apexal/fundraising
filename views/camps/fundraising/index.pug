@@ -36,8 +36,6 @@ block content
                             td $#{f.amount} #{f.form}
                             td= f.method
                             td(title=f.submittedBy.email)
-                                a(href="/users/" + f.submittedBy.email)
-                                    b #{f.submittedBy.rankName} 
-                                    | #{f.submittedBy.name.full}
+                                a(href="/users/" + f.submittedBy.email) #{f.submittedBy.name.full}
                             td
                                 a.btn.btn-danger.right Remove

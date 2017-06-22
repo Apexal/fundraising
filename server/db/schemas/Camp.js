@@ -6,7 +6,10 @@ const campSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
     info: String,
     startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true }
+    endDate: { type: Date, required: true },
+    teachers: [{ type: Number, ref: 'User' }],
+    director: { type: Number, ref: 'User' },
+    ambassador: { type: Number, ref: 'User' }
 }, {
     toObject: {
         virtuals: true
@@ -16,20 +19,10 @@ const campSchema = new Schema({
     }
 });
 
-campSchema.methods.getTeachers = function() {
-    console.log('Getting teachers for ...' + this._id);
-    return this.model('User').find({ rank: 0, currentCamp: this._id }).exec();
-}
-
-campSchema.methods.getDirector = function() {
-    console.log('Getting director...');
-    return this.model('User').findOne({ rank: 1, currentCamp: this._id }).exec();
-}
-
-campSchema.methods.getAmbassador = function() {
-    console.log('Getting ambassador...');
-    return this.model('User').findOne({ rank: 2, currentCamps: this._id }).exec();
-}
+campSchema.virtual('ready').get(function() { 
+    // Determine whether camp is ready to start
+    return ((this.teachers ? this.teachers : []).length > 0 && !!this.director && !!this.ambassador);
+});
 
 campSchema.virtual('active').get(function() { 
     // Determine whether camp is going on right now

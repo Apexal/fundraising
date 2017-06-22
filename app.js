@@ -84,7 +84,7 @@ requireVerified = function(req, res, next) {
 // To be used by routes
 requireAdmin = function(req, res, next) {
     // if user is authenticated in the session, carry on
-    if (req.isAuthenticated() && req.user.verified && req.user.rank > 2) return next();
+    if (req.isAuthenticated() && req.user.verified && req.user.admin) return next();
     req.session.redirect = req.originalUrl;
     req.flash('error', 'You must be logged in as an Administrator to view that page.');
     return res.redirect('/');

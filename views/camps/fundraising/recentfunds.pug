@@ -4,10 +4,10 @@
     
     ol.list-group
         if recentFunds.length == 0
-            li.list-group-item.text-muted No recent funds for #[b= user.location.name]
+            li.list-group-item.text-muted No recent funds for #[b= camp.location.name]
         else
             each f in recentFunds
                 a.list-group-item(href="/camps/" + camp._id + "/fundraising")
                     b #{moment(f.dateAdded).fromNow()} | 
                     | $#{f.amount} #{f.form}
-                    span.text-muted.right submitted by #{f.submittedBy.rankName} #{f.submittedBy.name.first}
+                    span.text-muted.right submitted by #{f.submittedBy.name.first}

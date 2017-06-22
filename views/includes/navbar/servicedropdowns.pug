@@ -2,7 +2,6 @@
 if user.verified
 
     // Actions for current camp (if assigned to one)
-    if user.rank < 2
         if user.currentCamp
             li.dropdown(class=helpers.activeLink("/camps/" + user.currentCamp._id, pagePath))
                 a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -19,7 +18,6 @@ if user.verified
                 a Current Camp
     
     // If Ambassador, show links for all camps
-    if user.rank == 2
         if user.currentCamps.length > 0
             li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -34,7 +32,7 @@ if user.verified
                 a Current Camps
 
     // Administrator actions (if admin)
-    if user.rank > 2
+    if user.admin
         li.dropdown(class=helpers.activeLink('/administration', pagePath))
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Administration
                 span.caret
@@ -51,7 +49,7 @@ if user.verified
     li(class=helpers.activeLink('/locations', pagePath), title="View the list of all locations used for camps past and present and see details.")
         a(href='/locations') Locations
 
-    li(class=helpers.activeLink('/users', pagePath), title="View the list of all users of every rank and see profiles.")
+    li(class=helpers.activeLink('/users', pagePath), title="View the list of all users and see profiles.")
         a(href='/users') Users
 else
     i.navbar-text You will be able to use services once verified.

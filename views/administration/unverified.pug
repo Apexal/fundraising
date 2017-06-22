@@ -11,12 +11,6 @@ mixin unverified(user)
                     .form-group
                         label Email
                         input.form-control.disabled(type="text", value=user.email, disabled)
-                    .form-group
-                        label Rank
-                        select.form-control(name="rank")
-                            option(value=0) Teacher
-                            option(value=1) Program Director
-                            option(value=2) Ambassador
                     button.btn.btn-default.right Verify
                     button.btn.btn-danger Delete
 block content
@@ -26,7 +20,7 @@ block content
                 h1 Unverified Users
                     small.right #{unverifiedUsers.length} pending
                 blockquote
-                    p New users that login are restricted from doing anything until an #[b Administrator] verifies them and sets their rank for them here.
+                    p New users that login are restricted from doing anything until an #[b Administrator] verifies them.
     .row
         if unverifiedUsers.length > 0
             each u in unverifiedUsers

@@ -24,7 +24,7 @@ block content
         .col-xs-12
             h3.camp-dates.text-center
                 if camp.active
-                    | Running from
+                    | Running from 
                 else
                     span.text-muted Ran from 
                 | #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
@@ -36,9 +36,9 @@ block content
                 .panel-heading
                     h1.panel-title Ambassador
                 ol.list-group
-                    if ambassador
-                        a.list-group-item(href="/users/" + ambassador.email)= ambassador.name.full
-                            span.right.badge= ambassador.email
+                    if camp.ambassador
+                        a.list-group-item(href="/users/" + camp.ambassador.email)= camp.ambassador.name.full
+                            span.right.badge= camp.ambassador.email
                     else
                         span.list-group-item.text-muted No Ambassador has been assigned yet.
             .panel.panel-success.director-panel
@@ -46,22 +46,22 @@ block content
                     h1.panel-title Program Director
 
                 ol.list-group
-                    if director
-                        a.list-group-item(href="/users/" + director.email)= director.name.full
-                            span.right.badge= director.email
+                    if camp.director
+                        a.list-group-item(href="/users/" + camp.director.email)= camp.director.name.full
+                            span.right.badge= camp.director.email
                     else
                         span.list-group-item.text-muted No Director has been assigned yet.
             .panel.panel-info.teachers-panel
                 .panel-heading
                     h1.panel-title Teachers
-                        span.right= teachers.length + ' total'
+                        span.right= camp.teachers.length + ' total'
 
                 ol.list-group
-                    if teachers.length == 0
+                    if camp.teachers.length == 0
                         span.list-group-item.text-muted There are no Teachers assigned yet.
                             
                     else
-                        each t in teachers
+                        each t in camp.teachers
                             a.list-group-item(href="/users/" + t.email)= t.name.full
                                 span.right.badge= t.email
         .col-xs-12.col-lg-7

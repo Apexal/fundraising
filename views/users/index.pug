@@ -6,127 +6,36 @@ block content
             .page-header
                 h1 User List
                     small.right #{users.length} total
-                blockquote
-                    p Verified users are given one of four possible ranks: 
-                        b
-                            a(href="#teachers") Teacher, 
-                            a(href="#directors") Program Director, 
-                            a(href="#ambassadors") Ambassador, 
-                            a(href="#administrators") Administrator
-    .row
-        .col-xs-12#administrators
-            .page-header
-                h2 Administrators
-                blockquote
-                    p Administrators can view and manage all users, camps, and locations.
-            if administrators.length > 0
-                each a in administrators
-                    .col-xs-12.col-md-6.col-lg-4
-                        .panel.panel-warning
-                            .panel-heading
-                                a.panel-title(href="/users/" + a.email) #{a.name.full}
-                            .panel-body
-                                .media
-                                    .media-left
-                                        a(href="/users/" + a.email)
-                                            img.large-profile-image(src="/images/" + a.profileImageName)
-                                    .media-right
-                                        .email
-                                            b Email
-                                            br
-                                            a(href="mailto:" + a.email) #{a.email}
-            else
-                p.text-muted.text-center There are currently no #[b Administrators] registered.
-    .row
-        .col-xs-12#ambassadors
-            .page-header
-                h2 Ambassadors
-                blockquote
-                    p Ambassadors can view and manage all camps and locations under their domain.
-            if ambassadors.length > 0
-                each a in ambassadors
-                    .col-xs-12.col-md-6.col-lg-4
-                        .panel.panel-danger
-                            .panel-heading
-                                a.panel-title(href="/users/" + a.email) #{a.name.full}
-                            .panel-body
-                                .media
-                                    .media-left
-                                        a(href="/users/" + a.email)
-                                            img.large-profile-image(alt="Image of " + a.name.first, src="/images/" + a.profileImageName)
-                                    .media-right
-                                        .email
-                                            b Email
-                                            br
-                                            a(href="mailto:" + a.email) #{a.email}
-                                        .camps
-                                            br
-                                            b Past Camp Counts
-                                            br
-                                            span #{a.pastCamps.length} total
-            else
-                p.text-muted.text-center There are currently no #[b Ambassadors] registered.
-        .col-xs-12
-            hr
-    .row
-        .col-xs-12#directors
-            .page-header
-                h2 Program Directors
-                blockquote
-                    p Program Directors can view and manage their one assigned camp.
-            if directors.length > 0
-                each d in directors
-                    .col-xs-12.col-md-6.col-lg-4
-                        .panel.panel-success
-                            .panel-heading
-                                a.panel-title(href="/users/" + d.email) #{d.name.full}
-                            .panel-body
-                                .media
-                                    .media-left
-                                        a(href="/users/" + d.email)
-                                            img.large-profile-image(alt="Image of " + d.name.first, src="/images/" + d.profileImageName)
-                                    .media-right
-                                        .email
-                                            b Email
-                                            br
-                                            a(href="mailto:" + d.email) #{d.email}
-                                        .camps
-                                            br
-                                            b Past Camp Counts
-                                            br
-                                            span #{d.pastCamps.length} total
-            else
-                p.text-muted.text-center There are currently no #[b Program Directors] registered.
-        .col-xs-12
-            hr
-    .row
-        .col-xs-12#teachers
-            .page-header
-                h2 Teachers
-                blockquote
-                    p Teachers can view and manage (to an extent) their one assigned camp.
-            if teachers.length > 0
-                each t in teachers
-                    .col-xs-12.col-md-6.col-lg-4
-                        .panel.panel-primary
-                            .panel-heading
-                                a.panel-title(href="/users/" + t.email) #{t.name.full}
-                            .panel-body
-                                .media
-                                    .media-left
-                                        a(href="/users/" + t.email)
-                                            img.large-profile-image(alt="Image of " + t.name.first, src="/images/" + t.profileImageName)
-                                    .media-right
-                                        .email
-                                            b Email
-                                            br
-                                            a(href="mailto:" + t.email) #{t.email}
-                                        .camps
-                                            br
-                                            b Past Camp Counts
-                                            br
-                                            span #{t.pastCamps.length} total
-            else
-                p.text-muted.text-center There are currently no #[b Teachers] registered.
-        .col-xs-12
-            hr
+
+    .row#users
+        each u in users
+            .col-xs-12.col-md-6.col-lg-4
+                .panel(class=(u.admin ? 'panel-primary' : 'panel-default'))
+                    .panel-heading
+                        h1.panel-title
+                            if u.admin
+                                b Administrator 
+                            | #{u.name.full}
+                    .panel-body
+                        .media
+                            .media-left
+                                a(href="/users/" + u.email)
+                                    img.large-profile-image(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
+                            .media-right
+                                .email
+                                    b Email
+                                    br
+                                    a(href="mailto:" + u.email) #{u.email}
+                                .phone-number
+                                    br
+                                    
+                                    b Phone Number
+                                    br
+                                    if u.phoneNumber
+                                        span= u.phoneNumber
+                                    else
+                                        span.text-muted None given.
+                            br
+                            a.btn(href="/users/" + u.email, class=(u.admin ? 'btn-primary' : 'btn-default')) View
+                            if user.admin
+                                a.btn.btn-danger.right(href="/users/" + u.email + "/edit") Edit

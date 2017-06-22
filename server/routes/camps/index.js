@@ -8,36 +8,59 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     req.db.Camp.find()
         .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
         .exec()
         .then(camps => {
             res.locals.camps = camps;
             res.locals.activeCamps = camps.filter(c => c.active);
             res.locals.pastCamps = camps.filter(c => moment(c.endDate).isBefore(moment()))
+
+
+            return req.db.Location.find().exec();
+        })
+        .then(locations => {
+            res.locals.openLocations = locations;
             res.render('camps/index');
         })
         .catch(next);
 });
 
+router.post('/schedule', (req, res, next) => {
+    const locationId = req.body.locationId;
+    const info = req.body.info;
+    const startDate = moment(req.body.startDate, "YYYY-MM-DD");
+    const endDate = moment(req.body.endDate, "YYYY-MM-DD");
+
+    // Validate
+    if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
+
+    const newCamp = new req.db.Camp({
+        location: locationId,
+        info,
+        startDate: startDate.toDate(),
+        endDate: endDate.toDate()
+    });
+
+    newCamp.save().then((camp) => {
+        req.flash('success', `Scheduled new camp on ${startDate}.`);
+        res.redirect(`/camps/${camp._id}`);
+    }).catch(next);
+});
+
 router.all(['/:campId', '/:campId/*'], (req, res, next) => {
     req.db.Camp.findById(req.params.campId)
         .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
         .exec()
         .then(camp => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
             if (!req.camp.active) req.flash('error', 'This camp has ended the following saved information and fundraising data cannot be edited afterwards.');
-            return camp.getTeachers();
-        })
-        .then(teachers => {
-            req.teachers = teachers;
-            return req.camp.getDirector();
-        })
-        .then(director => {
-            req.director = director;
-            return req.camp.getAmbassador();
-        })
-        .then(ambassador => {
-            req.ambassador = ambassador;
+
             return req.db.Funds.find({ camp: req.camp._id })
                 .limit(10)
                 .populate('submittedBy')
@@ -52,13 +75,10 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
 
 router.get('/:campId', (req, res) => {
     res.locals.camp = req.camp;
-    res.locals.teachers = req.teachers;
-    res.locals.director = req.director;
-    res.locals.ambassador = req.ambassador;
     res.locals.recentFunds = req.recentFunds;
 
     res.locals.apiKey = require('../../config').googleAuth.apiKey;
-    res.locals.ofUser = (req.user.rank > 2 || req.user.currentCamps.includes(req.camp) || req.camp == req.user.camp); // If its the teacher or program director's location
+    res.locals.ofUser = (req.user.admin); // If its the teacher or program director's location
 
     res.render('camps/camp');
 });
@@ -69,7 +89,7 @@ router.get('/:campId/fundraising', (req, res, next) => {
     // Make sure has permission to view
     // User is Administrator OR Ambassador of camp OR Program Director of camp OR Teacher of camp
     
-    if (1 == 1/*req.user.rank > 2 || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
+    if (1 == 1/*req.user.admin || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
         res.locals.camp = req.camp;
         res.locals.recentFunds = req.recentFunds;
 
