@@ -14,6 +14,19 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
+    req.db.Location.findById(req.params.locationId)
+        .exec()
+        .then(location => {
+            return location.remove();
+        })
+        .then(location => {
+            req.flash('success', `Deleted location and all camps at ${location.name}.`);
+            res.redirect('/locations');
+        })
+        .catch(next);
+});
+
 router.post('/add', requireAdmin, (req, res, next) => {
     const name = req.body.name;
     const address = req.body.address;

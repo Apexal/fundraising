@@ -7,4 +7,10 @@ const locationSchema = new Schema({
     description: String
 });
 
+// Remove camps at location
+locationSchema.pre('remove', function(next) {
+    console.log('removing camps...');
+    this.model('Camp').remove({ location: this._id }, next);
+});
+
 module.exports = { name: 'Location', schema: locationSchema };
