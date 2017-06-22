@@ -78,14 +78,12 @@ app.use((req, res, next) => {
                      
                     return {
                         rank,
-                        camp,
-                        active: camp.active
+                        camp
                     }
                 });
 
-                console.log(req.session.involvements);
                 res.locals.involvements = req.session.involvements;
-                res.locals.activeInvolvements = req.session.involvements.filter(i => i.active);
+                res.locals.activeInvolvements = req.session.involvements.filter(i => i.camp.active);
                 next();
             })
             .catch(next);
