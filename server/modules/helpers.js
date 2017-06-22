@@ -10,5 +10,6 @@ module.exports = {
     limit: (string, maxLength) => {
         return (string.length > maxLength ? string.substring(0, maxLength) + '...' : string);
     },
-    isTeacher: (camp, user) => camp.teachers.map(t => t._id).includes(user._id)
+    isTeacher: (camp, user) => camp.teachers.map(t => t._id).includes(user._id),
+    isInvolved: (involvements, camp) => involvements.map(i => i.camp._id.toString()).includes(camp._id.toString()) // Not sure why I need toString() but I do
 };
