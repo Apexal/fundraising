@@ -141,29 +141,23 @@ router.get('/:campId', (req, res, next) => {
 router.get('/:campId/fundraising', (req, res, next) => {
     const campId = req.params.campId;
 
-    // Make sure has permission to view
-    // User is Administrator OR Ambassador of camp OR Program Director of camp OR Teacher of camp
-    
-    if (1 == 1/*req.user.admin || req.user.currentCamps.includes(campId) || req.user.currentCamp == req.camp*/) {
-        res.locals.camp = req.camp;
-        res.locals.recentFunds = req.recentFunds;
+    res.locals.camp = req.camp;
+    res.locals.recentFunds = req.recentFunds;
 
-        req.db.Funds.find({ camp: req.camp._id })
-            .populate('submittedBy')
-            .sort('-dateAdded')
-            .exec()
-            .then(fundsList => {
-                res.locals.funds = fundsList;
-                
-                let total = 0;
-                fundsList.forEach(f => total += f.amount);
-                res.locals.total = total;
-                res.render('camps/fundraising/index');
-            })
-            .catch(next);
-    } else {
-        return next(new Error('You don\'t have permission to view this camp\'s finances.'));
-    }
+    req.db.Funds.find({ camp: req.camp._id })
+        .populate('submittedBy')
+        .sort('-dateAdded')
+        .exec()
+        .then(fundsList => {
+            res.locals.funds = fundsList;
+            
+            let total = 0;
+            fundsList.forEach(f => total += f.amount);
+            res.locals.total = total;
+            res.render('camps/fundraising/index');
+        })
+        .catch(next);
+
 });
 
 router.post('/:campId/addfunds', (req, res, next) => {
