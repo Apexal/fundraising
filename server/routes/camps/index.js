@@ -15,8 +15,7 @@ router.get('/', (req, res, next) => {
         .then(camps => {
             res.locals.camps = camps;
             res.locals.activeCamps = camps.filter(c => c.active);
-            res.locals.pastCamps = camps.filter(c => moment(c.endDate).isBefore(moment()))
-
+            res.locals.inactiveCamps = camps.filter(c => !c.active);
 
             return req.db.Location.find().exec();
         })
@@ -59,7 +58,8 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .then(camp => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
-            if (!req.camp.active) req.flash('error', 'This camp has ended the following saved information and fundraising data cannot be edited afterwards.');
+            
+            if (!req.camp.active) req.flash('warning', 'This camp is inactive so the following saved information and fundraising data cannot be edited.');
 
             return req.db.Funds.find({ camp: req.camp._id })
                 .limit(10)

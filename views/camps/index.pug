@@ -38,10 +38,10 @@ block content
     .row#camps
         .col-xs-12
             .page-header
-                h1 Past Camps
-                    small.right #{pastCamps.length} total
+                h1 Inactive Camps
+                    small.right #{inactiveCamps.length} total
         .col-xs-12
-            if pastCamps.length > 0
+            if inactiveCamps.length > 0
                 table.table.table-striped
                     thead
                         tr
@@ -49,11 +49,11 @@ block content
                             th Camp Location
                             th Info
                     tbody
-                        each c in pastCamps
+                        each c in inactiveCamps
                             th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("dddd, MMMM Do YYYY")
                             td(title=c.location.address)= c.location.name
                             td= helpers.limit(c.info, 100)
                             td
                                 a.btn.btn-default(href="/camps/" + c._id) View Details
             else
-                p.text-muted.text-center There are no #[b past camps].
+                p.text-muted.text-center There are no #[b inactive camps].

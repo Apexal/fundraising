@@ -6,14 +6,11 @@ block content
             .page-header
                 h1 
                     if !camp.active
-                        span(title="This camp has ended.") 🔒 Past 
+                        span(title="This camp has ended.") 🔒 Inactive 
                     | Camp at #[b(title=camp.location.address)= camp.location.name]
-                    small.right
-                        if !camp.active
-                            | Ended 
-                        else
-                            | Started 
-                        b= moment(camp.startDate).fromNow()
+                    if camp.active
+                        small.right Started 
+                            b= moment(camp.startDate).fromNow()
         if camp.info
             .col-xs-12
                 blockquote
@@ -22,13 +19,12 @@ block content
                 hr
     .row
         .col-xs-12
-            h3.camp-dates.text-center
-                if camp.active
-                    | Running from 
-                else
-                    span.text-muted Ran from 
-                | #[b= moment(camp.startDate).format("dddd, MMMM Do YY")] to #[b= moment(camp.endDate).format("dddd, MMMM Do YY")]
-                
+            .well.well-sm(class=(!camp.active ? 'text-muted' : ''))
+                h3.camp-dates.text-center Running from 
+                    b= moment(camp.startDate).format("dddd, MMMM Do YY")
+                    |  to 
+                    b= moment(camp.endDate).format("dddd, MMMM Do YY")
+                    
             hr
         br
         .col-xs-12.col-lg-5
