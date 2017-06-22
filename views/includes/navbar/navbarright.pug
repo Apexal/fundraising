@@ -13,8 +13,10 @@ ul.nav.navbar-nav.navbar-right
                 |  #{user.name.full}
                 span.caret
             ul.dropdown-menu
+                li(title="Edit your profile.")
+                    a(href='/setup') Edit Profile
                 li(title="View your public profile.")
-                    a(href='/users/' + user.email) Your Profile
+                    a(href='/users/' + user.email) View Profile
                 li.divider(role='separator')
                 li
                     a(href='/logout') Logout
