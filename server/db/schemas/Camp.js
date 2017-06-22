@@ -34,4 +34,10 @@ campSchema.virtual('ongoing').get(function() {
     return moment().isBetween(moment(this.startDate), moment(this.endDate));
 });
 
+// Remove funds related to camp
+campSchema.pre('remove', function(next) {
+    console.log('removing funds...');
+    this.model('Funds').remove({ camp: this._id }, next);
+});
+
 module.exports = { name: 'Camp', schema: campSchema };

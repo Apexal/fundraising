@@ -104,5 +104,7 @@ block content
     .row
         .col-xs-12
             hr
-            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising")= ((user.admin || helpers.isInvolved(activeInvolvements, camp)) ? "Manage" : "View") + " Fundraising"
-            
+            a.btn.btn-info.right(href="/camps/" + camp._id + "/fundraising")= ((user.admin || helpers.isInvolved(activeInvolvements, camp)) ? "Manage" : "View") + " Fundraising"
+            if user.admin
+                form(action="/camps/" + camp._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this camp?');")
+                    button.btn.btn-danger Delete Camp

@@ -74,6 +74,15 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .catch(next);
 });
 
+router.post('/:campId/delete', requireAdmin, (req, res, next) => {
+    req.camp.remove()
+        .then(camp => {
+            req.flash('success', `Deleted camp and funds at ${camp.location.name}.`);
+            res.redirect('/camps');
+        })
+        .catch(next);
+});
+
 const hasRank = (camp, user) => {
     return camp.teachers.map(t => t._id).includes(user._id) || (!!camp.director && camp.director._id == user.id) || (!!camp.ambassador && camp.ambassador._id == user.id);
 }
