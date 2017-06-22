@@ -5,6 +5,8 @@ block content
         .col-xs-12
             .page-header
                 h1 
+                    if helpers.isInvolved(activeInvolvements, camp)
+                        span(title="You are involved in this camp!") ⭐   
                     if !camp.active
                         span(title="This camp has ended.") 🔒 Inactive 
                     | Camp at #[b(title=camp.location.address)= camp.location.name]
@@ -99,9 +101,8 @@ block content
             .col-xs-12.col-lg-5
                 hr
                 include fundraising/recentfunds
-    //if ofUser
     .row
         .col-xs-12
             hr
-            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising")= (camp.active ? "Manage" : "View") + " Fundraising"
+            a.btn.btn-lg.btn-danger.right(href="/camps/" + camp._id + "/fundraising")= ((user.admin || helpers.isInvolved(activeInvolvements, camp)) ? "Manage" : "View") + " Fundraising"
             

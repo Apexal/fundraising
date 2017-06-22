@@ -9,15 +9,18 @@ block content
                     h3 $#{total} raised total
                 br
                 a.btn.btn-lg.btn-default.right(href="/camps/" + camp._id) Camp Details
-            hr
-    if camp.active
-        .row
-            .col-xs-12.col-md-6
-                include addfunds
-            .col-xs-12.col-md-6
-                include recentfunds
-    else
-        h3.text-muted.text-center This camp has ended so no more fundraising data can be added.
+            
+    if user.admin || helpers.isInvolved(activeInvolvements, camp)
+        hr
+        if camp.active
+            
+            .row
+                .col-xs-12.col-md-6
+                    include addfunds
+                .col-xs-12.col-md-6
+                    include recentfunds
+        else
+            h3.text-muted.text-center This camp has ended so no more fundraising data can be added.
     .row
         .col-xs-12
             hr
