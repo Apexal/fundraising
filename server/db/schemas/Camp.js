@@ -26,6 +26,11 @@ campSchema.virtual('ready').get(function() {
 
 campSchema.virtual('active').get(function() { 
     // Determine whether camp is going on right now
+    return moment().isBefore(moment(this.endDate));
+});
+
+campSchema.virtual('ongoing').get(function() { 
+    // Determine whether camp is going on right now
     return moment().isBetween(moment(this.startDate), moment(this.endDate));
 });
 
