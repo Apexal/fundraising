@@ -108,3 +108,4 @@ block content
             if user.admin
                 form(action="/camps/" + camp._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this camp?');")
                     button.btn.btn-danger Delete Camp
+                    a.btn.btn-primary(href="/camps/" + camp._id + "/edit") Edit Camp

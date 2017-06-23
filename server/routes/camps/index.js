@@ -147,6 +147,32 @@ router.get('/:campId', (req, res, next) => {
     return res.render('camps/camp');
 });
 
+router.get('/:campId/edit', requireAdmin, (req, res, next) => {
+    res.locals.camp = req.camp;
+
+    req.db.Location.find()
+        .exec()
+        .then(locations => {
+            res.locals.openLocations = locations;
+            res.render('camps/edit');
+        })
+        .catch(next);
+});
+
+router.post('/:campId/edit', requireAdmin, (req, res, next) => {
+    req.camp.location = req.body.locationId;
+    req.camp.startDate = moment(req.body.startDate, "YYYY-MM-DD").toDate();
+    req.camp.endDate = moment(req.body.endDate, "YYYY-MM-DD").toDate();
+    req.camp.info = req.body.info;
+
+    req.camp.save()
+        .then(camp => {
+            req.flash('success', `Saved edits to camp.`);
+            res.redirect('/');
+        })
+        .catch(next);
+});
+
 router.get('/:campId/fundraising', (req, res, next) => {
     const campId = req.params.campId;
 
