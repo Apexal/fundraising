@@ -1,0 +1,22 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Edit
+                    b Location #{location.name}
+    .row
+        .col-xs-12
+            form.form(method="POST")
+                .form-group
+                    label(for="edit-location-name") Location Name
+                    input.form-control#edit-location-name(name="name", type="text", value=location.name, maxlength="100", required)
+                .form-group
+                    label(for="edit-location-address") Location Address
+                    input.form-control#edit-location-address(type="text", name="address", value=location.address, required)
+                .form-group
+                    label(for="edit-location-description") Location Description
+                        small.text-muted  (Optional)
+                    textarea.form-control#edit-location-description(name="description", placeholder="Add any important information here!", rows="5")= location.description
+                button.btn.btn-primary Save Location
