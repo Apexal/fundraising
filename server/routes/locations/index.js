@@ -33,13 +33,13 @@ router.get('/:locationId', (req, res, next) => {
 });
 
 router.get('/:locationId/edit', requireAdmin, (req, res, next) => {
-    req.db.Location.findById()
+    req.db.Location.findById(req.params.locationId)
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
             
             res.locals.location = location;
-            res.render('/locations/edit');
+            res.render('locations/edit');
         })
         .catch(next);
 });
