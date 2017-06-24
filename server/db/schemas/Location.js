@@ -14,7 +14,15 @@ locationSchema.methods.findCamps = function() {
 // Remove camps at location
 locationSchema.pre('remove', function(next) {
     console.log('removing camps...');
-    this.model('Camp').remove({ location: this._id }, next);
+    
+    // Delete one at a time so Fund data is also deleted
+    //this.model('Camp').remove({ location: this._id }, next);
+    this.findCamps()
+        .then(camps => {
+            camps.forEach(c => c.remove());
+            next();
+        })
+        .catch(next);
 });
 
 module.exports = { name: 'Location', schema: locationSchema };
