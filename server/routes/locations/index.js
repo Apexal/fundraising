@@ -19,8 +19,14 @@ router.get('/:locationId', (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location doesn\'t exist!');
-
             res.locals.location = location;
+        
+            return req.db.Camp.find({}).exec();
+        }).then(camps => {
+            res.locals.camps = camps;
+            res.locals.activeCamps = camps.filter(c => c.active);
+            res.locals.inactiveCamps = camps.filter(c => !c.active);
+            
             res.render('locations/location');
         })
         .catch(next);
