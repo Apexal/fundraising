@@ -13,5 +13,8 @@ module.exports = {
         email: 'xxxxxxxxxxx@gmail.com',
         password: 'xxxxxxxxxxxxxxxxxxxxxxxx'
     },
-    secret: 'app secret'
+    secret: 'app secret',
+    slack: {
+        webhookUrl: 'xxxxxxxxxxxxxxx'
+    }
 };
