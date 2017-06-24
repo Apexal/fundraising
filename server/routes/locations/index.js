@@ -18,7 +18,7 @@ router.get('/:locationId', (req, res, next) => {
     req.db.Location.findById(req.params.locationId)
         .exec()
         .then(location => {
-            if (!location) throw new Error('Location doesn\'t exist!');
+            if (!location) throw new Error('Location does not exist!');
             res.locals.location = location;
         
             return req.db.Camp.find({}).exec();
@@ -32,10 +32,42 @@ router.get('/:locationId', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/:locationId/edit', requireAdmin, (req, res, next) => {
+    req.db.Location.findById()
+        .exec()
+        .then(location => {
+            if (!location) throw new Error('Location does not exist!');
+            
+            res.locals.location = location;
+            res.render('/locations/edit');
+        })
+        .catch(next);
+});
+
+router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
+    req.db.Location.findById(req.params.locationId)
+        .exec()
+        .then(location => {
+            if (!location) throw new Error('Location does not exist!');    
+            
+            location.name = req.body.name;
+            location.address = req.body.address;
+            location.description = req.body.description;
+            
+            return location.save();
+        }).then(location => {
+            req.flash('success', `Saved edits to location #{location.name}`);
+            res.redirect('/locations/' + location._id);
+        })
+        .catch(next);
+});
+
 router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
     req.db.Location.findById(req.params.locationId)
         .exec()
         .then(location => {
+            if (!location) throw new Error('Location does not exist!');
+            
             return location.remove();
         })
         .then(location => {
