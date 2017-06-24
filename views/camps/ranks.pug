@@ -3,7 +3,11 @@
         span.text-center
             b Camp Status: 
             if camp.ready
-                span Ready
+                if camp.ongoing
+                    span Ongoing
+                else
+                    span Ready
+                
             else
                 span Missing Ranks
                 span.text-muted  | Make sure all below are filled.
@@ -22,7 +26,11 @@
                 | Ambassador
         ol.list-group
             if camp.ambassador
-                a.list-group-item(href="/users/" + camp.ambassador.email)= camp.ambassador.name.full
+                a.list-group-item(href="/users/" + camp.ambassador.email)
+                    if camp.ambassador._id == user._id
+                        b You
+                    else
+                        span= camp.ambassador.name.full
                     span.right.badge= camp.ambassador.email
             else
                 span.list-group-item.text-muted No Ambassador has been assigned yet.
@@ -42,7 +50,11 @@
 
         ol.list-group
             if camp.director
-                a.list-group-item(href="/users/" + camp.director.email)= camp.director.name.full
+                a.list-group-item(href="/users/" + camp.director.email)
+                    if camp.director._id == user._id
+                        b You
+                    else
+                        span= camp.director.name.full
                     span.right.badge= camp.director.email
             else
                 span.list-group-item.text-muted No Director has been assigned yet.
@@ -66,5 +78,9 @@
                 span.list-group-item.text-muted There are no Teachers assigned yet.
             else
                 each t in camp.teachers
-                    a.list-group-item(href="/users/" + t.email)= t.name.full
+                    a.list-group-item(href="/users/" + t.email)
+                        if t._id == user._id
+                            b You
+                        else
+                            span= t.name.full
                         span.right.badge= t.email

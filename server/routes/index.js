@@ -21,9 +21,9 @@ router.get('/loginas', requireAdmin, (req, res, next) => {
     req.db.User.findOne({ email: req.query.email })
         .exec()
         .then(user => {
-            return req.logIn(user, (err) => {
+            return req.logIn(user, err => {
                 if (err) throw err;
-                
+
                 req.flash('info', `Successfully logged in as ${req.user.name.full}`);
                 res.redirect('/');
             });
