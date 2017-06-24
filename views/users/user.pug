@@ -26,4 +26,6 @@ block content
             a.btn.btn-lg.btn-primary.right(href="mailto:" + targetUser.email) Email #{targetUser.name.first}
     
             if user.admin
+                if user._id != targetUser._id
+                    a.btn.btn-lg.btn-info(href="/loginas?email=" + targetUser.email) Login as #{targetUser.name.first}
                 a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}

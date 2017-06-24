@@ -15,6 +15,22 @@ router.get('/login', (req, res) => {
     res.redirect('/auth/google');
 });
 
+router.get('/loginas', requireAdmin, (req, res, next) => {
+    if (!req.query.email) return next(new Error('Invalid user email.'));
+
+    req.db.User.findOne({ email: req.query.email })
+        .exec()
+        .then(user => {
+            return req.logIn(user, (err) => {
+                if (err) throw err;
+                
+                req.flash('info', `Successfully logged in as ${req.user.name.full}`);
+                res.redirect('/');
+            });
+        })
+        .catch(next);
+});
+
 router.get('/logout', function(req, res){
     req.logout();
     req.flash('info', 'Successful logout.');
