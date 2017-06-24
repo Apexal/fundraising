@@ -37,11 +37,6 @@ img.user-image {
     max-height: 42px;
 }
 
-img.large-profile-image {
-    width: 100px;
-    max-width: 100px;
-}
-
 img.user-profile {
     width: 250px;
     max-width: 250px;
@@ -60,4 +55,14 @@ img.user-profile {
 
 a.location-name {
     color: #222;
+}
+
+.user-panel {
+
+    height: 225px;
+}
+
+
+.user-panel img.large-profile-image {
+    height: 100px;
 }
