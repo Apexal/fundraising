@@ -5,7 +5,7 @@ const locationSchema = new Schema({
     name: { type: String, unique: true, required: true },
     address: { type: String, unique: true, required: true },
     description: String,
-    addedAt: { type: Date, required: true }
+    dateAdded: { type: Date, required: true }
 });
 
 locationSchema.methods.findCamps = function() {

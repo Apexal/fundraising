@@ -39,7 +39,8 @@ router.post('/schedule', (req, res, next) => {
         location: locationId,
         info,
         startDate: startDate.toDate(),
-        endDate: endDate.toDate()
+        endDate: endDate.toDate(),
+        dateAdded: new Date()
     });
 
     newCamp.save().then((camp) => {
