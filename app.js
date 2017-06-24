@@ -75,7 +75,7 @@ app.use((req, res, next) => {
                     if (camp.teachers.map(t => t._id).includes(req.user._id)) rank = 'teacher';
                     if (!!camp.director && camp.director._id == req.user._id) rank = 'director';
                     if (!!camp.ambassador && camp.ambassador._id == req.user._id) rank = 'ambassador';
-                     
+
                     return {
                         rank,
                         camp

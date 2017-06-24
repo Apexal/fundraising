@@ -57,3 +57,7 @@ img.user-profile {
 .rank-name {
     text-transform: capitalize;
 }
+
+a.location-name {
+    color: #222;
+}
