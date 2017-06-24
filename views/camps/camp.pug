@@ -29,70 +29,7 @@ block content
                     
             hr
         br
-        .col-xs-12.col-lg-5
-            .well.well-sm
-                span.text-center
-                    b Camp Status: 
-                    if camp.ready
-                        span Ready
-                    else
-                        span Missing Ranks
-                        span.text-muted  | Make sure all below are filled. 
-            .panel.panel-danger.ambassador-panel
-                .panel-heading
-                    if camp.active
-                        if !camp.ambassador
-                            a.badge.right(href="?assign=ambassador") Assign
-                        else if camp.ambassador._id == user._id
-                            a.badge.right(href="?unassign=ambassador") Unassign
-                    h1.panel-title
-                        if !camp.ambassador
-                            span ❌ 
-                        | Ambassador
-                ol.list-group
-                    if camp.ambassador
-                        a.list-group-item(href="/users/" + camp.ambassador.email)= camp.ambassador.name.full
-                            span.right.badge= camp.ambassador.email
-                    else
-                        span.list-group-item.text-muted No Ambassador has been assigned yet.
-            .panel.panel-success.director-panel
-                .panel-heading
-                    if camp.active
-                        if !camp.director
-                            a.badge.right(href="?assign=director") Assign
-                        else if camp.director._id == user._id
-                            a.badge.right(href="?unassign=director") Unassign
-                    h1.panel-title
-                        if !camp.director
-                            span ❌ 
-                        | Program Director
-
-                ol.list-group
-                    if camp.director
-                        a.list-group-item(href="/users/" + camp.director.email)= camp.director.name.full
-                            span.right.badge= camp.director.email
-                    else
-                        span.list-group-item.text-muted No Director has been assigned yet.
-            .panel.panel-info.teachers-panel
-                .panel-heading
-                    if camp.active
-                        if helpers.isTeacher(camp, user)
-                            a.badge.right(href="?unassign=teacher") Leave
-                        else
-                            a.badge.right(href="?assign=teacher") Join
-                    h1.panel-title
-                        if camp.teachers.length == 0
-                            span ❌ 
-                        | Teachers 
-                        span.text-muted= camp.teachers.length + ' total '
-
-                ol.list-group
-                    if camp.teachers.length == 0
-                        span.list-group-item.text-muted There are no Teachers assigned yet.
-                    else
-                        each t in camp.teachers
-                            a.list-group-item(href="/users/" + t.email)= t.name.full
-                                span.right.badge= t.email
+        include ranks
         .col-xs-12.col-lg-7
             iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + camp.location.address, allowfullscreen)
     
