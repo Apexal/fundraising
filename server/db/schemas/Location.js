@@ -7,6 +7,10 @@ const locationSchema = new Schema({
     description: String
 });
 
+locationSchema.methods.findCamps = function() {
+    return this.model('Camp').find({ location: this._id }).exec();   
+}
+
 // Remove camps at location
 locationSchema.pre('remove', function(next) {
     console.log('removing camps...');
