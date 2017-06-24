@@ -2,3 +2,20 @@
     .col-xs-12
         .jumbotron
             h1 Welcome, #{user.name.first}!
+            hr
+            blockquote
+                script(src="https://www.brainyquote.com/link/quotebr.js")
+            
+.row
+    .col-xs-12
+        .page-header
+            h2 Active Involvements
+.row
+    each i in activeInvolvements
+        .col-xs-12.col-lg-6
+            .panel.panel-danger
+                .panel-heading
+                    h1.panel-title Camp #{i.camp.location.name}
+                .panel-body
+                    b Ending #{moment(i.camp.endDate).fromNow()}
+                    p A lot of stuff
