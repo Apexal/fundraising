@@ -25,6 +25,9 @@ router.get('/:email', (req, res, next) => {
             if (!user) return next(new Error('Failed to find user.'));
 
             res.locals.targetUser = user;
+            return user.findCamps();
+        }).then(camps => {
+            res.locals.camps = camps;
             res.render('users/user');
         })
         .catch(next);

@@ -22,6 +22,10 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.methods.findCamps = function() {
+    return this.model('Camp').find().or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
+}
+
 userSchema.virtual('name.full').get(function() { 
     return this.name.first + ' ' + this.name.last;
 });

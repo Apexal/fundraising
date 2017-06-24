@@ -66,3 +66,7 @@ a.location-name {
 .user-panel img.large-profile-image {
     height: 100px;
 }
+
+.rank {
+    text-transform: capitalize;
+}

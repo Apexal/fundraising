@@ -12,5 +12,15 @@ module.exports = {
     },
     isTeacher: (camp, user) => camp.teachers.map(t => t._id).includes(user._id),
     isInvolved: (involvements, camp) => involvements.map(i => i.camp._id.toString()).includes(camp._id.toString()), // Not sure why I need toString() but I do
-    rank: (involvements, camp) => { const possible = involvements.filter(i => i.camp._id.toString() == camp._id.toString()); return (possible.length > 0 ? possible[0].rank : null); }
+    rank: (involvements, camp) => {
+        const possible = involvements.filter(i => i.camp._id.toString() == camp._id.toString());
+        return (possible.length > 0 ? possible[0].rank : null);
+    },
+    getRankFromCamp: (camp, user) => {
+        let rank = null;
+        if (camp.ambassador && (camp.ambassador == user._id || camp.ambassador._id == user._id)) rank = 'ambassador';
+        if (camp.director && (camp.director == user._id || camp.director._id == user._id)) rank = 'director';
+        if (camp.teachers.includes(user._id) || camp.teachers.map(t => t._id).includes(user._id)) rank = 'teacher';
+        return rank;
+    }
 };
