@@ -23,16 +23,35 @@ block content
         if activeCamps.length > 0
             each c in activeCamps
                 .col-xs-12.col-md-6.col-lg-4
-                    .panel.panel-primary
+                    .panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'))
                         .panel-heading
-                            h1.panel-title(title=c.location.address)= c.location.name
+                            h1.panel-title(title=c.location.address)
+                                if c.ongoing
+                                    b Ongoing at 
+                                | #{c.location.name}
                         .panel-body
-                            .time
-                                b= moment(c.startDate).format("dddd, MMMM Do")
-                                |  to 
-                                b= moment(c.endDate).format("dddd, MMMM Do")
+                            if c.ready
+                                .rank-summary
+                                    .ambassador
+                                        b Ambassador: 
+                                        span= c.ambassador.name.full
+                                    .director
+                                        b Program Director: 
+                                        span= c.director.name.full
+                                    .teachers
+                                        b Teachers: 
+                                        span #{c.teachers.length} total 
+                            else
+                                .well.well-sm.text-center
+                                    code
+                                        b Missing Ranks
+                                        |  | Join now.
                             hr
-                            a.btn.btn-primary.right(href="/camps/" + c._id) View Details
+                            if c.ongoing
+                                b Ends #{moment(c.endDate).fromNow()}
+                            else
+                                b Starts #{moment(c.startDate).fromNow()}
+                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) View Details
         else
             p.text-muted.text-center There are currently no #[b active camps].
     .row#camps
