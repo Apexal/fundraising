@@ -221,8 +221,12 @@ router.post('/:campId/addfunds', (req, res, next) => {
         .then(funds => {
         // Email program director
         const message = `<h3>Teacher ${req.user.name.full} Added Funds to Camp ${req.camp.location.name}</h3><p>${req.user.name.first} just added <b>$${amount} in ${form}</b> by <b>${method}</b></p><a href="http://localhost:3000/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
-        sendEmail(req.camp.director.email, "New Funds", message);
-        
+
+        if (req.camp.ambassador)
+            sendEmail(req.camp.ambassador.email, "New Funds", message);
+        if (req.camp.director)
+            sendEmail(req.camp.director.email, "New Funds", message);
+
         const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/camps/${campId}|Camp ${funds.camp}>`;
         return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { mrkdwn: true, text }, json: true });
     }).then(body => {
