@@ -33,14 +33,19 @@ block content
                             if c.ready
                                 .rank-summary
                                     .ambassador
-                                        b Ambassador: 
+                                        b Ambassador - 
                                         span= c.ambassador.name.full
                                     .director
-                                        b Program Director: 
+                                        b Program Director - 
                                         span= c.director.name.full
                                     .teachers
-                                        b Teachers: 
-                                        span #{c.teachers.length} total 
+                                        b Teachers - 
+                                        span #{c.teachers.length} total
+                                if c.info
+                                    br
+                                    .well.well-sm
+                                        b Camp Info
+                                        p= helpers.limit(c.info, 50)
                             else
                                 .well.well-sm.text-center
                                     code
