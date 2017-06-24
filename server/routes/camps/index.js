@@ -211,7 +211,8 @@ router.post('/:campId/addfunds', (req, res, next) => {
         amount,
         method,
         form,
-        source
+        source,
+        dateAdded: new Date()
     });
 
     newFunds.save().then(() => {

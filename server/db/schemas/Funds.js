@@ -8,7 +8,7 @@ const fundsSchema = new Schema({
     method: { type: String, required: true },
     form: { type: String, enum: ['Cash', 'Check', 'Other'], default: 'Other' },
     source: String,
-    dateAdded: { type: Date, default: Date.now }
+    addedAt: { type: Date, required: true }
 });
 
 module.exports = { name: 'Funds', schema: fundsSchema };

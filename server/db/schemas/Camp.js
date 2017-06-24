@@ -9,7 +9,8 @@ const campSchema = new Schema({
     endDate: { type: Date, required: true },
     teachers: [{ type: Number, ref: 'User' }],
     director: { type: Number, ref: 'User' },
-    ambassador: { type: Number, ref: 'User' }
+    ambassador: { type: Number, ref: 'User' },
+    addedAt: { type: Date, required: true }
 }, {
     toObject: {
         virtuals: true

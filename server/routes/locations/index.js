@@ -27,6 +27,7 @@ router.get('/:locationId', (req, res, next) => {
             res.locals.activeCamps = camps.filter(c => c.active);
             res.locals.inactiveCamps = camps.filter(c => !c.active);
             
+            res.locals.apiKey = require('../../config').googleAuth.apiKey;
             res.render('locations/location');
         })
         .catch(next);
@@ -85,7 +86,8 @@ router.post('/add', requireAdmin, (req, res, next) => {
     const newLocation = new req.db.Location({
         name,
         address,
-        description
+        description,
+        dateAdded: new Date()
     });
 
     newLocation.save()
