@@ -23,23 +23,30 @@ block content
             h3.text-muted.text-center This camp has ended so no more fundraising data can be added.
     .row
         .col-xs-12
+            
             hr
-            h2 All Funds
-            table.table
-                thead
-                    tr
-                        th Date Added
-                        th Amount/Form
-                        th Method
-                        th Submitted By
-                tbody
-                    each f in funds
+            .page-header
+                h2 All Funds
+                    small.right #{funds.length} total
+            if funds.length > 0
+                table.table
+                    thead
                         tr
-                            th(title=moment(f.dateAdded).fromNow()) #{moment(f.dateAdded).format("MMMM Do")}
-                            td $#{f.amount} #{f.form}
-                            td= f.method
-                            td(title=f.submittedBy.email)
-                                a(href="/users/" + f.submittedBy.email) #{f.submittedBy.name.full}
-                            td
-                                form(action="/camps/" + camp._id + "/removefunds?fundsId=" + f._id, method="POST", onsubmit="return confirm('Are you sure you want to remove these funds?');")
-                                    button.btn.btn-danger.right Remove
+                            th Date Added
+                            th Amount/Form
+                            th Method
+                            th Submitted By
+                    tbody
+                        each f in funds
+                            tr
+                                th(title=moment(f.dateAdded).fromNow()) #{moment(f.dateAdded).format("MMMM Do")}
+                                td $#{f.amount} #{f.form}
+                                td= f.method
+                                td(title=f.submittedBy.email)
+                                    a(href="/users/" + f.submittedBy.email) #{f.submittedBy.name.full}
+                                if user.admin || (helpers.getRankFromCamp(camp, user) != 'teacher' || (helpers.getRankFromCamp(camp, user) == 'teacher' && f.submittedBy._id == user._id))
+                                    td
+                                        form(action="/camps/" + camp._id + "/removefunds?fundsId=" + f._id, method="POST", onsubmit="return confirm('Are you sure you want to remove these funds?');")
+                                            button.btn.btn-danger.right Remove
+            else
+                p.text-muted.text-center There are currently no #[b funds].

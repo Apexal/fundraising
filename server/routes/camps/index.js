@@ -242,12 +242,17 @@ router.post('/:campId/removefunds', (req, res, next) => {
             if (!funds) throw new Error('Funds does not exist.');
             if (funds.camp.toString() != req.camp._id.toString()) throw new Error('Those funds are not associated with that camp!');
 
-            funds.remove()
-                .then(funds => {
-                    req.flash('success', 'Removed funds for camp.');
-                    res.redirect('/camps/' + req.camp._id + '/fundraising');
-                })
-                .catch(next);
+            // Check permissions
+            if (!req.user.admin) {
+                const rank = helpers.getRankFromCamp(req.camp, req.user);
+                if (!rank || (rank == 'teacher' && funds.submittedBy != req.user._id)) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
+            }
+
+            return funds.remove();
+        })
+        .then(funds => {
+            req.flash('success', 'Removed funds for camp.');
+            res.redirect('/camps/' + req.camp._id + '/fundraising');
         })
         .catch(next);
 });
