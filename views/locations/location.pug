@@ -8,16 +8,53 @@ block content
                     b #{location.name}
                     small.right added #{moment(location.created_at).fromNow()}
     .row
-        .col-xs-12
+        .col-xs-12.col-lg-7
             .well.well-sm.text-center
                 b Address: 
                 span= location.address
-        .col-xs-12.col-lg-7
-            
-            iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
+            iframe(width="650", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
         .col-xs-12.col-lg-5
-            .page-header
+            .page-header.active-camps
                 h3 Active Camps
+                    small.right #{activeCamps.length} total
+            if activeCamps.length > 0
+                each c in activeCamps
+                    .panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'))
+                        .panel-heading
+                            h1.panel-title(title=c.location.address)
+                                if c.ongoing
+                                    b Ongoing from 
+                                span #{moment(c.startDate).format("MMMM Do")} to #{moment(c.endDate).format("MMMM Do")}
+                        .panel-body
+                            if c.ready
+                                .rank-summary
+                                    .ambassador
+                                        b Ambassador - 
+                                        span= c.ambassador.name.full
+                                    .director
+                                        b Program Director - 
+                                        span= c.director.name.full
+                                    .teachers
+                                        b Teachers - 
+                                        span #{c.teachers.length} total
+                                if c.info
+                                    br
+                                    .well.well-sm
+                                        b Camp Info
+                                        p= helpers.limit(c.info, 50)
+                            else
+                                .well.well-sm.text-center
+                                    code
+                                        b Missing Ranks
+                                        |  | Join now.
+                            hr
+                            if c.ongoing
+                                b Ends #{moment(c.endDate).fromNow()}
+                            else
+                                b Starts #{moment(c.startDate).fromNow()}
+                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) View Details
+            else
+                p.text-muted.text-center There are currently no #[b active camps].
         .col-xs-12
     .row
         .col-xs-12

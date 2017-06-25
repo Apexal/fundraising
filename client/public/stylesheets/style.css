@@ -70,3 +70,12 @@ a.location-name {
 .rank {
     text-transform: capitalize;
 }
+
+.active-camps {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.active-camps h3 {
+    margin-top: 0;
+}

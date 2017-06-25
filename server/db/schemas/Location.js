@@ -9,7 +9,12 @@ const locationSchema = new Schema({
 });
 
 locationSchema.methods.findCamps = function() {
-    return this.model('Camp').find({ location: this._id }).exec();   
+    return this.model('Camp').find({ location: this._id })
+        .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
+        .exec();   
 }
 
 // Remove camps at location

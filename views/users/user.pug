@@ -14,29 +14,29 @@ block content
                 p= targetUser.phoneNumber
                  footer #{targetUser.name.first}'s Phone Number
           
-    .row.past-camps
-        .col-xs-12
-            .page-header
-                h2 All Camps
-                    small.right #{camps.length} total
-        .col-xs-12
-            table.table
-                    thead
-                        tr
-                            th Start Date
-                            th End Date
-                            th Location
-                            th Frank's Rank
-                    tbody
-                        each c in camps
+        .past-camps.col-xs-12.col-lg-9
+            .col-xs-12
+                .page-header
+                    h2 All Camps
+                        small.right #{camps.length} total
+            .col-xs-12
+                table.table
+                        thead
                             tr
-                                td= moment(c.startDate).format("YYYY-MM-DD")
-                                td= moment(c.endDate).format("YYYY-MM-DD")
-                                td
-                                    a(href="/locations/" + c.location._id)= c.location.name
-                                td.rank= helpers.getRankFromCamp(c, targetUser)
-                                td
-                                    a.btn.btn-default(href="/camps/" + c._id) View
+                                th Start Date
+                                th End Date
+                                th Location
+                                th Frank's Rank
+                        tbody
+                            each c in camps
+                                tr
+                                    td= moment(c.startDate).format("YYYY-MM-DD")
+                                    td= moment(c.endDate).format("YYYY-MM-DD")
+                                    td
+                                        a(href="/locations/" + c.location._id)= c.location.name
+                                    td.rank= helpers.getRankFromCamp(c, targetUser)
+                                    td
+                                        a.btn.btn-default(href="/camps/" + c._id) View
                                 
         
     .row
