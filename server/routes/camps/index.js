@@ -235,4 +235,21 @@ router.post('/:campId/addfunds', (req, res, next) => {
     }).catch(next);
 });
 
+router.post('/:campId/removefunds', (req, res, next) => {
+    req.db.Funds.findById(req.query.fundsId)
+        .exec()
+        .then(funds => {
+            if (!funds) throw new Error('Funds does not exist.');
+            if (funds.camp.toString() != req.camp._id.toString()) throw new Error('Those funds are not associated with that camp!');
+
+            funds.remove()
+                .then(funds => {
+                    req.flash('success', 'Removed funds for camp.');
+                    res.redirect('/camps/' + req.camp._id + '/fundraising');
+                })
+                .catch(next);
+        })
+        .catch(next);
+});
+
 module.exports = router;
