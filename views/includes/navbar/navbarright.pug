@@ -7,7 +7,7 @@ ul.nav.navbar-nav.navbar-right
         li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                 if user.admin
-                    b Administrator
+                    b Admin
                 else if !user.verified
                     b Unverified
                 |  #{user.name.full}

@@ -17,8 +17,11 @@ if user.verified
     // Administrator actions (if admin)
     if user.admin
         li.dropdown(class=helpers.activeLink('/administration', pagePath))
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Administration
-                span.caret
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                span.visible-sm Admin 
+                    span.caret
+                span.hidden-sm  Administration 
+                    span.caret
             ul.dropdown-menu
                 li
                     a(href='/administration') Overview
