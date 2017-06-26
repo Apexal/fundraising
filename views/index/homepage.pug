@@ -15,7 +15,12 @@
         .col-xs-12.col-lg-6
             .panel.panel-danger
                 .panel-heading
-                    h1.panel-title Camp #{i.camp.location.name}
+                    h1.panel-title Camp 
+                        b= i.camp.location.name
                 .panel-body
+                    .rank-desc
+                        h3 You are 
+                            b.rank= helpers.getRankFromCamp(i.camp, user)
+                    hr
+                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
                     b Ending #{moment(i.camp.endDate).fromNow()}
-                    p A lot of stuff

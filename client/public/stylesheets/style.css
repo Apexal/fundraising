@@ -79,3 +79,11 @@ a.location-name {
 .active-camps h3 {
     margin-top: 0;
 }
+
+.rank-desc h3 {
+    margin-top: 0;
+}
+
+.camp-dates {
+    margin-top: 10px;
+}
