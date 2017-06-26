@@ -60,7 +60,7 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         .then(camp => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
-            
+
             if (!req.camp.active) req.flash('warning', 'This camp is inactive so the following saved information and fundraising data cannot be edited.');
 
             return req.db.Funds.find({ camp: req.camp._id })
@@ -97,7 +97,7 @@ router.get('/:campId', (req, res, next) => {
 
     if (req.query.assign) {
         if (!req.camp.active) return next(new Error('This camp in inactive.'));
-        
+
         const rank = req.query.assign;
         // Make sure they aren't anything else already
         if(hasRank(req.camp, req.user)) return next(new Error('You already have a position in this camp.'));
@@ -107,19 +107,32 @@ router.get('/:campId', (req, res, next) => {
                 req.flash('error', 'You are already a teacher!');
                 return res.redirect('/camps/' + req.camp._id);
             }
-            
+
             req.camp.teachers.push(req.user._id);
-        } else if (rank == 'director') {
+        } else if (rank === 'director') {
             req.camp.director = req.user._id;
-        } else if (rank == 'ambassador') {
+        } else if (rank === 'ambassador') {
             req.camp.ambassador = req.user._id;
         } else {
             req.flash('error', 'Invalid rank to assign!');
+            return res.redirect('/camps/' + camp._id);
         }
 
         return req.camp.save()
             .then(camp => {
                 req.flash('success', 'You have become ' + rank + '.');
+
+                // Send emails
+                try {
+                    if (rank === 'teacher') {
+                        sendEmail(req.camp.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> assigned themselves as a <b>Teacher</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> which you are the Program Director of.`);
+                    } else if (rank === 'director') {
+                        sendEmail(req.camp.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> assigned themselves as <b>Program Director</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> which you are the Ambassador of.`);
+                    }
+                } catch(err) {
+
+                }
+
                 res.redirect('/camps/' + camp._id);
             })
             .catch(next);
@@ -140,6 +153,18 @@ router.get('/:campId', (req, res, next) => {
         return req.camp.save()
             .then(camp => {
                 req.flash('success', 'You are no longer ' + rank + '.');
+
+                // Send emails
+                try {
+                    if (rank === 'teacher') {
+                        sendEmail(req.camp.director.email, 'Teacher Left', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> is no longer a <b>Teacher</b> at <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> which you are the Program Director of.`);
+                    } else if (rank === 'director') {
+                        sendEmail(req.camp.ambassador.email, 'Director Left', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> is no longer <b>Program Director</b> of <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> which you are the Ambassador of.`);
+                    }
+                } catch(err) {
+
+                }
+
                 res.redirect("/camps/" + camp._id);
             })
             .catch(next);
@@ -187,7 +212,7 @@ router.get('/:campId/fundraising', (req, res, next) => {
         .exec()
         .then(fundsList => {
             res.locals.funds = fundsList;
-            
+
             let total = 0;
             fundsList.forEach(f => total += f.amount);
             res.locals.total = total;
@@ -222,10 +247,8 @@ router.post('/:campId/addfunds', (req, res, next) => {
         // Email program director
         const message = `<h3>Teacher ${req.user.name.full} Added Funds to Camp ${req.camp.location.name}</h3><p>${req.user.name.first} just added <b>$${amount} in ${form}</b> by <b>${method}</b></p><a href="http://localhost:3000/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
 
-        if (req.camp.ambassador)
-            sendEmail(req.camp.ambassador.email, "New Funds", message);
-        if (req.camp.director)
-            sendEmail(req.camp.director.email, "New Funds", message);
+        if (req.camp.ambassador) sendEmail(req.camp.ambassador.email, "New Funds", message);
+        if (req.camp.director) sendEmail(req.camp.director.email, "New Funds", message);
 
         const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/camps/${campId}|Camp ${funds.camp}>`;
         return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { mrkdwn: true, text }, json: true });
