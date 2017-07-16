@@ -18,7 +18,24 @@ block content
                 h1 Active Locations
                     +help('active-locations')
                     small.right #{activeLocations.length} total
-        .col-xs-12
+        
+        if activeLocations.length > 0
+            each l in activeLocations
+                .col-xs-12.col-md-6.col-lg-4
+                    .panel.panel-primary
+                        .panel-heading
+                            h1.panel-title= l.name
+                        .panel-body
+                            b Address 
+                            span= l.address
+                            a.btn.btn-primary.right(href="/locations/" + l._id) View Details
+                            hr
+                            blockquote
+                                - l.description = description || "No description given..."
+                                p= l.description
+                        .panel-footer
+                            span.text-muted Has ongoing camp(s).
+        else
             p.text-muted.text-center There are no #[b active locations].
 
     .row#locations
@@ -28,7 +45,7 @@ block content
                     +help('inactive-locations')
                     small.right #{inactiveLocations.length} total
         .col-xs-12
-            if locations.length > 0
+            if inactiveLocations.length > 0
                 table.table
                     thead
                         tr
