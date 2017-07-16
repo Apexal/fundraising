@@ -76,9 +76,15 @@ block content
                                 td= moment(c.startDate).format("YYYY-MM-DD")
                                 td= moment(c.endDate).format("YYYY-MM-DD")
                                 td
-                                    a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
+                                    if c.ambassador
+                                        a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
+                                    else
+                                        span.text-muted None
                                 td
-                                    a(href="/users/" + c.director._id)= c.director.name.full
+                                    if c.director
+                                        a(href="/users/" + c.director._id)= c.director.name.full
+                                    else
+                                        span.text-muted None
             else
                 p.text-muted.text-center There are currently no #[b inactive camps].
     if user.admin
