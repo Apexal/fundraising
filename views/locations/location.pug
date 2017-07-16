@@ -16,6 +16,7 @@ block content
         .col-xs-12.col-lg-5
             .page-header.active-camps
                 h3 Active Camps
+                    +help('active-camps')
                     small.right #{activeCamps.length} total
             if activeCamps.length > 0
                 each c in activeCamps
@@ -60,6 +61,7 @@ block content
         .col-xs-12
             .page-header
                 h3 Inactive Camps
+                    +help('inactive-camps')
                     small.right #{inactiveCamps.length} total
         .col-xs-12
             if inactiveCamps.length > 0

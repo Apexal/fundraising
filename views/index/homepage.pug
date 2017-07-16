@@ -16,6 +16,7 @@
     .col-xs-12
         .page-header
             h2 Latest News
+                +help('latest-news')
     .col-xs-12
         blockquote
             p.
@@ -25,6 +26,7 @@
     .col-xs-12
         .page-header
             h2 Active Involvements
+                +help('active-involvements')
 .row
     if activeInvolvements.length > 0
         each i in activeInvolvements

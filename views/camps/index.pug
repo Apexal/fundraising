@@ -16,9 +16,8 @@ block content
         .col-xs-12
             .page-header
                 h1 Active Camps
+                    +help('active-camps')
                     small.right #{activeCamps.length} total
-                blockquote
-                    p Active camps are either starting soon or are currently in session.
     
         if activeCamps.length > 0
             each c in activeCamps
@@ -62,7 +61,8 @@ block content
     .row#camps
         .col-xs-12
             .page-header
-                h1 Inactive Camps
+                h2 Inactive Camps
+                    +help('inactive-camps')
                     small.right #{inactiveCamps.length} total
         .col-xs-12
             if inactiveCamps.length > 0
