@@ -2,3 +2,6 @@ mixin icon(name, text)
     i.fa(class="fa-" + name, aria-hidden="true")
     if text
         |  #{text}
+
+mixin help(label)
+    i.fa.fa-question-circle.help-icon(aria-hidden="true", title=helpers.getHelpInfo(label))

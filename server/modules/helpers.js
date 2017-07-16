@@ -1,4 +1,5 @@
 // All helper methods for all views.
+var helpInfo = require('./helpInfo.js');
 
 module.exports = {
     activeLink: (href, current) => {
@@ -22,5 +23,12 @@ module.exports = {
         if (camp.director && (camp.director == user._id || camp.director._id == user._id)) rank = 'director';
         if (camp.teachers.includes(user._id) || camp.teachers.map(t => t._id).includes(user._id)) rank = 'teacher';
         return rank;
+    },
+    getHelpInfo: label => {
+        if (label in helpInfo) {
+            return helpInfo[label];
+        } else {
+            return 'No help info found!'
+        }
     }
 };

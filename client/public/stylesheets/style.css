@@ -102,3 +102,9 @@ a.location-name {
     color: white;
     padding: 20px;
 }
+
+.help-icon {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.7em !important;
+}
