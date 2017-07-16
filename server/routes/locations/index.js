@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 
 router.use(requireVerified);
 
@@ -9,6 +10,13 @@ router.get('/', (req, res, next) => {
         .exec()
         .then(locations => {
             res.locals.locations = locations;
+
+            // Determine active locations by getting all active camps and taking the locations
+            return req.db.Camp.find({ endDate: { "$gt": moment().startOf('day').toDate() }});
+        }).then(activeCamps => {
+            res.locals.activeLocations = res.locals.locations.filter(l => activeCamps.filter(c => c.location == l.id).length > 0);
+            res.locals.inactiveLocations = res.locals.locations.filter(l => res.locals.activeLocations.indexOf(l) == -1); // All locations not in activeLocations
+
             res.render('locations/index');
         })
         .catch(next);
