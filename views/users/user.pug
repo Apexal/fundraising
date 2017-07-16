@@ -4,7 +4,10 @@ block content
     .row
         .col-xs-12
             .page-header
-                h1 #{targetUser.name.full}
+                h1 
+                    if user.admin
+                        b Adminstrator  
+                    | #{targetUser.name.full}
                     small.text-muted.right registered #{moment(targetUser.registeredDate).fromNow()}
     .row.user-info
         .col-xs-12.col-md-6.col-lg-3
@@ -15,6 +18,10 @@ block content
                  footer #{targetUser.name.first}'s Phone Number
           
         .past-camps.col-xs-12.col-lg-9
+            if user.admin
+                .well
+                    b Adminstrator
+                    p= helpers.getHelpInfo('administrators')
             .col-xs-12
                 .page-header
                     h2 All Camps
