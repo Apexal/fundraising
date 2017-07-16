@@ -31,17 +31,14 @@ if user.verified
     
     li(class=helpers.activeLink("/camp", pagePath), title="View the list of all camps active and inactive and see details.")
         a(href="/camps")
-            i.fa.fa-map-marker(aria-hidden="true")
-            |  Camps
+            +icon('map-marker', 'Camps')
 
     li(class=helpers.activeLink('/locations', pagePath), title="View the list of all locations used for camps past and present and see details.")
         a(href='/locations')
-            i.fa.fa-globe(aria-hidden="true")
-            |  Locations
+            +icon('globe', 'Locations')
 
     li(class=helpers.activeLink('/users', pagePath), title="View the list of all users and see profiles.")
         a(href='/users') 
-            i.fa.fa-address-book(aria-hidden="true")
-            |  Users
+            +icon('address-book', 'Users')
 else
     i.navbar-text You will be able to use services once verified.

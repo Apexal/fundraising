@@ -1,2 +1,4 @@
-mixin icon(name)
-    i.fa(class="fa-" + name)
+mixin icon(name, text)
+    i.fa(class="fa-" + name, aria-hidden="true")
+    if text
+        |  #{text}
