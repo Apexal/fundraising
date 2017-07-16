@@ -87,3 +87,18 @@ a.location-name {
 .camp-dates {
     margin-top: 10px;
 }
+
+.homepage-jumbotron {
+    margin: 0;
+}
+
+.important-links nav {
+    background-color: #222;
+    padding: 10px;
+    text-align: center;
+}
+
+.important-links nav a {
+    color: white;
+    padding: 20px;
+}
