@@ -92,6 +92,10 @@ a.location-name {
     margin: 0;
 }
 
+.homepage-jumbotron blockquote {
+    margin-bottom: 0;
+}
+
 .important-links nav {
     background-color: #222;
     padding: 10px;
