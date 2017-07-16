@@ -6,7 +6,7 @@ block content
             .jumbotron.clearfix
                 h1 Locations
                     small.right #{locations.length} total
-                p Locations info here...
+                p= helpers.getHelpInfo('locations')
                 a.btn.btn-primary.right(href="#locations") All Locations
         hr
     if user.admin

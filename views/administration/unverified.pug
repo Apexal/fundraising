@@ -18,8 +18,9 @@ block content
         .col-xs-12
             .page-header
                 h1 Unverified Users
+                    +help('unverified-users')
                     small.right #{unverifiedUsers.length} pending
-                blockquote
+                blockquote.visible-xs
                     p New users that login are restricted from doing anything until an #[b Administrator] verifies them.
     .row
         if unverifiedUsers.length > 0

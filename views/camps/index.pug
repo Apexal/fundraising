@@ -6,7 +6,7 @@ block content
             .jumbotron.clearfix
                 h1 Camps
                     small.right #{camps.length} total
-                p Camps info here...
+                p= helpers.getHelpInfo('camps')
                 a.btn.btn-primary.right(href="#camps") All Camps
         hr
     if user.admin
