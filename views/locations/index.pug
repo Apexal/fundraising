@@ -30,9 +30,11 @@ block content
                             span= l.address
                             a.btn.btn-primary.right(href="/locations/" + l._id) View Details
                             hr
-                            blockquote
-                                - l.description = description || "No description given..."
-                                p= l.description
+                            if l.description
+                                blockquote
+                                    p= l.description
+                            else
+                                p.text-muted No description given.
                         .panel-footer
                             span.text-muted Has ongoing camp(s).
         else

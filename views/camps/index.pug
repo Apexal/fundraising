@@ -75,7 +75,7 @@ block content
                     tbody
                         each c in inactiveCamps
                             tr
-                                th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("dddd, MMMM Do YYYY")
+                                th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("MMMM Do YYYY")
                                 td(title=c.location.address)= c.location.name
                                 td= helpers.limit(c.info, 100)
                                 td

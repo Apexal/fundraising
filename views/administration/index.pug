@@ -5,6 +5,6 @@ block content
         .col-xs-12
             .jumbotron
                 h1 Administration
-                p As Administrators...
-                a.btn.btn-default(href="/administration/unverified") Unverified Users
+                p= helpers.getHelpInfo('administrators')
+                a.btn.btn-primary(href="/administration/unverified") Unverified Users
             hr    

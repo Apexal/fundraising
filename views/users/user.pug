@@ -8,10 +8,10 @@ block content
                     if user.admin
                         b Adminstrator  
                     | #{targetUser.name.full}
-                    small.text-muted.right registered #{moment(targetUser.registeredDate).fromNow()}
+                    small.text-muted.right(title=moment(targetUser.registeredDate).format("dddd, MMMM Do YYYY")) registered #{moment(targetUser.registeredDate).fromNow()}
     .row.user-info
         .col-xs-12.col-md-6.col-lg-3
-            img.user-profile(src="/images/" + targetUser.profileImageName)
+            img.user-profile(src="/images/" + targetUser.profileImageName, alt=targetUser.name.first + "'s profile picture.'", title=targetUser.name.full)
             br
             blockquote
                 p= targetUser.phoneNumber
