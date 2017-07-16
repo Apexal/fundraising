@@ -30,12 +30,18 @@ if user.verified
                     a(href="/administration/unverified") Unverified Users
     
     li(class=helpers.activeLink("/camp", pagePath), title="View the list of all camps active and inactive and see details.")
-        a(href="/camps") Camps
+        a(href="/camps")
+            i.fa.fa-map-marker(aria-hidden="true")
+            |  Camps
 
     li(class=helpers.activeLink('/locations', pagePath), title="View the list of all locations used for camps past and present and see details.")
-        a(href='/locations') Locations
+        a(href='/locations')
+            i.fa.fa-globe(aria-hidden="true")
+            |  Locations
 
     li(class=helpers.activeLink('/users', pagePath), title="View the list of all users and see profiles.")
-        a(href='/users') Users
+        a(href='/users') 
+            i.fa.fa-address-book(aria-hidden="true")
+            |  Users
 else
     i.navbar-text You will be able to use services once verified.
