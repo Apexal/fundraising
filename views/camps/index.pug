@@ -74,10 +74,11 @@ block content
                             th Info
                     tbody
                         each c in inactiveCamps
-                            th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("dddd, MMMM Do YYYY")
-                            td(title=c.location.address)= c.location.name
-                            td= helpers.limit(c.info, 100)
-                            td
-                                a.btn.btn-default(href="/camps/" + c._id) View Details
+                            tr
+                                th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("dddd, MMMM Do YYYY")
+                                td(title=c.location.address)= c.location.name
+                                td= helpers.limit(c.info, 100)
+                                td
+                                    a.btn.btn-default(href="/camps/" + c._id) View Details
             else
                 p.text-muted.text-center There are no #[b inactive camps].
