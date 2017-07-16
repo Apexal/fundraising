@@ -15,18 +15,30 @@
 .row
     .col-xs-12
         .page-header
+            h2 Latest News
+    .col-xs-12
+        blockquote
+            p.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae scelerisque erat. Aliquam gravida lacus auctor sapien consequat facilisis. Sed sit amet varius nisl. Sed eu neque ipsum.
+            footer The Administrators
+.row
+    .col-xs-12
+        .page-header
             h2 Active Involvements
 .row
-    each i in activeInvolvements
-        .col-xs-12.col-lg-6
-            .panel.panel-danger
-                .panel-heading
-                    h1.panel-title Camp 
-                        b= i.camp.location.name
-                .panel-body
-                    .rank-desc
-                        h3 You are 
-                            b.rank= helpers.getRankFromCamp(i.camp, user)
-                    hr
-                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
-                    b Ending #{moment(i.camp.endDate).fromNow()}
+    if activeInvolvements.length > 0
+        each i in activeInvolvements
+            .col-xs-12.col-lg-6
+                .panel.panel-danger
+                    .panel-heading
+                        h1.panel-title Camp 
+                            b= i.camp.location.name
+                    .panel-body
+                        .rank-desc
+                            h3 You are 
+                                b.rank= helpers.getRankFromCamp(i.camp, user)
+                        hr
+                        a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
+                        b Ending #{moment(i.camp.endDate).fromNow()}
+    else
+        p.text-center.text-muted You are not currently involved in any active camps!
