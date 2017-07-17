@@ -4,4 +4,4 @@ mixin icon(name, text)
         |  #{text}
 
 mixin help(label)
-    i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", title=helpers.getHelpInfo(label))
+    i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, title=helpers.getHelpInfo(label))

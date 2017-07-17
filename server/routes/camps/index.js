@@ -115,7 +115,7 @@ router.get('/:campId', (req, res, next) => {
             req.camp.ambassador = req.user._id;
         } else {
             req.flash('error', 'Invalid rank to assign!');
-            return res.redirect('/camps/' + camp._id);
+            return res.redirect('/camps/' + req.camp._id);
         }
 
         return req.camp.save()
@@ -201,8 +201,6 @@ router.post('/:campId/edit', requireAdmin, (req, res, next) => {
 });
 
 router.get('/:campId/fundraising', (req, res, next) => {
-    const campId = req.params.campId;
-
     res.locals.camp = req.camp;
     res.locals.recentFunds = req.recentFunds;
 

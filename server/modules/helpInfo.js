@@ -1,20 +1,22 @@
 const helpInfo = {};
 
-helpInfo['latest-news'] = "Latest news info here...";
+helpInfo['users'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
-helpInfo['camps'] = "Camp info here...";
-helpInfo['active-camps'] = "Active camp info here...";
-helpInfo['inactive-camps'] = "Inactive camp info here...";
+helpInfo['latest-news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
-helpInfo['funds'] = "Funds info here...";
-helpInfo['fundraising-goals'] = "Fundraising goals info here...";
+helpInfo['camps'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['active-camps'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['inactive-camps'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+
+helpInfo['funds'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['fundraising-goals'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
 
-helpInfo['locations'] = "Location info here...";
-helpInfo['active-locations'] = "Active location info here...";
-helpInfo['inactive-locations'] = "Inactive location info here...";
+helpInfo['locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['active-locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['inactive-locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
-helpInfo['active-involvements'] = "Active involvement info here...";
+helpInfo['active-involvements'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
 helpInfo['unverified-users'] = "New users that login are restricted from doing anything until an Administrator verifies them.";
 
