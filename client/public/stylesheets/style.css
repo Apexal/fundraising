@@ -19,6 +19,10 @@ body {
     margin-top: 0;
 }
 
+.location-iframe {
+    width: 100%;
+}
+
 .fundraising-well {
     margin-bottom: 0;
 }
