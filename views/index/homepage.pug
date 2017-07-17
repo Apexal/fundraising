@@ -13,33 +13,33 @@
                 a(href="https://github.com/KidsTales/kt-web/issues", target="new")
                     +icon('github', 'Website Issues')
 .row
-    .col-xs-12
+    .col-xs-12.col-md-6
         .page-header
             h2 Latest News
                 +help('latest-news')
-    .col-xs-12
+
         blockquote
             p= latestNews
             footer The Administrators
-.row
-    .col-xs-12
+
+    .col-xs-12.col-md-6
         .page-header
             h2 Active Involvements
                 +help('active-involvements')
-.row
-    if activeInvolvements.length > 0
-        each i in activeInvolvements
-            .col-xs-12.col-lg-6
-                .panel.panel-danger
-                    .panel-heading
-                        h1.panel-title Camp 
-                            b= i.camp.location.name
-                    .panel-body
-                        .rank-desc
-                            h3 You are 
-                                b.rank= helpers.getRankFromCamp(i.camp, user)
-                        hr
-                        a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
-                        b Ending #{moment(i.camp.endDate).fromNow()}
-    else
-        p.text-center.text-muted You are not currently involved in any active camps!
+
+        if activeInvolvements.length > 0
+            each i in activeInvolvements
+                .col-xs-12
+                    .panel.panel-danger
+                        .panel-heading
+                            h1.panel-title Camp 
+                                b= i.camp.location.name
+                        .panel-body
+                            .rank-desc
+                                h3 You are 
+                                    b.rank= helpers.getRankFromCamp(i.camp, user)
+                            hr
+                            a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
+                            b Ending #{moment(i.camp.endDate).fromNow()}
+        else
+            p.text-center.text-muted You are not currently involved in any active camps!
