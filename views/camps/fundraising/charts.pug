@@ -1,0 +1,38 @@
+.row
+    .col-xs-12.col-lg-6
+        .page-header
+            h2 Fund Forms
+        canvas#funds-pie-chart(width="200", height="200")
+    
+    script.
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [
+                        #{fundsTypes['Cash']},
+                        #{fundsTypes['Check']},
+                        #{fundsTypes['Other']}
+                    ],
+                    backgroundColor: [
+                        window.chartColors.red,
+                        window.chartColors.orange,
+                        window.chartColors.yellow,
+                        window.chartColors.green,
+                        window.chartColors.blue,
+                    ],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    "Cash",
+                    "Check",
+                    "Other"
+                ]
+            }
+        };
+
+        window.onload = function() {
+
+            var ctx = document.getElementById("funds-pie-chart").getContext("2d");
+            window.myPie = new Chart(ctx, config);
+        }

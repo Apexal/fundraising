@@ -214,12 +214,21 @@ router.get('/:campId/fundraising', (req, res, next) => {
             let total = 0;
             fundsList.forEach(f => total += f.amount);
             res.locals.total = total;
+                        
+            // For charts
+            res.locals.fundsTypes = {};
+            ['Cash', 'Check', 'Other'].forEach(t => {
+                let tTotal = 0;
+                fundsList.filter(f => f.form == t).forEach(f => tTotal += f.amount);
+
+                res.locals.fundsTypes[t] = tTotal;
+            });
 
             return req.camp.findFundraisingGoals();
         }).then(fundraisingGoals => {
             req.camp.fundraisingGoals = fundraisingGoals;
             res.locals.camp.fundraisingGoals = fundraisingGoals;
-            
+
             res.render('camps/fundraising/index');
         })
         .catch(next);
