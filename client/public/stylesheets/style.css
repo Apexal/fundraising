@@ -115,6 +115,8 @@ a.location-name {
     margin-left: 5px;
     cursor: pointer;
     font-size: 0.7em !important;
+    vertical-align: top;
+    margin-top: 1.2%;
 }
 
 .camp-ranks .help-icon {
