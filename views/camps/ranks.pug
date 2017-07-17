@@ -1,4 +1,4 @@
-.col-xs-12.col-lg-5
+.col-xs-12.col-lg-5.camp-ranks
     if !camp.ready
         .well.well-sm.text-center
             span Missing Ranks
@@ -12,7 +12,9 @@
                         a.badge.right(href="?assign=ambassador", onclick="return confirm('Are you sure you want to become Ambassador?')") Assign
                 else if camp.ambassador._id == user._id
                     a.badge.right(href="?unassign=ambassador", onclick="return confirm('Are you sure you want to be Ambassador?')") Unassign
-            h1.panel-title Ambassador
+            h1.panel-title 
+                +help('ambassador')
+                | Ambassador
         ol.list-group
             if camp.ambassador
                 a.list-group-item(href="/users/" + camp.ambassador.email)
@@ -32,7 +34,9 @@
                         a.badge.right(href="?assign=director", onclick="return confirm('Are you sure you want to become Program Director?')") Assign
                 else if camp.director._id == user._id
                     a.badge.right(href="?unassign=director", onclick="return confirm('Are you sure you want to no longer be Program Director?')") Unassign
-            h1.panel-title Program Director
+            h1.panel-title
+                +help('director')
+                | Program Director
 
         ol.list-group
             if camp.director
@@ -53,7 +57,9 @@
                     a.badge.right(href="?unassign=teacher", onclick="return confirm('Are you sure you want to no longer be a Teacher?')") Leave
                 else if !helpers.rank(activeInvolvements, camp)
                     a.badge.right(href="?assign=teacher", onclick="return confirm('Are you sure you want to become a Teacher?')") Join
-            h1.panel-title Teachers  
+            h1.panel-title
+                +help('teachers')
+                | Teachers  
                 span.text-muted= camp.teachers.length + ' total '
 
         ol.list-group

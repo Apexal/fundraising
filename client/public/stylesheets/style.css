@@ -116,3 +116,9 @@ a.location-name {
     cursor: pointer;
     font-size: 0.7em !important;
 }
+
+.camp-ranks .help-icon {
+    margin-left: 0;
+    margin-right: 5px;
+    font-size: 1em !important;
+}
