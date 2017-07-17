@@ -13,7 +13,6 @@ block content
     if user.admin || helpers.isInvolved(activeInvolvements, camp)
         hr
         if camp.active
-            
             .row
                 .col-xs-12.col-md-6
                     include addfunds
@@ -25,12 +24,19 @@ block content
         .col-xs-12
             .page-header
                 h1 Goals
+                    +help('fundraising-goals')
+                    small.right #{camp.fundraisingGoals.length} total
         .col-xs-12
-            
+            if camp.fundraisingGoals.length > 0
+                each goal in camp.fundraisingGoals
+                    p goal
+            else
+                p.text-center.text-muted There are currently no fundraising goals.
     .row
         .col-xs-12
             .page-header
                 h2 All Funds
+                    +help('funds')
                     small.right #{funds.length} total
             if funds.length > 0
                 table.table

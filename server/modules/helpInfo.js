@@ -6,6 +6,10 @@ helpInfo['camps'] = "Camp info here...";
 helpInfo['active-camps'] = "Active camp info here...";
 helpInfo['inactive-camps'] = "Inactive camp info here...";
 
+helpInfo['funds'] = "Funds info here...";
+helpInfo['fundraising-goals'] = "Fundraising goals info here...";
+
+
 helpInfo['locations'] = "Location info here...";
 helpInfo['active-locations'] = "Active location info here...";
 helpInfo['inactive-locations'] = "Inactive location info here...";
