@@ -122,3 +122,18 @@ a.location-name {
     margin-right: 5px;
     font-size: 1em !important;
 }
+
+@media only screen and (max-width: 768px) {
+    .page-header h1, .page-header h2, .page-header h3 {
+        text-align: center;
+    }
+    .page-header h1 small {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .location-iframe {
+        margin-bottom: 30px;
+    }
+}

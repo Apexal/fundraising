@@ -37,8 +37,8 @@ block content
                             tbody
                                 each c in camps
                                     tr
-                                        td= moment(c.startDate).format("YYYY-MM-DD")
-                                        td= moment(c.endDate).format("YYYY-MM-DD")
+                                        td= moment(c.startDate).format("MMMM Do YYYY")
+                                        td= moment(c.endDate).format("MMMM Do YYYY")
                                         td
                                             a(href="/locations/" + c.location._id)= c.location.name
                                         td.rank= helpers.getRankFromCamp(c, targetUser)

@@ -1,6 +1,6 @@
 {
   "name": "kidstales",
-  "version": "0.2.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -28,7 +28,7 @@
     "request-promise": "^4.2.1",
     "serve-favicon": "~2.3.0"
   },
-  "description": "For the children",
+  "description": "For the children.",
   "main": "./bin/www",
   "devDependencies": {},
   "repository": {

@@ -1,7 +1,7 @@
 ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
-        li
+        li.hidden-xs
             a.user-image-link(href="/setup")
                 img.user-image(src="/images/" + user.profileImageName)
         li.dropdown

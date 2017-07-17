@@ -1,45 +1,48 @@
-.row
-    .col-xs-12
-        .jumbotron.homepage-jumbotron
-            h1 Welcome, #{user.name.first}!
-            hr
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .jumbotron.homepage-jumbotron
+                h1 Welcome, #{user.name.first}!
+                hr
+                blockquote
+                    script(src="https://www.brainyquote.com/link/quotebr.js")
+        .col-xs-12
+            .important-links
+                nav
+                    a(href="http://kidstales.org/", target="new")
+                        +icon('external-link', 'Kids Tales Site')
+                    a(href="https://github.com/KidsTales/kt-web/issues", target="new")
+                        +icon('github', 'Website Issues')
+    .row
+        .col-xs-12.col-md-6
+            .page-header
+                h2 Latest News
+                    +help('latest-news')
+
             blockquote
-                script(src="https://www.brainyquote.com/link/quotebr.js")
-    .col-xs-12
-        .important-links
-            nav
-                a(href="http://kidstales.org/", target="new")
-                    +icon('external-link', 'Kids Tales Site')
-                a(href="https://github.com/KidsTales/kt-web/issues", target="new")
-                    +icon('github', 'Website Issues')
-.row
-    .col-xs-12.col-md-6
-        .page-header
-            h2 Latest News
-                +help('latest-news')
+                p= latestNews
+                footer The Administrators
 
-        blockquote
-            p= latestNews
-            footer The Administrators
+        .col-xs-12.col-md-6
+            .page-header
+                h2 Active Involvements
+                    +help('active-involvements')
 
-    .col-xs-12.col-md-6
-        .page-header
-            h2 Active Involvements
-                +help('active-involvements')
-
-        if activeInvolvements.length > 0
-            each i in activeInvolvements
-                .col-xs-12
-                    .panel.panel-danger
-                        .panel-heading
-                            h1.panel-title Camp 
-                                b= i.camp.location.name
-                        .panel-body
-                            .rank-desc
-                                h3 You are 
-                                    b.rank= helpers.getRankFromCamp(i.camp, user)
-                            hr
-                            a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
-                            b Ending #{moment(i.camp.endDate).fromNow()}
-        else
-            p.text-center.text-muted You are not currently involved in any active camps!
+            if activeInvolvements.length > 0
+                each i in activeInvolvements
+                    .col-xs-12
+                        .panel.panel-danger
+                            .panel-heading
+                                h1.panel-title Camp 
+                                    b= i.camp.location.name
+                            .panel-body
+                                .rank-desc
+                                    h3 You are 
+                                        b.rank= helpers.getRankFromCamp(i.camp, user)
+                                hr
+                                a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
+                                b Ending #{moment(i.camp.endDate).fromNow()}
+            else
+                p.text-center.text-muted You are not currently involved in any active camps!
