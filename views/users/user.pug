@@ -26,26 +26,26 @@ block content
                 .page-header
                     h2 All Camps
                         small.right #{camps.length} total
-            .col-xs-12
-                table.table
-                        thead
-                            tr
-                                th Start Date
-                                th End Date
-                                th Location
-                                th Frank's Rank
-                        tbody
-                            each c in camps
+                if camps.length > 0
+                    table.table
+                            thead
                                 tr
-                                    td= moment(c.startDate).format("YYYY-MM-DD")
-                                    td= moment(c.endDate).format("YYYY-MM-DD")
-                                    td
-                                        a(href="/locations/" + c.location._id)= c.location.name
-                                    td.rank= helpers.getRankFromCamp(c, targetUser)
-                                    td
-                                        a.btn.btn-default(href="/camps/" + c._id) View
-                                
-        
+                                    th Start Date
+                                    th End Date
+                                    th Location
+                                    th Frank's Rank
+                            tbody
+                                each c in camps
+                                    tr
+                                        td= moment(c.startDate).format("YYYY-MM-DD")
+                                        td= moment(c.endDate).format("YYYY-MM-DD")
+                                        td
+                                            a(href="/locations/" + c.location._id)= c.location.name
+                                        td.rank= helpers.getRankFromCamp(c, targetUser)
+                                        td
+                                            a.btn.btn-default(href="/camps/" + c._id) View
+                else
+                    p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any camps.
     .row
         .col-xs-12
             hr
