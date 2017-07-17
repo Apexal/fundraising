@@ -92,6 +92,10 @@ a.location-name {
     margin-top: 0;
 }
 
+.rank-summary {
+    margin-bottom: 10px;
+}
+
 .camp-dates {
     margin-top: 10px;
 }
@@ -127,6 +131,8 @@ a.location-name {
     margin-left: 0;
     margin-right: 5px;
     font-size: 1em !important;
+    margin-top: 0;
+    vertical-align: inherit;
 }
 
 @media only screen and (max-width: 768px) {

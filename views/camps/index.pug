@@ -44,19 +44,14 @@ block content
                                     .teachers.col-xs-12.col-sm-2.col-md-12
                                         b Teachers - 
                                         span #{c.teachers.length}
-                                
-                                if c.info
-                                    br
-                                    .well.well-sm
-                                        b Camp Info
-                                        p= helpers.limit(c.info, 50)
                             else
-                                .well.well-sm.text-center
-                                    code
-                                        b Missing Ranks
-                                        |  | Join now.
-
+                                .alert.alert-warning #[b Missing Ranks] Join now on details page.
                             
+                            if c.info
+                                .well.well-sm
+                                    b Camp Info
+                                    p= helpers.limit(c.info, 50)
+                        
                             a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) View Details
         else
             p.text-muted.text-center There are currently no #[b active camps].
