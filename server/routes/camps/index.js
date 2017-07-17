@@ -272,13 +272,69 @@ router.post('/:campId/removefunds', (req, res, next) => {
             // Check permissions
             if (!req.user.admin) {
                 const rank = helpers.getRankFromCamp(req.camp, req.user);
-                if (!rank || (rank == 'teacher' && funds.submittedBy != req.user._id)) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
+                if (!rank || (rank == 'teacher' && !funds.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
             }
 
             return funds.remove();
         })
         .then(funds => {
             req.flash('success', 'Removed funds for camp.');
+            res.redirect('/camps/' + req.camp._id + '/fundraising');
+        })
+        .catch(next);
+});
+
+/* FUNDRAISING GOALS */
+router.post('/:campId/addfundraisinggoal', (req, res, next) => {
+    const campId = req.camp._id;
+    const submittedById = req.user._id;
+    const amount = req.body.amount;
+    const deadline = moment(req.body.deadline);
+
+    // Validate
+    if (deadline.isBefore(moment())) return next(new Error('Deadline must be in the future!'));
+
+    const newFundraisingGoal = new req.db.FundraisingGoal({
+        camp: campId,
+        submittedBy: submittedById,
+        amount,
+        deadline,
+        dateAdded: new Date()
+    });
+
+    newFundraisingGoal.save()
+        .then(goal => {
+        // Email program director
+        const message = `<h3>Teacher ${req.user.name.full} Added Fundraising Goal to Camp ${req.camp.location.name}</h3><a href="http://localhost:3000/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
+
+        if (req.camp.ambassador) sendEmail(req.camp.ambassador.email, "New Fundraising Goal", message);
+        if (req.camp.director) sendEmail(req.camp.director.email, "New Fundraising Goal", message);
+
+        const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/camps/${campId}|Camp ${funds.camp}>`;
+        return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { mrkdwn: true, text }, json: true });
+    }).then(body => {
+        req.flash('success', 'Added new fundraising goal for camp.');
+        res.redirect(`/camps/${req.camp._id}/fundraising`);
+    }).catch(next);
+});
+
+router.post('/:campId/removefundraisinggoal', (req, res, next) => {
+    req.db.FundraisingGoal.findById(req.query.fundraisingGoalId)
+        .exec()
+        .then(goal => {
+            if (!goal) throw new Error('Fundraising goal does not exist.');
+            if (goal.camp != req.camp.id) throw new Error('That goal is not associated with that camp!');
+
+            // Check permissions
+            if (!req.user.admin) {
+                const rank = helpers.getRankFromCamp(req.camp, req.user);
+                if (!rank || (rank == 'teacher' && !goal.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
+            }
+
+            return goal.remove();
+        })
+        .then(funds => {
+            req.flash('success', 'Removed fundraising goal for camp.');
             res.redirect('/camps/' + req.camp._id + '/fundraising');
         })
         .catch(next);
