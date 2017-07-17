@@ -1,16 +1,8 @@
 .col-xs-12.col-lg-5
-    .well.well-sm
-        span.text-center
-            b Camp Status: 
-            if camp.ready
-                if camp.ongoing
-                    span Ongoing
-                else
-                    span Ready
-                
-            else
-                span Missing Ranks
-                span.text-muted  | Make sure all below are filled.
+    if !camp.ready
+        .well.well-sm.text-center
+            span Missing Ranks
+            span.text-muted  | Make sure all below are filled.
 
     .panel.panel-danger.ambassador-panel
         .panel-heading
