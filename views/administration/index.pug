@@ -7,4 +7,17 @@ block content
                 h1 Administration
                 p= helpers.getHelpInfo('administrators')
                 a.btn.btn-primary(href="/administration/unverified") Unverified Users
-            hr    
+            hr
+    .row
+        .col-xs-12.col-md-6
+            .page-header
+                h2 Update News
+                    +help('news')
+            p.text-center.text-muted Coming soon...
+
+        .col-xs-12.col-md-6
+            .page-header
+                h2 Latest Updates
+                    +help('latest-updates')
+            p.text-center.text-muted Coming soon...
+            

@@ -2,6 +2,11 @@ const helpInfo = {};
 
 helpInfo['users'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
+helpInfo['administrators'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+
+helpInfo['news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['latest-updates'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+
 helpInfo['ambassador'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['director'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['teachers'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
