@@ -227,8 +227,9 @@ router.get('/:campId/fundraising', (req, res, next) => {
 });
 
 router.post('/:campId/addfunds', (req, res, next) => {
-    // Check permission
-    //if (!req.user.admin && !helpers.isInvolved(res.locals.activeInvolvements, req.user)) return next(new Error('You are not involved in this camp!'));
+    // Check permissions
+    if (!req.user.admin && !helpers.getRankFromCamp(req.camp, req.user)) return next(new Error('You must be an admin and/or involved in the camp to add this.'));
+
     const campId = req.camp._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
@@ -286,6 +287,8 @@ router.post('/:campId/removefunds', (req, res, next) => {
 
 /* FUNDRAISING GOALS */
 router.post('/:campId/addfundraisinggoal', (req, res, next) => {
+    if (!req.user.admin && !helpers.getRankFromCamp(req.camp, req.user)) return next(new Error('You must be an admin and/or involved in the camp to add this.'));
+
     const campId = req.camp._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
@@ -328,7 +331,7 @@ router.post('/:campId/removefundraisinggoal', (req, res, next) => {
             // Check permissions
             if (!req.user.admin) {
                 const rank = helpers.getRankFromCamp(req.camp, req.user);
-                if (!rank || (rank == 'teacher' && !goal.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
+                if (!rank || (rank == 'teacher' && !goal.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the goal to remove this.');
             }
 
             return goal.remove();
