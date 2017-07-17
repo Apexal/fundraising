@@ -16,12 +16,10 @@ block content
                             option(value=l._id, selected=l._id==camp.location._id) #{l.name} (#{l.address})
                 .form-group
                     label(for="edit-camp-start") Start Date
-                        span.text-muted  (was #{moment(camp.startDate).format("MM/DD/YY")})
-                    input.form-control#edit-camp-start(type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="startDate", required)
+                    input.form-control#edit-camp-start(type="date", value=moment(camp.startDate).format("YYYY-MM-DD"), min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="startDate", required)
 
                     label(for="edit-camp-end") End Date
-                        span.text-muted  (was #{moment(camp.endDate).format("MM/DD/YY")})
-                    input.form-control#edit-camp-end(value=camp.endDate, type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="endDate", required)
+                    input.form-control#edit-camp-end(type="date", value=moment(camp.endDate).format("YYYY-MM-DD"), min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="endDate", required)
 
                 .form-group
                     label(for="edit-camp-info") Camp Info
