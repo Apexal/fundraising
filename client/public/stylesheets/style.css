@@ -84,6 +84,10 @@ a.location-name {
     margin-top: 0;
 }
 
+.camp-panel[data-camp-status="future"]  span.text-muted{
+    color: white;
+}
+
 .rank-desc h3 {
     margin-top: 0;
 }
