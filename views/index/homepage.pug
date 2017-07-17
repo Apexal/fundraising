@@ -13,40 +13,46 @@ block content
                 nav
                     a(href="http://kidstales.org/", target="new")
                         +icon('external-link', 'Kids Tales Site')
-                    a(href="#", target="new")
-                        +icon('slack', 'Slack')
+                    if user.verified
+                        a(href="#", target="new")
+                            +icon('slack', 'Slack')
                     a(href="https://github.com/KidsTales/kt-web/issues", target="new")
                         +icon('github', 'Website Issues')
-    .row
-        .col-xs-12.col-md-6
-            .page-header
-                h2 Latest News
-                    +help('latest-news')
+    
+    if user.verified
+        .row
+            .col-xs-12.col-md-6
+                .page-header
+                    h2 Latest News
+                        +help('latest-news')
 
-            blockquote
-                p= latestNews
-                footer The Administrators
-            if user.admin
-                a.btn.btn-danger(href='#', title='Set a public message for all users to see.') Edit
+                blockquote
+                    p= latestNews
+                    footer The Administrators
+                if user.admin
+                    a.btn.btn-danger(href='#', title='Set a public message for all users to see.') Edit
 
-        .col-xs-12.col-md-6
-            .page-header
-                h2 Active Involvements
-                    +help('active-involvements')
-
-            if activeInvolvements.length > 0
-                each i in activeInvolvements
-                    .col-xs-12
-                        .panel.panel-danger
-                            .panel-heading
-                                h1.panel-title Camp 
-                                    b= i.camp.location.name
-                            .panel-body
-                                .rank-desc
-                                    h3 You are 
-                                        b.rank= helpers.getRankFromCamp(i.camp, user)
-                                hr
-                                a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
-                                b Ending #{moment(i.camp.endDate).fromNow()}
-            else
-                p.text-center.text-muted You are not currently involved in any active camps!
+            .col-xs-12.col-md-6
+                .page-header
+                    h2 Active Involvements
+                        +help('active-involvements')
+                        small.right #{activeInvolvements.length} total
+                if activeInvolvements.length > 0
+                    each i in activeInvolvements
+                        .col-xs-12
+                            .panel.panel-danger
+                                .panel-heading
+                                    h1.panel-title Camp 
+                                        b= i.camp.location.name
+                                .panel-body
+                                    .rank-desc
+                                        h3 You are 
+                                            b.rank= helpers.getRankFromCamp(i.camp, user)
+                                    hr
+                                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
+                                    b Ending #{moment(i.camp.endDate).fromNow()}
+                else
+                    p.text-center.text-muted You are not currently involved in any active camps!
+    else
+        .col-xs-12.text-center
+            h3.text-muted Once you are verified you will be able to view updates from the administrators and access your current camp involvements.
