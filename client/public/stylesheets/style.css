@@ -108,7 +108,7 @@ a.location-name {
 
 .important-links nav a {
     color: white;
-    padding: 20px;
+    padding: 10px;
 }
 
 .help-icon {
@@ -127,9 +127,14 @@ a.location-name {
     .page-header h1, .page-header h2, .page-header h3 {
         text-align: center;
     }
-    .page-header h1 small {
-        display: none;
+
+    .page-header small {
+        float: none !important;
     }
+    .page-header small:before {
+        content: ' ';
+        display: block;
+    }  
 }
 
 @media only screen and (max-width: 1200px) {
