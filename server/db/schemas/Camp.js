@@ -20,6 +20,10 @@ const campSchema = new Schema({
     }
 });
 
+campSchema.methods.findFundraisingGoals = function() {
+    return this.model('FundraisingGoal').find({ camp: this._id }).populate('submittedBy').exec();   
+}
+
 campSchema.virtual('ready').get(function() { 
     // Determine whether camp is ready to start
     return (this.teachers.length > 0 && !!this.director && !!this.ambassador);

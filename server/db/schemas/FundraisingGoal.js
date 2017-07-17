@@ -8,8 +8,4 @@ const fundraisingGoalSchema = new Schema({
     deadline: { type: Date, required: true }
 });
 
-fundraisingGoalSchema.methods.findFundraisingGoals = function() {
-    return this.model('FundraisingGoal').find({ camp: this._id }).populate('Camp').exec();   
-}
-
 module.exports = { name: 'FundraisingGoal', schema: fundraisingGoalSchema };
