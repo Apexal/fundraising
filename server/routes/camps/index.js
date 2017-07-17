@@ -263,7 +263,7 @@ router.post('/:campId/removefunds', (req, res, next) => {
         .exec()
         .then(funds => {
             if (!funds) throw new Error('Funds does not exist.');
-            if (funds.camp.toString() != req.camp._id.toString()) throw new Error('Those funds are not associated with that camp!');
+            if (funds.camp != req.camp.id) throw new Error('Those funds are not associated with that camp!');
 
             // Check permissions
             if (!req.user.admin) {
