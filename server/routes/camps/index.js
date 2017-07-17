@@ -195,7 +195,7 @@ router.post('/:campId/edit', requireAdmin, (req, res, next) => {
     req.camp.save()
         .then(camp => {
             req.flash('success', `Saved edits to camp.`);
-            res.redirect('/camps' + camp._id);
+            res.redirect('/camps/' + camp._id);
         })
         .catch(next);
 });
