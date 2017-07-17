@@ -162,10 +162,21 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-    req.flash('error', err.message);
     console.error(err);
-    res.status(err.status || 500);
-    res.redirect('/');
+
+    if (req.app.get('env') === 'development') {
+        // set locals, only providing error in development
+        res.locals.message = err.message;
+        res.locals.error = err;
+
+        // render the error page
+        res.status(err.status || 500);
+        res.render('error');
+    } else {
+        req.flash('error', 'An error occurred! Please try again later.');
+        res.status(err.status || 500);
+        res.redirect('/');
+    }
 });
 
 module.exports = app;
