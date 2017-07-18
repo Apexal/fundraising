@@ -164,7 +164,7 @@ router.get('/:campId', (req, res, next) => {
 
 router.get('/:campId/applicants', (req, res, next) => {
     // Ensure admin, ambassador, or program director
-    if (!req.user.admin && !['ambassador', 'director'].includes(helpers.getRankFromCamp(req.camp, req.user))) {
+    if (!helpers.isHigherUp(req.camp, req.user)) {
         req.flash('warning', 'Only admininstrators, ambassadors, and program directors can view applicants.');
         return res.redirect('/camps/' + req.camp._id);
     }
@@ -174,6 +174,11 @@ router.get('/:campId/applicants', (req, res, next) => {
 });
 
 router.post('/:campId/verify/:email', (req, res, next) => {
+    if (!helpers.isHigherUp(req.camp, req.user)) {
+        req.flash('warning', 'Only admininstrators, ambassadors, and program directors can verify applicants.');
+        return res.redirect('/camps/' + req.camp._id);
+    }
+
     req.db.User.findOne({ email: req.params.email })
         .exec()
         .then(applicant => {

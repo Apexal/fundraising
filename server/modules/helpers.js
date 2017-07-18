@@ -32,6 +32,12 @@ h.getRankFromCamp = (camp, user) => {
     return rank;
 };
 
+h.isHigherUp = (camp, user) => {
+    if (user.admin) return true;
+    if (['ambassador', 'director'].includes(h.getRankFromCamp(camp, user))) return true;
+    return false;
+}
+
 h.getHelpInfo = label => {
     if (label in helpInfo) {
         return helpInfo[label];
