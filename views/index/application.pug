@@ -8,7 +8,7 @@ block content
                 p= helpers.getHelpInfo('application')
         
         .col-xs-12
-            form.application-form
+            form.application-form(method="POST")
                 .page-header
                     h3 Contact Info
                 .form-group
@@ -22,38 +22,39 @@ block content
                     input.form-control#last-name(name="lastName", type="text", value=user.name.last, required)
                 .form-group
                     label(for="location") Location
-                    input#location.form-control(name="location", type="text", placeholder="Where do you live?", required)
+                    input#location.form-control(name="location", type="text", value=user.location, placeholder="Where do you live?", required)
                 .form-group
                     label(for="phone-number") Personal Phone Number
                     input#phone-number.form-control(name="phoneNumber", type="text", placeholder="xxx-xxx-xxxx", value=user.phoneNumber, required)
                 .form-group
                     label(for="age") Age
-                    input#age.form-control(name="age", type="number", placeholder="How old are you?", min="10", max="100", required)
+                    input#age.form-control(name="age", type="number", placeholder="How old are you?", value=user.age, min="10", max="100", required)
                 .form-group
                     label(for="grade") Grade
-                    input#grade.form-control(name="grade", type="number", placeholder="What grade are you in?", min="8", max="100", required)
+                    input#grade.form-control(name="grade", type="number", placeholder="What grade are you in?", value=user.grade, min="8", max="100", required)
                 
                 .page-header
                     h3 Camp Info
                 .form-group
-                    label(for="role") Role
+                    label(for="role") Desired Role
                         +help('roles')
-                    select#role.form-control
-                        option Teacher
-                        option Leader (Program Director or Ambassador)
+                    select#role.form-control(required)
+                        option(value="teacher") Teacher
+                        option(value="director") Program Director
+                        option(value="ambassador") Ambassador
                 .form-group
                     label(for="camp") What Camp?
                         +help('camp')
-                    select#camp.form-control(name="camp")
+                    select#camp.form-control(name="campId", required)
                         each c in openCamps
                             option(value=c.id) #{moment(c.startDate).format("M/D/YY")} | #{c.location.name} #{c.director ? "| Directed by " + c.director.name.full : ""}
                         option(value="other") Other
                 .form-group
                     label(for="why") Why Kids Tales?
-                    textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?")
+                    textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", required)= user.application.why
 
                 .form-group
                     label(for="writing-sample") Sample of Your Writing
                     input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
 
-                button.btn.btn-default(type="submit") Save
+                button.btn.btn-danger(type="submit") Save

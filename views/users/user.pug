@@ -10,42 +10,51 @@ block content
                     | #{targetUser.name.full}
                     small.text-muted.right(title=moment(targetUser.registeredDate).format("dddd, MMMM Do YYYY")) registered #{moment(targetUser.registeredDate).fromNow()}
     .row.user-info
-        .col-xs-12.col-md-6.col-lg-3
+        .col-xs-12.col-sm-5.col-md-4.col-lg-3
             img.user-profile(src="/images/" + targetUser.profileImageName, alt=targetUser.name.first + "'s profile picture.'", title=targetUser.name.full)
             br
             blockquote
-                p= targetUser.phoneNumber
-                 footer #{targetUser.name.first}'s Phone Number
-          
-        .past-camps.col-xs-12.col-lg-9
-            if user.admin
-                .well
-                    b Adminstrator
-                    p= helpers.getHelpInfo('administrators')
-            .col-xs-12
-                .page-header
-                    h2 All Camps
-                        small.right #{camps.length} total
-                if camps.length > 0
-                    table.table
-                            thead
+                p= targetUser.application.why
+                    footer Why Kids Tales?
+        .col-xs-12.col-sm-7.col-md-8.col-lg-9
+            .well.contact-info
+                div
+                    b Phone Number  
+                    span= targetUser.phoneNumber
+                div
+                    b Age 
+                    span= targetUser.age
+                div
+                    b Grade 
+                    span= targetUser.grade
+                div
+                    b Location  
+                    span= targetUser.location
+    .row
+        .col-xs-12
+            .page-header
+                h2 All Camps
+                    small.right #{camps.length} total
+            if camps.length > 0
+                table.table
+                        thead
+                            tr
+                                th Start Date
+                                th End Date
+                                th Location
+                                th Frank's Rank
+                        tbody
+                            each c in camps
                                 tr
-                                    th Start Date
-                                    th End Date
-                                    th Location
-                                    th Frank's Rank
-                            tbody
-                                each c in camps
-                                    tr
-                                        td= moment(c.startDate).format("MMMM Do YYYY")
-                                        td= moment(c.endDate).format("MMMM Do YYYY")
-                                        td
-                                            a(href="/locations/" + c.location._id)= c.location.name
-                                        td.rank= helpers.getRankFromCamp(c, targetUser)
-                                        td
-                                            a.btn.btn-default(href="/camps/" + c._id) View
-                else
-                    p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any camps.
+                                    td= moment(c.startDate).format("MMMM Do YYYY")
+                                    td= moment(c.endDate).format("MMMM Do YYYY")
+                                    td
+                                        a(href="/locations/" + c.location._id)= c.location.name
+                                    td.rank= helpers.getRankFromCamp(c, targetUser)
+                                    td
+                                        a.btn.btn-default(href="/camps/" + c._id) View
+            else
+                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any camps.
     .row
         .col-xs-12
             hr

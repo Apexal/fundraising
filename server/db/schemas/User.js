@@ -8,6 +8,7 @@ const userSchema = new Schema({
     age: { type: Number, min: 10, max: 100 },
     grade: { type: Number, min: 8, max: 12 },
     phoneNumber: { type: String },
+    location: { type: String },
     name: {
         first: { type: String, trim: true },
         last: { type: String, trim: true }
