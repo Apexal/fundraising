@@ -8,6 +8,16 @@ router.get('/', (req, res, next) => {
     res.render('administration/index');
 });
 
+router.get('/fundraising', (req, res, next) => {
+    req.db.Funds.find()
+        .exec()
+        .then(fundsList => {
+            res.locals.fundsList = fundsList;
+            res.render('administration/fundraising');
+        })
+        .catch(next);
+});
+
 router.get('/unverified', (req, res, next) => {
     req.db.User.find({ verified: false })
         .exec()

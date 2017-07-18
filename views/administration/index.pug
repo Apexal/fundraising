@@ -6,7 +6,7 @@ block content
             .jumbotron
                 h1 Administration
                 p= helpers.getHelpInfo('administrators')
-                a.btn.btn-primary(href="/administration/unverified") Unverified Users
+                a.btn.btn-primary(href='/administration/unverified') Unverified Users
             hr
     .row
         .col-xs-12.col-md-6
@@ -20,4 +20,3 @@ block content
                 h2 Latest Updates
                     +help('latest-updates')
             p.text-center.text-muted Coming soon...
-            
