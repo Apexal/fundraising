@@ -123,16 +123,17 @@ a.location-name {
     margin-left: 5px;
     cursor: pointer;
     font-size: 0.7em !important;
-    vertical-align: top;
-    margin-top: 1.2%;
 }
 
 .camp-ranks .help-icon {
     margin-left: 0;
     margin-right: 5px;
     font-size: 1em !important;
-    margin-top: 0;
-    vertical-align: inherit;
+}
+
+.application-form .help-icon {
+    margin-left: 5px;
+    font-size: 1em !important;
 }
 
 @media only screen and (max-width: 768px) {

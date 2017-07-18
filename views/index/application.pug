@@ -9,6 +9,8 @@ block content
         
         .col-xs-12
             form.application-form
+                .page-header
+                    h3 Contact Info
                 .form-group
                     label Email
                     input.form-control.disabled(type="text", value=user.email, disabled)
@@ -19,6 +21,9 @@ block content
                     label(for="last-name") Last Name
                     input.form-control#last-name(name="lastName", type="text", value=user.name.last, required)
                 .form-group
+                    label(for="location") Location
+                    input#location.form-control(name="location", type="text", placeholder="Where do you live?", required)
+                .form-group
                     label(for="phone-number") Personal Phone Number
                     input#phone-number.form-control(name="phoneNumber", type="text", placeholder="xxx-xxx-xxxx", value=user.phoneNumber, required)
                 .form-group
@@ -28,4 +33,23 @@ block content
                     label(for="grade") Grade
                     input#grade.form-control(name="grade", type="number", placeholder="What grade are you in?", min="8", max="100", required)
                 
-                button.btn.btn-default(type="submit") Submit
+                .page-header
+                    h3 Camp Info
+                .form-group
+                    label(for="role") Role
+                        +help('roles')
+                    select#role.form-control
+                        option Teacher
+                        option Leader (Program Director or Ambassador)
+                .form-group
+                    label(for="camp") What Camp?
+                        +help('camp')
+                    select#camp.form-control(name="camp")
+                        each c in openCamps
+                            option(value=c.id) #{moment(c.startDate).format("M/D/YY")} | #{c.location.name} #{c.director ? "| Directed by " + c.director.name.full : ""}
+                        option(value="other") Other
+                .form-group
+                    label(for="why") Why Kids Tales?
+                    textarea#why.form-control(name="why", rows="5")
+
+                button.btn.btn-default(type="submit") Save

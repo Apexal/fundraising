@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
         if (req.user.verified) {
             return res.render('index/homepage');
         } else {
-            return res.render('index/application');
+            return res.redirect('/application');
         }
     } else {
         return res.render('index/info');
