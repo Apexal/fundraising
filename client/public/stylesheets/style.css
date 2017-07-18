@@ -136,6 +136,10 @@ a.location-name {
 }
 
 @media only screen and (max-width: 768px) {
+    .homepage-jumbotron h1 {
+        text-align: center;
+    }
+
     .page-header h1, .page-header h2, .page-header h3 {
         text-align: center;
     }
