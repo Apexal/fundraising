@@ -5,10 +5,17 @@ const userSchema = new Schema({
     _id: { type: Number },
     profileImageName: { type: String, default: 'default.png' },
     email: { type: String, unique: true },
+    age: { type: Number, min: 10, max: 100 },
+    grade: { type: Number, min: 8, max: 12 },
     phoneNumber: { type: String },
     name: {
         first: { type: String, trim: true },
         last: { type: String, trim: true }
+    },
+    application: {
+        recommender: { type: Number, ref: 'User' },
+        why: String,
+        writingFileName: String
     },
     registeredDate: { type: Date, default: Date.now },
     admin: { type: Boolean, default: false },
