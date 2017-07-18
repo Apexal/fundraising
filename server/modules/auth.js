@@ -37,6 +37,8 @@ module.exports = (User) => {
                         }
                     });
 
+                    sendEmail(user.email, 'Welcome to Kids Tales', `<h2>Welcome to Kids Tales!</h2><p>Please fill out the application on the website and wait for a higher up to approve your application. You will be emailed once this happens and will then have full access to the website.</p>`);
+
                     user.save();
                 }
                 console.log(`Logging in ${email}...`)
