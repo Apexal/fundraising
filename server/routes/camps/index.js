@@ -196,13 +196,12 @@ router.post('/:campId/verify/:email', (req, res, next) => {
             req.applicant = applicant;
 
             applicant.verified = true;
-            req.camp[applicant.application.role] = applicant._id;
-
+            
             return applicant.save()
-                .then(req.camp.save);
-        }).then(camp => {
+                .then(helpers.assignRank(req.camp, applicant, applicant.application.role));
+        }).then(applicant => {
             req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
-            res.redirect('/camps/' + camp.id + '/applicants');
+            res.redirect('/camps/' + req.camp._id + '/applicants');
         })
         .catch(next);
 });
