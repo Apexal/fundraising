@@ -1,5 +1,7 @@
 const helpInfo = {};
 
+
+helpInfo['application'] = "Please fill out the form below to be considered for the position of a Kids Tales teacher! Submitting this form confirms your interest in teaching a week-long Kids Tales workshop to 8-to-12 year old kids this summer.";
 helpInfo['users'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
 helpInfo['administrators'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";

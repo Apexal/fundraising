@@ -5,7 +5,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
     res.locals.latestNews = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit justo in orci auctor rhoncus. Sed vitae odio dignissim, suscipit lacus eget, laoreet dolor.";
     if (req.isAuthenticated()) {
-        return res.render('index/homepage');
+        if (req.user.verified) {
+            return res.render('index/homepage');
+        } else {
+            return res.render('index/application');
+        }
     } else {
         return res.render('index/info');
     }
