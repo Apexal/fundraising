@@ -6,7 +6,10 @@ router.use(requireLogin);
 
 /* GET application. */
 router.get('/', (req, res, next) => {
-    if (req.user.verified) return res.redirect('/');
+    if (req.user.verified) {
+        req.flash('warning', 'You have already applied and been accepted.');    
+        return res.redirect('/');
+    }
 
     // Get open camps
     req.db.Camp.find({ endDate: { "$gt": moment().startOf('day').toDate() }})
