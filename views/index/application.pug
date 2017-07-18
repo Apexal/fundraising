@@ -50,6 +50,10 @@ block content
                         option(value="other") Other
                 .form-group
                     label(for="why") Why Kids Tales?
-                    textarea#why.form-control(name="why", rows="5")
+                    textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?")
+
+                .form-group
+                    label(for="writing-sample") Sample of Your Writing
+                    input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
 
                 button.btn.btn-default(type="submit") Save

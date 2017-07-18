@@ -22,4 +22,9 @@ router.get('/', (req, res, next) => {
         });
 });
 
+/* Save application data and alert higher ups */
+router.post('/', (req, res, next) => {
+    
+});
+
 module.exports = router;
