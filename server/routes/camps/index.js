@@ -180,9 +180,18 @@ router.post('/:campId/verify/:email', (req, res, next) => {
             applicant.verified = true;
             
             return applicant.save()
-        })
-        .then(helpers.assignRank(req.camp, applicant, applicant.application.role))
-        .then(applicant => {
+                .then(helpers.assignRank(req.camp, applicant, applicant.application.role));
+        }).then(applicant => {
+            sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.application.role}</b> for <b>Camp ${req.camp.location.name}</b> has been accepted.`);
+
+            try {
+                if (applicant.application.role === 'teacher') {
+                    sendEmail(req.camp.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b>'s application for <b>Teacher</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Program Director of) has been accepted.`);
+                } else if (applicant.application.role === 'director') {
+                    sendEmail(req.camp.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b>'s application for <b>Program Director</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Ambassador of) has been accepted.`);
+                }
+            } catch(err) {}
+
             req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
             res.redirect('/camps/' + req.camp._id + '/applicants');
         })

@@ -23,10 +23,11 @@ h.rank = (involvements, camp) => {
     return (possible.length > 0 ? possible[0].rank : null);
 };
 
-h.getRankFromCamp =  (camp, user) => {
+h.getRankFromCamp = (camp, user) => {
     let rank = null;
-    if (camp.ambassador && (camp.ambassador.equals(user._id) || camp.ambassador._id.equals(user._id))) rank = 'ambassador';
-    if (camp.director && (camp.director.equals(user._id) || camp.director._id.equals(user._id))) rank = 'director';
+    // I can use ._id == ._id becauses User ID's are Numbers not ObjectID's
+    if (camp.ambassador && (camp.ambassador == user._id || camp.ambassador._id == user._id)) rank = 'ambassador';
+    if (camp.director && (camp.director == user._id || camp.director._id == user._id)) rank = 'director';
     if (camp.teachers.includes(user._id) || camp.teachers.map(t => t._id).includes(user._id)) rank = 'teacher';
     return rank;
 };
