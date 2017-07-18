@@ -1,3 +1,14 @@
+mixin media(u)
+    .media
+        .media-left
+            a(href="/users/" + u.email)
+                img(src="/images/" + u.profileImageName, alt=u.name.first + "'s profile picture.'", title=u.name.full)
+        .media-body
+            h4.media-heading= u.name.full
+                if u.id == user.id
+                    b  (You)
+            a(href="mailto:" + u.email)= u.email
+
 .col-xs-12.col-lg-5.camp-ranks
     if !camp.ready
         .alert.alert-warning
@@ -17,13 +28,7 @@
                 | Ambassador
         ol.list-group
             if camp.ambassador
-                .media
-                    .media-left
-                        a(href="/users/" + camp.ambassador.email)
-                            img(src="/images/" + camp.ambassador.profileImageName, alt=camp.ambassador.name.first + "'s profile picture.'", title=camp.ambassador.name.full)
-                    .media-body
-                        h4.media-heading= camp.ambassador.name.full
-                        a(href="mailto:" + camp.ambassador.email)= camp.ambassador.email
+                +media(camp.ambassador)
             else
                 span.list-group-item.text-muted No Ambassador has been assigned yet.
 
@@ -41,13 +46,7 @@
 
         ol.list-group
             if camp.director
-                .media
-                    .media-left
-                        a(href="/users/" + camp.director.email)
-                            img(src="/images/" + camp.director.profileImageName, alt=camp.director.name.first + "'s profile picture.'", title=camp.director.name.full)
-                    .media-body
-                        h4.media-heading= camp.director.name.full
-                        a(href="mailto:" + camp.director.email)= camp.director.email
+                +media(camp.director)
             else
                 span.list-group-item.text-muted No Director has been assigned yet.
 
@@ -69,10 +68,4 @@
                 span.list-group-item.text-muted There are no Teachers assigned yet.
             else
                 each t in camp.teachers
-                    .media
-                        .media-left
-                            a(href="/users/" + t.email)
-                                img(src="/images/" + t.profileImageName, alt=t.name.first + "'s profile picture.'", title=t.name.full)
-                        .media-body
-                            h4.media-heading= t.name.full
-                            a(href="mailto:" + t.email)= t.email
+                    +media(t)
