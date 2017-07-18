@@ -131,6 +131,21 @@ a.location-name {
     font-size: 1em !important;
 }
 
+.camp-ranks .media {
+    border-bottom: 1px solid #D9EDF7;
+    margin-top: 0;
+}
+.camp-ranks .media-left {
+    width: 120px;
+}
+.camp-ranks .media img {
+    height: 60px;
+}
+
+.camp-ranks .media-body {
+    padding: 8px;
+}
+
 .application-form .help-icon {
     margin-left: 5px;
     font-size: 1em !important;

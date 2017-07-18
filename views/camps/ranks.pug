@@ -17,12 +17,13 @@
                 | Ambassador
         ol.list-group
             if camp.ambassador
-                a.list-group-item(href="/users/" + camp.ambassador.email)
-                    if camp.ambassador._id == user._id
-                        b You
-                    else
-                        span= camp.ambassador.name.full
-                    span.right.badge= camp.ambassador.email
+                .media
+                    .media-left
+                        a(href="/users/" + camp.ambassador.email)
+                            img(src="/images/" + camp.ambassador.profileImageName, alt=camp.ambassador.name.first + "'s profile picture.'", title=camp.ambassador.name.full)
+                    .media-body
+                        h4.media-heading= camp.ambassador.name.full
+                        a(href="mailto:" + camp.ambassador.email)= camp.ambassador.email
             else
                 span.list-group-item.text-muted No Ambassador has been assigned yet.
 
@@ -40,12 +41,13 @@
 
         ol.list-group
             if camp.director
-                a.list-group-item(href="/users/" + camp.director.email)
-                    if camp.director._id == user._id
-                        b You
-                    else
-                        span= camp.director.name.full
-                    span.right.badge= camp.director.email
+                .media
+                    .media-left
+                        a(href="/users/" + camp.director.email)
+                            img(src="/images/" + camp.director.profileImageName, alt=camp.director.name.first + "'s profile picture.'", title=camp.director.name.full)
+                    .media-body
+                        h4.media-heading= camp.director.name.full
+                        a(href="mailto:" + camp.director.email)= camp.director.email
             else
                 span.list-group-item.text-muted No Director has been assigned yet.
 
@@ -67,9 +69,10 @@
                 span.list-group-item.text-muted There are no Teachers assigned yet.
             else
                 each t in camp.teachers
-                    a.list-group-item(href="/users/" + t.email)
-                        if t._id == user._id
-                            b You
-                        else
-                            span= t.name.full
-                        span.right.badge= t.email
+                    .media
+                        .media-left
+                            a(href="/users/" + t.email)
+                                img(src="/images/" + t.profileImageName, alt=t.name.first + "'s profile picture.'", title=t.name.full)
+                        .media-body
+                            h4.media-heading= t.name.full
+                            a(href="mailto:" + t.email)= t.email
