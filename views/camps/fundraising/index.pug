@@ -9,7 +9,7 @@ block content
                     h3 $#{total} raised total
                 br
                 a.btn.btn-lg.btn-primary.right(href="/camps/" + camp._id) Camp Details
-            
+
     if user.admin || helpers.isInvolved(activeInvolvements, camp)
         hr
         if camp.active
@@ -58,6 +58,10 @@ block content
                                     td
                                         form(action="/camps/" + camp._id + "/removefunds?fundsId=" + f._id, method="POST", onsubmit="return confirm('Are you sure you want to remove these funds?');")
                                             button.btn.btn-danger.right Remove
+                        tr
+                            td
+                                h4
+                                    b $#{total} Total
             else
                 p.text-muted.text-center There are currently no #[b funds].
     include charts
