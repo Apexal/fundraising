@@ -47,6 +47,8 @@ block content
         .col-xs-12
             hr
             a.btn.btn-info.right(class=(!camp.ready ? 'disabled' : ''), title=(camp.ready ? 'View/Manage this camp\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!camp.ready, href="/camps/" + camp._id + "/fundraising")= ((user.admin || helpers.isInvolved(activeInvolvements, camp)) ? "Manage" : "View") + " Fundraising"
+            a.btn.btn-warning.right(href="/camps/" + camp._id + "/applicants") Review Applicants 
+                span.badge= camp.applicants.length
             if user.admin
                 form(action="/camps/" + camp._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this camp?');")
                     button.btn.btn-danger Delete Camp

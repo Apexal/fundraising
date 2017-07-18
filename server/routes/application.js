@@ -43,6 +43,9 @@ router.post('/', (req, res, next) => {
     req.user.location = location;
     
     req.user.application.why = why;
+    req.user.application.role = (['teacher', 'director', 'ambassador'].includes(role) ? role : 'teacher');
+    req.user.application.camp = campId;
+    
 
     req.user.save()
         .then(user => {

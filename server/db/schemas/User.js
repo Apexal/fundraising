@@ -16,7 +16,9 @@ const userSchema = new Schema({
     application: {
         recommender: { type: Number, ref: 'User' },
         why: String,
-        writingFileName: String
+        writingFileName: String,
+        role: String,
+        camp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }
     },
     registeredDate: { type: Date, default: Date.now },
     admin: { type: Boolean, default: false },

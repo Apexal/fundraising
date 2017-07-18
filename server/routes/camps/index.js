@@ -22,6 +22,7 @@ router.get('/', (req, res, next) => {
         })
         .then(locations => {
             res.locals.openLocations = locations;
+
             res.render('camps/index');
         })
         .catch(next);
@@ -71,6 +72,11 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
         })
         .then(fundsList => {
             req.recentFunds = fundsList;
+
+            return req.camp.findApplicants();
+        }).then(applicants => {
+            req.camp.applicants = applicants;
+
             next();
         })
         .catch(next);
@@ -172,6 +178,33 @@ router.get('/:campId', (req, res, next) => {
 
     res.locals.camp = req.camp;
     return res.render('camps/camp');
+});
+
+router.get('/:campId/applicants', (req, res, next) => {
+    // Ensure admin, ambassador, or program director
+    
+    
+    res.locals.camp = req.camp;
+    return res.render('camps/applicants');
+});
+
+router.post('/:campId/verify/:email', (req, res, next) => {
+    req.db.User.findOne({ email: req.params.email })
+        .exec()
+        .then(applicant => {
+            if (!applicant) throw new Error('Applicant does not exist!');
+            req.applicant = applicant;
+
+            applicant.verified = true;
+            req.camp[applicant.application.role] = applicant._id;
+
+            return applicant.save()
+                .then(req.camp.save);
+        }).then(camp => {
+            req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
+            res.redirect('/camps/' + camp.id + '/applicants');
+        })
+        .catch(next);
 });
 
 router.get('/:campId/edit', requireAdmin, (req, res, next) => {

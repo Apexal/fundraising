@@ -38,7 +38,7 @@ block content
                 .form-group
                     label(for="role") Desired Role
                         +help('roles')
-                    select#role.form-control(required)
+                    select#role.form-control(name="role", required)
                         option(value="teacher") Teacher
                         option(value="director") Program Director
                         option(value="ambassador") Ambassador

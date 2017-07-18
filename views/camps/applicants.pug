@@ -1,0 +1,42 @@
+extends /layout
+
+mixin applicant(user)
+    .col-xs-12.col-sm-6
+        .panel.panel-default
+            .panel-heading
+                h1.panel-title= user.name.full
+                    span.text-muted.right(title=moment(user.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(user.registeredDate).fromNow()
+            .panel-body
+                p.text-muted.text-center #[b= user.age] years old in grade #[b= user.grade] near #[b= user.location]
+                    br
+                    a(href="mailto:" + user.email)= user.email
+                    hr
+                h4.text-center Wishes to be #[b= user.application.role] at this camp.
+                hr
+                blockquote
+                    p= user.application.why
+                    footer Why Kids Tales?
+                hr
+                a(href="#")
+                    +icon('link', 'Writing Sample')
+                hr
+                form.form(method="POST", action="/camps/" + camp.id + "/verify/" + user.email)
+                    button.btn.btn-success.right Accept
+                    button.btn.btn-danger Delete
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Camp Applicants
+                    +help('applicants')
+                    small.right #{camp.applicants.length} total
+        .col-xs-12
+            if camp.applicants.length > 0
+                each a in camp.applicants
+                    +applicant(a)
+            else
+                p.text-muted.text-center There are currently no pending applicants.
+    .row
+        .col-xs-12
+            hr
+            a.btn.btn-primary(href='/camps/' + camp._id) Camp Overview

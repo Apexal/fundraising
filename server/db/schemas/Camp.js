@@ -20,6 +20,10 @@ const campSchema = new Schema({
     }
 });
 
+campSchema.methods.findApplicants = function() {
+    return this.model('User').find({ verified: false, 'application.camp': this._id }).exec();   
+}
+
 campSchema.methods.findFundraisingGoals = function() {
     return this.model('FundraisingGoal').find({ camp: this._id }).populate('submittedBy').exec();   
 }
