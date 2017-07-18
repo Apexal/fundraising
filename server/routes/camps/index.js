@@ -349,13 +349,13 @@ router.post('/:campId/addfundraisinggoal', (req, res, next) => {
     newFundraisingGoal.save()
         .then(goal => {
         // Email program director
-        const message = `<h3>Teacher ${req.user.name.full} Added Fundraising Goal to Camp ${req.camp.location.name}</h3><a href="http://localhost:3000/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
+        const message = `<h3>Teacher ${req.user.name.full} Added Fundraising Goal to Camp ${req.camp.location.name}</h3><a href="http://kidstales.ddns.net/camps/${req.camp._id}/fundraising">View Fundraising</a>`;
 
         if (req.camp.ambassador) sendEmail(req.camp.ambassador.email, "New Fundraising Goal", message);
         if (req.camp.director) sendEmail(req.camp.director.email, "New Fundraising Goal", message);
 
-        const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/camps/${campId}|Camp ${funds.camp}>`;
-        return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { mrkdwn: true, text }, json: true });
+        const text = `<http://kidstales.ddns.net:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://kidstales.ddns.net/camps/${campId}|Camp ${req.camp.location.name}>`;
+        return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { markdown: true, text }, json: true });
     }).then(body => {
         req.flash('success', 'Added new fundraising goal for camp.');
         res.redirect(`/camps/${req.camp._id}/fundraising`);
