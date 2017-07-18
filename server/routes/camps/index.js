@@ -153,7 +153,7 @@ router.get('/:campId', (req, res, next) => {
 
                 }
 
-                res.redirect("/camps/" + camp._id);
+                res.redirect('/camps/' + camp._id);
             })
             .catch(next);
     }
@@ -164,7 +164,10 @@ router.get('/:campId', (req, res, next) => {
 
 router.get('/:campId/applicants', (req, res, next) => {
     // Ensure admin, ambassador, or program director
-    
+    if (!req.user.admin && !['ambassador', 'director'].includes(helpers.getRankFromCamp(req.camp, req.user))) {
+        req.flash('warning', 'Only admininstrators, ambassadors, and program directors can view applicants.');
+        return res.redirect('/camps/' + req.camp._id);
+    }
     
     res.locals.camp = req.camp;
     return res.render('camps/applicants');
