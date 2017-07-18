@@ -40,14 +40,16 @@ h.getHelpInfo = label => {
 };
 
 h.assignRank = (camp, user, rank) => {
-    // Make sure no role already
-    //if (h.getRankFromCamp(camp, user)) throw new Error('User already has role!');
+    // Make sure no rank already
+    if (h.getRankFromCamp(camp, user)) throw new Error('User already has a rank!');
 
     if(rank === 'teacher') {
         camp.teachers.push(user._id);
     } else if (rank === 'director') {
+        if (camp.director && !camp.director.equals(user.id)) throw new Error('Director rank is already taken.');
         camp.director = user._id;
     } else if (rank === 'ambassador') {
+        if (camp.ambassador && !camp.ambassador.equals(user.id)) throw new Error('Ambassador rank is already taken.');
         camp.ambassador = user._id;
     } else {
         throw new Error('Invalid rank to assign.');

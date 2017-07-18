@@ -105,26 +105,8 @@ router.get('/:campId', (req, res, next) => {
         if (!req.camp.active) return next(new Error('This camp in inactive.'));
 
         const rank = req.query.assign;
-        // Make sure they aren't anything else already
-        if(hasRank(req.camp, req.user)) return next(new Error('You already have a position in this camp.'));
-
-        if(rank === 'teacher') {
-            if (req.camp.teachers.map(t => t._id).includes(req.user._id)) {
-                req.flash('error', 'You are already a teacher!');
-                return res.redirect('/camps/' + req.camp._id);
-            }
-
-            req.camp.teachers.push(req.user._id);
-        } else if (rank === 'director') {
-            req.camp.director = req.user._id;
-        } else if (rank === 'ambassador') {
-            req.camp.ambassador = req.user._id;
-        } else {
-            req.flash('error', 'Invalid rank to assign!');
-            return res.redirect('/camps/' + req.camp._id);
-        }
-
-        return req.camp.save()
+        return helpers.assignRank(req.camp, req.user, rank)
+            .then(req.camp.save)
             .then(camp => {
                 req.flash('success', 'You have become ' + rank + '.');
 
@@ -198,8 +180,9 @@ router.post('/:campId/verify/:email', (req, res, next) => {
             applicant.verified = true;
             
             return applicant.save()
-                .then(helpers.assignRank(req.camp, applicant, applicant.application.role));
-        }).then(applicant => {
+        })
+        .then(helpers.assignRank(req.camp, applicant, applicant.application.role))
+        .then(applicant => {
             req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
             res.redirect('/camps/' + req.camp._id + '/applicants');
         })
