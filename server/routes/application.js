@@ -47,13 +47,30 @@ router.post('/', (req, res, next) => {
     
     req.user.application.why = why;
     req.user.application.role = (['teacher', 'director', 'ambassador'].includes(role) ? role : 'teacher');
+    let newCamp = false;
+    if (!req.user.application.camp || req.user.application.camp.toString() != campId.toString()) newCamp = true;
     req.user.application.camp = campId;
     
-
     req.user.save()
         .then(user => {
             req.flash('info', 'Updated application.');
             res.redirect('/application');
+            if (newCamp) {
+                // Email program director and ambassador
+                return req.db.Camp.findById(campId)
+                    .populate('location')
+                    .populate('ambassador')
+                    .populate('director')
+                    .exec();
+            }
+        })
+        .then(camp => {
+            if (!camp) return;
+            if (req.user.application.role === 'teacher') {
+                sendEmail(camp.director.email, 'New Applicant', `test`);
+            } else if (req.user.application.role === 'director') {
+                sendEmail(camp.ambassador.email, 'New Applicant', `test`);
+            }
         })
         .catch(next);
 });
