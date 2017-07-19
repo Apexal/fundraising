@@ -24,19 +24,19 @@ block content
                 .col-xs-12.col-md-6.col-lg-4
                     .panel.panel-primary
                         .panel-heading
-                            h1.panel-title= l.name
+                            span.right= l.address
+                            h1.panel-title
+                                a(href='/locations/' + l._id)= l.name
                         .panel-body
-                            b Address 
-                            span= l.address
-                            a.btn.btn-primary.right(href="/locations/" + l._id) View Details
-                            hr
-                            if l.description
-                                blockquote
-                                    p= l.description
-                            else
-                                p.text-muted No description given.
+                            // Nasty I know
+                            b Camps 
+                                small.text-muted (Starting Date) &nbsp;&nbsp;
+                            each camp in l.camps
+                                a.btn.btn-info(href='/camps/' + camp._id) #{moment(camp.startDate).format('dddd, MMMM Do YY')}
+                           
                         .panel-footer
-                            span.text-muted Has ongoing camp(s).
+                            a.btn.btn-primary(href="/locations/" + l._id) View Location Details
+                            
         else
             p.text-muted.text-center There are no #[b active locations].
 
@@ -55,7 +55,7 @@ block content
                             th Address
                             th Description
                     tbody
-                        each l in locations
+                        each l in inactiveLocations
                             tr
                                 td= l.name
                                 td= l.address

@@ -14,8 +14,11 @@ router.get('/', (req, res, next) => {
             // Determine active locations by getting all active camps and taking the locations
             return req.db.Camp.find({ endDate: { "$gt": moment().startOf('day').toDate() }});
         }).then(activeCamps => {
+            res.locals.activeCamps = activeCamps;
             res.locals.activeLocations = res.locals.locations.filter(l => activeCamps.filter(c => c.location == l.id).length > 0);
             res.locals.inactiveLocations = res.locals.locations.filter(l => res.locals.activeLocations.indexOf(l) == -1); // All locations not in activeLocations
+
+            res.locals.activeLocations.forEach(l => l.camps = activeCamps.filter(c => c.location.equals(l._id)));
 
             res.render('locations/index');
         })

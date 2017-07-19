@@ -242,6 +242,11 @@ router.post('/:campId/edit', requireAdmin, (req, res, next) => {
 });
 
 router.get('/:campId/fundraising', (req, res, next) => {
+    if (!req.camp.ready) {
+        req.flash('error', 'Once a camp\'s ranks are filled fundraising will become available.');
+        return res.redirect('/camps/' + req.camp._id);
+    }
+
     res.locals.camp = req.camp;
     res.locals.recentFunds = req.recentFunds;
 
