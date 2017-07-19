@@ -4,7 +4,7 @@ const moment = require('moment');
 
 const campSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
-    info: String,
+    info: { type: String, trim: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     teachers: [{ type: Number, ref: 'User' }],

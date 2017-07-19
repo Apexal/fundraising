@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const locationSchema = new Schema({
-    name: { type: String, unique: true, required: true },
-    address: { type: String, unique: true, required: true },
-    description: String,
+    name: { type: String, trim: true, unique: true, required: true },
+    address: { type: String, trim: true, unique: true, required: true },
+    description: { type: String, trim: true },
     dateAdded: { type: Date, required: true }
 });
 
