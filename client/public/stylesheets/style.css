@@ -88,8 +88,29 @@ a.location-name {
     color: white;
 }
 
-.rank-desc h3 {
+.involvement-panel img {
+    height: 80px;
+}
+
+.rank-desc h4 {
     margin-top: 0;
+    
+    text-align: center;
+}
+
+.rank-desc img.ambassador {
+    border: 5px solid #F2DEDE;
+}
+
+
+.rank-desc img.director {
+    border: 3px solid #F2DEDE;
+}
+
+
+.rank-desc img.teacher {
+    height: 60px;
+    vertical-align: bottom;
 }
 
 .rank-summary {
