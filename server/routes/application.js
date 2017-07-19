@@ -1,6 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
+const multer = require('multer');
+
+const IMAGE_TYPES = ['.txt', '.doc', '.docx'];
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/writingsamples'),
+    filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
+    fileFilter: (req, file, cb) => {
+        if(IMAGE_TYPES.includes(file.mimetype)) {
+            cb(null, true)
+        } else {
+            cb(null, false)
+        }
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 2000000, // 1 Megabyte
+        files: 1,
+    }
+});
 
 router.use(requireLogin);
 
@@ -26,7 +49,7 @@ router.get('/', (req, res, next) => {
 });
 
 /* Save application data and alert higher ups */
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('writingSample'), (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const grade = req.body.grade;
@@ -45,6 +68,8 @@ router.post('/', (req, res, next) => {
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
     
+    req.user.application.writingFileName = (req.file ? req.file.filename : undefined);
+
     req.user.application.why = why;
     req.user.application.role = (['teacher', 'director', 'ambassador'].includes(role) ? role : 'teacher');
     let newCamp = false;

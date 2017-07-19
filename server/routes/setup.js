@@ -49,7 +49,6 @@ router.post('/', (req, res, next) => {
 });
 
 router.post('/profilepicture', upload.single('profileImage'), (req, res, next) => {
-    console.log(req.file);
     req.user.profileImageName = req.file.filename;
     req.user.save()
         .then(() => {

@@ -6,7 +6,7 @@ mixin media(u)
         .media-body
             h4.media-heading= u.name.full
                 if u.id == user.id
-                    b  (You)
+                    b  | You
             a(href="mailto:" + u.email)= u.email
 
 .col-xs-12.col-lg-5.camp-ranks

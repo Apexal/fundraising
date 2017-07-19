@@ -17,7 +17,7 @@ mixin applicant(user)
                     p= user.application.why
                     footer Why Kids Tales?
                 hr
-                a(href="#")
+                a(href='/writingsamples/' + user.application.writingFileName)
                     +icon('link', 'Writing Sample')
                 hr
                 form.form(method="POST", action="/camps/" + camp.id + "/verify/" + user.email)

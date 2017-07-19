@@ -43,3 +43,4 @@ server/config.js
 client/public/images/user-*.png
 client/public/images/user-*.jpg
 client/public/images/user-*.jpeg
+client/public/writingsamples/*

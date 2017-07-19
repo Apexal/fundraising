@@ -8,7 +8,7 @@ block content
                 p= helpers.getHelpInfo('application')
         
         .col-xs-12
-            form.application-form(method="POST")
+            form.application-form(method="POST", enctype="multipart/form-data")
                 .page-header
                     h3 Contact Info
                 .form-group
