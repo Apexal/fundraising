@@ -5,3 +5,36 @@ mixin icon(name, text)
 
 mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, title=helpers.getHelpInfo(label))
+
+mixin camp-panel(c)
+    .panel.camp-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-camp-status=(c.ongoing ? 'ongoing' : 'future'))
+        .panel-heading
+            if c.ongoing
+                span.text-muted.right Ends #{moment(c.endDate).fromNow()}
+            else
+                span.text-muted.right Starts #{moment(c.startDate).fromNow()}
+            h1.panel-title(title=c.location.address)
+                if c.ongoing
+                    b Ongoing at 
+                | #{c.location.name}
+        .panel-body
+            if c.ready
+                .rank-summary.clearfix
+                    .ambassador.col-xs-12.col-sm-5.col-md-12
+                        b Ambassador - 
+                        a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
+                    .director.col-xs-12.col-sm-5.col-md-12
+                        b Program Director - 
+                        a(href='/users/' + c.director.email)= c.director.name.full
+                    .teachers.col-xs-12.col-sm-2.col-md-12
+                        b Teachers - 
+                        span #{c.teachers.length}
+            else
+                .alert.alert-warning #[b Missing Ranks] Join now on details page.
+            
+            if c.info
+                .well.well-sm
+                    b Camp Info
+                    p= helpers.limit(c.info, 50)
+        
+            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview

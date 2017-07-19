@@ -17,40 +17,7 @@ block content
                     small.right #{activeCamps.length} total
             if activeCamps.length > 0
                 each c in activeCamps
-                    .panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'))
-                        .panel-heading
-                            h1.panel-title(title=c.location.address)
-                                if c.ongoing
-                                    b Ongoing from 
-                                span #{moment(c.startDate).format("MMMM Do")} to #{moment(c.endDate).format("MMMM Do")}
-                        .panel-body
-                            if c.ready
-                                .rank-summary
-                                    .ambassador
-                                        b Ambassador - 
-                                        span= c.ambassador.name.full
-                                    .director
-                                        b Program Director - 
-                                        span= c.director.name.full
-                                    .teachers
-                                        b Teachers - 
-                                        span #{c.teachers.length} total
-                                if c.info
-                                    br
-                                    .well.well-sm
-                                        b Camp Info
-                                        p= helpers.limit(c.info, 50)
-                            else
-                                .well.well-sm.text-center
-                                    code
-                                        b Missing Ranks
-                                        |  | Join now.
-                            hr
-                            if c.ongoing
-                                b Ends #{moment(c.endDate).fromNow()}
-                            else
-                                b Starts #{moment(c.startDate).fromNow()}
-                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview
+                    +camp-panel(c)
             else
                 p.text-muted.text-center There are currently no #[b active camps].
         .col-xs-12
@@ -65,15 +32,13 @@ block content
                 table.table
                     thead
                         tr
-                            th Start Date
                             th End Date
                             th Ambassador
                             th Program Director
                     tbody
                         each c in inactiveCamps
                             tr
-                                td= moment(c.startDate).format("YYYY-MM-DD")
-                                td= moment(c.endDate).format("YYYY-MM-DD")
+                                td= moment(c.endDate).format("dddd, MMMM Do YY")
                                 td
                                     if c.ambassador
                                         a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
@@ -84,6 +49,8 @@ block content
                                         a(href="/users/" + c.director._id)= c.director.name.full
                                     else
                                         span.text-muted None
+                                td
+                                    a.btn.btn-default(href='/camps/' + c._id) Camp Details
             else
                 p.text-muted.text-center There are currently no #[b inactive camps].
     if user.admin
