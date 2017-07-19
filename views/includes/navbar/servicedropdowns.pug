@@ -26,6 +26,8 @@ if user.verified
                 li
                     a(href='/administration') Overview
                 li.divider(role='separator')
+                li(class=helpers.activeLink('/administration/fundraising', pagePath), title="Manage overall fundraising efforts.")
+                    a(href="/administration/fundraising") Overall Fundraising
                 li(class=helpers.activeLink('/administration/unverified', pagePath), title="Verify pending new users.")
                     a(href="/administration/unverified") Unverified Users
     
