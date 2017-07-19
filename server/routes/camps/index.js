@@ -64,7 +64,7 @@ router.all(['/:campId', '/:campId/*'], (req, res, next) => {
             if (!camp) throw new Error('Failed to find camp. It may not exist.');
             req.camp = camp;
 
-            if (!req.camp.active) req.flash('warning', 'This camp is inactive so the following saved information and fundraising data cannot be edited.');
+            if (!req.camp.active) req.flash('warning', 'This camp is has ended so the following information and fundraising data cannot be edited.');
 
             return req.db.Funds.find({ camp: req.camp._id })
                 .limit(10)

@@ -42,7 +42,10 @@ block content
                         .col-xs-12
                             .panel.panel-danger.involvement-panel
                                 .panel-heading
-                                    h1.panel-title Camp 
+                                    h1.panel-title
+                                        if i.camp.ongoing
+                                            b Ongoing 
+                                        | Camp 
                                         b= i.camp.location.name
                                 .panel-body
                                     .rank-desc

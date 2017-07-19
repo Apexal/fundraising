@@ -5,10 +5,9 @@ block content
         .col-xs-12
             .page-header
                 h1 
-                    if helpers.isInvolved(activeInvolvements, camp)
-                        span(title="You are involved in this camp!") ⭐   
                     if !camp.active
-                        span(title="This camp has ended.") 🔒 Inactive 
+                        b(title="This camp has ended.")
+                            +icon('lock', 'Inactive ') 
                     span
                         if camp.ongoing
                             b Ongoing 
