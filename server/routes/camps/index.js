@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const request = require('request-promise');
+const fs = require('fs');
+const path = require('path');
 
 router.use(requireVerified);
 
@@ -203,6 +205,12 @@ router.post('/:campId/verify/:email', (req, res, next) => {
 
             req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
             res.redirect('/camps/' + req.camp._id + '/applicants');
+
+            const p = path.join(__dirname, '..', '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
+
+            fs.unlinkSync(p, err => {
+                if (err) console.error(err);
+            });
         })
         .catch(next);
 });

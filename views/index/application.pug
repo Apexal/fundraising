@@ -54,6 +54,8 @@ block content
 
                 .form-group
                     label(for="writing-sample") Sample of Your Writing
+                    if user.application.writingFileName
+                        span.text-muted  Already uploaded.
                     input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
 
                 button.btn.btn-danger(type="submit") Save
