@@ -47,6 +47,7 @@ img.user-profile {
     border: 5px solid #222;
 }
 
+
 #new-location-info {
     max-width: 100%;
     min-width: 100%;
@@ -201,7 +202,11 @@ a.location-name {
     .page-header small:before {
         content: ' ';
         display: block;
-    }  
+    }
+
+    .user-info .summary {
+        text-align: center;
+    }
 }
 
 @media only screen and (max-width: 1200px) {
