@@ -11,8 +11,8 @@ if user.verified
                 li
                     a(href="/camps/" + i.camp._id) Overview
                 li.divider(role='separator')
-                li
-                    a(href="/camps/" + i.camp._id + "/fundraising") Fundraising
+                li(class=(i.camp.ready ? '' : 'disabled'), title=(i.camp.ready ? '' : 'Fundraising opens once all camp ranks are filled.'))
+                    a(href=(i.camp.ready ? '/camps/' + i.camp._id + '/fundraising' : '#')) Fundraising
 
     // Administrator actions (if admin)
     if user.admin
