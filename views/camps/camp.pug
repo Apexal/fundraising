@@ -14,8 +14,11 @@ block content
                         | Camp at 
                         b
                             a.location-name(href="/locations/" + camp.location._id, title=camp.location.address)= camp.location.name
-                    if camp.active
+                    if camp.ongoing
                         small.right Started 
+                            b= moment(camp.startDate).fromNow()
+                    else if camp.active
+                        small.right Starting 
                             b= moment(camp.startDate).fromNow()
         if camp.info
             .col-xs-12
