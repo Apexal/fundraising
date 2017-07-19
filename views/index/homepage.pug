@@ -61,7 +61,7 @@ block content
                                             a(href='/users/' + t.email)
                                                 img.teacher(src='/images/' + t.profileImageName, title='Teacher ' + t.name.full)
                                     hr
-                                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) View Details
+                                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) Camp Overview
                                     span.text-muted Ending #{moment(i.camp.endDate).fromNow()}
                 else
                     p.text-center.text-muted You are not currently involved in any active camps!

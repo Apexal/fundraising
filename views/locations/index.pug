@@ -35,7 +35,7 @@ block content
                                 a.btn.btn-info(href='/camps/' + camp._id) #{moment(camp.startDate).format('dddd, MMMM Do YY')}
                            
                         .panel-footer
-                            a.btn.btn-primary(href="/locations/" + l._id) View Location Details
+                            a.btn.btn-primary(href="/locations/" + l._id) Location Overview
                             
         else
             p.text-muted.text-center There are no #[b active locations].
@@ -64,6 +64,6 @@ block content
                                 else
                                     td.text-muted No description given.
                                 td
-                                    a.btn.btn-default(href="/locations/" + l._id) View Details
+                                    a.btn.btn-default(href="/locations/" + l._id) Location Overview
             else
                 p.text-muted.text-center There are no #[b locations].

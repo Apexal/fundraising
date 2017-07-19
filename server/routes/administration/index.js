@@ -13,6 +13,11 @@ router.get('/fundraising', (req, res, next) => {
         .exec()
         .then(fundsList => {
             res.locals.fundsList = fundsList;
+            
+            let total = 0;
+            fundsList.forEach(f => total += f.amount);
+            res.locals.total = total;
+
             res.render('administration/fundraising');
         })
         .catch(next);

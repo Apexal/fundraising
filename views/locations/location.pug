@@ -50,7 +50,7 @@ block content
                                 b Ends #{moment(c.endDate).fromNow()}
                             else
                                 b Starts #{moment(c.startDate).fromNow()}
-                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) View Details
+                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview
             else
                 p.text-muted.text-center There are currently no #[b active camps].
         .col-xs-12

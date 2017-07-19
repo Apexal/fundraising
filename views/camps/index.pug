@@ -52,7 +52,7 @@ block content
                                     b Camp Info
                                     p= helpers.limit(c.info, 50)
                         
-                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) View Details
+                            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview
         else
             p.text-muted.text-center There are currently no #[b active camps].
     .row#camps
@@ -68,14 +68,28 @@ block content
                         tr
                             th End Date
                             th Camp Location
-                            th Info
+                            th Ambassador
+                            th Program Director
                     tbody
                         each c in inactiveCamps
                             tr
                                 th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("MMMM Do YYYY")
-                                td(title=c.location.address)= c.location.name
-                                td= helpers.limit(c.info, 100)
+                                td(title=c.location.address)
+                                    a(href='/locations/' + c.location._id)= c.location.name
+
+                                if c.ambassador
+                                    td
+                                        a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
+                                else
+                                    td.text-muted None
+                                
+                                if c.director
+                                    td
+                                        a(href='/users/' + c.director.email)= c.director.name.full
+                                else
+                                    td.text-muted None
+                                
                                 td
-                                    a.btn.btn-default(href="/camps/" + c._id) View Details
+                                    a.btn.btn-default(href="/camps/" + c._id) Camp Overview
             else
                 p.text-muted.text-center There are no #[b inactive camps].
