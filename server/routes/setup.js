@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
+const easyimg = require('easyimage');
+const fs = require('fs');
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png'];
 
@@ -50,12 +52,33 @@ router.post('/', (req, res, next) => {
 
 router.post('/profilepicture', upload.single('profileImage'), (req, res, next) => {
     req.user.profileImageName = req.file.filename;
-    req.user.save()
-        .then(() => {
-            req.flash('success', 'Uploaded photo');
-            res.redirect('/setup');
-        })
-        .catch(next);
+    const imgPath = path.join(__dirname, '..', '..', 'client', 'public', 'images', req.file.filename);
+    
+    console.log(imgPath);
+    return easyimg.resize({
+        src: imgPath, dst: imgPath,
+        width: 200, height: 250,
+    })
+    .then(image => {
+        const newPath = imgPath.replace('.' + imgPath.split('.')[1], '.jpg');
+
+        return easyimg.convert({
+            src: imgPath, dst: newPath, quality: 90
+        });
+    }).then(image => {
+        if (req.user.profileImageName !== image.name) {
+            fs.unlinkSync(imgPath, err => {
+                if (err) console.error(err);
+            });
+        }
+        req.user.profileImageName = image.name;
+        return req.user.save();
+    })
+    .then(user => {
+        req.flash('success', 'Uploaded photo');
+        res.redirect('/setup');
+    })
+    .catch(next);
 });
 
 module.exports = router;
