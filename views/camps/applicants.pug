@@ -1,26 +1,33 @@
 extends /layout
 
-mixin applicant(user)
+mixin applicant(u)
     .col-xs-12.col-sm-6
         .panel.panel-default
             .panel-heading
-                h1.panel-title= user.name.full
-                    span.text-muted.right(title=moment(user.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(user.registeredDate).fromNow()
+                h1.panel-title= u.name.full
+                    span.text-muted.right(title=moment(u.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(u.registeredDate).fromNow()
             .panel-body
-                p.text-muted.text-center #[b= user.age] years old in grade #[b= user.grade] near #[b= user.location]
-                    br
-                    a(href="mailto:" + user.email)= user.email
+                form.form(method="POST", action="/camps/" + camp.id + "/verify/" + u.email)
+                    p.text-muted.text-center #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
+                        br
+                        a(href="mailto:" + u.email)= u.email
+                        hr
+                    b Applying for
+                        select.form-control(name="role")
+                            option(value="teacher", selected=(u.application.role == 'teacher')) Teacher
+                            option(value="director", selected=(u.application.role == 'director')) Program Director
                     hr
-                h4.text-center Wishes to be #[b= user.application.role] at this camp.
-                hr
-                blockquote
-                    p= user.application.why
-                    footer Why Kids Tales?
-                hr
-                a(href='/writingsamples/' + user.application.writingFileName)
-                    +icon('link', 'Writing Sample')
-                hr
-                form.form(method="POST", action="/camps/" + camp.id + "/verify/" + user.email)
+                    blockquote
+                        p= u.application.why
+                        footer Why Kids Tales?
+                    hr
+                    if u.application.writingFileName
+                        a(href='/writingsamples/' + u.application.writingFileName, target='new')
+                            +icon('link', 'Writing Sample')
+                    else
+                        p.text-muted.text-center No writing sample uploaded yet.
+                    hr
+
                     button.btn.btn-success.right Accept
                     button.btn.btn-danger Delete
 block content

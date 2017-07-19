@@ -186,7 +186,8 @@ router.post('/:campId/verify/:email', (req, res, next) => {
             req.applicant = applicant;
 
             applicant.verified = true;
-            
+            applicant.application.role = ['teacher', 'director'].includes(req.body.role) ? req.body.role : 'teacher';
+
             return applicant.save()
                 .then(helpers.assignRank(req.camp, applicant, applicant.application.role));
         }).then(applicant => {

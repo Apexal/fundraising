@@ -39,8 +39,8 @@ block content
                     label(for="role") Desired Role
                         +help('roles')
                     select#role.form-control(name="role", required)
-                        option(value="teacher") Teacher
-                        option(value="director") Program Director
+                        option(value="teacher", selected=(user.application.role == 'teacher')) Teacher
+                        option(value="director", selected=(user.application.role == 'director')) Program Director
                 .form-group
                     label(for="camp") What Camp?
                         +help('camp')
