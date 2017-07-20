@@ -31,6 +31,16 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/schedule', (req, res, next) => {
+    req.db.Location.find()
+        .exec()
+        .then(locations => {
+            res.locals.locations = locations;
+            res.render('camps/schedulecamp');
+        })
+        .catch(next);
+});
+
 router.post('/schedule', (req, res, next) => {
     const locationId = req.body.locationId;
     const info = req.body.info;

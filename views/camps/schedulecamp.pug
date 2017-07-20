@@ -1,24 +1,46 @@
-.panel.panel-success
-    .panel-heading
-        h1.panel-title Schedule Camp
-    .panel-body
-        form.from.schedule-camp-form(action="/camps/schedule", method="POST")
-            .form-group
-                label(for="schedule-camp-location") Location
-                select.form-control#schedule-camp-location(name="locationId")
-                    each l in openLocations
-                        option(value=l._id) #{l.name} (#{l.address})
-            .form-group
-                label(for="schedule-camp-start") Start Date
-                input.form-control#schedule-camp-start(type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="startDate", required)
+extends /layout
 
-                label(for="schedule-camp-end") End Date
-                input.form-control#schedule-camp-end(type="date", min=moment().format("YYYY-MM-DD"), max=moment().add(1, "years").format("YYYY-MM-DD"), name="endDate", required)
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Schedule New Camp
+        
+        .col-xs-12
+            form.schedule-new-camp
+                                
+                h3 Location Info
+                .form-group
+                    label(for='location') Location
+                    select.form-control#location(name='locationId')
+                        each l in locations
+                            option(value=l._id) #{l.name} | #{l.address}
+                .checkbox
+                    label #[input(type='checkbox')] Classroom Available?
+
+
+                hr
+                h3 Camp Contact
+                .form-group
+                    label(for='contact-name') Name
+                    input.form-control#contact-name(type='text', name='contactName', maxlength='30', placeholder='John Smith', required)
+                .form-group
+                    label(for='contact-info') Contact Info
+                    input.form-control#contact-info(type='text', name='contactInfo', maxlength='30', required)
                 
-            .form-group
-                label(for="schedule-camp-info") Camp Info
-                    small.text-muted  (Optional)
-                textarea.form-control#schedule-camp-description(name="info", placeholder="Add any important information here.", maxlength="650", rows="5")
-            
-            hr
-            button.btn.btn-success.right Schedule Camp
+                h3 Student Info
+                .form-group
+                    label(for='student-count') Count
+                    input.form-control#student-count(type='number', name='studentCount', min=0, max=100, placeholder='How many students will be taught?', required)
+                .form-group
+                    label(for='age-range') Age Range
+                    input.form-control#age-range(type='text', name='ageRange', maxlength='30', placeholder='What is the range of the students\' ages?', required)
+
+                hr
+                h3 Teacher Info
+                .form-group
+                    label(for='teacher-min') Count
+                    input.form-control#teacher-min(type='number', name='teacherMin', min=0, max=40, placeholder='How many teachers will be needed at least?', required)
+                .form-group
+                    label(for='preparation') Required Preparation
+                    textarea.form-control#preparation(name='preparation', rows='6', placeholder='Does the location need your teachers to go through any additional training or fill out any additional forms?')
