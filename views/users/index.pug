@@ -11,11 +11,13 @@ block content
         .col-xs-12.user-search
             form
                 .input-group
-                    input.form-control(type='text', name='search', placeholder='Search for users by name, location, etc.')
+                    input.form-control(type='text', name='search', placeholder='Search for users by name, email, phone number, location, etc.', value=search)
                     span.input-group-btn
                         button.btn.btn-default Search
             hr
     .row#users
+        if search
+            h3 Search Results
         each u in users
             .col-xs-12.col-md-6.col-lg-4
                 .panel.user-panel(class=(u.admin ? 'panel-primary' : 'panel-default'))

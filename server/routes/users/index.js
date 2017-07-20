@@ -10,8 +10,20 @@ router.get('/', (req, res, next) => {
         .then(users => {
             res.locals.users = users;
             
-            // Users in a active camp
-            res.locals.activeUsers = [];
+            if (req.query.search) {
+                const s = req.query.search;
+                // SEARCH
+                res.locals.users = users.filter(user => {
+                    if (user.name.full.includes(s)) return true;
+                    if (user.email.includes(s)) return true;
+                    if (user.phoneNumber.includes(s)) return true;
+                    if (user.location.includes(s)) return true;
+
+                    return false;
+                });
+
+                res.locals.search = s;
+            }
 
             res.render('users/index');
         })
