@@ -11,6 +11,10 @@ body {
     float: left;
 }
 
+.logo {
+    height: 130px;
+}
+
 .location {
     padding-right: 20px;
 }
