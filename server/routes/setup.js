@@ -51,10 +51,15 @@ router.post('/', (req, res, next) => {
 });
 
 router.post('/profilepicture', upload.single('profileImage'), (req, res, next) => {
+    if (!req.file) {
+        req.flash('error', 'No image was selected!');
+        return res.redirect('/setup');
+    }
+
     req.user.profileImageName = req.file.filename;
     const imgPath = path.join(__dirname, '..', '..', 'client', 'public', 'images', req.file.filename);
     
-    console.log(imgPath);
+    
     return easyimg.resize({
         src: imgPath, dst: imgPath,
         width: 200, height: 250,
