@@ -20,12 +20,12 @@ block content
                     else if camp.active
                         small.right Starting 
                             b= moment(camp.startDate).fromNow()
-        if camp.info
-            .col-xs-12
-                blockquote
-                    b Camp Info
-                    p= camp.info
-                hr
+        //- if camp.info
+        //-     .col-xs-12
+        //-         blockquote
+        //-             b Camp Info
+        //-             p= camp.info
+        //-         hr
     .row
         .col-xs-12
             .well.well-sm(class=(!camp.active ? 'text-muted' : ''))

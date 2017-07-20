@@ -32,9 +32,9 @@ mixin camp-panel(c)
             else
                 .alert.alert-warning #[b Missing Ranks] Join now on details page.
             
-            if c.info
-                .well.well-sm
-                    b Camp Info
-                    p= helpers.limit(c.info, 50)
+            //- if c.info
+            //-     .well.well-sm
+            //-         b Camp Info
+            //-         p= helpers.limit(c.info, 50)
         
             a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview
