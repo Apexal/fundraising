@@ -20,11 +20,11 @@ block content
                     input.form-control.disabled(type="text", value=user.email, disabled)
                 .form-group
                     label(for="first-name") First Name
-                    input.form-control#first-name(name="firstName", type="text", value=user.name.first, required)
+                    input.form-control#first-name(name="firstName", type="text", maxlength="20", value=user.name.first, required)
                 .form-group
                     label(for="last-name") Last Name
-                    input.form-control#last-name(name="lastName", type="text", value=user.name.last, required)
+                    input.form-control#last-name(name="lastName", type="text", maxlength="20", value=user.name.last, required)
                 .form-group
                     label(for="phone-number") Personal Phone Number
-                    input#phone-number.form-control(name="phoneNumber", type="text", placeholder="xxx-xxx-xxxx", value=user.phoneNumber, required)
+                    input#phone-number.form-control(name="phoneNumber", type="text", maxlength="20", placeholder="xxx-xxx-xxxx", value=user.phoneNumber, required)
                 button.btn.btn-default(type="submit") Save
