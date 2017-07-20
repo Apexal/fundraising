@@ -181,6 +181,11 @@ router.post('/:campId/verify/:email', (req, res, next) => {
         return res.redirect('/camps/' + req.camp._id);
     }
 
+    if (!req.camp.active) {
+        req.flash('warning', 'This camp has already ended. Applications for it are unavailable.');
+        return res.redirect('/camps/' + req.camp._id);
+    }
+
     req.db.User.findOne({ email: req.params.email })
         .exec()
         .then(applicant => {
