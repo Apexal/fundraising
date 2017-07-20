@@ -78,7 +78,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     
     req.user.save()
         .then(user => {
-            req.flash('info', 'Updated application.');
+            req.flash('info', 'Your application has been submitted! Camp leaders have been alerted and will review your application soon. You will be emailed when it is accepted.');
             res.redirect('/application');
             if (newCamp) {
                 // Email program director and ambassador
@@ -91,6 +91,9 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
         })
         .then(camp => {
             if (!camp) return;
+            
+            sendEmail(req.user.email, 'Application Submitted', `test`);
+
             if (req.user.application.role === 'teacher') {
                 sendEmail(camp.director.email, 'New Applicant', `test`);
             } else if (req.user.application.role === 'director') {
