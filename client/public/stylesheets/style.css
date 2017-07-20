@@ -208,6 +208,15 @@ a.location-name {
     .user-info .summary {
         text-align: center;
     }
+
+    .actions {
+        text-align: center;
+    }
+
+    .actions .right {
+        float: none;
+        
+    }
 }
 
 @media only screen and (max-width: 1200px) {
