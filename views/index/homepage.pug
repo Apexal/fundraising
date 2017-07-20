@@ -49,6 +49,8 @@ block content
                                         | Camp 
                                         b= i.camp.location.name
                                 .panel-body
+                                    if !i.camp.ready
+                                        .alert.alert-warning #[b MISSING RANKS] Some ranks have yet to be filled.
                                     .rank-desc
                                         h4 You are #[b.rank= helpers.getRankFromCamp(i.camp, user)].
                                         if i.camp.ambassador

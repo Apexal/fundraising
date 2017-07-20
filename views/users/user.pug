@@ -52,7 +52,7 @@ block content
                                         a(href="/locations/" + c.location._id)= c.location.name
                                     td.rank= helpers.getRankFromCamp(c, targetUser)
                                     td
-                                        a.btn.btn-default(href="/camps/" + c._id) View
+                                        a.btn.btn-default(href="/camps/" + c._id) Camp Details
             else
                 p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any camps.
     .row
