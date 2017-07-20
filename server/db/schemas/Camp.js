@@ -4,12 +4,24 @@ const moment = require('moment');
 
 const campSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
-    info: { type: String, trim: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     teachers: [{ type: Number, ref: 'User' }],
     director: { type: Number, ref: 'User' },
     ambassador: { type: Number, ref: 'User' },
+    info: {
+        studentCount: { type: Number, min: 0, max: 100 },
+        studentAgeRange: { type: String, trim: true },
+        minTeachers: { type: Number, min: 0, max: 100 },
+        classRoomAvailable: Boolean,
+        contact: {
+            name: { type: String, trim: true },
+            contactInfo: { type: String, trim: true }
+        },
+        preparation: { type: String, trim: true },
+        language: { type: String, trim: true, default: 'English' },
+        extra: { type: String, trim: true }
+    },
     dateAdded: { type: Date, required: true }
 }, {
     toObject: {

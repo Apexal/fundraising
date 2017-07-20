@@ -4,6 +4,7 @@ const moment = require('moment');
 const request = require('request-promise');
 const fs = require('fs');
 const path = require('path');
+const slack = require('../../modules/slack.js');
 
 router.use(requireVerified);
 
@@ -236,7 +237,7 @@ router.post('/:campId/edit', requireAdmin, (req, res, next) => {
     req.camp.location = req.body.locationId;
     req.camp.startDate = moment(req.body.startDate, "YYYY-MM-DD").toDate();
     req.camp.endDate = moment(req.body.endDate, "YYYY-MM-DD").toDate();
-    req.camp.info = req.body.info;
+    //req.camp.info = req.body.info;
 
     req.camp.save()
         .then(camp => {
@@ -374,7 +375,7 @@ router.post('/:campId/addfundraisinggoal', (req, res, next) => {
         if (req.camp.director) sendEmail(req.camp.director.email, "New Fundraising Goal", message);
 
         const text = `<http://kidstales.ddns.net:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://kidstales.ddns.net/camps/${campId}|Camp ${req.camp.location.name}>`;
-        return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { markdown: true, text }, json: true });
+        return slack.sendMessage(text);
     }).then(body => {
         req.flash('success', 'Added new fundraising goal for camp.');
         res.redirect(`/camps/${req.camp._id}/fundraising`);
