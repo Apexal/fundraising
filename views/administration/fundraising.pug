@@ -3,5 +3,9 @@ extends /layout
 block content
     .row
         .col-xs-12
-            .page-header
+            .jumbotron
                 h1 Overall Fundraising
+                p= helpers.getHelpInfo('fundraising')
+            hr
+        .col-xs-12
+            h2 #[b= '$' + total] has been raised so far.
