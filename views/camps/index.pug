@@ -8,9 +8,7 @@ block content
                     small.right #{camps.length} total
                 p= helpers.getHelpInfo('camps')
                 a.btn.btn-primary.right(href="#camps") All Camps
-        hr
-    if user.admin
-        include schedulecamp_old
+            hr
 
     .row
         .col-xs-12
@@ -63,3 +61,9 @@ block content
                                     a.btn.btn-default(href="/camps/" + c._id) Camp Overview
             else
                 p.text-muted.text-center There are no #[b inactive camps].
+        
+    .row
+        .col-xs-12
+            hr
+            if user.admin
+                a.btn.btn-success(href='/camps/schedule') Schedule New Camp
