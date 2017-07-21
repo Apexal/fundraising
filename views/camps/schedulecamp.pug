@@ -7,7 +7,7 @@ block content
                 h1 Schedule New Camp
         
         .col-xs-12
-            form.schedule-new-camp(onsubmit='return confirm("Are you sure all info entered is correct? (It can be edited at any time later on.)")')
+            form.schedule-new-camp(method='POST', onsubmit='return confirm("Are you sure all info entered is correct? (It can be edited at any time later on.)")')
                 .form-group
                     label(for='start-date') Start Date
                     input.form-control#start-date(type='date', min=moment().format('YYYY-MM-DD'), max=moment().add(1, 'years').format('YYYY-MM-DD'), name='startDate', required)

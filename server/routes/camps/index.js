@@ -42,24 +42,52 @@ router.get('/schedule', (req, res, next) => {
 });
 
 router.post('/schedule', (req, res, next) => {
+    // Location info
     const locationId = req.body.locationId;
-    const info = req.body.info;
     const startDate = moment(req.body.startDate, "YYYY-MM-DD");
     const endDate = moment(req.body.endDate, "YYYY-MM-DD");
+    const language = req.body.language;
+    const classRoomAvailable = ('classRoomAvailable' in req.body);
     
+    // Contact Info
+    const contactName = req.body.contactName;
+    const contactInfo = req.body.contactInfo;
+    
+    // Student Info
+    const studentCount = req.body.studentCount;
+    const studentAgeRange = req.body.ageRange;
+
+    // Teacher Info
+    const teacherMin = req.body.teacherMin;
+    const preparation = req.body.preparation;
+
+    const extra = req.body.extra;
+
     // Validate
     if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
     const newCamp = new req.db.Camp({
         location: locationId,
-        info,
         startDate: startDate.toDate(),
         endDate: endDate.toDate(),
+        info: {
+            studentCount,
+            studentAgeRange,
+            teacherMin,
+            classRoomAvailable,
+            contact: {
+                name: contactName,
+                contactInfo
+            },
+            preparation,
+            language,
+            extra
+        },
         dateAdded: new Date()
     });
 
     newCamp.save().then((camp) => {
-        req.flash('success', `Scheduled new camp on ${startDate}.`);
+        req.flash('success', `Scheduled new camp on ${startDate.format('dddd, MMMM Do YYYY')}.`);
         res.redirect(`/camps/${camp._id}`);
     }).catch(next);
 });

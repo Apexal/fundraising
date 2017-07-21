@@ -12,7 +12,7 @@ const campSchema = new Schema({
     info: {
         studentCount: { type: Number, min: 0, max: 100, required: true },
         studentAgeRange: { type: String, trim: true, required: true },
-        minTeachers: { type: Number, min: 0, max: 100, required: true },
+        teacherMin: { type: Number, min: 0, max: 100, required: true },
         classRoomAvailable: { type: Boolean, required: true },
         contact: {
             name: { type: String, trim: true, required: true },
