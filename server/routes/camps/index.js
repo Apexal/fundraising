@@ -10,6 +10,8 @@ router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Camps';
+
     req.db.Camp.find()
         .populate('location')
         .populate('ambassador')
@@ -32,6 +34,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/schedule', (req, res, next) => {
+    res.locals.pageTitle = 'Schedule New Camp';
+
     req.db.Location.find()
         .exec()
         .then(locations => {
@@ -200,6 +204,7 @@ router.get('/:campId', (req, res, next) => {
     }
 
     res.locals.camp = req.camp;
+    res.locals.pageTitle = `Camp ${req.camp.location.name}`;
     return res.render('camps/camp');
 });
 
@@ -211,6 +216,7 @@ router.get('/:campId/applicants', (req, res, next) => {
     }
     
     res.locals.camp = req.camp;
+    res.locals.pageTitle = `Camp ${req.camp.location.name} Applicants`;
     return res.render('camps/applicants');
 });
 
@@ -266,6 +272,7 @@ router.get('/:campId/edit', requireAdmin, (req, res, next) => {
         .exec()
         .then(locations => {
             res.locals.openLocations = locations;
+            res.locals.pageTitle = `Edit Camp ${req.camp.location.name}`;
             res.render('camps/edit');
         })
         .catch(next);
@@ -319,6 +326,7 @@ router.get('/:campId/fundraising', (req, res, next) => {
             req.camp.fundraisingGoals = fundraisingGoals;
             res.locals.camp.fundraisingGoals = fundraisingGoals;
 
+            res.locals.pageTitle = `Camp ${req.camp.location.name} Fundraising`;
             res.render('camps/fundraising/index');
         })
         .catch(next);

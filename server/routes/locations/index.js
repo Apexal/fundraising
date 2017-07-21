@@ -6,6 +6,8 @@ router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Locations';
+
     req.db.Location.find()
         .exec()
         .then(locations => {
@@ -31,7 +33,9 @@ router.get('/:locationId', (req, res, next) => {
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
             res.locals.location = location;
-        
+            
+            res.locals.pageTitle = `Location ${location.name}`;
+
             return location.findCamps();
         }).then(camps => {
             res.locals.camps = camps;
@@ -51,6 +55,7 @@ router.get('/:locationId/edit', requireAdmin, (req, res, next) => {
             if (!location) throw new Error('Location does not exist!');
             
             res.locals.location = location;
+            res.locals.pageTitle = `Edit Location ${location.name}`;
             res.render('locations/edit');
         })
         .catch(next);

@@ -5,6 +5,7 @@ router.use(requireAdmin);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Administration';
     res.render('administration/index');
 });
 
@@ -18,6 +19,7 @@ router.get('/fundraising', (req, res, next) => {
             fundsList.forEach(f => total += f.amount);
             res.locals.total = total;
 
+            res.locals.pageTitle = 'Overall Fundraising';
             res.render('administration/fundraising');
         })
         .catch(next);

@@ -5,6 +5,8 @@ router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Users';
+
     req.db.User.find({ verified: true })
         .exec()
         .then(users => {
@@ -37,6 +39,7 @@ router.get('/:email', (req, res, next) => {
             if (!user) return next(new Error('Failed to find user.'));
 
             res.locals.targetUser = user;
+            res.locals.pageTitle = `User ${user.name.full}`;
             return user.findCamps();
         }).then(camps => {
             res.locals.camps = camps;
@@ -54,6 +57,7 @@ router.get('/:email/edit', requireAdmin, (req, res, next) => {
             if (!user) throw new Error('Failed to find user.');
 
             res.locals.targetUser = user;
+            res.locals.pageTitle = `Edit User ${user.name.full}`;
             return req.db.Camp.find()
                 .populate('location')
                 .exec();

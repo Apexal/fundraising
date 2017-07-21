@@ -29,6 +29,8 @@ router.use(requireLogin);
 
 /* GET application. */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Application';
+
     if (req.user.verified) {
         req.flash('warning', 'You have already applied and been accepted.');    
         return res.redirect('/');
