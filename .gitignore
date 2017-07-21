@@ -45,3 +45,6 @@ client/public/images/user-*.jpg
 client/public/images/user-*.jpeg
 client/public/writingsamples/*
 .vscode/launch.json
+tests/testBookCompile.js
+
+.~lock.*.docx#
