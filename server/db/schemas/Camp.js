@@ -10,13 +10,13 @@ const campSchema = new Schema({
     director: { type: Number, ref: 'User' },
     ambassador: { type: Number, ref: 'User' },
     info: {
-        studentCount: { type: Number, min: 0, max: 100 },
-        studentAgeRange: { type: String, trim: true },
-        minTeachers: { type: Number, min: 0, max: 100 },
-        classRoomAvailable: Boolean,
+        studentCount: { type: Number, min: 0, max: 100, required: true },
+        studentAgeRange: { type: String, trim: true, required: true },
+        minTeachers: { type: Number, min: 0, max: 100, required: true },
+        classRoomAvailable: { type: Boolean, required: true },
         contact: {
-            name: { type: String, trim: true },
-            contactInfo: { type: String, trim: true }
+            name: { type: String, trim: true, required: true },
+            contactInfo: { type: String, trim: true, required: true }
         },
         preparation: { type: String, trim: true },
         language: { type: String, trim: true, default: 'English' },

@@ -46,7 +46,7 @@ router.post('/schedule', (req, res, next) => {
     const info = req.body.info;
     const startDate = moment(req.body.startDate, "YYYY-MM-DD");
     const endDate = moment(req.body.endDate, "YYYY-MM-DD");
-
+    
     // Validate
     if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
