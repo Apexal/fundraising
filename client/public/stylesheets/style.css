@@ -178,7 +178,7 @@ a.location-name {
     font-size: 1em !important;
 }
 
-.application-form textarea, .schedule-camp-form textarea, .add-location-form textarea {
+textarea {
     max-width: 100%;
     max-height: 200px;
 }

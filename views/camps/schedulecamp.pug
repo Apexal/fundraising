@@ -7,8 +7,16 @@ block content
                 h1 Schedule New Camp
         
         .col-xs-12
-            form.schedule-new-camp
-                                
+            form.schedule-new-camp(onsubmit='return confirm("Are you sure all info entered is correct? (It can be edited at any time later on.)")')
+                .form-group
+                    label(for='start-date') Start Date
+                    input.form-control#start-date(type='date', min=moment().format('YYYY-MM-DD'), max=moment().add(1, 'years').format('YYYY-MM-DD'), name='startDate', required)
+                
+                .form-group
+                    label(for='end-date') End Date
+                    input.form-control#end-date(type='date', min=moment().format('YYYY-MM-DD'), max=moment().add(1, 'years').format('YYYY-MM-DD'), name='endDate', required)
+                hr
+                
                 h3 Location Info
                 .form-group
                     label(for='location') Location
@@ -54,3 +62,5 @@ block content
                 .form-group
                     label(for='extra') Extra Information
                     textarea.form-control#extra(name='extra', rows='6', placeholder='(Optional) Any extra camp information.')
+                
+                button.btn.btn-primary Schedule Camp
