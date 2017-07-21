@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     _id: { type: Number },
     profileImageName: { type: String, default: 'default.png' },
-    email: { type: String, trim: true, unique: true },
+    email: { type: String, trim: true /*, unique: true*/ },
     age: { type: Number, min: 10, max: 100 },
     grade: { type: Number, min: 8, max: 12 },
     phoneNumber: { type: String, trim: true },

@@ -25,14 +25,14 @@ const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
 const fakeTeacher = {
     _id: 1,
-    email: 'teacher@kidstales.org',
+    email: 'fmatranga18@regis.org',
     age: 17,
     grade: 12,
     phoneNumber: '888-888-8888',
     location: 'NYC',
     name: { first: 'Teacher', last: 'Test' },
     rank: 'teacher',
-    rankInfo: {},
+    rankInfo: { directorId: 2 },
     application: { why: 'Why not?' },
     registeredDate: Date.now(),
     admin: false,
@@ -47,14 +47,14 @@ models.User.findOneAndUpdate({ _id: 1 }, fakeTeacher, options, function(error, r
 
 const fakeDirector = {
     _id: 2,
-    email: 'director@kidstales.org',
+    email: 'fmatranga18@regis.org',
     age: 17,
     grade: 12,
     phoneNumber: '888-888-8888',
     location: 'NYC',
     name: { first: 'Director', last: 'Test' },
     rank: 'director',
-    rankInfo: {},
+    rankInfo: { ambassadorId: 3 },
     application: { why: 'Because.' },
     registeredDate: Date.now(),
     admin: false,
@@ -68,21 +68,21 @@ models.User.findOneAndUpdate({ _id: 2 }, fakeDirector, options, function(error, 
 
 const fakeAmbassador = {
     _id: 3,
-    email: 'ambassador@kidstales.org',
+    email: 'fmatranga18@regis.org',
     age: 17,
     grade: 12,
     phoneNumber: '888-888-8888',
     location: 'NYC',
     name: { first: 'Ambassador', last: 'Test' },
     rank: 'ambassador',
-    rankInfo: {},
+    rankInfo: { area: 'Tri-state Area' },
     application: { why: 'idek.' },
     registeredDate: Date.now(),
     admin: false,
     verified: true
 };
 models.User.findOneAndUpdate({ _id: 3 }, fakeAmbassador, options, function(error, result) {
-    if (error) return;
+    if (error) return console.error(error);
     console.log(result);
     // do something with the document
 });

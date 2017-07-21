@@ -58,8 +58,8 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     const phoneNumber = req.body.phoneNumber;
     const location = req.body.location;
     
-    const role = req.body.role;
-    const superiorId = req.body.superiorId;
+    const rank = req.body.rank;
+    const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
     const why = req.body.why;
 
     req.user.name.first = firstName;
@@ -72,34 +72,24 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     req.user.application.writingFileName = (req.file ? req.file.filename : undefined);
 
     req.user.application.why = why;
-    req.user.application.role = (['teacher', 'director', 'ambassador'].includes(role) ? role : 'teacher');
-    let newCamp = false;
-    if (!req.user.application.camp || req.user.application.camp.toString() != campId.toString()) newCamp = true;
-    req.user.application.camp = campId;
-    
+    req.user.application.rank = (['teacher', 'director', 'ambassador'].includes(rank) ? rank : 'teacher');
+    req.user.application.superior = superiorId;
+
     req.user.save()
         .then(user => {
-            req.flash('info', 'Your application has been submitted! Camp leaders have been alerted and will review your application soon. You will be emailed when it is accepted.');
-            res.redirect('/application');
-            if (newCamp) {
-                // Email program director and ambassador
-                return req.db.Camp.findById(campId)
-                    .populate('location')
-                    .populate('ambassador')
-                    .populate('director')
-                    .exec();
-            }
+            req.user = user;
+            return req.db.User.findById(user.application.superior).exec();
         })
-        .then(camp => {
-            if (!camp) return;
-            
-            sendEmail(req.user.email, 'Application Submitted', `test`);
+        .then(superior => {
+            const message = `
+            <h2>New Applicant</h2>
+            <p>
+                <b>${req.user.name.full}</b> has just applied to be a <b>${req.user.rankName}</b> under you.</b>
+            </p>`;
+            sendEmail(superior.email, 'New Applicant', message);
 
-            if (req.user.application.role === 'teacher') {
-                sendEmail(camp.director.email, 'New Applicant', `test`);
-            } else if (req.user.application.role === 'director') {
-                sendEmail(camp.ambassador.email, 'New Applicant', `test`);
-            }
+            req.flash('info', `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.`);
+            res.redirect('/application');
         })
         .catch(next);
 });
