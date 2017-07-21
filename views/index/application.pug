@@ -36,18 +36,22 @@ block content
                 .page-header
                     h3 Camp Info
                 .form-group
-                    label(for="role") Desired Role
-                        +help('roles')
-                    select#role.form-control(name="role", required)
-                        option(value="teacher", selected=(user.application.role == 'teacher')) Teacher
-                        option(value="director", selected=(user.application.role == 'director')) Program Director
+                    label(for="rank") Desired Rank
+                        +help('ranks')
+                    select#rank.form-control(name="rank", required)
+                        option(value="teacher", selected=(user.application.rank == 'teacher')) Teacher
+                        option(value="director", selected=(user.application.rank == 'director')) Program Director
+                
                 .form-group
-                    label(for="camp") What Camp?
-                        +help('camp')
-                    select#camp.form-control(name="campId", required)
-                        each c in openCamps
-                            option(value=c.id) #{moment(c.startDate).format("M/D/YY")} | #{c.location.name} #{c.director ? "| Directed by " + c.director.name.full : ""}
-                        option(value="other") Other
+                    label(for='superior') Superior
+                        +help('superior')
+                    select#directors.form-control(name="directorId", required)
+                        each d in directors
+                            option(value=d._id)= d.name.full
+                    select#ambassadors.form-control(name="ambassadorId", required)
+                        each a in ambassadors
+                            option(value=a._id)= a.name.full
+
                 .form-group
                     label(for="why") Why Kids Tales?
                     textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= user.application.why
@@ -59,3 +63,4 @@ block content
                     input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
 
                 button.btn.btn-danger(type="submit") Save
+                script(src='/javascripts/application.js')

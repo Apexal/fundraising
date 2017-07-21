@@ -37,17 +37,16 @@ router.get('/', (req, res, next) => {
     }
 
     // Get open camps
-    req.db.Camp.find({ endDate: { "$gt": moment().startOf('day').toDate() }})
-        .populate('location')
-        .populate('ambassador')
-        .populate('director')
-        .populate('teachers')
+    req.db.User.where('rank').ne('teacher')
         .exec()
-        .then(openCamps => {
-            res.locals.openCamps = openCamps;
-            
+        .then(superiors => {
+            res.locals.superiors = superiors;
+            res.locals.directors = superiors.filter(s => s.rank == 'director');
+            res.locals.ambassadors = superiors.filter(s => s.rank == 'ambassador');
+
             return res.render('index/application');
-        });
+        })
+        .catch(next);
 });
 
 /* Save application data and alert higher ups */
@@ -60,7 +59,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     const location = req.body.location;
     
     const role = req.body.role;
-    const campId = req.body.campId;
+    const superiorId = req.body.superiorId;
     const why = req.body.why;
 
     req.user.name.first = firstName;

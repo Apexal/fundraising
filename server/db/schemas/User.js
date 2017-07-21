@@ -19,8 +19,8 @@ const userSchema = new Schema({
         recommender: { type: Number, ref: 'User' },
         why: { type: String, trim: true },
         writingFileName: { type: String, trim: true },
-        role: { type: String, trim: true },
-        camp: { type: mongoose.Schema.Types.ObjectId, ref: 'Camp' }
+        rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
+        superior: { type: Number, ref: 'User' }
     },
     registeredDate: { type: Date, default: Date.now },
     admin: { type: Boolean, default: false },
