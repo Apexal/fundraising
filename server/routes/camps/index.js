@@ -213,9 +213,9 @@ router.post('/:campId/verify/:email', (req, res, next) => {
 
             try {
                 if (applicant.application.role === 'teacher') {
-                    sendEmail(req.camp.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b>'s application for <b>Teacher</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Program Director of) has been accepted.`);
+                    sendEmail(req.camp.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${applicant.name.full}</a></b>'s application for <b>Teacher</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Program Director of) has been accepted.`);
                 } else if (applicant.application.role === 'director') {
-                    sendEmail(req.camp.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b>'s application for <b>Program Director</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Ambassador of) has been accepted.`);
+                    sendEmail(req.camp.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${applicant.name.full}</a></b>'s application for <b>Program Director</b> to <b><a href='http://localhost:3000/camps/${req.camp._id}'>Camp ${req.camp.location.name}</a></b> (which you are the Ambassador of) has been accepted.`);
                 }
             } catch(err) {}
 
