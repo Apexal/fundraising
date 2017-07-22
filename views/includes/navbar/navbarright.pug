@@ -10,6 +10,8 @@ ul.nav.navbar-nav.navbar-right
                     b Admin
                 else if !user.verified
                     b Unverified
+                else
+                    b= user.rankName
                 |  #{user.name.full}
                 span.caret
             ul.dropdown-menu

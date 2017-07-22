@@ -39,7 +39,7 @@ router.get('/:email', (req, res, next) => {
             if (!user) return next(new Error('Failed to find user.'));
 
             res.locals.targetUser = user;
-            res.locals.pageTitle = `User ${user.name.full}`;
+            res.locals.pageTitle = `${user.rankName} ${user.name.full}`;
             return user.findCamps();
         }).then(camps => {
             res.locals.camps = camps;

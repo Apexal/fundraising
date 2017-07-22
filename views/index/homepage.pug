@@ -32,42 +32,6 @@ block content
                     footer The Administrators
                 if user.admin
                     a.btn.btn-danger(href='/administration', title='Set a public message for all users to see.') Edit
-
-            .col-xs-12.col-md-6
-                .page-header
-                    h2 Active Involvements
-                        +help('active-involvements')
-                        small.right #{activeInvolvements.length} total
-                if activeInvolvements.length > 0
-                    each i in activeInvolvements
-                        .col-xs-12
-                            .panel.panel-danger.involvement-panel
-                                .panel-heading
-                                    h1.panel-title
-                                        if i.camp.ongoing
-                                            b Ongoing 
-                                        | Camp 
-                                        b= i.camp.location.name
-                                .panel-body
-                                    if !i.camp.ready
-                                        .alert.alert-warning #[b MISSING RANKS] Some ranks have yet to be filled.
-                                    .rank-desc
-                                        h4 You are #[b.rank= helpers.getRankFromCamp(i.camp, user)].
-                                        if i.camp.ambassador
-                                            a(href='/users/' + i.camp.ambassador.email)
-                                                img.ambassador(src='/images/' + i.camp.ambassador.profileImageName, title='Ambassador ' + i.camp.ambassador.name.full)
-                                        if i.camp.director
-                                            a(href='/users/' + i.camp.director.email)
-                                                img.director(src='/images/' + i.camp.director.profileImageName, title='Director ' + i.camp.director.name.full)
-                                   
-                                        each t in i.camp.teachers
-                                            a(href='/users/' + t.email)
-                                                img.teacher(src='/images/' + t.profileImageName, title='Teacher ' + t.name.full)
-                                    hr
-                                    a.btn.btn-danger.right(href="/camps/" + i.camp._id) Camp Overview
-                                    span.text-muted Ending #{moment(i.camp.endDate).fromNow()}
-                else
-                    p.text-center.text-muted You are not currently involved in any active camps!
     else
         .col-xs-12.text-center
             h3.text-muted Once you are verified you will be able to view updates from the administrators and access your current camp involvements.
