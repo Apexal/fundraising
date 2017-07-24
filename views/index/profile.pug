@@ -1,0 +1,12 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Your Profile
+    .row
+        .col-xs-12
+            form.form(method="POST", enctype="multipart/form-data")
+                include /includes/userForm
+                button.btn.btn-danger(type="submit") Save

@@ -17,7 +17,7 @@ ul.nav.navbar-nav.navbar-right
             ul.dropdown-menu
                 if user.verified
                     li(title="Edit your profile.")
-                        a(href='/setup') Edit Profile
+                        a(href='/profile') Edit Profile
                     li(title="View your public profile.")
                         a(href='/users/' + user.email) View Profile
                     li.divider(role='separator')
