@@ -39,6 +39,7 @@ module.exports = (User) => {
                     });
 
                     user.save();
+                    sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                 }
                 console.log(`Logging in ${email}...`)
                 return done(null, user);

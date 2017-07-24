@@ -1,5 +1,14 @@
 const config = require('../config');
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs');
+const templatePath = path.join(__dirname, 'emailTemplates');
+const templateNames = fs.readdirSync(templatePath);
+
+const templates = {};
+templateNames.map(fileName => {
+    templates[fileName] = fs.readFileSync(path.join(templatePath, fileName), 'utf8');
+});
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -10,7 +19,21 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = (to, subject, html) => {
+/* Replace all data in the template */
+const renderTemplate = (template, data) => {
+    for (let d in data) {
+        template = template.replace(new RegExp(`{{${d}}}`, 'g'), data[d]);
+    }
+
+    return template;
+}
+
+module.exports = (to, subject, template, data) => {
+    if (!(template+'.html' in templates)) throw new Error(`Email template '${template}' not found.`);
+    
+    // Render template
+    const html = renderTemplate(templates[template+'.html'], data);
+
     transporter.sendMail({ from: `Kids Tales <${config.googleAuth.email}>`, to, subject, html }, (error, info) => {
         if (error) {
             console.log(error);
