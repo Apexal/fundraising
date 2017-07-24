@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png'];
 
+/* Save uploaded files (profile images) in the public images folder under the naming scheme 'user-<user-id>.<extenstion>' */
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/images'),
     filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
@@ -27,10 +28,14 @@ const upload = multer({
     }
 });
 
-/* GET home page. */
+/* Determine which homepage to show based on whether logged in and verified or not */
 router.get('/', (req, res) => {
+    
+    // TODO: make customizable
     res.locals.latestNews = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit justo in orci auctor rhoncus. Sed vitae odio dignissim, suscipit lacus eget, laoreet dolor.";
+    
     if (req.isAuthenticated()) {
+        // Unverified users get sent to the application
         if (req.user.verified) {
             return res.render('index/homepage');
         } else {
@@ -41,15 +46,17 @@ router.get('/', (req, res) => {
     }
 });
 
+/* Show login form page */
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
-      req.flash('warning', 'You are already logged in!');
-      return res.redirect('/');
+        req.flash('warning', 'You are already logged in!');
+        return res.redirect('/');
     }
 
     res.redirect('/auth/google');
 });
 
+/* Allow admins to login as any user based on email */
 router.get('/loginas', /*requireAdmin,*/ (req, res, next) => {
     //if (!req.query.email) return next(new Error('Invalid user email.'));
 
@@ -78,7 +85,9 @@ router.get('/profile', requireVerified, (req, res, next) => {
     res.render('users/profile');
 });
 
+/* Update logged in user's profile */
 router.post('/profile', requireVerified, upload.single('profileImage'), (req, res, next) => {
+    // Gather form data
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const grade = req.body.grade;
@@ -86,6 +95,7 @@ router.post('/profile', requireVerified, upload.single('profileImage'), (req, re
     const phoneNumber = req.body.phoneNumber;
     const location = req.body.location;
 
+    // Update user (isn't saved until user.save() is called)
     req.user.name.first = firstName;
     req.user.name.last = lastName;
     req.user.grade = grade;
@@ -93,11 +103,12 @@ router.post('/profile', requireVerified, upload.single('profileImage'), (req, re
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
 
+    /* If a profile picture was uploaded then resize and convert the picture to standards then save the user, otherwise just save the user */
     if (req.file) {
         req.user.profileImageName = req.file.filename;
         const imgPath = path.join(__dirname, '..', '..', 'client', 'public', 'images', req.file.filename);
-        console.log(imgPath);
 
+        // Resize image to roughly 200 by 250 (keeps ratio so may not be perfect)
         return easyimg.resize({
             src: imgPath, dst: imgPath,
             width: 200, height: 250,
@@ -105,6 +116,7 @@ router.post('/profile', requireVerified, upload.single('profileImage'), (req, re
         .then(image => {
             const newPath = imgPath.replace('.' + imgPath.split('.')[1], '.jpg');
 
+            // Convert to JPG image
             return easyimg.convert({
                 src: imgPath, dst: newPath, quality: 90
             });
@@ -114,6 +126,8 @@ router.post('/profile', requireVerified, upload.single('profileImage'), (req, re
                     if (err) console.error(err);
                 });
             }
+
+            // Set profile image name (url) to new one with JPG extension
             req.user.profileImageName = image.name;
             return req.user.save();
         }).then(user => {
@@ -123,6 +137,7 @@ router.post('/profile', requireVerified, upload.single('profileImage'), (req, re
         .catch(next);
     }
 
+    // Called if no profile picture was uploaded
     return req.user.save()
         .then(user => {
             req.flash('success', 'Successfully updated profile.');

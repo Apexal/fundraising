@@ -5,6 +5,7 @@ const multer = require('multer');
 
 const DOC_TYPES = ['.txt', '.doc', '.docx'];
 
+/* Save uploaded writing sample files to the writingsamples directory with the naming scheme 'user-<user-id>.<extension>' */
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/'),
     filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
@@ -20,11 +21,12 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     limits: {
-        fileSize: 2000000, // 1 Megabyte
+        fileSize: 1000000, // 1 Megabytes
         files: 1,
     }
 });
 
+/* Users must be at least logged in to access ANY routes here */
 router.use(requireLogin);
 
 /* GET application. */
@@ -51,6 +53,7 @@ router.get('/', (req, res, next) => {
 
 /* Save application data and alert higher ups */
 router.post('/', upload.single('writingSample'), (req, res, next) => {
+    // Get form data
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const grade = req.body.grade;
@@ -62,6 +65,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
     const why = req.body.why;
 
+    // Update user properties
     req.user.name.first = firstName;
     req.user.name.last = lastName;
     req.user.grade = grade;
@@ -69,6 +73,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
     
+    // Only set if uploaded, otherwise it would reset if nothing was uploaded
     if (req.file)
         req.user.application.writingFileName = req.file.filename;
 
