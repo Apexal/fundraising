@@ -75,7 +75,7 @@ router.get('/logout', function(req, res){
 router.get('/profile', requireVerified, (req, res, next) => {
     res.locals.pageTitle = 'Your Profile';
 
-    res.render('index/profile');
+    res.render('users/profile');
 });
 
 router.post('/profile', requireVerified, upload.single('profileImage'), (req, res, next) => {

@@ -8,5 +8,8 @@ block content
     .row
         .col-xs-12
             form.form(method="POST", enctype="multipart/form-data")
+                .form-group
+                    label(for="profile-img-picker") Profile Picture
+                    input.form-control#profile-img-picker(type="file", name="profileImage", accept="image/*")
                 include /includes/userForm
                 button.btn.btn-danger(type="submit") Save

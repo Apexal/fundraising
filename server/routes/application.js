@@ -3,13 +3,13 @@ const router = express.Router();
 const moment = require('moment');
 const multer = require('multer');
 
-const IMAGE_TYPES = ['.txt', '.doc', '.docx'];
+const DOC_TYPES = ['.txt', '.doc', '.docx'];
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/writingsamples'),
+    destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/'),
     filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
     fileFilter: (req, file, cb) => {
-        if(IMAGE_TYPES.includes(file.mimetype)) {
+        if(DOC_TYPES.includes(file.mimetype)) {
             cb(null, true)
         } else {
             cb(null, false)
@@ -69,7 +69,8 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
     
-    req.user.application.writingFileName = (req.file ? req.file.filename : undefined);
+    if (req.file)
+        req.user.application.writingFileName = req.file.filename;
 
     req.user.application.why = why;
     req.user.application.rank = (['teacher', 'director', 'ambassador'].includes(rank) ? rank : 'teacher');
@@ -84,7 +85,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
             const message = `
             <h2>New Applicant</h2>
             <p>
-                <b>${req.user.name.full}</b> has just applied to be a <b>${req.user.rankName}</b> under you.</b>
+                <b>${req.user.name.full}</b> has just applied to be a <b>${req.user.application.rankName}</b> under you.</b>
             </p>`;
             sendEmail(superior.email, 'New Applicant', message);
 
