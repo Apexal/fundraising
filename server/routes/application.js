@@ -87,12 +87,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
             return req.db.User.findById(user.application.superior).exec();
         })
         .then(superior => {
-            const message = `
-            <h2>New Applicant</h2>
-            <p>
-                <b>${req.user.name.full}</b> has just applied to be a <b>${req.user.application.rankName}</b> under you.</b>
-            </p>`;
-            sendEmail(superior.email, 'New Applicant', message);
+            sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.application.rank });
 
             req.flash('info', `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.`);
             res.redirect('/application');
