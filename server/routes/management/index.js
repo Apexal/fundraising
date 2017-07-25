@@ -6,9 +6,9 @@ router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    res.locals.pageTitle = 'Management';
+    res.locals.pageTitle = `${req.user.rankName} Management`;
 
-    res.render('');
+    res.render(`${req.user.rank}s/index`);
 });
 
 /* Accept an applicant */
