@@ -11,43 +11,28 @@ block content
             form.application-form(method="POST", enctype="multipart/form-data")
                 .page-header
                     h3 Contact Info
-                .form-group
-                    label Email
-                    input.form-control.disabled(type="text", value=user.email, disabled)
-                .form-group
-                    label(for="first-name") First Name
-                    input.form-control#first-name(name="firstName", type="text", value=user.name.first, maxlength="20", required)
-                .form-group
-                    label(for="last-name") Last Name
-                    input.form-control#last-name(name="lastName", type="text", value=user.name.last, maxlength="20", required)
-                .form-group
-                    label(for="location") Location
-                    input#location.form-control(name="location", type="text", value=user.location, maxlength="40", placeholder="Where do you live?", required)
-                .form-group
-                    label(for="phone-number") Personal Phone Number
-                    input#phone-number.form-control(name="phoneNumber", type="text", placeholder="xxx-xxx-xxxx", maxlength="20", value=user.phoneNumber, required)
-                .form-group
-                    label(for="age") Age
-                    input#age.form-control(name="age", type="number", placeholder="How old are you?", value=user.age, min="10", max="100", required)
-                .form-group
-                    label(for="grade") Grade
-                    input#grade.form-control(name="grade", type="number", placeholder="What grade are you in?", value=user.grade, min="8", max="100", required)
+                include /includes/userForm
                 
                 .page-header
                     h3 Camp Info
                 .form-group
-                    label(for="role") Desired Role
-                        +help('roles')
-                    select#role.form-control(name="role", required)
-                        option(value="teacher", selected=(user.application.role == 'teacher')) Teacher
-                        option(value="director", selected=(user.application.role == 'director')) Program Director
-                .form-group
-                    label(for="camp") What Camp?
-                        +help('camp')
-                    select#camp.form-control(name="campId", required)
-                        each c in openCamps
-                            option(value=c.id) #{moment(c.startDate).format("M/D/YY")} | #{c.location.name} #{c.director ? "| Directed by " + c.director.name.full : ""}
-                        option(value="other") Other
+                    label(for="rank") Desired Rank
+                        +help('ranks')
+                    select#rank.form-control(name="rank", required)
+                        option(value='none') Choose Rank
+                        option(value="teacher", selected=(user.application.rank == 'teacher')) Teacher
+                        option(value="director", selected=(user.application.rank == 'director')) Program Director
+                
+                .form-group(class=(user.application.rank ? '' : 'no-rank'))
+                    label(for='superior') Superior
+                        +help('superior')
+                    select#directors.form-control(name="directorId", required)
+                        each d in directors
+                            option(value=d._id)= d.name.full
+                    select#ambassadors.form-control(name="ambassadorId", required)
+                        each a in ambassadors
+                            option(value=a._id)= a.name.full
+
                 .form-group
                     label(for="why") Why Kids Tales?
                     textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= user.application.why
@@ -59,3 +44,4 @@ block content
                     input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
 
                 button.btn.btn-danger(type="submit") Save
+                script(src='/javascripts/application.js')

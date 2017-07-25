@@ -2,3 +2,7 @@ while message = flash.shift()
     .alert.alert-dismissible(role='alert', class='alert-' + (message.type == 'error' ? 'danger' : message.type))
         b #{message.type.toUpperCase()} 
         span= message.message
+
+.alert.alert-danger(role='alert')
+    b WARNING 
+    span This website is undergoing major revisions right now. It will not work properly.

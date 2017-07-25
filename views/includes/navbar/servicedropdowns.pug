@@ -1,19 +1,6 @@
 // FUNDRAISING
 if user.verified
 
-    each i in activeInvolvements
-        li.dropdown(class=helpers.activeLink("/camps/" + i.camp._id, pagePath))
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                b Camp #{i.camp.location.name}
-                span.caret
-            ul.dropdown-menu
-                li.dropdown-header.rank-name= i.rank
-                li
-                    a(href="/camps/" + i.camp._id) Overview
-                li.divider(role='separator')
-                li(class=(i.camp.ready ? '' : 'disabled'), title=(i.camp.ready ? '' : 'Fundraising opens once all camp ranks are filled.'))
-                    a(href=(i.camp.ready ? '/camps/' + i.camp._id + '/fundraising' : '#')) Fundraising
-
     // Administrator actions (if admin)
     if user.admin
         li.dropdown(class=helpers.activeLink('/administration', pagePath))
@@ -28,8 +15,6 @@ if user.verified
                 li.divider(role='separator')
                 li(class=helpers.activeLink('/administration/fundraising', pagePath), title="Manage overall fundraising efforts.")
                     a(href="/administration/fundraising") Overall Fundraising
-                li(class=helpers.activeLink('/administration/unverified', pagePath), title="Verify pending new users.")
-                    a(href="/administration/unverified") Unverified Users
     
     li(class=helpers.activeLink("/camp", pagePath), title="View the list of all camps active and inactive and see details.")
         a(href="/camps")

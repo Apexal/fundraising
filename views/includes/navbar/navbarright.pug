@@ -1,21 +1,24 @@
 ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
-        li.hidden-xs
-            a.user-image-link(href="/setup")
-                img.user-image(src="/images/" + user.profileImageName)
+        if user.verified
+            li.hidden-xs
+                a.user-image-link(href="/profile")
+                    img.user-image(src="/images/" + user.profileImageName)
         li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                 if user.admin
                     b Admin
                 else if !user.verified
                     b Unverified
+                else
+                    b= user.rankName
                 |  #{user.name.full}
                 span.caret
             ul.dropdown-menu
                 if user.verified
                     li(title="Edit your profile.")
-                        a(href='/setup') Edit Profile
+                        a(href='/profile') Edit Profile
                     li(title="View your public profile.")
                         a(href='/users/' + user.email) View Profile
                     li.divider(role='separator')

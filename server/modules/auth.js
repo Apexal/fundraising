@@ -30,16 +30,16 @@ module.exports = (User) => {
                     user = new User({
                         _id: profile.id,
                         email,
-                        camps: [],
                         name: {
                             first: profile.name.givenName,
                             last: profile.name.familyName
-                        }
+                        },
+                        verified: false,
+                        admin: false
                     });
 
-                    sendEmail(user.email, 'Welcome to Kids Tales', `<h2>Welcome to Kids Tales!</h2><p>Please fill out the application on the website and wait for a higher up to approve your application. You will be emailed once this happens and will then have full access to the website.</p>`);
-
                     user.save();
+                    sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                 }
                 console.log(`Logging in ${email}...`)
                 return done(null, user);
