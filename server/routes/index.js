@@ -29,21 +29,27 @@ const upload = multer({
 });
 
 /* Determine which homepage to show based on whether logged in and verified or not */
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     
     // TODO: make customizable
     res.locals.latestNews = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit justo in orci auctor rhoncus. Sed vitae odio dignissim, suscipit lacus eget, laoreet dolor.";
     
-    if (req.isAuthenticated()) {
-        // Unverified users get sent to the application
-        if (req.user.verified) {
+    // Not logged in users get shown the info page
+    if (!req.isAuthenticated()) return res.render('index/info');
+    
+    // Unverified users get sent to the application
+    if (!req.user.verified) return res.redirect('/application');
+
+    if (req.user.rank == 'teacher') return res.render('index/homepage');
+
+    req.db.User.find({ 'application.superior': req.user._id, verified: false })
+        .exec()
+        .then(applicants => {
+            res.locals.applicants = applicants;
+
             return res.render('index/homepage');
-        } else {
-            return res.redirect('/application');
-        }
-    } else {
-        return res.render('index/info');
-    }
+        })
+        .catch(next);
 });
 
 /* Show login form page */

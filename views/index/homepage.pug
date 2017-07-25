@@ -21,17 +21,12 @@ block content
                         +icon('github', 'Website Issues')
     
     if user.verified
-        .row
-            .col-xs-12.col-md-6
-                .page-header
-                    h2 Latest News
-                        +help('latest-news')
+        if user.rank == 'teacher'
 
-                blockquote
-                    p= latestNews
-                    footer The Administrators
-                if user.admin
-                    a.btn.btn-danger(href='/administration', title='Set a public message for all users to see.') Edit
+        else if user.rank == 'director'
+            include /directors/index
+        else if user.rank == 'ambassador'
+            span Coming soon...
     else
         .col-xs-12.text-center
             h3.text-muted Once you are verified you will be able to view updates from the administrators and access your current camp involvements.

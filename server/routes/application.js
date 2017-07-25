@@ -93,7 +93,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
         .then(superior => {
             if (newSuperior) {
                 sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.application.rank });
-                sendEmail(req.user.email, 'Application Updated', 'updatedApplication', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
+                sendEmail(req.user.email, 'Application Updated', 'applicationUpdated', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
             }
 
             const message = (newSuperior ? `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.` : `Your application has been updated. It will be submitted once you choose a rank and superior.`);
