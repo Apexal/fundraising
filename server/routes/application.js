@@ -7,7 +7,7 @@ const DOC_TYPES = ['.txt', '.doc', '.docx'];
 
 /* Save uploaded writing sample files to the writingsamples directory with the naming scheme 'user-<user-id>.<extension>' */
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/'),
+    destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/writingsamples'),
     filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
     fileFilter: (req, file, cb) => {
         if(DOC_TYPES.includes(file.mimetype)) {
