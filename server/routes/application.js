@@ -78,11 +78,13 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
         req.user.application.writingFileName = req.file.filename;
 
     req.user.application.why = why;
-    req.user.application.rank = (['teacher', 'director', 'ambassador'].includes(rank) ? rank : 'teacher');
     
-    const newSuperior = (req.user.application.superior != superiorId);
-    req.user.application.superior = superiorId;
-    
+    const newSuperior = (rank !== 'none' && req.user.application.superior != superiorId);
+    if (rank !== 'none') {
+        req.user.application.rank = rank;
+        req.user.application.superior = superiorId;
+    }
+
     req.user.save()
         .then(user => {
             req.user = user;
@@ -94,7 +96,9 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
                 sendEmail(req.user.email, 'Application Updated', 'updatedApplication', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
             }
 
-            req.flash('info', `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.`);
+            const message = (newSuperior ? `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.` : `Your application has been updated. It will be submitted once you choose a rank and superior.`);
+
+            req.flash('info', message);
             res.redirect('/application');
         })
         .catch(next);

@@ -183,13 +183,31 @@ textarea {
     max-height: 200px;
 }
 
-
 .contact-info div {
     padding-bottom: 10px;
 }
 
+.applicant-panel blockquote {
+    font-size: 1em;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 0;
+}
+
+.applicant-panel .input-group {
+    width: 100%;
+}
+
 .applicant-info-section * {
     display: block;
+}
+
+.form-group.no-rank * {
+    display: none;
+}
+
+.application-form #ambassadors {
+    display: none;
 }
 
 @media only screen and (max-width: 768px) {
