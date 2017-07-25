@@ -1,9 +1,10 @@
 ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
-        li.hidden-xs
-            a.user-image-link(href="/setup")
-                img.user-image(src="/images/" + user.profileImageName)
+        if user.verified
+            li.hidden-xs
+                a.user-image-link(href="/profile")
+                    img.user-image(src="/images/" + user.profileImageName)
         li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                 if user.admin
