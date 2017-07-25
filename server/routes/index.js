@@ -40,16 +40,7 @@ router.get('/', (req, res, next) => {
     // Unverified users get sent to the application
     if (!req.user.verified) return res.redirect('/application');
 
-    if (req.user.rank == 'teacher') return res.render('index/homepage');
-
-    req.db.User.find({ 'application.superior': req.user._id, verified: false })
-        .exec()
-        .then(applicants => {
-            res.locals.applicants = applicants;
-
-            return res.render('index/homepage');
-        })
-        .catch(next);
+    return res.render('index/homepage');
 });
 
 /* Show login form page */

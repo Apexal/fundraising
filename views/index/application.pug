@@ -20,10 +20,10 @@ block content
                         +help('ranks')
                     select#rank.form-control(name="rank", required)
                         option(value='none') Choose Rank
-                        option(value="teacher", selected=(user.application.rank == 'teacher')) Teacher
-                        option(value="director", selected=(user.application.rank == 'director')) Program Director
+                        option(value="teacher", selected=(user.rank == 'teacher')) Teacher
+                        option(value="director", selected=(user.rank == 'director')) Program Director
                 
-                .form-group(class=(user.application.rank ? '' : 'no-rank'))
+                .form-group(class=(user.rank ? '' : 'no-rank'))
                     label(for='superior') Superior
                         +help('superior')
                     select#directors.form-control(name="directorId", required)

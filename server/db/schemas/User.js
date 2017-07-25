@@ -14,13 +14,12 @@ const userSchema = new Schema({
         last: { type: String, trim: true, trim: true }
     },
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
+    superior: { type: Number, ref: 'User' },
     rankInfo: Object, // Depends on rank
     application: {
         recommender: { type: Number, ref: 'User' },
         why: { type: String, trim: true },
-        writingFileName: { type: String, trim: true },
-        rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
-        superior: { type: Number, ref: 'User' }
+        writingFileName: { type: String, trim: true }
     },
     registeredDate: { type: Date, default: Date.now },
     admin: { type: Boolean, default: false },

@@ -8,13 +8,33 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = `${req.user.rankName} Management`;
 
-    res.render(`${req.user.rank}s/index`);
+    const done = () => res.render(`${req.user.rank}s/index`);
+
+    if (req.user.rank == 'teacher') {
+        return done();
+    } else if (req.user.rank == 'director') {
+        return req.db.User.find({ superior: req.user._id, verified: false })
+            .exec()
+            .then(applicants => {
+                res.locals.applicants = applicants;
+
+                return req.db.User.find({ rank: 'teacher', verified: true, superior: req.user._id })
+                    .exec();
+            })
+            .then(teachers => {
+                res.locals.teachers = teachers;
+            })
+            .then(done)
+            .catch(next);
+    } else {
+        return done()
+    }    
 });
 
 /* Accept an applicant */
 router.post(['/accept', '/deny'], (req, res, next) => {
     req.db.User.findOne({ _id: req.query.userId, verified: false })
-        .populate('application.superior')
+        .populate('superior')
         .exec()
         .then(applicant => {
             if (!applicant) throw new Error(`Failed to find unverified user with id ${req.query.userId}.`);
@@ -27,12 +47,11 @@ router.post(['/accept', '/deny'], (req, res, next) => {
 });
 
 router.post('/accept', (req, res, next) => {
-    req.applicant.rank = req.applicant.application.rank;
     req.applicant.verified = true;
 
     return req.applicant.save()
         .then(applicant => {
-            sendEmail(applicant.email, 'Application Accepted', 'applicationAccepted', { firstName: applicant.name.first, rank: applicant.rank, superiorFullName: applicant.application.superior.name.full });
+            sendEmail(applicant.email, 'Application Accepted', 'applicationAccepted', { firstName: applicant.name.first, rank: applicant.rank, superiorFullName: applicant.superior.name.full });
 
             req.flash('success', `You have successfully verified ${applicant.name.full} to be ${applicant.rank} under you.`);
             res.redirect('/');
@@ -43,9 +62,9 @@ router.post('/accept', (req, res, next) => {
 /* Deny an applicant */
 router.post('/deny', (req, res, next) => {
     
-    const oldSuperior = req.applicant.application.superior;
-    req.applicant.application.superior = undefined;
-    req.applicant.application.rank = undefined;
+    const oldSuperior = req.applicant.superior;
+    req.applicant.superior = undefined;
+    req.applicant.rank = undefined;
 
     return req.applicant.save()
         .then(applicant => {

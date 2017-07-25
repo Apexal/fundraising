@@ -79,20 +79,20 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
 
     req.user.application.why = why;
     
-    const newSuperior = (rank !== 'none' && req.user.application.superior != superiorId);
+    const newSuperior = (rank !== 'none' && req.user.superior != superiorId);
     if (rank !== 'none') {
-        req.user.application.rank = rank;
-        req.user.application.superior = superiorId;
+        req.user.rank = rank;
+        req.user.superior = superiorId;
     }
 
     req.user.save()
         .then(user => {
             req.user = user;
-            return req.db.User.findById(user.application.superior).exec();
+            return req.db.User.findById(user.superior).exec();
         })
         .then(superior => {
             if (newSuperior) {
-                sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.application.rank });
+                sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.rank });
                 sendEmail(req.user.email, 'Application Updated', 'applicationUpdated', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
             }
 
