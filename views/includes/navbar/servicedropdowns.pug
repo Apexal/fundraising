@@ -17,8 +17,8 @@ if user.verified
                 li.divider(role='separator')
                 li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
                     a(href='/administration/fundraising') Overall Fundraising
-
-    li.dropdown
+    
+    li.dropdown.hidden-lg
         a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') View
             span.caret
         ul.dropdown-menu
@@ -34,5 +34,17 @@ if user.verified
                 li(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
                     a(href='/users') 
                         +icon('address-book', 'Users')
+    
+    li.visible-lg(class=helpers.activeLink('/camp', pagePath), title='View the list of all camps active and inactive and see details.')
+        a(href='/camps')
+            +icon('map-marker', 'Camps')
+
+    li.visible-lg(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for camps past and present and see details.')
+        a(href='/locations')
+            +icon('globe', 'Locations')
+
+    li.visible-lg(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
+        a(href='/users') 
+            +icon('address-book', 'Users')
 else
     i.navbar-text You will be able to use services once verified.
