@@ -25,7 +25,7 @@ const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
 const fakeTeacher = {
     _id: 1,
-    email: 'fmatranga18@regis.org',
+    email: 'thefrank.matranga@gmail.com',
     age: 17,
     grade: 12,
     phoneNumber: '888-888-8888',
@@ -68,7 +68,7 @@ models.User.findOneAndUpdate({ _id: 2 }, fakeDirector, options, function(error, 
 
 const fakeAmbassador = {
     _id: 3,
-    email: 'fmatranga18@regis.org',
+    email: 'the.frankmatranga@gmail.com',
     age: 17,
     grade: 12,
     phoneNumber: '888-888-8888',
