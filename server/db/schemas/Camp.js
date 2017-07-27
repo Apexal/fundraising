@@ -22,6 +22,7 @@ const campSchema = new Schema({
         language: { type: String, trim: true, default: 'English' },
         extra: { type: String, trim: true }
     },
+    claimed: { type: Boolean, default: false },
     dateAdded: { type: Date, required: true }
 }, {
     toObject: {
