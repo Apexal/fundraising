@@ -30,6 +30,13 @@ mixin applicant(u)
                 form(action="/management/deny?userId=" + u._id, method="POST")
                     button.btn.btn-danger Deny
 
+mixin teacher(t)
+    .col-xs-12.col-sm-3.col-lg-2.text-center.teacher-director-page
+        a(href='/users/' + t.email)
+            img(src='/images/' + t.profileImageName, title=t.name.full + ' (' + t.email + ')', alt='Profile image of ' + t.name.full)
+            br
+            b= t.name.full
+
 block content
     .row
         .col-xs-12
@@ -64,6 +71,7 @@ block content
         .col-xs-12
             if teachers.length > 0
                 each t in teachers
-                    p= t.name.full
+                    +teacher(t)
+
             else
                 p.text-center.text-muted No teachers currently.
