@@ -38,40 +38,44 @@ mixin teacher(t)
             b= t.name.full
 
 block content
-    .row
-        .col-xs-12
-            .jumbotron
-                h1 Program Director Management
-                p= helpers.getHelpInfo('directors')
-            hr
-    .row
-        .col-xs-12
-            .page-header
-                h1 Active Camp
-                    a.btn.btn-success.right(href='/camps/schedule') Schedule New Camp
-        .col-xs-12
-            p.text-center.text-muted You are not currently directing a camp.
-    .row.director-row
-        .col-xs-12
-            .page-header
-                h2 Your Applicants
-                    a.btn.btn-warning.right(href='/camps/schedule') Send Invites
-        .col-xs-12
-            if applicants.length > 0
-                each a in applicants
-                    +applicant(a)
-            else
-                p.text-center.text-muted No applicants currently.
-    .row
-        .col-xs-12
-            .page-header
-                h2 Your Teachers
-                    small  #{teachers.length} total
-                    a.btn.btn-info.right(href='/camps/schedule') Send Invites
-        .col-xs-12
-            if teachers.length > 0
-                each t in teachers
-                    +teacher(t)
+    .director-management
+        .row
+            .col-xs-12
+                .jumbotron
+                    h1 Program Director Management
+                    p= helpers.getHelpInfo('directors')
+                hr
+        .row.active-camp
+            .col-xs-12
+                .page-header
+                    h1 Active Camp
+            .col-xs-12
+                p.text-center.text-muted You are not currently directing a camp.
+                    br
+                    br
+                    a.btn.btn-info(href='/camps') Claim Camp
+                    a.btn.btn-success(href='/camps/schedule') Schedule New Camp
+        .row
+            .col-xs-12
+                .page-header
+                    h2 Your Teachers
+                        small  #{teachers.length} total
+                        a.btn.btn-info.right(href='/management/request') Request Users
+            .col-xs-12
+                if teachers.length > 0
+                    each t in teachers
+                        +teacher(t)
 
-            else
-                p.text-center.text-muted No teachers currently.
+                else
+                    p.text-center.text-muted No teachers currently.
+        .row
+            .col-xs-12
+                .page-header
+                    h2 Your Applicants
+                        a.btn.btn-warning.right(href='/management/invite') Send Invites
+            .col-xs-12
+                if applicants.length > 0
+                    each a in applicants
+                        +applicant(a)
+                else
+                    p.text-center.text-muted No applicants currently.

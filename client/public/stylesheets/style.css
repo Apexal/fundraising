@@ -215,6 +215,10 @@ textarea {
     border: 4px solid #222;
 }
 
+.director-management .active-camp a:first-of-type {
+    margin-right: 5px;
+}
+
 @media only screen and (max-width: 768px) {
     .homepage-jumbotron h1 {
         text-align: center;
