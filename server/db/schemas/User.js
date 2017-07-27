@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
 const userSchema = new Schema({
     _id: { type: Number },
@@ -32,6 +33,8 @@ const userSchema = new Schema({
         virtuals: true 
     }
 });
+
+userSchema.plugin(mongoosePaginate);
 
 userSchema.methods.findCamps = function() {
     return this.model('Camp').find().or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   

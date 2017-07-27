@@ -38,7 +38,7 @@ router.get('/list', (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     if (page < 1) return res.redirect('/camps/list?page=1');
 
-    req.db.Camp.paginate({}, { page, limit: 10 })
+    req.db.Camp.paginate({}, { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'] })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;

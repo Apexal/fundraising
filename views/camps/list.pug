@@ -1,5 +1,10 @@
 extends /layout
 
+mixin camp(c)
+    .camp
+        =c.location.name
+
+
 block content
     .row
         .col-xs-12
@@ -21,7 +26,6 @@ block content
                         else
                             li.disabled
                                 span &raquo;
-                h1 Camps
+                h1 All Camps
     .row
         .col-xs-12
-            
