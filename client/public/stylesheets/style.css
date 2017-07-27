@@ -219,6 +219,10 @@ textarea {
     margin-right: 5px;
 }
 
+.camp-list-pagination {
+    margin-top: 0;
+}
+
 @media only screen and (max-width: 768px) {
     .homepage-jumbotron h1 {
         text-align: center;

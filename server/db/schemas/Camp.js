@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const moment = require('moment');
+const mongoosePaginate = require('mongoose-paginate');
 
 const campSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
@@ -32,6 +33,8 @@ const campSchema = new Schema({
         virtuals: true 
     }
 });
+
+campSchema.plugin(mongoosePaginate);
 
 campSchema.methods.findApplicants = function() {
     return this.model('User').find({ verified: false, 'application.camp': this._id }).exec();   

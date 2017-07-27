@@ -33,6 +33,22 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+/* LIST all camps (paginated) and allow filtering */
+router.get('/list', (req, res, next) => {
+    const page = parseInt(req.query.page) || 1;
+    if (page < 1) return res.redirect('/camps/list?page=1');
+
+    req.db.Camp.paginate({}, { page, limit: 10 })
+        .then(result => {
+            res.locals.page = result.page;
+            res.locals.pages = result.pages;
+            res.locals.users = result.docs;
+
+            res.render('camps/list');
+        })
+        .catch(next);
+});
+
 router.get('/schedule', (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Camp';
 
