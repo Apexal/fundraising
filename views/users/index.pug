@@ -1,5 +1,34 @@
 extends /layout
 
+mixin user(u)
+    .col-xs-12.col-sm-6.col-lg-4
+        .panel.user-panel(class=(u.admin ? 'panel-primary' : 'panel-default'))
+            .panel-heading
+                small.text-muted.right.hidden-xs registered 
+                    =moment(u.registeredDate).fromNow()
+                h1.panel-title
+                    if u.admin
+                        b Administrator
+                    else
+                        b=u.rankName
+                    |  #{u.name.full}
+            .panel-body
+                .media
+                    .media-left
+                        a(href="/users/" + u.email)
+                            img.large-profile-image(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
+                    .media-right
+                        p.text-muted.text-center #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
+                            br
+                            b Phone #: 
+                            span= u.phoneNumber
+                            br
+                            a(href="mailto:" + u.email)= u.email
+                    br
+                    a.btn(href="/users/" + u.email, class=(u.admin ? 'btn-primary' : 'btn-default')) View
+                    if user.admin
+                        a.btn.btn-danger.right(href="/users/" + u.email + "/edit") Edit
+
 block content
     .row
         .col-xs-12
@@ -20,35 +49,4 @@ block content
         if search
             h3 Search Results
         each u in users
-            .col-xs-12.col-md-6.col-lg-4
-                .panel.user-panel(class=(u.admin ? 'panel-primary' : 'panel-default'))
-                    .panel-heading
-                        h1.panel-title
-                            if u.admin
-                                b Administrator
-                            else
-                                b=u.rankName
-                            |  #{u.name.full}
-                    .panel-body
-                        .media
-                            .media-left
-                                a(href="/users/" + u.email)
-                                    img.large-profile-image(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
-                            .media-right
-                                .email
-                                    b Email
-                                    br
-                                    a(href="mailto:" + u.email) #{u.email}
-                                .phone-number
-                                    br
-                                    
-                                    b Phone Number
-                                    br
-                                    if u.phoneNumber
-                                        span= u.phoneNumber
-                                    else
-                                        span.text-muted None given.
-                            br
-                            a.btn(href="/users/" + u.email, class=(u.admin ? 'btn-primary' : 'btn-default')) View
-                            if user.admin
-                                a.btn.btn-danger.right(href="/users/" + u.email + "/edit") Edit
+            +user(u)
