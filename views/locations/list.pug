@@ -1,0 +1,15 @@
+extends /layout
+
+mixin location(l)
+    .location
+        =l.name
+
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                include /includes/pagination
+                h1 All Locations
+    .row
+        .col-xs-12

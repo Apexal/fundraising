@@ -42,7 +42,7 @@ router.get('/list', (req, res, next) => {
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
-            res.locals.users = result.docs;
+            res.locals.camps = result.docs;
 
             res.render('camps/list');
         })

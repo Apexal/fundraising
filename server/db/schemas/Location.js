@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
 const locationSchema = new Schema({
     name: { type: String, trim: true, unique: true, required: true },
@@ -7,6 +8,8 @@ const locationSchema = new Schema({
     description: { type: String, trim: true },
     dateAdded: { type: Date, required: true }
 });
+
+locationSchema.plugin(mongoosePaginate);
 
 locationSchema.methods.findCamps = function() {
     return this.model('Camp').find({ location: this._id })

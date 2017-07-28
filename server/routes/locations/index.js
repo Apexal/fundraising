@@ -8,14 +8,15 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Locations';
 
-    req.db.Location.find()
+    req.db.Camp.find()
         .exec()
         .then(locations => {
             res.locals.locations = locations;
 
             // Determine active locations by getting all active camps and taking the locations
             return req.db.Camp.find({ endDate: { "$gt": moment().startOf('day').toDate() }});
-        }).then(activeCamps => {
+        })
+        .then(activeCamps => {
             res.locals.activeCamps = activeCamps;
             res.locals.activeLocations = res.locals.locations.filter(l => activeCamps.filter(c => c.location == l.id).length > 0);
             res.locals.inactiveLocations = res.locals.locations.filter(l => res.locals.activeLocations.indexOf(l) == -1); // All locations not in activeLocations
@@ -23,6 +24,22 @@ router.get('/', (req, res, next) => {
             res.locals.activeLocations.forEach(l => l.camps = activeCamps.filter(c => c.location.equals(l._id)));
 
             res.render('locations/index');
+        })
+        .catch(next);
+});
+
+/* LIST all locations (paginated) and allow filtering */
+router.get('/list', (req, res, next) => {
+    const page = parseInt(req.query.page) || 1;
+    if (page < 1) return res.redirect('/locations/list?page=1');
+
+    req.db.Location.paginate({}, { page, limit: 10 })
+        .then(result => {
+            res.locals.page = result.page;
+            res.locals.pages = result.pages;
+            res.locals.locations = result.docs;
+
+            res.render('locations/list');
         })
         .catch(next);
 });
