@@ -1,0 +1,17 @@
+nav.right
+    ul.pagination
+        if page <= 1
+            li.disabled
+                span &laquo;
+        else
+            li
+                a(href='?page=' + (page-1)) &laquo;
+        each _, i in Array(pages)
+            li(class=(page == i+1 ? 'active': ''))
+                a(href='?page=' + (i+1))= (i+1)
+        if page < pages
+            li
+                a(href='?page=' + (page+1)) &raquo;
+        else
+            li.disabled
+                span &raquo;

@@ -4,9 +4,10 @@ block content
     .row
         .col-xs-12
             .page-header
+                include /includes/pagination
                 h1 User List
                     +help('users')
-                    small.right #{users.length} total
+                    small  #{users.length} total
     .row
         .col-xs-12.user-search
             form

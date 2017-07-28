@@ -7,25 +7,26 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Users';
 
-    req.db.User.find({ verified: true })
-        .exec()
-        .then(users => {
-            res.locals.users = users;
-            
-            if (req.query.search) {
-                const s = req.query.search;
-                // SEARCH
-                res.locals.users = users.filter(user => {
-                    if (user.name.full.includes(s)) return true;
-                    if (user.email.includes(s)) return true;
-                    if (user.phoneNumber.includes(s)) return true;
-                    if (user.location.includes(s)) return true;
+    const page = parseInt(req.query.page) || 1;
+    if (page < 1) return res.redirect('/users?page=1');
 
-                    return false;
-                });
+    const s = req.query.search;
+    const query = {
+        $or: [
+            { 'name.full': { $regex: s, $options: 'i' } },
+            { email: { $regex: s, $options: 'i' } },
+            { phoneNumber: { $regex: s, $options: 'i' } },
+            { location: { $regex: s, $options: 'i' } }
+        ]
+    };
 
-                res.locals.search = s;
-            }
+    req.db.User.paginate((s ? query : {}), { page, limit: 10 })
+        .then(result => {
+            res.locals.page = result.page;
+            res.locals.pages = result.pages;
+            res.locals.users = result.docs;
+
+            if (s) res.locals.search = s;
 
             res.render('users/index');
         })

@@ -11,8 +11,9 @@ const userSchema = new Schema({
     phoneNumber: { type: String, trim: true },
     location: { type: String, trim: true },
     name: {
-        first: { type: String, trim: true, trim: true },
-        last: { type: String, trim: true, trim: true }
+        full: { type: String, required: true },
+        first: { type: String, required: true, trim: true },
+        last: { type: String, required: true, trim: true }
     },
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
     superior: { type: Number, ref: 'User' },
@@ -42,10 +43,6 @@ userSchema.methods.findCamps = function() {
 
 userSchema.virtual('rankName').get(function() { 
     return { teacher: 'Teacher', director: 'Program Director', ambassador: 'Ambassador' }[this.rank];
-});
-
-userSchema.virtual('name.full').get(function() { 
-    return this.name.first + ' ' + this.name.last;
 });
 
 module.exports = { name: 'User', schema: userSchema };
