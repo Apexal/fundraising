@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
         ]
     };
 
-    req.db.User.paginate((s ? query : {}), { page, limit: 10 })
+    req.db.User.paginate((s ? query : {}), { page, limit: 10, sort: { registeredDate: 1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
