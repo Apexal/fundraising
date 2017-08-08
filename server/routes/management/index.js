@@ -31,6 +31,14 @@ router.get('/', (req, res, next) => {
     }    
 });
 
+router.post('/invite', (req, res, next) => {
+    const email = req.body.email;
+    sendEmail(email, 'Kids Tales Invite', 'teacherInvite', { superiorFullName: req.user.name.full });
+
+    req.flash('success', `An invitation has been sent to ${email}.`);
+    res.redirect('/management/applicants');
+});
+
 router.get('/applicants', (req, res, next) => {
     if (req.user.rank == 'teacher') {
         req.flash('warning', 'Teachers cannot have applicants.');
