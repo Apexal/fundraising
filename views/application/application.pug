@@ -1,0 +1,11 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .jumbotron
+                h1 Kids Tales Teacher Application
+                p= helpers.getHelpInfo('application')
+        
+        .col-xs-12
+            include /application/applicationform

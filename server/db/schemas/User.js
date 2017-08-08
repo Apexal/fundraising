@@ -11,7 +11,7 @@ const userSchema = new Schema({
     phoneNumber: { type: String, trim: true },
     location: { type: String, trim: true },
     name: {
-        full: { type: String, required: true },
+        full: { type: String, required: true, trim: true },
         first: { type: String, required: true, trim: true },
         last: { type: String, required: true, trim: true }
     },
@@ -21,7 +21,8 @@ const userSchema = new Schema({
     application: {
         recommender: { type: Number, ref: 'User' },
         why: { type: String, trim: true },
-        writingFileName: { type: String, trim: true }
+        writingFileName: { type: String, trim: true },
+        updatedAt: { type: Date }
     },
     registeredDate: { type: Date, default: Date.now },
     admin: { type: Boolean, default: false },

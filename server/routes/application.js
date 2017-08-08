@@ -46,7 +46,7 @@ router.get('/', (req, res, next) => {
             res.locals.directors = superiors.filter(s => s.rank == 'director');
             res.locals.ambassadors = superiors.filter(s => s.rank == 'ambassador');
 
-            return res.render('index/application');
+            return res.render('application/application');
         })
         .catch(next);
 });
@@ -73,6 +73,8 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
     
+    req.user.application.updatedAt = new Date();
+
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
     if (req.file)
         req.user.application.writingFileName = req.file.filename;
