@@ -31,6 +31,7 @@ router.get('/', (req, res, next) => {
     }    
 });
 
+/* Send custom invitation email to invited */
 router.post('/invite', (req, res, next) => {
     const email = req.body.email;
     sendEmail(email, 'Kids Tales Invite', 'teacherInvite', { superiorFullName: req.user.name.full });
@@ -39,6 +40,7 @@ router.post('/invite', (req, res, next) => {
     res.redirect('/management/applicants');
 });
 
+/* List all applicants and allow invites */
 router.get('/applicants', (req, res, next) => {
     if (req.user.rank == 'teacher') {
         req.flash('warning', 'Teachers cannot have applicants.');
@@ -58,6 +60,7 @@ router.get('/applicants', (req, res, next) => {
         .catch(next);
 });
 
+/* Display the specific application of one user and offer actions */
 router.get('/applicants/:email', (req, res, next) => {
     if (req.user.rank == 'teacher') {
         req.flash('warning', 'Teachers cannot have applicants.');
@@ -77,7 +80,7 @@ router.get('/applicants/:email', (req, res, next) => {
         .catch(next);
 });
 
-/* Accept an applicant */
+/* Get the user about to be denied/accepted */
 router.post(['/applicants/:email/accept', '/applicants/:email/deny'], (req, res, next) => {
     req.db.User.findOne({ email: req.params.email, verified: false })
         .populate('superior')
@@ -92,6 +95,7 @@ router.post(['/applicants/:email/accept', '/applicants/:email/deny'], (req, res,
         .catch(next);
 });
 
+/* Accept an applicant */
 router.post('/applicants/:email/accept', (req, res, next) => {
     req.applicant.verified = true;
 
