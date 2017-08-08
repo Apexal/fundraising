@@ -1,8 +1,16 @@
 // FUNDRAISING
 if user.verified
-    li(class=helpers.activeLink('/management', pagePath), title='View the list of all camps active and inactive and see details.')
-        a(href='/management')
-            +icon('cogs', 'Management')
+    li.dropdown(class=helpers.activeLink('/management', pagePath))
+        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            +icon('cogs', 'Management') 
+            span.caret
+        ul.dropdown-menu
+            li
+                a(href='/management') Overview
+            li.divider(role='separator')
+            li(class=helpers.activeLink('/management/applicants', pagePath))
+                a(href='/management/applicants') Applicants
+  
     // Administrator actions (if admin)
     if user.admin
         li.dropdown(class=helpers.activeLink('/administration', pagePath))
