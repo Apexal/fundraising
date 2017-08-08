@@ -31,6 +31,7 @@ module.exports = (User) => {
                         _id: profile.id,
                         email,
                         name: {
+                            full: `${profile.name.givenName} ${profile.name.familyName}`,
                             first: profile.name.givenName,
                             last: profile.name.familyName
                         },
