@@ -32,7 +32,7 @@ router.get('/', (req, res, next) => {
 });
 
 /* Send custom invitation email to invited */
-router.post('/invite', (req, res, next) => {
+router.post('/applicants/invite', (req, res, next) => {
     const email = req.body.email;
     sendEmail(email, 'Kids Tales Invite', 'teacherInvite', { superiorFullName: req.user.name.full });
 

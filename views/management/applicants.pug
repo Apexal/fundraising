@@ -10,7 +10,7 @@ block content
             hr
     .row
         .col-xs-12
-            form
+            form(method='POST', action='/management/applicants/invite')
                 label(for='email') Invite Person
                 .input-group
                     input.form-control#email(type='text', name='email', placeholder='Email of person you wish to invite to be Teacher.', required)
