@@ -5,7 +5,8 @@ block content
         .col-xs-12
             .page-header
                 a.btn.btn-primary.right(href='/management/applicants/') All Applicants
-                h1 Applicant #{applicant.name.full}
+                h1 Applicant #{applicant.name.full} 
+                    small(title=moment(applicant.application.updatedAt).format('dddd, MMMM Do YYYY, h:mm a')) updated #{moment(applicant.application.updatedAt).fromNow()}
     .row
         .col-xs-12
             - var u = applicant

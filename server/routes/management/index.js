@@ -32,6 +32,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/applicants', (req, res, next) => {
+    if (req.user.rank == 'teacher') {
+        req.flash('warning', 'Teachers cannot have applicants.');
+        return res.redirect('/management');
+    }
+
     res.locals.pageTitle = `Your Applicants`;
 
     req.db.User.find({ superior: req.user._id, verified: false })
@@ -46,6 +51,11 @@ router.get('/applicants', (req, res, next) => {
 });
 
 router.get('/applicants/:email', (req, res, next) => {
+    if (req.user.rank == 'teacher') {
+        req.flash('warning', 'Teachers cannot have applicants.');
+        return res.redirect('/management');
+    }
+    
     req.db.User.findOne({ email: req.params.email, superior: req.user._id, verified: false })
         .exec()
         .then(applicant => {

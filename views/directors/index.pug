@@ -1,35 +1,5 @@
 extends /layout
 
-mixin applicant(u)
-    .col-xs-12.col-md-6
-        .panel.panel-default.applicant-panel
-            .panel-heading
-                h1.panel-title= u.name.full
-                    span.text-muted.right(title=moment(u.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(u.registeredDate).fromNow()
-            .panel-body
-                form.form(method="POST", action="/management/accept?userId=" + u._id)
-                    p.text-muted.text-center #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
-                        br
-                        b Phone #: 
-                        span= u.phoneNumber
-                        br
-                        a(href="mailto:" + u.email)= u.email
-                    hr
-                    blockquote
-                        p= u.application.why
-                        footer Why Kids Tales?
-                    hr
-                    if u.application.writingFileName
-                        a(href='/writingsamples/' + u.application.writingFileName, target='new')
-                            +icon('link', 'Writing Sample')
-                    else
-                        p.text-muted.text-center No writing sample uploaded yet.
-                    hr
-
-                    button.btn.btn-success.right Accept
-                form(action="/management/deny?userId=" + u._id, method="POST")
-                    button.btn.btn-danger Deny
-
 mixin teacher(t)
     .col-xs-12.col-sm-3.col-lg-2.text-center.teacher-director-page
         a(href='/users/' + t.email)
@@ -44,7 +14,9 @@ block content
                 .jumbotron
                     h1 Program Director Management
                     p= helpers.getHelpInfo('directors')
-                hr
+            .col-xs-12
+                a.btn.btn-danger.btn-lg(href='/management/applicants') View Applicants 
+                    span.badge= applicants.length
         .row.active-camp
             .col-xs-12
                 .page-header
@@ -68,14 +40,3 @@ block content
 
                 else
                     p.text-center.text-muted No teachers currently.
-        .row
-            .col-xs-12
-                .page-header
-                    h2 Your Applicants
-                        a.btn.btn-warning.right(href='/management/invite') Send Invites
-            .col-xs-12
-                if applicants.length > 0
-                    each a in applicants
-                        +applicant(a)
-                else
-                    p.text-center.text-muted No applicants currently.
