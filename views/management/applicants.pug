@@ -1,0 +1,30 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .jumbotron.clearfix
+                h1 Your Applicants
+                    small.right #{applicants.length} total
+                p SAdadasdasdasdasdads
+            hr
+    .row
+        .col-xs-12
+            if applicants.length > 0
+                table.table.table-striped.table-hover
+                    thead
+                        tr
+                            th Email
+                            th Name
+                            th Application Date
+                            th            
+                    tbody
+                        each a in applicants
+                            tr
+                                td= a.email
+                                td= a.name.full
+                                td= moment(a.application.updatedAt).format('dddd, MMMM Do YYYY, h:mm a')
+                                td
+                                    a.btn.btn-default.right(href='/management/applicants/' + a.email) View/Approve
+            else
+                p.text-muted.text-center You have no #[b applicants] at the moment.

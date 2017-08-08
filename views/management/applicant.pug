@@ -1,0 +1,19 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                a.btn.btn-primary.right(href='/management/applicants/') All Applicants
+                h1 Applicant #{applicant.name.full}
+    .row
+        .col-xs-12
+            - var u = applicant
+            include /application/applicationform
+            form(action="/management/deny?userId=" + u._id, method="POST")
+                    button.btn.btn-danger Deny
+    .row
+        .col-xs-12
+            hr
+
+            a.btn.btn-primary.right(href='/management/applicants/') All Applicants

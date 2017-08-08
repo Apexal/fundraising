@@ -5,33 +5,39 @@ form.application-form(method="POST", enctype="multipart/form-data")
     
     .page-header
         h3 Camp Info
-    .form-group
-        label(for="rank") Desired Rank
-            +help('ranks')
-        select#rank.form-control(name="rank", required)
-            option(value='none') Choose Rank
-            option(value="teacher", selected=(user.rank == 'teacher')) Teacher
-            option(value="director", selected=(user.rank == 'director')) Program Director
-    
-    .form-group(class=(user.rank ? '' : 'no-rank'))
-        label(for='superior') Superior
-            +help('superior')
-        select#directors.form-control(name="directorId", required)
-            each d in directors
-                option(value=d._id)= d.name.full
-        select#ambassadors.form-control(name="ambassadorId", required)
-            each a in ambassadors
-                option(value=a._id)= a.name.full
+
+    if applying
+        .form-group
+            label(for="rank") Desired Rank
+                +help('ranks')
+            select#rank.form-control(name="rank", required)
+                option(value='none') Choose Rank
+                option(value="teacher", selected=(u.rank == 'teacher')) Teacher
+                option(value="director", selected=(u.rank == 'director')) Program Director
+        
+        .form-group(class=(u.rank ? '' : 'no-rank'))
+            label(for='superior') Superior
+                +help('superior')
+            select#directors.form-control(name="directorId", required)
+                each d in directors
+                    option(value=d._id)= d.name.full
+            select#ambassadors.form-control(name="ambassadorId", required)
+                each a in ambassadors
+                    option(value=a._id)= a.name.full
 
     .form-group
         label(for="why") Why Kids Tales?
-        textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= user.application.why
+        textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= u.application.why
 
     .form-group
         label(for="writing-sample") Sample of Your Writing
-        if user.application.writingFileName
+        if u.application.writingFileName
             span.text-muted  Already uploaded.
         input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
-
-    button.btn.btn-danger(type="submit") Save
-    script(src='/javascripts/application.js')
+    hr
+    
+    if applying
+        button.btn.btn-danger(type="submit") Save
+        script(src='/javascripts/application.js')
+    else  
+        button.btn.btn-success.right(type="submit") Save & Accept

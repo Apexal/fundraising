@@ -8,4 +8,6 @@ block content
                 p= helpers.getHelpInfo('application')
         
         .col-xs-12
+            - var u = user
+            - var applying = true
             include /application/applicationform
