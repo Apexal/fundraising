@@ -70,12 +70,12 @@ router.get('/applicants/:email', (req, res, next) => {
 });
 
 /* Accept an applicant */
-router.post(['/accept', '/deny'], (req, res, next) => {
-    req.db.User.findOne({ _id: req.query.userId, verified: false })
+router.post(['/applicants/:email/accept', '/applicants/:email/deny'], (req, res, next) => {
+    req.db.User.findOne({ email: req.params.email, verified: false })
         .populate('superior')
         .exec()
         .then(applicant => {
-            if (!applicant) throw new Error(`Failed to find unverified user with id ${req.query.userId}.`);
+            if (!applicant) throw new Error(`Failed to find unverified user with email ${req.params.email}.`);
 
             req.applicant = applicant;
 
@@ -84,7 +84,7 @@ router.post(['/accept', '/deny'], (req, res, next) => {
         .catch(next);
 });
 
-router.post('/accept', (req, res, next) => {
+router.post('/applicants/:email/accept', (req, res, next) => {
     req.applicant.verified = true;
 
     return req.applicant.save()
@@ -98,17 +98,19 @@ router.post('/accept', (req, res, next) => {
 });
 
 /* Deny an applicant */
-router.post('/deny', (req, res, next) => {
+router.post('/applicants/:email/deny', (req, res, next) => {
     
     const oldSuperior = req.applicant.superior;
     req.applicant.superior = undefined;
+    
+    const oldRank = req.applicant.rank;
     req.applicant.rank = undefined;
 
     return req.applicant.save()
         .then(applicant => {
             sendEmail(applicant.email, 'Application Denied', 'applicationDenied', { firstName: applicant.name.first, rank: applicant.rank, superiorFullName: oldSuperior.name.full });
 
-            req.flash('danger', `You have denied ${applicant.name.full}'s application to be ${applicant.rank} under you. They have been notified.`);
+            req.flash('danger', `You have denied ${applicant.name.full}'s application to be ${oldRank} under you. They have been notified.`);
             res.redirect('/management/applicants');
         })
         .catch(next);
