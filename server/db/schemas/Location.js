@@ -11,8 +11,8 @@ const locationSchema = new Schema({
 
 locationSchema.plugin(mongoosePaginate);
 
-locationSchema.methods.findCamps = function() {
-    return this.model('Camp').find({ location: this._id })
+locationSchema.methods.findWorkshop = function() {
+    return this.model('Workshop').find({ location: this._id })
         .populate('location')
         .populate('ambassador')
         .populate('director')
@@ -20,15 +20,14 @@ locationSchema.methods.findCamps = function() {
         .exec();   
 }
 
-// Remove camps at location
+// Remove workshops at location
 locationSchema.pre('remove', function(next) {
-    console.log('removing camps...');
+    console.log('removing workshops...');
     
     // Delete one at a time so Fund data is also deleted
-    //this.model('Camp').remove({ location: this._id }, next);
-    this.findCamps()
-        .then(camps => {
-            camps.forEach(c => c.remove());
+    this.findWorkshops()
+        .then(workshops => {
+            workshops.forEach(w => w.remove());
             next();
         })
         .catch(next);

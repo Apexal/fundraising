@@ -4,10 +4,10 @@ block content
     .row
         .col-xs-12
             .page-header
-                h1 Schedule New Camp
+                h1 Schedule New Workshop
         
         .col-xs-12
-            form.schedule-new-camp(method='POST', onsubmit='return confirm("Are you sure all info entered is correct? (It can be edited at any time later on.)")')
+            form.schedule-new-workshop(method='POST', onsubmit='return confirm("Are you sure all info entered is correct? (It can be edited at any time later on.)")')
                 .form-group
                     label(for='start-date') Start Date
                     input.form-control#start-date(type='date', min=moment().format('YYYY-MM-DD'), max=moment().add(1, 'years').format('YYYY-MM-DD'), name='startDate', required)
@@ -33,7 +33,7 @@ block content
                     label #[input(type='checkbox')] Classroom Available?
 
                 hr
-                h3 Camp Contact
+                h3 Workshop Contact
                 .form-group
                     label(for='contact-name') Name
                     input.form-control#contact-name(type='text', name='contactName', maxlength='30', placeholder='John Smith', required)
@@ -61,6 +61,6 @@ block content
 
                 .form-group
                     label(for='extra') Extra Information
-                    textarea.form-control#extra(name='extra', rows='6', placeholder='(Optional) Any extra camp information.')
+                    textarea.form-control#extra(name='extra', rows='6', placeholder='(Optional) Any extra workshop information.')
                 
-                button.btn.btn-primary Schedule Camp
+                button.btn.btn-primary Schedule Workshop

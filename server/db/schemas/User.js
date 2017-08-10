@@ -38,8 +38,8 @@ const userSchema = new Schema({
 
 userSchema.plugin(mongoosePaginate);
 
-userSchema.methods.findCamps = function() {
-    return this.model('Camp').find().or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
+userSchema.methods.findWorkshops = function() {
+    return this.model('Workshop').find().or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
 }
 
 userSchema.virtual('rankName').get(function() { 

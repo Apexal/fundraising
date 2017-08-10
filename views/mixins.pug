@@ -6,8 +6,8 @@ mixin icon(name, text)
 mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, title=helpers.getHelpInfo(label))
 
-mixin camp-panel(c)
-    .panel.camp-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-camp-status=(c.ongoing ? 'ongoing' : 'future'))
+mixin workshop-panel(c)
+    .panel.workshop-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-workshop-status=(c.ongoing ? 'ongoing' : 'future'))
         .panel-heading
             if c.ongoing
                 span.text-muted.right Ends #{moment(c.endDate).fromNow()}
@@ -34,7 +34,7 @@ mixin camp-panel(c)
             
             //- if c.info
             //-     .well.well-sm
-            //-         b Camp Info
+            //-         b Workshop Info
             //-         p= helpers.limit(c.info, 50)
         
-            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/camps/" + c._id) Camp Overview
+            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/workshops/" + c._id) Workshop Overview

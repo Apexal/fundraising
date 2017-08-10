@@ -31,11 +31,11 @@ if user.verified
             span.caret
         ul.dropdown-menu
             if user.verified
-                li(class=helpers.activeLink('/camp', pagePath), title='View the list of all camps active and inactive and see details.')
-                    a(href='/camps')
-                        +icon('map-marker', 'Camps')
+                li(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
+                    a(href='/workshops')
+                        +icon('map-marker', 'Workshops')
 
-                li(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for camps past and present and see details.')
+                li(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
                     a(href='/locations')
                         +icon('globe', 'Locations')
 
@@ -43,11 +43,11 @@ if user.verified
                     a(href='/users') 
                         +icon('address-book', 'Users')
     
-    li.visible-lg(class=helpers.activeLink('/camp', pagePath), title='View the list of all camps active and inactive and see details.')
-        a(href='/camps')
-            +icon('map-marker', 'Camps')
+    li.visible-lg(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
+        a(href='/workshops')
+            +icon('map-marker', 'Workshops')
 
-    li.visible-lg(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for camps past and present and see details.')
+    li.visible-lg(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
         a(href='/locations')
             +icon('globe', 'Locations')
 

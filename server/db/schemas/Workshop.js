@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const moment = require('moment');
 const mongoosePaginate = require('mongoose-paginate');
 
-const campSchema = new Schema({
+const workshopSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
@@ -34,35 +34,35 @@ const campSchema = new Schema({
     }
 });
 
-campSchema.plugin(mongoosePaginate);
+workshopSchema.plugin(mongoosePaginate);
 
-campSchema.methods.findApplicants = function() {
-    return this.model('User').find({ verified: false, 'application.camp': this._id }).exec();   
+workshopSchema.methods.findApplicants = function() {
+    return this.model('User').find({ verified: false, 'application.workshop': this._id }).exec();   
 }
 
-campSchema.methods.findFundraisingGoals = function() {
-    return this.model('FundraisingGoal').find({ camp: this._id }).populate('submittedBy').exec();   
+workshopSchema.methods.findFundraisingGoals = function() {
+    return this.model('FundraisingGoal').find({ workshop: this._id }).populate('submittedBy').exec();   
 }
 
-campSchema.virtual('ready').get(function() { 
-    // Determine whether camp is ready to start
+workshopSchema.virtual('ready').get(function() { 
+    // Determine whether workshop is ready to start
     return (this.teachers.length > 0 && !!this.director && !!this.ambassador);
 });
 
-campSchema.virtual('active').get(function() { 
-    // Determine whether camp is going on right now
+workshopSchema.virtual('active').get(function() { 
+    // Determine whether workshop is going on right now
     return moment().isBefore(moment(this.endDate));
 });
 
-campSchema.virtual('ongoing').get(function() { 
-    // Determine whether camp is going on right now
+workshopSchema.virtual('ongoing').get(function() { 
+    // Determine whether workshop is going on right now
     return moment().isBetween(moment(this.startDate), moment(this.endDate));
 });
 
-// Remove funds related to camp
-campSchema.pre('remove', function(next) {
+// Remove funds related to workshop
+workshopSchema.pre('remove', function(next) {
     console.log('removing funds...');
-    this.model('Funds').remove({ camp: this._id }, next);
+    this.model('Funds').remove({ workshop: this._id }, next);
 });
 
-module.exports = { name: 'Camp', schema: campSchema };
+module.exports = { name: 'Workshop', schema: workshopSchema };

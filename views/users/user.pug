@@ -32,9 +32,9 @@ block content
         
         .col-xs-12
             .page-header
-                h2 All Camps
-                    small.right #{camps.length} total
-            if camps.length > 0
+                h2 All Workshops
+                    small.right #{workshops.length} total
+            if workshops.length > 0
                 table.table
                         thead
                             tr
@@ -43,17 +43,17 @@ block content
                                 th Location
                                 th Frank's Rank
                         tbody
-                            each c in camps
+                            each c in workshops
                                 tr
                                     td= moment(c.startDate).format("MMMM Do YYYY")
                                     td= moment(c.endDate).format("MMMM Do YYYY")
                                     td
                                         a(href="/locations/" + c.location._id)= c.location.name
-                                    td.rank= helpers.getRankFromCamp(c, targetUser)
+                                    td.rank= helpers.getRankFromWorkshop(c, targetUser)
                                     td
-                                        a.btn.btn-default(href="/camps/" + c._id) Camp Details
+                                        a.btn.btn-default(href="/workshops/" + c._id) Workshop Details
             else
-                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any camps.
+                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
     .row
         .col-xs-12
             hr

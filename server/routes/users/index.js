@@ -41,9 +41,9 @@ router.get('/:email', (req, res, next) => {
 
             res.locals.targetUser = user;
             res.locals.pageTitle = `${user.rankName} ${user.name.full}`;
-            return user.findCamps();
-        }).then(camps => {
-            res.locals.camps = camps;
+            return user.findWorkshops();
+        }).then(workshops => {
+            res.locals.workshops = workshops;
             res.render('users/user');
         })
         .catch(next);
@@ -59,14 +59,14 @@ router.get('/:email/edit', requireAdmin, (req, res, next) => {
 
             res.locals.targetUser = user;
             res.locals.pageTitle = `Edit User ${user.name.full}`;
-            return req.db.Camp.find()
+            return req.db.Workshop.find()
                 .populate('location')
                 .exec();
         })
-        .then(camps => {
-            res.locals.camps = camps;
-            res.locals.noDirector = camps.filter(c => !c.director);
-            res.locals.noAmbassador = camps.filter(c => !c.ambassador);
+        .then(workshops => {
+            res.locals.workshops = workshops;
+            res.locals.noDirector = workshops.filter(w => !w.director);
+            res.locals.noAmbassador = workshops.filter(w => !w.ambassador);
 
             res.render('users/edit');
         })

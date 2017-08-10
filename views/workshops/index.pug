@@ -4,47 +4,47 @@ block content
     .row
         .col-xs-12
             .jumbotron.clearfix
-                h1 Camps
-                    small.right #{camps.length} total
-                p= helpers.getHelpInfo('camps')
-                a.btn.btn-primary.right(href="/camps/list") All Camps
+                h1 Workshops
+                    small.right #{workshops.length} total
+                p= helpers.getHelpInfo('workshops')
+                a.btn.btn-primary.right(href="/workshops/list") All Workshops
             hr
 
     .row
-        .col-xs-12.camp-statistics
-            p.text-muted.text-center Overall camp statistics graphs coming soon...
+        .col-xs-12.workshop-statistics
+            p.text-muted.text-center Overall workshop statistics graphs coming soon...
             hr
 
     .row
         .col-xs-12
             .page-header
-                h1 Active Camps
-                    +help('active-camps')
-                    small.right #{activeCamps.length} total
+                h1 Active Workshops
+                    +help('active-workshops')
+                    small.right #{activeWorkshops.length} total
     
-        if activeCamps.length > 0
-            each c in activeCamps
+        if activeWorkshops.length > 0
+            each c in activeWorkshops
                 .col-xs-12.col-md-6.col-lg-4
-                    +camp-panel(c)
+                    +workshop-panel(c)
         else
-            p.text-muted.text-center There are currently no #[b active camps].
-    .row#camps
+            p.text-muted.text-center There are currently no #[b active workshops].
+    .row#workshops
         .col-xs-12
             .page-header
-                h2 Inactive Camps
-                    +help('inactive-camps')
-                    small.right #{inactiveCamps.length} total
+                h2 Inactive Workshops
+                    +help('inactive-workshops')
+                    small.right #{inactiveWorkshops.length} total
         .col-xs-12
-            if inactiveCamps.length > 0
+            if inactiveWorkshops.length > 0
                 table.table.table-striped
                     thead
                         tr
                             th End Date
-                            th Camp Location
+                            th Workshop Location
                             th Ambassador
                             th Program Director
                     tbody
-                        each c in inactiveCamps
+                        each c in inactiveWorkshops
                             tr
                                 th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("MMMM Do YYYY")
                                 td(title=c.location.address)
@@ -63,12 +63,12 @@ block content
                                     td.text-muted None
                                 
                                 td
-                                    a.btn.btn-default(href="/camps/" + c._id) Camp Overview
+                                    a.btn.btn-default(href="/workshops/" + c._id) Workshop Overview
             else
-                p.text-muted.text-center There are no #[b inactive camps].
+                p.text-muted.text-center There are no #[b inactive workshops].
         
     .row
         .col-xs-12
             hr
             if user.admin
-                a.btn.btn-success(href='/camps/schedule') Schedule New Camp
+                a.btn.btn-success(href='/workshops/schedule') Schedule New Workshop

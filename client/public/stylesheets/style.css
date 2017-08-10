@@ -19,7 +19,7 @@ body {
     padding-right: 20px;
 }
 
-.camp-dates {
+.workshop-dates {
     margin-top: 0;
 }
 
@@ -74,16 +74,16 @@ a.location-name {
     text-transform: capitalize;
 }
 
-.active-camps {
+.active-workshops {
     margin: 0;
     margin-bottom: 10px;
 }
 
-.active-camps h3 {
+.active-workshops h3 {
     margin-top: 0;
 }
 
-.camp-panel[data-camp-status="future"]  span.text-muted{
+.workshop-panel[data-workshop-status="future"]  span.text-muted{
     color: white;
 }
 
@@ -116,7 +116,7 @@ a.location-name {
     margin-bottom: 10px;
 }
 
-.camp-dates {
+.workshop-dates {
     margin-top: 10px;
 }
 
@@ -145,24 +145,24 @@ a.location-name {
     font-size: 0.7em !important;
 }
 
-.camp-ranks .help-icon {
+.workshop-ranks .help-icon {
     margin-left: 0;
     margin-right: 5px;
     font-size: 1em !important;
 }
 
-.camp-ranks .media {
+.workshop-ranks .media {
     border-bottom: 1px solid #D9EDF7;
     margin-top: 0;
 }
-.camp-ranks .media-left {
+.workshop-ranks .media-left {
     width: 120px;
 }
-.camp-ranks .media img {
+.workshop-ranks .media img {
     height: 60px;
 }
 
-.camp-ranks .media-body {
+.workshop-ranks .media-body {
     padding: 8px;
     padding-left: 0;
 }
@@ -209,7 +209,7 @@ textarea {
     border: 4px solid #222;
 }
 
-.director-management .active-camp a:first-of-type {
+.director-management .active-workshop a:first-of-type {
     margin-right: 5px;
 }
 

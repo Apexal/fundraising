@@ -29,10 +29,10 @@ block content
                                 a(href='/locations/' + l._id)= l.name
                         .panel-body
                             // Nasty I know
-                            b Camps 
+                            b Workshops 
                                 small.text-muted (Starting Date) &nbsp;&nbsp;
-                            each camp in l.camps
-                                a.btn.btn-info(href='/camps/' + camp._id) #{moment(camp.startDate).format('dddd, MMMM Do YY')}
+                            each workshop in l.workshops
+                                a.btn.btn-info(href='/workshops/' + workshop._id) #{moment(workshop.startDate).format('dddd, MMMM Do YY')}
                            
                         .panel-footer
                             a.btn.btn-primary(href="/locations/" + l._id) Location Overview

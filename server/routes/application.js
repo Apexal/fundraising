@@ -38,7 +38,7 @@ router.get('/', (req, res, next) => {
         return res.redirect('/');
     }
 
-    // Get open camps
+    // Get open workshops
     req.db.User.where('rank').ne('teacher')
         .exec()
         .then(superiors => {

@@ -11,24 +11,24 @@ block content
         .col-xs-12.col-lg-7
             iframe.location-iframe(width="650", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
         .col-xs-12.col-lg-5
-            .page-header.active-camps
-                h3 Active Camps
-                    +help('active-camps')
-                    small.right #{activeCamps.length} total
-            if activeCamps.length > 0
-                each c in activeCamps
-                    +camp-panel(c)
+            .page-header.active-workshops
+                h3 Active Workshops
+                    +help('active-workshops')
+                    small.right #{activeWorkshops.length} total
+            if activeWorkshops.length > 0
+                each c in activeWorkshops
+                    +workshop-panel(c)
             else
-                p.text-muted.text-center There are currently no #[b active camps].
+                p.text-muted.text-center There are currently no #[b active workshops].
         .col-xs-12
     .row
         .col-xs-12
             .page-header
-                h3 Inactive Camps
-                    +help('inactive-camps')
-                    small.right #{inactiveCamps.length} total
+                h3 Inactive Workshops
+                    +help('inactive-workshops')
+                    small.right #{inactiveWorkshops.length} total
         .col-xs-12
-            if inactiveCamps.length > 0
+            if inactiveWorkshops.length > 0
                 table.table
                     thead
                         tr
@@ -36,7 +36,7 @@ block content
                             th Ambassador
                             th Program Director
                     tbody
-                        each c in inactiveCamps
+                        each c in inactiveWorkshops
                             tr
                                 td= moment(c.endDate).format("dddd, MMMM Do YY")
                                 td
@@ -50,9 +50,9 @@ block content
                                     else
                                         span.text-muted None
                                 td
-                                    a.btn.btn-default(href='/camps/' + c._id) Camp Details
+                                    a.btn.btn-default(href='/workshops/' + c._id) Workshop Details
             else
-                p.text-muted.text-center There are currently no #[b inactive camps].
+                p.text-muted.text-center There are currently no #[b inactive workshops].
     if user.admin
         .row
             .col-xs-12
