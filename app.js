@@ -13,6 +13,8 @@ const config = require('./server/config.js');
 const packageInfo = require('./package.json');
 const mongodb = require('./server/db');
 
+const debug = require('debug')('http');
+
 const app = express();
 const passport = require('./server/modules/auth.js')(mongodb.User);
 
@@ -82,6 +84,8 @@ requireVerified = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated() && req.user.verified) return next();
     req.session.redirect = req.originalUrl;
+    debug(req.originalUrl);
+    debug(req.session);
     req.flash('error', 'You must be logged in and verified to view that page.');
     return res.redirect('/');
 }
@@ -100,7 +104,7 @@ requireAdmin = function(req, res, next) {
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/',
+        //successRedirect: '/',
         failureRedirect: '/',
         failureFlash: true
     }),
@@ -112,7 +116,9 @@ app.get('/auth/google/callback',
 
             delete req.session.redirect;
             
-            res.redirect(redir);
+            return res.redirect(redir);
+        } else {
+            return res.redirect('/management');
         }
     });
 
