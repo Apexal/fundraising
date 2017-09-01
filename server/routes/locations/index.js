@@ -44,6 +44,11 @@ router.get('/list', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/new', (req, res, next) => {
+    res.locals.pageTitle = 'New Location';
+    res.render('locations/new');
+});
+
 router.get('/:locationId', (req, res, next) => {
     req.db.Location.findById(req.params.locationId)
         .exec()
@@ -111,7 +116,7 @@ router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
         .catch(next);
 });
 
-router.post('/add', requireAdmin, (req, res, next) => {
+router.post('/new', requireAdmin, (req, res, next) => {
     const name = req.body.name;
     const address = req.body.address;
     const description = req.body.description;
@@ -125,7 +130,7 @@ router.post('/add', requireAdmin, (req, res, next) => {
 
     newLocation.save()
         .then(l => {
-            req.flash(`Added location ${l.name}`);
+            req.flash(`New location ${l.name} added.`);
             res.redirect('/locations');
         })
         .catch(next);

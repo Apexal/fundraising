@@ -20,12 +20,7 @@ block content
                     else if workshop.active
                         small.right Starting 
                             b= moment(workshop.startDate).fromNow()
-        //- if workshop.info
-        //-     .col-xs-12
-        //-         blockquote
-        //-             b Workshop Info
-        //-             p= workshop.info
-        //-         hr
+
     .row
         .col-xs-12
             .well.well-sm(class=(!workshop.active ? 'text-muted' : ''))

@@ -9,9 +9,6 @@ block content
                 p= helpers.getHelpInfo('locations')
                 a.btn.btn-primary.right(href="/locations/list") All Locations
         hr
-    if user.admin
-        include addlocation
-
     .row
         .col-xs-12
             .page-header
