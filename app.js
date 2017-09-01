@@ -38,37 +38,36 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client/public')));
 
+
+// These two will be GLOBAL to all js files
 // View helper methods
 helpers = require('./server/modules/helpers.js');
 sendEmail = require('./server/modules/email.js');
-app.locals.helpers = {};
-for (var h in helpers) {
-    if (typeof(helpers[h]) === 'function') {
-        app.locals.helpers[h] = helpers[h];
-    }
-}
+
+// Make helpers available in views
+app.locals.helpers = helpers;
+
 // ALL REQUESTS PASS THROUGH HERE FIRST
 app.locals.moment = moment;
 app.locals.defaultTitle = 'Kids Tales';//packageInfo.name;
 app.locals.appDescription = packageInfo.description;
 app.use((req, res, next) => {
-    res.locals.pageTitle = app.locals.defaultTitle;
-    res.locals.pagePath = req.path;
+    res.locals.pageTitle = app.locals.defaultTitle; // Default page title is passed down
+    res.locals.pagePath = req.path; // To access in views and helpers
     req.db = mongodb;
     
-    if (req.user) res.locals.user = req.user;
+    if (req.user) res.locals.user = req.user; // To access in views
 
+    // For convenience
     res.locals.loggedIn = req.isAuthenticated();
 
-    // Involvements
-    if (req.user) {
-        
-    }
+    // if (req.user) { }
 
     next();
 });
 
 // To be used by routes
+// When used as a middleware on a route, if user is not logged it redirects home
 requireLogin = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
@@ -78,6 +77,7 @@ requireLogin = function(req, res, next) {
 }
 
 // To be used by routes
+// When used as a middleware on a route, if user is not logged in or is not verified it redirects home
 requireVerified = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated() && req.user.verified) return next();
@@ -87,6 +87,7 @@ requireVerified = function(req, res, next) {
 }
 
 // To be used by routes
+// When used as a middleware on a route, if user is not logged in or is not an admin it redirects home
 requireAdmin = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated() && req.user.verified && req.user.admin) return next();
@@ -95,6 +96,7 @@ requireAdmin = function(req, res, next) {
     return res.redirect('/');
 }
 
+/* Login with Google using Passport */
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
@@ -103,6 +105,7 @@ app.get('/auth/google/callback',
         failureFlash: true
     }),
     (req, res) => {
+        // Does not work at all...?
         if (req.session.redirect !== undefined) {
             // Redirect to page after login if specified
             const redir = req.session.redirect;
