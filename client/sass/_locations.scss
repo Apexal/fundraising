@@ -1,0 +1,23 @@
+.location {
+    padding-right: 20px;
+}
+
+#new-location-info {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 200px;
+}
+
+.location-iframe {
+    width: 100%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .location-iframe {
+        margin-bottom: 30px;
+    }
+}
+
+a.location-name {
+    color: #222;
+}

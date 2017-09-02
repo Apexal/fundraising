@@ -3,122 +3,15 @@ body {
     padding-bottom: 40px;
 }
 
-.right {
-    float: right;
-}
-
-.left {
-    float: left;
-}
-
 .logo {
     height: 130px;
 }
 
-.location {
-    padding-right: 20px;
-}
-
-.workshop-dates {
-    margin-top: 0;
-}
-
-.location-iframe {
-    width: 100%;
-}
-
-.fundraising-well {
-    margin-bottom: 0;
-}
-
-.fundraising-well h3 {
-    margin: 10px;
-}
-
-.user-image-link {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-img.user-image {
-    height: 42px;
-    max-height: 42px;
-}
-
-img.user-profile {
-    width: 250px;
-    max-width: 250px;
-    border: 5px solid #222;
-}
-
-
-#new-location-info {
-    max-width: 100%;
-    min-width: 100%;
-    max-height: 200px;
-}
-
-.rank-name {
-    text-transform: capitalize;
-}
-
-a.location-name {
-    color: #222;
-}
-
-.user-panel img.large-profile-image {
-    height: 100px;
-}
-
-.rank {
-    text-transform: capitalize;
-}
-
-.active-workshops {
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.active-workshops h3 {
-    margin-top: 0;
-}
-
-.workshop-panel[data-workshop-status="future"]  span.text-muted{
-    color: white;
-}
-
-.involvement-panel img {
-    height: 80px;
-}
-
-.rank-desc h4 {
-    margin-top: 0;
-    
-    text-align: center;
-}
-
-.rank-desc img.ambassador {
-    border: 5px solid #F2DEDE;
-}
-
-
-.rank-desc img.director {
-    border: 3px solid #F2DEDE;
-}
-
-
-.rank-desc img.teacher {
-    height: 60px;
-    vertical-align: bottom;
-}
-
-.rank-summary {
-    margin-bottom: 10px;
-}
-
-.workshop-dates {
-    margin-top: 10px;
-}
+@import 'utils';
+@import 'application';
+@import 'locations';
+@import 'users';
+@import 'workshops';
 
 .homepage-jumbotron {
     margin: 0;
@@ -143,37 +36,6 @@ a.location-name {
     margin-left: 5px;
     cursor: pointer;
     font-size: 0.7em !important;
-}
-
-.workshop-ranks {
-    .help-icon {
-        margin-left: 0;
-        margin-right: 5px;
-        font-size: 1em !important;
-    }
-
-    .media {
-        border-bottom: 1px solid #D9EDF7;
-        margin-top: 0;
-    }
-
-    .media-left {
-        width: 120px;
-    }
-
-    .media img {
-        height: 60px;
-    }
-
-    .media-body {
-        padding: 8px;
-        padding-left: 0;
-    }
-}
-
-.application-form .help-icon {
-    margin-left: 5px;
-    font-size: 1em !important;
 }
 
 textarea {
@@ -204,9 +66,7 @@ textarea {
     display: none;
 }
 
-.application-form #ambassadors {
-    display: none;
-}
+
 
 .teacher-director-page img {
     width: 150px;
@@ -241,10 +101,6 @@ textarea {
         }
     }
 
-    .user-info .summary {
-        text-align: center;
-    }
-
     .actions {
         text-align: center;
 
@@ -252,11 +108,5 @@ textarea {
             float: none;
             
         }
-    }
-}
-
-@media only screen and (max-width: 1200px) {
-    .location-iframe {
-        margin-bottom: 30px;
     }
 }

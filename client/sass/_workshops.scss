@@ -1,0 +1,83 @@
+.workshop-dates {
+    margin-top: 10px;
+}
+
+.workshop-ranks {
+    .help-icon {
+        margin-left: 0;
+        margin-right: 5px;
+        font-size: 1em !important;
+    }
+
+    .media {
+        border-bottom: 1px solid #D9EDF7;
+        margin-top: 0;
+    }
+
+    .media-left {
+        width: 120px;
+    }
+
+    .media img {
+        height: 60px;
+    }
+
+    .media-body {
+        padding: 8px;
+        padding-left: 0;
+    }
+}
+
+.active-workshops {
+    margin: 0;
+    margin-bottom: 10px;
+
+    h3 {
+        margin-top: 0;
+    }
+}
+
+.workshop-panel[data-workshop-status="future"]  span.text-muted{
+    color: white;
+}
+
+
+.rank-name {
+    text-transform: capitalize;
+}
+
+.rank {
+    text-transform: capitalize;
+
+    h4 {
+        margin-top: 0;
+        
+        text-align: center;
+    }
+
+    img.ambassador {
+        border: 5px solid #F2DEDE;
+    }
+
+    img.director {
+        border: 3px solid #F2DEDE;
+    }
+    
+    img.teacher {
+        height: 60px;
+        vertical-align: bottom;
+    }
+}
+
+.rank-summary {
+    margin-bottom: 10px;
+}
+
+
+.fundraising-well {
+    margin-bottom: 0;
+}
+
+.fundraising-well h3 {
+    margin: 10px;
+}

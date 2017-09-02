@@ -1,0 +1,25 @@
+.user-image-link {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+img.user-image {
+    height: 42px;
+    max-height: 42px;
+}
+
+img.user-profile {
+    width: 250px;
+    max-width: 250px;
+    border: 5px solid #222;
+}
+
+.user-panel img.large-profile-image {
+    height: 100px;
+}
+
+@media only screen and (max-width: 768px) {
+    .user-info .summary {
+        text-align: center;
+    }
+}
