@@ -145,26 +145,30 @@ a.location-name {
     font-size: 0.7em !important;
 }
 
-.workshop-ranks .help-icon {
-    margin-left: 0;
-    margin-right: 5px;
-    font-size: 1em !important;
-}
+.workshop-ranks {
+    .help-icon {
+        margin-left: 0;
+        margin-right: 5px;
+        font-size: 1em !important;
+    }
 
-.workshop-ranks .media {
-    border-bottom: 1px solid #D9EDF7;
-    margin-top: 0;
-}
-.workshop-ranks .media-left {
-    width: 120px;
-}
-.workshop-ranks .media img {
-    height: 60px;
-}
+    .media {
+        border-bottom: 1px solid #D9EDF7;
+        margin-top: 0;
+    }
 
-.workshop-ranks .media-body {
-    padding: 8px;
-    padding-left: 0;
+    .media-left {
+        width: 120px;
+    }
+
+    .media img {
+        height: 60px;
+    }
+
+    .media-body {
+        padding: 8px;
+        padding-left: 0;
+    }
 }
 
 .application-form .help-icon {
@@ -222,16 +226,19 @@ textarea {
         text-align: center;
     }
 
-    .page-header h1, .page-header h2, .page-header h3 {
-        text-align: center;
-    }
+    .page-header {
+        h1, h2, h3 {
+            text-align: center;
+        }
 
-    .page-header small {
-        float: none !important;
-    }
-    .page-header small:before {
-        content: ' ';
-        display: block;
+        small {
+            float: none !important;
+        }
+        
+        small:before {
+            content: ' ';
+            display: block;
+        }
     }
 
     .user-info .summary {
@@ -240,11 +247,11 @@ textarea {
 
     .actions {
         text-align: center;
-    }
 
-    .actions .right {
-        float: none;
-        
+        .right {
+            float: none;
+            
+        }
     }
 }
 

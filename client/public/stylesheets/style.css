@@ -113,17 +113,13 @@ a.location-name {
   margin-left: 0;
   margin-right: 5px;
   font-size: 1em !important; }
-
 .workshop-ranks .media {
   border-bottom: 1px solid #D9EDF7;
   margin-top: 0; }
-
 .workshop-ranks .media-left {
   width: 120px; }
-
 .workshop-ranks .media img {
   height: 60px; }
-
 .workshop-ranks .media-body {
   padding: 8px;
   padding-left: 0; }
@@ -173,10 +169,8 @@ textarea {
 
   .page-header h1, .page-header h2, .page-header h3 {
     text-align: center; }
-
   .page-header small {
     float: none !important; }
-
   .page-header small:before {
     content: ' ';
     display: block; }
@@ -186,9 +180,8 @@ textarea {
 
   .actions {
     text-align: center; }
-
-  .actions .right {
-    float: none; } }
+    .actions .right {
+      float: none; } }
 @media only screen and (max-width: 1200px) {
   .location-iframe {
     margin-bottom: 30px; } }
