@@ -8,7 +8,7 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Locations';
 
-    req.db.Workshop.find()
+    req.db.Location.find()
         .exec()
         .then(locations => {
             res.locals.locations = locations;
@@ -44,9 +44,35 @@ router.get('/list', (req, res, next) => {
         .catch(next);
 });
 
+/* Show page with form for adding a new location */
 router.get('/new', (req, res, next) => {
+    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
+
     res.locals.pageTitle = 'New Location';
     res.render('locations/new');
+});
+
+/* Add a new location (if allowed to) */
+router.post('/new', (req, res, next) => {
+    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
+
+    const name = req.body.name;
+    const address = req.body.address;
+    const description = req.body.description;
+
+    const newLocation = new req.db.Location({
+        name,
+        address,
+        description,
+        dateAdded: new Date()
+    });
+
+    newLocation.save()
+        .then(l => {
+            req.flash(`New location ${l.name} added.`);
+            res.redirect('/locations');
+        })
+        .catch(next);
 });
 
 router.get('/:locationId', (req, res, next) => {
@@ -111,26 +137,6 @@ router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
         })
         .then(location => {
             req.flash('success', `Deleted location and all Workshops at ${location.name}.`);
-            res.redirect('/locations');
-        })
-        .catch(next);
-});
-
-router.post('/new', requireAdmin, (req, res, next) => {
-    const name = req.body.name;
-    const address = req.body.address;
-    const description = req.body.description;
-
-    const newLocation = new req.db.Location({
-        name,
-        address,
-        description,
-        dateAdded: new Date()
-    });
-
-    newLocation.save()
-        .then(l => {
-            req.flash(`New location ${l.name} added.`);
             res.redirect('/locations');
         })
         .catch(next);
