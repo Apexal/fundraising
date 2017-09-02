@@ -218,7 +218,7 @@ router.get('/:workshopId', (req, res, next) => {
 
     res.locals.workshop = req.workshop;
     res.locals.pageTitle = `Workshop ${req.workshop.location.name}`;
-    return res.render('workshop/workshop');
+    return res.render('workshops/workshop');
 });
 
 router.get('/:workshopId/applicants', (req, res, next) => {
