@@ -12,23 +12,16 @@ router.use(requireVerified);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Workshops';
 
-    req.db.Workshop.find()
+    req.db.Workshop.find({ endDate: { "$gt": moment().startOf('day').toDate() }})
         .populate('location')
         .populate('ambassador')
         .populate('director')
         .populate('teachers')
         .exec()
-        .then(workshops => {
-            res.locals.workshops = workshops;
-            res.locals.activeWorkshops = workshops.filter(w => w.active);
-            res.locals.inactiveWorkshops = workshops.filter(w => !w.active);
+        .then(activeWorkshops => {
+            res.locals.activeWorkshops = activeWorkshops;
 
-            return req.db.Location.find().exec();
-        })
-        .then(locations => {
-            res.locals.openLocations = locations;
-
-            res.render('workshops/index');
+            return res.render('workshops/index');
         })
         .catch(next);
 });
@@ -49,19 +42,23 @@ router.get('/list', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/schedule', (req, res, next) => {
+router.get('/new', (req, res, next) => {
+    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
+
     res.locals.pageTitle = 'Schedule New Workshop';
 
     req.db.Location.find()
         .exec()
         .then(locations => {
             res.locals.locations = locations;
-            res.render('workshops/scheduleworkshop');
+            res.render('workshops/new');
         })
         .catch(next);
 });
 
-router.post('/schedule', (req, res, next) => {
+router.post('/new', (req, res, next) => {
+    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
+
     // Location info
     const locationId = req.body.locationId;
     const startDate = moment(req.body.startDate, "YYYY-MM-DD");

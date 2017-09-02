@@ -5,14 +5,13 @@ block content
         .col-xs-12
             .jumbotron.clearfix
                 h1 Workshops
-                    small.right #{workshops.length} total
                 p= helpers.getHelpInfo('workshops')
-                a.btn.btn-primary.right(href="/workshops/list") All Workshops
-            hr
 
-    .row
-        .col-xs-12.workshop-statistics
-            p.text-muted.text-center Overall workshop statistics graphs coming soon...
+                //- Only program directors, ambassadors, and admins of any rank can schedule new workshops
+                if user.rank != 'teacher' || user.admin
+                    a.btn.btn-danger(href='/workshops/new') New Workshop
+
+                a.btn.btn-primary.right(href='/workshops/list') All Workshops
             hr
 
     .row
@@ -28,47 +27,9 @@ block content
                     +workshop-panel(c)
         else
             p.text-muted.text-center There are currently no #[b active workshops].
-    .row#workshops
-        .col-xs-12
-            .page-header
-                h2 Inactive Workshops
-                    +help('inactive-workshops')
-                    small.right #{inactiveWorkshops.length} total
-        .col-xs-12
-            if inactiveWorkshops.length > 0
-                table.table.table-striped
-                    thead
-                        tr
-                            th End Date
-                            th Workshop Location
-                            th Ambassador
-                            th Program Director
-                    tbody
-                        each c in inactiveWorkshops
-                            tr
-                                th(title=moment(c.endDate).fromNow())= moment(c.endDate).format("MMMM Do YYYY")
-                                td(title=c.location.address)
-                                    a(href='/locations/' + c.location._id)= c.location.name
 
-                                if c.ambassador
-                                    td
-                                        a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
-                                else
-                                    td.text-muted None
-                                
-                                if c.director
-                                    td
-                                        a(href='/users/' + c.director.email)= c.director.name.full
-                                else
-                                    td.text-muted None
-                                
-                                td
-                                    a.btn.btn-default(href="/workshops/" + c._id) Workshop Overview
-            else
-                p.text-muted.text-center There are no #[b inactive workshops].
-        
     .row
-        .col-xs-12
-            hr
-            if user.admin
-                a.btn.btn-success(href='/workshops/schedule') Schedule New Workshop
+        .col-xs-12.workshop-statistics
+            .page-header
+                h1 Workshops Statistics
+            p.text-muted.text-center Overall workshop statistics graphs coming soon...
