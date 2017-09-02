@@ -109,7 +109,6 @@ app.get('/auth/google/callback',
         failureFlash: true
     }),
     (req, res) => {
-        // Does not work at all...?
         if (req.session.redirect !== undefined) {
             // Redirect to page after login if specified
             const redir = req.session.redirect;

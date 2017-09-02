@@ -47,3 +47,5 @@ client/public/writingsamples/*
 .vscode/launch.json
 tests/testBookCompile.js
 sendgrid.env
+
+.sass-cache/

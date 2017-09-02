@@ -1,255 +1,196 @@
 body {
-    padding-top: 70px;
-    padding-bottom: 40px;
-}
+  padding-top: 70px;
+  padding-bottom: 40px; }
 
 .right {
-    float: right;
-}
+  float: right; }
 
 .left {
-    float: left;
-}
+  float: left; }
 
 .logo {
-    height: 130px;
-}
+  height: 130px; }
 
 .location {
-    padding-right: 20px;
-}
+  padding-right: 20px; }
 
 .workshop-dates {
-    margin-top: 0;
-}
+  margin-top: 0; }
 
 .location-iframe {
-    width: 100%;
-}
+  width: 100%; }
 
 .fundraising-well {
-    margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 .fundraising-well h3 {
-    margin: 10px;
-}
+  margin: 10px; }
 
 .user-image-link {
-    margin: 0 !important;
-    padding: 0 !important;
-}
+  margin: 0 !important;
+  padding: 0 !important; }
 
 img.user-image {
-    height: 42px;
-    max-height: 42px;
-}
+  height: 42px;
+  max-height: 42px; }
 
 img.user-profile {
-    width: 250px;
-    max-width: 250px;
-    border: 5px solid #222;
-}
-
+  width: 250px;
+  max-width: 250px;
+  border: 5px solid #222; }
 
 #new-location-info {
-    max-width: 100%;
-    min-width: 100%;
-    max-height: 200px;
-}
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 200px; }
 
 .rank-name {
-    text-transform: capitalize;
-}
+  text-transform: capitalize; }
 
 a.location-name {
-    color: #222;
-}
+  color: #222; }
 
 .user-panel img.large-profile-image {
-    height: 100px;
-}
+  height: 100px; }
 
 .rank {
-    text-transform: capitalize;
-}
+  text-transform: capitalize; }
 
 .active-workshops {
-    margin: 0;
-    margin-bottom: 10px;
-}
+  margin: 0;
+  margin-bottom: 10px; }
 
 .active-workshops h3 {
-    margin-top: 0;
-}
+  margin-top: 0; }
 
-.workshop-panel[data-workshop-status="future"]  span.text-muted{
-    color: white;
-}
+.workshop-panel[data-workshop-status="future"] span.text-muted {
+  color: white; }
 
 .involvement-panel img {
-    height: 80px;
-}
+  height: 80px; }
 
 .rank-desc h4 {
-    margin-top: 0;
-    
-    text-align: center;
-}
+  margin-top: 0;
+  text-align: center; }
 
 .rank-desc img.ambassador {
-    border: 5px solid #F2DEDE;
-}
-
+  border: 5px solid #F2DEDE; }
 
 .rank-desc img.director {
-    border: 3px solid #F2DEDE;
-}
-
+  border: 3px solid #F2DEDE; }
 
 .rank-desc img.teacher {
-    height: 60px;
-    vertical-align: bottom;
-}
+  height: 60px;
+  vertical-align: bottom; }
 
 .rank-summary {
-    margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 .workshop-dates {
-    margin-top: 10px;
-}
+  margin-top: 10px; }
 
 .homepage-jumbotron {
-    margin: 0;
-}
+  margin: 0; }
 
 .homepage-jumbotron blockquote {
-    margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 .important-links nav {
-    background-color: #222;
-    padding: 10px;
-    text-align: center;
-}
+  background-color: #222;
+  padding: 10px;
+  text-align: center; }
 
 .important-links nav a {
-    color: white;
-    padding: 10px;
-}
+  color: white;
+  padding: 10px; }
 
 .help-icon {
-    margin-left: 5px;
-    cursor: pointer;
-    font-size: 0.7em !important;
-}
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 0.7em !important; }
 
 .workshop-ranks .help-icon {
-    margin-left: 0;
-    margin-right: 5px;
-    font-size: 1em !important;
-}
+  margin-left: 0;
+  margin-right: 5px;
+  font-size: 1em !important; }
 
 .workshop-ranks .media {
-    border-bottom: 1px solid #D9EDF7;
-    margin-top: 0;
-}
+  border-bottom: 1px solid #D9EDF7;
+  margin-top: 0; }
+
 .workshop-ranks .media-left {
-    width: 120px;
-}
+  width: 120px; }
+
 .workshop-ranks .media img {
-    height: 60px;
-}
+  height: 60px; }
 
 .workshop-ranks .media-body {
-    padding: 8px;
-    padding-left: 0;
-}
+  padding: 8px;
+  padding-left: 0; }
 
 .application-form .help-icon {
-    margin-left: 5px;
-    font-size: 1em !important;
-}
+  margin-left: 5px;
+  font-size: 1em !important; }
 
 textarea {
-    max-width: 100%;
-    max-height: 200px;
-}
+  max-width: 100%;
+  max-height: 200px; }
 
 .contact-info div {
-    padding-bottom: 10px;
-}
+  padding-bottom: 10px; }
 
 .applicant-panel blockquote {
-    font-size: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 0;
-}
+  font-size: 1em;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0; }
 
 .applicant-panel .input-group {
-    width: 100%;
-}
+  width: 100%; }
 
 .applicant-info-section * {
-    display: block;
-}
+  display: block; }
 
 .form-group.no-rank * {
-    display: none;
-}
+  display: none; }
 
 .application-form #ambassadors {
-    display: none;
-}
+  display: none; }
 
 .teacher-director-page img {
-    width: 150px;
-    border: 4px solid #222;
-}
+  width: 150px;
+  border: 4px solid #222; }
 
 .director-management .active-workshop a:first-of-type {
-    margin-right: 5px;
-}
+  margin-right: 5px; }
 
 .pagination {
-    margin-top: 0;
-}
+  margin-top: 0; }
 
 @media only screen and (max-width: 768px) {
-    .homepage-jumbotron h1 {
-        text-align: center;
-    }
+  .homepage-jumbotron h1 {
+    text-align: center; }
 
-    .page-header h1, .page-header h2, .page-header h3 {
-        text-align: center;
-    }
+  .page-header h1, .page-header h2, .page-header h3 {
+    text-align: center; }
 
-    .page-header small {
-        float: none !important;
-    }
-    .page-header small:before {
-        content: ' ';
-        display: block;
-    }
+  .page-header small {
+    float: none !important; }
 
-    .user-info .summary {
-        text-align: center;
-    }
+  .page-header small:before {
+    content: ' ';
+    display: block; }
 
-    .actions {
-        text-align: center;
-    }
+  .user-info .summary {
+    text-align: center; }
 
-    .actions .right {
-        float: none;
-        
-    }
-}
+  .actions {
+    text-align: center; }
 
+  .actions .right {
+    float: none; } }
 @media only screen and (max-width: 1200px) {
-    .location-iframe {
-        margin-bottom: 30px;
-    }
-}
+  .location-iframe {
+    margin-bottom: 30px; } }
+
+/*# sourceMappingURL=style.css.map */
