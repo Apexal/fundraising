@@ -11,5 +11,9 @@ block content
             .page-header
                 include /includes/pagination
                 h1 All Locations
-    .row
-        .col-xs-12
+    if user.rank != 'teacher' || user.admin
+        .row
+            .col-xs-12
+                hr
+                //- Only program directors, ambassadors, and admins of any rank can add new locations
+                a.btn.btn-danger(href='/locations/new') New Location
