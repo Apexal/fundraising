@@ -11,9 +11,21 @@ block content
             .page-header
                 include /includes/pagination
                 h1 All Locations
-    if user.rank != 'teacher' || user.admin
-        .row
-            .col-xs-12
-                hr
-                //- Only program directors, ambassadors, and admins of any rank can add new locations
+                    small  #{locations.length} shown
+    
+    .row.location-list
+        if locations.length > 0
+            each l in locations
+                +location(l)
+        else
+            p.text-muted.text-center There are currently no existing #[b locations].
+
+
+    .row
+        .col-xs-12
+            hr
+            a.btn.btn-primary(href='/locations') Locations Overview
+            //- Only program directors, ambassadors, and admins of any rank can add new locations
+            if user.rank != 'teacher' || user.admin
                 a.btn.btn-danger(href='/locations/new') New Location
+            

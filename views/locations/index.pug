@@ -41,31 +41,3 @@ block content
                             
         else
             p.text-muted.text-center There are no #[b active locations].
-
-    .row#locations
-        .col-xs-12
-            .page-header
-                h2 Inactive Locations
-                    +help('inactive-locations')
-                    small.right #{inactiveLocations.length} total
-        .col-xs-12
-            if inactiveLocations.length > 0
-                table.table
-                    thead
-                        tr
-                            th Name
-                            th Address
-                            th Description
-                    tbody
-                        each l in inactiveLocations
-                            tr
-                                td= l.name
-                                td= l.address
-                                if l.description
-                                    td= helpers.limit(l.description, 50)
-                                else
-                                    td.text-muted No description given.
-                                td
-                                    a.btn.btn-default(href="/locations/" + l._id) Location Overview
-            else
-                p.text-muted.text-center There are no #[b locations].

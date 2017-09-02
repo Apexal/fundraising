@@ -19,8 +19,7 @@ router.get('/', (req, res, next) => {
         .then(activeWorkshops => {
             res.locals.activeWorkshops = activeWorkshops;
             res.locals.activeLocations = res.locals.locations.filter(l => activeWorkshops.filter(w => w.location == l.id).length > 0);
-            res.locals.inactiveLocations = res.locals.locations.filter(l => res.locals.activeLocations.indexOf(l) == -1); // All locations not in activeLocations
-
+            
             res.locals.activeLocations.forEach(l => l.workshops = activeWorkshops.filter(w => w.location.equals(l._id)));
 
             res.render('locations/index');
