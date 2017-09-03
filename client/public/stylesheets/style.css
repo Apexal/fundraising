@@ -73,7 +73,6 @@ textarea {
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 0; }
-
 .applicant-panel .input-group {
   width: 100%; }
 
@@ -111,6 +110,12 @@ a.location-name {
     text-align: center; } }
 
 /* EDIT PROFILE PAGE */
+/* WORKSHOP OVERVIEW PAGE */
+.workshop-panel[data-workshop-status="future"] span.text-muted {
+  color: white; }
+
+/* WORKSHOP LIST PAGE */
+/* WORKSHOP PAGE */
 .workshop-dates {
   margin-top: 10px; }
 
@@ -135,9 +140,6 @@ a.location-name {
   .active-workshops h3 {
     margin-top: 0; }
 
-.workshop-panel[data-workshop-status="future"] span.text-muted {
-  color: white; }
-
 .rank-name {
   text-transform: capitalize; }
 
@@ -157,6 +159,7 @@ a.location-name {
 .rank-summary {
   margin-bottom: 10px; }
 
+/* FUNDRAISING PAGE */
 .fundraising-well {
   margin-bottom: 0; }
 

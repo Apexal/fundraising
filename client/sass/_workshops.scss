@@ -1,3 +1,15 @@
+/* WORKSHOP OVERVIEW PAGE */
+
+.workshop-panel[data-workshop-status="future"]  span.text-muted{
+    color: white;
+}
+
+
+/* WORKSHOP LIST PAGE */
+
+
+/* WORKSHOP PAGE */
+
 .workshop-dates {
     margin-top: 10px;
 }
@@ -37,11 +49,6 @@
     }
 }
 
-.workshop-panel[data-workshop-status="future"]  span.text-muted{
-    color: white;
-}
-
-
 .rank-name {
     text-transform: capitalize;
 }
@@ -73,6 +80,7 @@
     margin-bottom: 10px;
 }
 
+/* FUNDRAISING PAGE */
 
 .fundraising-well {
     margin-bottom: 0;
