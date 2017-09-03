@@ -83,22 +83,19 @@ textarea {
 .form-group.no-rank * {
   display: none; }
 
-.location {
-  padding-right: 20px; }
-
-#new-location-info {
-  max-width: 100%;
-  min-width: 100%;
-  max-height: 200px; }
-
+/* LOCATION PAGE */
 .location-iframe {
   width: 100%; }
+  @media only screen and (max-width: 1200px) {
+    .location-iframe {
+      margin-bottom: 30px; } }
 
-@media only screen and (max-width: 1200px) {
-  .location-iframe {
-    margin-bottom: 30px; } }
 a.location-name {
   color: #222; }
+
+/* LOCATION INDEX PAGE */
+.location-list > .location-item {
+  padding-right: 20px; }
 
 /* USER INDEX/LIST PAGE */
 .user-list .user-panel .profileimage {

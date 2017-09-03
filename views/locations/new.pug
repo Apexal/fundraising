@@ -7,7 +7,7 @@ block content
                 h1 New Location
     .row
         .col-xs-12
-            form.from.add-location-form(action='/locations/new', method='POST')
+            form.from.new-location-form(action='/locations/new', method='POST')
                 .form-group
                     label(for='new-location-name') Location Name
                     input.form-control#new-location-name(name='name', type='text', maxlength='75', required)
@@ -18,6 +18,6 @@ block content
                     label(for='new-location-description') Location Description
                         small.text-muted  (Optional)
                     textarea.form-control#new-location-description(name='description', maxlength='650', placeholder='Add any important information here.', rows='5')
-                
+
                 hr
                 button.btn.btn-success.right Add Location
