@@ -3,8 +3,9 @@ ul.nav.navbar-nav.navbar-right
         // Logged in indicator with user actions
         if user.verified
             li.hidden-xs
-                a.user-image-link(href="/profile")
-                    img.user-image(src="/images/" + user.profileImageName)
+                a.profilepicture(href="/profile")
+                    img(src="/images/" + user.profileImageName)
+        
         li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                 if user.admin
@@ -24,6 +25,7 @@ ul.nav.navbar-nav.navbar-right
                     li.divider(role='separator')
                 li
                     a(href='/logout') Logout
+
     else
         li
             a(href='/login') Login

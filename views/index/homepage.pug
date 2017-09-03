@@ -5,21 +5,21 @@ block content
         .col-xs-12
             .jumbotron.homepage-jumbotron
                 img.logo.right.hidden-xs(alt="Brand" src='/images/small-logo.gif')
-                h1 Welcome, #{user.name.first}!
+                h1.welcome Welcome, #{user.name.first}!
                 hr
-                blockquote
+                blockquote.quoteofday
                     script(src="https://www.brainyquote.com/link/quotebr.js")
+
         .col-xs-12
-            .important-links
-                nav
-                    a(href="http://kidstales.org/", target="_blank")
-                        +icon('external-link', 'Kids Tales Site')
-                    if user.verified
-                        a(href="#", target="_blank")
-                            +icon('slack', 'Slack')
-                    a(href="https://github.com/KidsTales/kt-web/issues", target="_blank")
-                        +icon('github', 'Website Issues')
-    
+            nav.important-links
+                a.kidstales(href="http://kidstales.org/", target="_blank")
+                    +icon('external-link', 'Kids Tales Site')
+                if user.verified
+                    a.slack(href="#", target="_blank")
+                        +icon('slack', 'Slack')
+                a.github(href="https://github.com/KidsTales/kt-web/issues", target="_blank")
+                    +icon('github', 'Website Issues')
+
     if user.verified
         if user.rank == 'teacher'
             span Coming soon...

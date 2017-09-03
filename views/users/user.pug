@@ -13,29 +13,29 @@ block content
                     small.text-muted.right(title=moment(targetUser.registeredDate).format("dddd, MMMM Do YYYY")) registered #{moment(targetUser.registeredDate).fromNow()}
     .row.user-info
         .col-xs-12.col-sm-5.col-md-4.col-lg-3.summary
-            img.user-profile(src="/images/" + targetUser.profileImageName, alt=targetUser.name.first + "'s profile picture.'", title=targetUser.name.full)
+            img.profilepicture.-large(src="/images/" + targetUser.profileImageName, alt=targetUser.name.first + "'s profile picture.'", title=targetUser.name.full)
             
-        .col-xs-12.col-sm-7.col-md-8.col-lg-9.contact-info
+        .col-xs-12.col-sm-7.col-md-8.col-lg-9.contact
             .panel.panel-default
                 .panel-body
-                p.text-muted.text-center #[b= targetUser.age] years old in grade #[b= targetUser.grade] near #[b= targetUser.location]
-                    br
-                    b Phone #: 
-                    span= targetUser.phoneNumber
-                    br
-                    a(href="mailto:" + targetUser.email)= targetUser.email
-            
+                    p.text-muted.text-center #[b= targetUser.age] years old in grade #[b= targetUser.grade] near #[b= targetUser.location]
+                        br
+                        b Phone #: 
+                        span.phonenumber= targetUser.phoneNumber
+                        br
+                        a.email(href="mailto:" + targetUser.email)= targetUser.email
+
     .row
         .col-xs-12.col-sm-6.col-lg-5
             .page-header
                 h2 Why Kids Tales?
-            blockquote
+            blockquote.why
                 p= targetUser.application.why
-                    footer= targetUser.name.full
+                footer= targetUser.name.full
         .col-xs-12.col-sm-6.col-lg-7
                 .page-header
                     h2 #{targetUser.rankName} Info
-        
+
     .row
         .col-xs-12
             .page-header
@@ -48,7 +48,7 @@ block content
                                 th Start Date
                                 th End Date
                                 th Location
-                                th Frank's Rank
+                                th #{targetUser.name.first}'s Rank
                         tbody
                             each c in workshops
                                 tr

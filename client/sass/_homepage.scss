@@ -1,0 +1,22 @@
+.homepage-jumbotron {
+    margin: 0;
+
+    > .logo {
+        height: 130px;
+    }
+
+    > .quoteofday {
+        margin-bottom: 0;
+    }
+}
+
+.important-links {
+    background-color: #222;
+    padding: 10px;
+    text-align: center;
+
+    a {
+        color: white;
+        padding: 10px;
+    }
+}

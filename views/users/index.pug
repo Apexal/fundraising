@@ -16,9 +16,9 @@ mixin user(u)
                 .media
                     .media-left
                         a(href="/users/" + u.email)
-                            img.large-profile-image(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
+                            img.profileimage(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
                     .media-right
-                        p.text-muted.text-center #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
+                        p.text-muted.text-center.summary #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
                             br
                             b Phone #: 
                             span= u.phoneNumber
@@ -41,11 +41,12 @@ block content
         .col-xs-12.user-search
             form
                 .input-group
-                    input.form-control(type='text', name='search', placeholder='Search for users by name, email, phone number, location, etc.', value=search)
+                    input.form-control.criteria(type='text', name='search', placeholder='Search for users by name, email, phone number, location, etc.', value=search)
                     span.input-group-btn
                         button.btn.btn-default Search
             hr
-    .row#users
+
+    .row.user-list
         if search
             h3 Search Results
         each u in users

@@ -2,14 +2,32 @@ body {
   padding-top: 70px;
   padding-bottom: 40px; }
 
-.logo {
-  height: 130px; }
-
 .right {
   float: right; }
 
 .left {
   float: left; }
+
+.homepage-jumbotron {
+  margin: 0; }
+  .homepage-jumbotron > .logo {
+    height: 130px; }
+  .homepage-jumbotron > .quoteofday {
+    margin-bottom: 0; }
+
+.important-links {
+  background-color: #222;
+  padding: 10px;
+  text-align: center; }
+  .important-links a {
+    color: white;
+    padding: 10px; }
+
+.navbar-top .profilepicture > img {
+  height: 50px; }
+.navbar-top .profilepicture {
+  margin: 0 !important;
+  padding: 0 !important; }
 
 .application-form .help-icon {
   margin-left: 5px;
@@ -34,25 +52,19 @@ body {
 a.location-name {
   color: #222; }
 
-.user-image-link {
-  margin: 0 !important;
-  padding: 0 !important; }
+/* USER INDEX/LIST PAGE */
+.user-list .user-panel .profileimage {
+  height: 100px; }
 
-img.user-image {
-  height: 42px;
-  max-height: 42px; }
-
-img.user-profile {
+/* USER PROFILE PAGE */
+.user-info .summary > .profilepicture {
   width: 250px;
   max-width: 250px;
   border: 5px solid #222; }
-
-.user-panel img.large-profile-image {
-  height: 100px; }
-
 @media only screen and (max-width: 768px) {
   .user-info .summary {
     text-align: center; } }
+
 .workshop-dates {
   margin-top: 10px; }
 
@@ -104,21 +116,6 @@ img.user-profile {
 
 .fundraising-well h3 {
   margin: 10px; }
-
-.homepage-jumbotron {
-  margin: 0; }
-
-.homepage-jumbotron blockquote {
-  margin-bottom: 0; }
-
-.important-links nav {
-  background-color: #222;
-  padding: 10px;
-  text-align: center; }
-
-.important-links nav a {
-  color: white;
-  padding: 10px; }
 
 .help-icon {
   margin-left: 5px;

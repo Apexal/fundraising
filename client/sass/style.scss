@@ -3,34 +3,13 @@ body {
     padding-bottom: 40px;
 }
 
-.logo {
-    height: 130px;
-}
-
 @import 'utils';
+@import 'homepage';
+@import 'topnav';
 @import 'application';
 @import 'locations';
 @import 'users';
 @import 'workshops';
-
-.homepage-jumbotron {
-    margin: 0;
-}
-
-.homepage-jumbotron blockquote {
-    margin-bottom: 0;
-}
-
-.important-links nav {
-    background-color: #222;
-    padding: 10px;
-    text-align: center;
-}
-
-.important-links nav a {
-    color: white;
-    padding: 10px;
-}
 
 .help-icon {
     margin-left: 5px;
