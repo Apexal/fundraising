@@ -8,12 +8,40 @@ body {
 .left {
   float: left; }
 
+.pagination {
+  margin-top: 0; }
+
+textarea {
+  max-width: 100%;
+  max-height: 200px; }
+
+.help-icon {
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 0.7em !important; }
+
+@media only screen and (max-width: 768px) {
+  .page-header h1, .page-header h2, .page-header h3 {
+    text-align: center; }
+  .page-header small {
+    float: none !important; }
+  .page-header small:before {
+    content: ' ';
+    display: block; }
+
+  .actions {
+    text-align: center; }
+    .actions .right {
+      float: none; } }
 .homepage-jumbotron {
   margin: 0; }
   .homepage-jumbotron > .logo {
     height: 130px; }
   .homepage-jumbotron > .quoteofday {
     margin-bottom: 0; }
+  @media only screen and (max-width: 768px) {
+    .homepage-jumbotron > h1 {
+      text-align: center; } }
 
 .important-links {
   background-color: #222;
@@ -29,10 +57,30 @@ body {
   margin: 0 !important;
   padding: 0 !important; }
 
+/* APPLICATION PAGE */
 .application-form .help-icon {
   margin-left: 5px;
   font-size: 1em !important; }
 .application-form #ambassadors {
+  display: none; }
+
+/* APPLICANT LIST */
+.contact-info div {
+  padding-bottom: 10px; }
+
+.applicant-panel blockquote {
+  font-size: 1em;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0; }
+
+.applicant-panel .input-group {
+  width: 100%; }
+
+.applicant-info-section * {
+  display: block; }
+
+.form-group.no-rank * {
   display: none; }
 
 .location {
@@ -65,6 +113,7 @@ a.location-name {
   .user-info .summary {
     text-align: center; } }
 
+/* EDIT PROFILE PAGE */
 .workshop-dates {
   margin-top: 10px; }
 
@@ -116,59 +165,5 @@ a.location-name {
 
 .fundraising-well h3 {
   margin: 10px; }
-
-.help-icon {
-  margin-left: 5px;
-  cursor: pointer;
-  font-size: 0.7em !important; }
-
-textarea {
-  max-width: 100%;
-  max-height: 200px; }
-
-.contact-info div {
-  padding-bottom: 10px; }
-
-.applicant-panel blockquote {
-  font-size: 1em;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 0; }
-
-.applicant-panel .input-group {
-  width: 100%; }
-
-.applicant-info-section * {
-  display: block; }
-
-.form-group.no-rank * {
-  display: none; }
-
-.teacher-director-page img {
-  width: 150px;
-  border: 4px solid #222; }
-
-.director-management .active-workshop a:first-of-type {
-  margin-right: 5px; }
-
-.pagination {
-  margin-top: 0; }
-
-@media only screen and (max-width: 768px) {
-  .homepage-jumbotron h1 {
-    text-align: center; }
-
-  .page-header h1, .page-header h2, .page-header h3 {
-    text-align: center; }
-  .page-header small {
-    float: none !important; }
-  .page-header small:before {
-    content: ' ';
-    display: block; }
-
-  .actions {
-    text-align: center; }
-    .actions .right {
-      float: none; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,7 +7,7 @@ block content
                 h1 Edit #{targetUser.name.full}
     .row
         .col-xs-12
-            form.form(action="/users/" + targetUser.email + "/edit", method="POST")
+            form.form.edit-user-form(action="/users/" + targetUser.email + "/edit", method="POST")
                 .form-group
                     label(for="email") Email
                     input.form-control.disabled#email(type="text", value=targetUser.email, disabled)

@@ -5,3 +5,44 @@
 .left {
     float: left;
 }
+
+.pagination {
+    margin-top: 0;
+}
+
+textarea {
+    max-width: 100%;
+    max-height: 200px;
+}
+
+.help-icon {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.7em !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .page-header {
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        small {
+            float: none !important;
+        }
+        
+        small:before {
+            content: ' ';
+            display: block;
+        }
+    }
+
+    .actions {
+        text-align: center;
+
+        .right {
+            float: none;
+            
+        }
+    }
+}

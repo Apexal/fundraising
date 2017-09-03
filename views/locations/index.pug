@@ -7,7 +7,7 @@ block content
                 h1 Locations
                     small.right #{locations.length} total
                 p= helpers.getHelpInfo('locations')
-                
+
                 //- Only program directors, ambassadors, and admins of any rank can add new locations
                 if user.rank != 'teacher' || user.admin
                     a.btn.btn-danger(href='/locations/new') New Location
