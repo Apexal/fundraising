@@ -24,6 +24,7 @@ const workshopSchema = new Schema({
         extra: { type: String, trim: true }
     },
     claimed: { type: Boolean, default: false },
+    active: { type: Boolean, default: true },
     dateAdded: { type: Date, required: true }
 }, {
     toObject: {
@@ -44,14 +45,9 @@ workshopSchema.methods.findFundraisingGoals = function() {
     return this.model('FundraisingGoal').find({ workshop: this._id }).populate('submittedBy').exec();   
 }
 
-workshopSchema.virtual('ready').get(function() { 
+workshopSchema.virtual('ranksFilled').get(function() { 
     // Determine whether workshop is ready to start
-    return (this.teachers.length > 0 && !!this.director && !!this.ambassador);
-});
-
-workshopSchema.virtual('active').get(function() { 
-    // Determine whether workshop is going on right now
-    return moment().isBefore(moment(this.endDate));
+    return (this.teachers.length > 1 && !!this.director && !!this.ambassador);
 });
 
 workshopSchema.virtual('ongoing').get(function() { 
