@@ -38,6 +38,12 @@ router.get('/', (req, res, next) => {
         return res.redirect('/');
     }
 
+    ['rank', 'directorId', 'ambassadorId'].forEach(prop => {
+        console.log(prop);
+        console.log(req.query[prop]);
+        res.locals.user.application[prop] = req.query[prop];
+    });
+
     // Get open workshops
     req.db.User
         .where('rank').ne('teacher')
