@@ -5,10 +5,6 @@
         margin-left: 5px;
         font-size: 1em !important;
     }
-
-    #ambassadors {
-        display: none;
-    }
 }
 
 
@@ -35,6 +31,6 @@
     display: block;
 }
 
-.form-group.no-rank * {
+.form-group.no-rank {
     display: none;
 }

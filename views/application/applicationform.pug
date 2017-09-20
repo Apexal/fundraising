@@ -11,19 +11,19 @@ form.application-form(method="POST", enctype="multipart/form-data", action=(appl
             label(for="rank") Desired Rank
                 +help('ranks')
             select#rank.form-control(name="rank", required)
-                option(value='none') Choose Rank
-                option(value="teacher", selected=(u.rank == 'teacher')) Teacher
-                option(value="director", selected=(u.rank == 'director')) Program Director
-        
-        .form-group(class=(u.rank ? '' : 'no-rank'))
-            label(for='superior') Superior
+                option(value="teacher", selected=(u.application.rank == 'teacher')) Teacher
+                option(value="director", selected=(u.application.rank == 'director')) Program Director
+                option(value="ambassador", selected=(u.application.rank == 'ambassador')) Ambassador
+
+        .form-group
+            label(for='superior', style=(u.application.rank == 'ambassador' ? 'display: none' : '')) Program Director
                 +help('superior')
-            select#directors.form-control(name="directorId", required)
+            select#directors.form-control(name="directorId", style=(u.application.rank == 'teacher' || !u.application.rank ? '' : 'display: none'), required)
                 each d in directors
-                    option(value=d._id)= d.name.full
-            select#ambassadors.form-control(name="ambassadorId", required)
+                    option(value=d._id, selected=(u.application.superior == d.id))= d.name.full
+            select#ambassadors.form-control(name="ambassadorId", style=(u.application.rank == 'director' ? '' : 'display: none'), required)
                 each a in ambassadors
-                    option(value=a._id)= a.name.full
+                    option(value=a._id, selected=(u.application.superior == a.id))= a.name.full
 
     .form-group
         label(for="why") Why Kids Tales?
@@ -32,12 +32,18 @@ form.application-form(method="POST", enctype="multipart/form-data", action=(appl
     .form-group
         label(for="writing-sample") Sample of Your Writing
         if u.application.writingFileName
-            span.text-muted  Already uploaded.
-        input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md")
+            | 
+            a(href='/writingsamples/' + u.application.writingFileName, target='new')
+                +icon('link', 'Already Submitted')
+        input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md", required=(!u.application.writingFileName))
     hr
-    
+
     if applying
-        button.btn.btn-danger(type="submit") Save
+        button.btn.btn-danger(type="submit")
+            if u.application.rank
+                | Update Application
+            else
+                | Submit Application
         script(src='/javascripts/application.js')
     else  
         button.btn.btn-success.right(type="submit") Save & Accept
