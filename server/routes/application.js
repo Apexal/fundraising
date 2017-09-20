@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const moment = require('moment');
 const multer = require('multer');
 
 const DOC_TYPES = ['.txt', '.doc', '.docx'];
@@ -38,11 +37,7 @@ router.get('/', (req, res, next) => {
         return res.redirect('/');
     }
 
-    ['rank', 'directorId', 'ambassadorId'].forEach(prop => {
-        console.log(prop);
-        console.log(req.query[prop]);
-        res.locals.user.application[prop] = req.query[prop];
-    });
+    ['rank', 'directorId', 'ambassadorId'].forEach(prop => res.locals.user.application[prop] = req.query[prop] ); // Prefill rank and/or superior from link
 
     // Get open workshops
     req.db.User

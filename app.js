@@ -63,8 +63,6 @@ app.use((req, res, next) => {
     // For convenience
     res.locals.loggedIn = req.isAuthenticated();
 
-    // if (req.user) { }
-
     next();
 });
 
