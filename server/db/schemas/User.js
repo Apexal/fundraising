@@ -16,9 +16,9 @@ const userSchema = new Schema({
         last: { type: String, required: true, trim: true }
     },
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
-    superior: { type: Number, ref: 'User' },
-    rankInfo: Object, // Depends on rank
     application: {
+        rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
+        superior: { type: Number, ref: 'User' },
         recommender: { type: Number, ref: 'User' },
         why: { type: String, trim: true },
         writingFileName: { type: String, trim: true },
@@ -38,8 +38,8 @@ const userSchema = new Schema({
 
 userSchema.plugin(mongoosePaginate);
 
-userSchema.methods.findWorkshops = function() {
-    return this.model('Workshop').find().or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
+userSchema.methods.getActiveWorkshops = function() {
+    return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
 }
 
 userSchema.virtual('rankName').get(function() { 

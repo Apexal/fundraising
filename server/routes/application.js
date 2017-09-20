@@ -39,7 +39,8 @@ router.get('/', (req, res, next) => {
     }
 
     // Get open workshops
-    req.db.User.where('rank').ne('teacher')
+    req.db.User
+        .where('rank').ne('teacher')
         .exec()
         .then(superiors => {
             res.locals.superiors = superiors;
@@ -72,37 +73,48 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     req.user.age = age;
     req.user.phoneNumber = phoneNumber;
     req.user.location = location;
-    
+
     req.user.application.updatedAt = new Date();
 
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
-    if (req.file)
-        req.user.application.writingFileName = req.file.filename;
+    if (req.file) req.user.application.writingFileName = req.file.filename;
 
     req.user.application.why = why;
     
-    const newSuperior = (rank !== 'none' && req.user.superior != superiorId);
-    if (rank !== 'none') {
-        req.user.rank = rank;
-        req.user.superior = superiorId;
+    const newRank = (rank !== req.user.rank);
+    if (['teacher', 'director', 'ambassador'].includes(rank)) {
+        req.user.application.rank = rank;
+        req.user.rank = undefined;
+    } else {
+        return next(new Error('Invalid rank!'));
+    }
+    
+    if (['teacher', 'director'].includes(rank)) {
+        req.user.application.superior = superiorId;
+    } else {
+        req.user.application.superior = undefined;
     }
 
     req.user.save()
         .then(user => {
             req.user = user;
-            return req.db.User.findById(user.superior).exec();
+            req.flash('info', `Your application has been submitted. It will be reviewed shortly.`);
+            return res.redirect('/application');
+            //return req.db.User.findById(user.superior).exec();
         })
-        .then(superior => {
+        /*.then(superior => {
             if (newSuperior) {
                 sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.rank });
                 sendEmail(req.user.email, 'Application Updated', 'applicationUpdated', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
             }
 
-            const message = (newSuperior ? `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.` : `Your application has been updated. It will be submitted once you choose a rank and superior.`);
 
+
+            const message = (newRank ? `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.` : `Your application has been updated. It will be submitted once you choose a rank and superior.`);
             req.flash('info', message);
+
             res.redirect('/application');
-        })
+        })*/
         .catch(next);
 });
 
