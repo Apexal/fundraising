@@ -99,9 +99,9 @@ requireAdmin = function(req, res, next) {
 }
 
 /* Login with Google using Passport */
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
+app.get('/auth/slack', passport.authenticate('slack'));
+app.get('/auth/slack/callback',
+    passport.authenticate('slack', {
         //successRedirect: '/',
         failureRedirect: '/',
         failureFlash: true

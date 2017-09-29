@@ -24,7 +24,6 @@ console.log('Loaded schemas...');
 const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
 const fakeTeacher = {
-    _id: 1,
     email: 'thefrank.matranga@gmail.com',
     age: 17,
     grade: 12,
@@ -46,7 +45,6 @@ models.User.findOneAndUpdate({ _id: 1 }, fakeTeacher, options, function(error, r
 
 
 const fakeDirector = {
-    _id: 2,
     email: 'fmatranga18@regis.org',
     age: 17,
     grade: 12,
@@ -67,7 +65,6 @@ models.User.findOneAndUpdate({ _id: 2 }, fakeDirector, options, function(error, 
 });
 
 const fakeAmbassador = {
-    _id: 3,
     email: 'the.frankmatranga@gmail.com',
     age: 17,
     grade: 12,

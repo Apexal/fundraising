@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
 const userSchema = new Schema({
-    _id: { type: Number },
+    slackId: { type: String, required: true },
     profileImageName: { type: String, default: 'default.png' },
     email: { type: String, trim: true /*, unique: true*/ },
     age: { type: Number, min: 10, max: 100 },
