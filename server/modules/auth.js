@@ -1,6 +1,7 @@
 const passport = require('passport');
 const SlackStrategy = require('passport-slack').Strategy;
 const config = require('../config').slack;
+const slack = require('./slack');
 
 module.exports = (User) => {
     passport.serializeUser((user, done) => {
@@ -48,8 +49,15 @@ module.exports = (User) => {
                     user.save();
                     sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                 }
-                console.log(`Logging in ${email}...`)
-                return done(null, user);
+                console.log(`Logging in ${email}...`);
+
+                const u = user.sendSlackMessage('Welcome!')
+                    .then(data => {
+                        return done(null, user);
+                    })
+                    .catch(err => {
+                        return done(err, false);
+                    });
             })
             .catch(err => {
                 console.log(`Failed to login user with email ${email}.`)

@@ -12,6 +12,7 @@ const session = require('express-session');
 const config = require('./server/config.js');
 const packageInfo = require('./package.json');
 const mongodb = require('./server/db');
+const slack = require('./server/modules/slack.js');
 
 const debug = require('debug')('http');
 

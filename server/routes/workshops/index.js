@@ -4,7 +4,6 @@ const moment = require('moment');
 const request = require('request-promise');
 const fs = require('fs');
 const path = require('path');
-const slack = require('../../modules/slack.js');
 
 router.use(requireVerified);
 
@@ -434,7 +433,7 @@ router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
         if (req.workshop.director) sendEmail(req.workshop.director.email, "New Fundraising Goal", message);
 
         const text = `<http://kidstales.ddns.net:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://kidstales.ddns.net/workshops/${workshopId}|Workshop ${req.workshop.location.name}>`;
-        return slack.sendMessage(text);
+        //return slack.sendMessage(text);
     }).then(body => {
         req.flash('success', 'Added new fundraising goal for workshop.');
         res.redirect(`/workshops/${req.workshop._id}/fundraising`);

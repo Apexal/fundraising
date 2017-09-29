@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
+const slack = require('../../modules/slack');
 
 const userSchema = new Schema({
     slackId: { type: String, required: true },
@@ -40,6 +41,19 @@ userSchema.plugin(mongoosePaginate);
 
 userSchema.methods.getActiveWorkshops = function() {
     return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
+}
+
+userSchema.methods.getSlackUser = function() {
+    return slack.getUsers()
+        .then(data => data.members.filter(u => u.id == this.slackId)[0])
+        .fail(err => console.error(err));
+}
+
+userSchema.methods.sendSlackMessage = function(message) {
+    return slack.getUsers()
+        .then(data => data.members.filter(u => u.id == this.slackId)[0])
+        .then(user => slack.postMessageToUser(user.profile.display_name, message))
+        .fail(err => console.error(err));
 }
 
 userSchema.virtual('rankName').get(function() { 
