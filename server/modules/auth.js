@@ -28,7 +28,7 @@ module.exports = (User) => {
             const email = profile.user.email;
 
             // Find user
-            User.findOne({ slackId: profile.slackId })
+            User.findOne({ slackId: profile.id })
             .exec()
             .then(user => {
                 if (!user) {
@@ -46,18 +46,15 @@ module.exports = (User) => {
                         admin: false
                     });
 
-                    user.save();
+                    user.save()
+                        .then(u => {
+                            u.sendSlackMessage('Welcome to Kids Tales!');
+                        });
                     sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                 }
                 console.log(`Logging in ${email}...`);
 
-                const u = user.sendSlackMessage('Welcome!')
-                    .then(data => {
-                        return done(null, user);
-                    })
-                    .catch(err => {
-                        return done(err, false);
-                    });
+                return done(null, user);
             })
             .catch(err => {
                 console.log(`Failed to login user with email ${email}.`)
