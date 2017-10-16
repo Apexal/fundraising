@@ -7,7 +7,7 @@ const DOC_TYPES = ['.txt', '.doc', '.docx'];
 /* Save uploaded writing sample files to the writingsamples directory with the naming scheme 'user-<user-id>.<extension>' */
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, __dirname + '/../../client/public/writingsamples'),
-    filename: (req, file, cb) => cb(null, 'user-' + req.user._id + '.' + file.originalname.split('.')[1]),
+    filename: (req, file, cb) => cb(null, 'user-' + req.body.email + '.' + file.originalname.split('.')[1]),
     fileFilter: (req, file, cb) => {
         if(DOC_TYPES.includes(file.mimetype)) {
             cb(null, true)
@@ -26,16 +26,16 @@ const upload = multer({
 });
 
 /* Users must be at least logged in to access ANY routes here */
-router.use(requireLogin);
+router.use(requireNotLogin);
 
 /* GET application. */
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Application';
-
-    if (req.user.verified) {
-        req.flash('warning', 'You have already applied and been accepted.');    
-        return res.redirect('/');
-    }
+    res.locals.user = {
+        email: '',
+        name: {},
+        application: {}
+    };
 
     ['rank', 'directorId', 'ambassadorId'].forEach(prop => res.locals.user.application[prop] = req.query[prop] ); // Prefill rank and/or superior from link
 
@@ -56,47 +56,57 @@ router.get('/', (req, res, next) => {
 /* Save application data and alert higher ups */
 router.post('/', upload.single('writingSample'), (req, res, next) => {
     // Get form data
+    const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const grade = req.body.grade;
     const age = req.body.age;
     const phoneNumber = req.body.phoneNumber;
     const location = req.body.location;
-    
+
     const rank = req.body.rank;
     const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
     const why = req.body.why;
 
-    // Update user properties
-    req.user.name.first = firstName;
-    req.user.name.last = lastName;
-    req.user.grade = grade;
-    req.user.age = age;
-    req.user.phoneNumber = phoneNumber;
-    req.user.location = location;
-
-    req.user.application.updatedAt = new Date();
+    // Get/create user
+    const user = {
+        email,
+        age,
+        grade,
+        phoneNumber: phoneNumber,
+        location: location,
+        name: {
+            full: firstName + ' ' + lastName,
+            first: firstName,
+            last: lastName
+        },
+        rank: 'teacher', // placeholder
+        application: {
+            rank,
+            superior: superiorId,
+            //recommender: { type: Number, ref: 'User' },
+            why,
+            updatedAt: new Date()
+        }
+    };
 
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
-    if (req.file) req.user.application.writingFileName = req.file.filename;
+    if (req.file) user.application.writingFileName = req.file.filename;
 
-    req.user.application.why = why;
-    
-    const newRank = (rank !== req.user.rank);
     if (['teacher', 'director', 'ambassador'].includes(rank)) {
-        req.user.application.rank = rank;
-        req.user.rank = undefined;
+        user.application.rank = rank;
     } else {
         return next(new Error('Invalid rank!'));
     }
-    
-    if (['teacher', 'director'].includes(rank)) {
-        req.user.application.superior = superiorId;
-    } else {
-        req.user.application.superior = undefined;
-    }
 
-    req.user.save()
+    if (['teacher', 'director'].includes(rank)) user.application.superior = superiorId;
+
+    req.db.User.findOneAndUpdate({ email }, user, { upsert: true, new: true, setDefaultsOnInsert: true })
+        .exec()
+        .then(user => {
+            console.log(user);
+            return user.save();
+        })
         .then(user => {
             req.user = user;
             req.flash('info', `Your application has been submitted. It will be reviewed shortly.`);

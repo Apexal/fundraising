@@ -6,8 +6,46 @@ block content
             .jumbotron
                 h1 Kids Tales Teacher Application
                 p= helpers.getHelpInfo('application')
-        
+
         .col-xs-12
-            - var u = user
-            - var applying = true
-            include /application/applicationform
+            form.application-form(method="POST", enctype="multipart/form-data", action="/application")
+                .page-header
+                    h3 Contact Info
+                include /includes/userForm
+
+                .page-header
+                    h3 Workshop Info
+
+                .form-group
+                    label(for="rank") Desired Rank
+                        +help('ranks')
+                    select#rank.form-control(name="rank", required)
+                        option(value="teacher", selected=(user.application.rank == 'teacher')) Teacher
+                        option(value="director", selected=(user.application.rank == 'director')) Program Director
+                        option(value="ambassador", selected=(user.application.rank == 'ambassador')) Ambassador
+
+                .form-group
+                    label(for='superior', style=(user.application.rank == 'ambassador' ? 'display: none' : '')) Program Director
+                        +help('superior')
+                    select#directors.form-control(name="directorId", style=(user.application.rank == 'teacher' || !user.application.rank ? '' : 'display: none'))
+                        each d in directors
+                            option(value=d._id, selected=(user.application.superior == d.id))= d.name.full
+                    select#ambassadors.form-control(name="ambassadorId", style=(user.application.rank == 'director' ? '' : 'display: none'))
+                        each a in ambassadors
+                            option(value=a._id, selected=(user.application.superior == a.id))= a.name.full
+
+                .form-group
+                    label(for="why") Why Kids Tales?
+                    textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= user.application.why
+
+                .form-group
+                    label(for="writing-sample") Sample of Your Writing
+                    if user.application.writingFileName
+                        | 
+                        a(href='/writingsamples/' + user.application.writingFileName, target='new')
+                            +icon('link', 'Already Submitted')
+                    input.form-control#writing-sample(type="file", name="writingSample", accept=".doc,.docx,.txt,.md", required)
+                hr
+
+                button.btn.btn-danger(type="submit") Submit Application
+                script(src='/javascripts/application.js')
