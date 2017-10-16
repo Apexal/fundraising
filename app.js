@@ -77,6 +77,11 @@ requireLogin = function(req, res, next) {
     return res.redirect('/');
 }
 
+requireNotLogin = function(req, res, next) {
+    if (!req.isAuthenticated()) return next();
+    return next(new Error('You are logged in!'));
+}
+
 // To be used by routes
 // When used as a middleware on a route, if user is not logged in or is not verified it redirects home
 requireVerified = function(req, res, next) {
