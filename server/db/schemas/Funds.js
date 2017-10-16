@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const fundsSchema = new Schema({
     workshop: { type: mongoose.Schema.Types.ObjectId, ref: 'Workshop' },
-    submittedBy: { type: Number, ref: 'User', required: true },
+    submittedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     amount: { type: Number, min: 0, required: true },
     method: { type: String, trim: true, required: true },
     form: { type: String, enum: ['Cash', 'Check', 'Other'], default: 'Other' },

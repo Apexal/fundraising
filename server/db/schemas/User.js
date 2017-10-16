@@ -18,8 +18,8 @@ const userSchema = new Schema({
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
     application: {
         rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
-        superior: { type: Number, ref: 'User' },
-        recommender: { type: Number, ref: 'User' },
+        superior: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        recommender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         why: { type: String, trim: true },
         writingFileName: { type: String, trim: true },
         updatedAt: { type: Date }
