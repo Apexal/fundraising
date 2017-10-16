@@ -24,61 +24,21 @@ console.log('Loaded schemas...');
 const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
 const fakeTeacher = {
-    email: 'thefrank.matranga@gmail.com',
-    age: 17,
-    grade: 12,
-    phoneNumber: '888-888-8888',
-    location: 'NYC',
-    name: { full: 'Teacher Test', first: 'Teacher', last: 'Test' },
-    rank: 'teacher',
-    rankInfo: { directorId: 2 },
-    application: { why: 'Why not?' },
-    registeredDate: Date.now(),
-    admin: false,
-    verified: true
-};
-models.User.findOneAndUpdate({ _id: 1 }, fakeTeacher, options, function(error, result) {
-    if (error) return;
-    console.log(result);
-    // do something with the document
-});
-
-
-const fakeDirector = {
-    email: 'fmatranga18@regis.org',
-    age: 17,
-    grade: 12,
-    phoneNumber: '888-888-8888',
-    location: 'NYC',
-    name: { full: 'Director Test', first: 'Director', last: 'Test' },
-    rank: 'director',
-    rankInfo: { ambassadorId: 3 },
-    application: { why: 'Because.' },
-    registeredDate: Date.now(),
-    admin: false,
-    verified: true
-};
-models.User.findOneAndUpdate({ _id: 2 }, fakeDirector, options, function(error, result) {
-    if (error) return;
-    console.log(result);
-    // do something with the document
-});
-
-const fakeAmbassador = {
     email: 'the.frankmatranga@gmail.com',
     age: 17,
     grade: 12,
-    phoneNumber: '888-888-8888',
-    location: 'NYC',
-    name: { full: 'Ambassador Test', first: 'Ambassador', last: 'Test' },
+    phoneNumber: '8888888888',
+    location: 'Narnia',
+    name: {
+        full: 'Ambas Sador',
+        first: 'Ambas',
+        last: 'Sador'
+    },
     rank: 'ambassador',
-    rankInfo: { area: 'Tri-state Area' },
-    application: { why: 'idek.' },
-    registeredDate: Date.now(),
-    admin: false,
+    admin: true,
     verified: true
 };
-models.User.findOneAndUpdate({ _id: 3 }, fakeAmbassador, options, function(error, result) {
+models.User.findOneAndUpdate({ email: 'the.frankmatranga@gmail.com' }, fakeTeacher, options, function(error, result) {
     if (error) return console.error(error);
     console.log(result);
     // do something with the document
