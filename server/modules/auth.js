@@ -1,6 +1,7 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const config = require('../config').googleAuth;
+const SlackStrategy = require('passport-slack').Strategy;
+const config = require('../config').slack;
+const slack = require('./slack');
 
 module.exports = (User) => {
     passport.serializeUser((user, done) => {
@@ -17,32 +18,42 @@ module.exports = (User) => {
         .catch(done);
     });
 
-    passport.use(new GoogleStrategy(config, 
+    passport.use(new SlackStrategy(config, 
         (req, token, refreshToken, profile, done) => {
-            const email = profile.emails[0].value;
+            console.log(profile);
+            
+            // Make sure user is in Kids Tales Slack team 
+            if (profile.team.id !== config.teamID) return done(null, false, { message: 'You must be on the Kids Tales Slack team!' });
+
+            const email = profile.user.email;
 
             // Find user
-            User.findById(profile.id)
+            User.findOne({ slackId: profile.id })
             .exec()
             .then(user => {
                 if (!user) {
                     console.log(`Creating user with email ${email}...`);
                     user = new User({
-                        _id: profile.id,
+                        slackId: profile.id,
                         email,
                         name: {
-                            full: `${profile.name.givenName} ${profile.name.familyName}`,
-                            first: profile.name.givenName,
-                            last: profile.name.familyName
+                            full: profile.user.name,
+                            first: profile.user.name.split(' ')[0],
+                            last: profile.user.name.split(' ')[1],
                         },
+                        profileImageName: profile.user.image_192,
                         verified: false,
                         admin: false
                     });
 
-                    user.save();
+                    user.save()
+                        .then(u => {
+                            u.sendSlackMessage('Welcome to Kids Tales!');
+                        });
                     sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                 }
-                console.log(`Logging in ${email}...`)
+                console.log(`Logging in ${email}...`);
+
                 return done(null, user);
             })
             .catch(err => {

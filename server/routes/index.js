@@ -50,7 +50,7 @@ router.get('/login', (req, res) => {
         return res.redirect('/');
     }
 
-    res.redirect('/auth/google');
+    res.redirect('/auth/slack');
 });
 
 /* Allow admins to login as any user based on email */
