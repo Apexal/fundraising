@@ -1,47 +1,18 @@
 extends /layout
 
-mixin user(u)
-    .col-xs-12.col-sm-6.col-lg-4
-        .panel.user-panel(class=(u.admin ? 'panel-primary' : 'panel-default'))
-            .panel-heading
-                small.text-muted.right.hidden-xs registered 
-                    =moment(u.registeredDate).fromNow()
-                h1.panel-title
-                    if u.admin
-                        b Administrator
-                    else
-                        b=u.rankName
-                    |  #{u.name.full}
-            .panel-body
-                .media
-                    .media-left
-                        a(href="/users/" + u.email)
-                            img.profileimage(alt="Image of " + u.name.first, src="/images/" + u.profileImageName)
-                    .media-right
-                        p.text-muted.text-center.summary #[b= u.age] years old in grade #[b= u.grade] near #[b= u.location]
-                            br
-                            b Phone #: 
-                            span= u.phoneNumber
-                            br
-                            a(href="mailto:" + u.email)= u.email
-                    br
-                    a.btn(href="/users/" + u.email, class=(u.admin ? 'btn-primary' : 'btn-default')) View
-                    if user.admin
-                        a.btn.btn-danger.right(href="/users/" + u.email + "/edit") Edit
-
 block content
     .row
         .col-xs-12
             .page-header
                 include /includes/pagination
                 h1 User List
-                    +help('users')
+                    +help("users")
                     small  #{users.length} total
     .row
         .col-xs-12.user-search
             form
                 .input-group
-                    input.form-control.criteria(type='text', name='search', placeholder='Search for users by name, email, phone number, location, etc.', value=search)
+                    input.form-control.criteria(type="text", name="search", placeholder="Search for users by name, email, phone number, location, etc.", value=search)
                     span.input-group-btn
                         button.btn.btn-default Search
             hr
@@ -49,5 +20,25 @@ block content
     .row.user-list
         if search
             h3 Search Results
-        each u in users
-            +user(u)
+        
+        table.table.table-hover
+            thead
+                tr
+                    th Rank
+                    th Name
+                    th Email
+                    th Phone Number
+                    th Location
+                    th Actions
+            tbody
+                each u in users
+                    tr(class=(u.admin ? "danger" : ""))
+                        td
+                            b= helpers.cap(u.rank)
+                        td= u.name.full
+                        td
+                            a(href="mailto:" + u.email)= u.email
+                        td= u.phoneNumber
+                        td= u.location
+                        td
+                            a.btn.btn-default(href="/users/" + u.email) View Profile

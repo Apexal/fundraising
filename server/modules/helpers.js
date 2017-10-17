@@ -14,6 +14,8 @@ h.limit = (string, maxLength) => {
     return (string.length > maxLength ? string.substring(0, maxLength) + '...' : string);
 };
 
+h.cap = string => { return string.charAt(0).toUpperCase() + string.slice(1); };
+
 h.isTeacher = (workshop, user) => workshop.teachers.map(t => t.id).includes(user.id);
 
 h.isInvolved = (involvements, workshop) => involvements.map(i => i.workshop.id).includes(workshop.id); // Not sure why I need toString() but I do
