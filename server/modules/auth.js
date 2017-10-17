@@ -28,38 +28,29 @@ module.exports = (User) => {
             const email = profile.user.email;
 
             // Find user
-            User.findOne({ slackId: profile.id })
-            .exec()
-            .then(user => {
-                if (!user) {
-                    console.log(`Creating user with email ${email}...`);
-                    user = new User({
-                        slackId: profile.id,
-                        email,
-                        name: {
-                            full: profile.user.name,
-                            first: profile.user.name.split(' ')[0],
-                            last: profile.user.name.split(' ')[1],
-                        },
-                        profileImageName: profile.user.image_192,
-                        verified: false,
-                        admin: false
-                    });
+            User.findOne({ email, verified: true })
+                .exec()
+                .then(user => {
+                    if (!user) throw new Error('You must apply first!');
 
-                    user.save()
-                        .then(u => {
-                            u.sendSlackMessage('Welcome to Kids Tales!');
-                        });
-                    sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
-                }
-                console.log(`Logging in ${email}...`);
+                    if (user.slackId !== profile.id) {
+                        // First login
+                        sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
+                        user.slackId = profile.id;
 
-                return done(null, user);
-            })
-            .catch(err => {
-                console.log(`Failed to login user with email ${email}.`)
-                return done(err, false, { message: 'There was an error logging you in, please try again later.' });
-            });
+                        user.save()
+                            .then(u => {
+                                u.sendSlackMessage('Welcome to Kids Tales!');
+                            });
+                    }
+                    console.log(`Logging in ${email}...`);
+
+                    return done(null, user);
+                })
+                .catch(err => {
+                    console.log(`Failed to login user with email ${email}.`)
+                    return done(err, false, { message: 'There was an error logging you in, please try again later.' });
+                });
         }
     ));
 
