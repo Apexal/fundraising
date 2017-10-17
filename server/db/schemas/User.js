@@ -38,6 +38,11 @@ const userSchema = new Schema({
 
 userSchema.plugin(mongoosePaginate);
 
+userSchema.pre('save', function(next) {
+    this.name.full = this.name.first + ' ' + this.name.last;
+    next();
+});
+
 userSchema.methods.getActiveWorkshops = function() {
     return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
 }

@@ -11,6 +11,6 @@ block content
                 .form-group
                     label(for="profile-img-picker") Profile Picture
                     input.form-control#profile-img-picker(type="file", name="profileImage", accept="image/*")
-                - var u = user
+                - var profile = true
                 include /includes/userForm
                 button.btn.btn-danger(type="submit") Save

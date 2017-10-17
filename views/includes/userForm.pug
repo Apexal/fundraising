@@ -1,6 +1,11 @@
-.form-group
-    label Email
-    input.form-control#email(name="email", type="text", value=user.email, maxlength="70", required)
+if profile
+    .form-group
+        label Email
+        input.form-control.disabled(type="text", value=user.email, maxlength="70", disabled)
+else
+    .form-group
+        label Email
+        input.form-control#email(name="email", type="text", value=user.email, maxlength="70", required)
 .form-group
     label(for="first-name") First Name
     input.form-control#first-name(name="firstName", type="text", value=user.name.first, maxlength="20", required)
