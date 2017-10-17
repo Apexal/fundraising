@@ -42,10 +42,8 @@ router.get('/:email', (req, res, next) => {
 
             res.locals.targetUser = user;
             res.locals.pageTitle = `${user.rankName} ${user.name.full}`;
-            return user.findWorkshops();
-        }).then(workshops => {
-            res.locals.workshops = workshops;
-            res.render('users/user');
+
+            return res.render('users/user');
         })
         .catch(next);
 });

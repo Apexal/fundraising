@@ -36,37 +36,38 @@ block content
                 .page-header
                     h2 #{targetUser.rankName} Info
 
-    .row
-        .col-xs-12
-            .page-header
-                h2 All Workshops
-                    small.right #{workshops.length} total
-            if workshops.length > 0
-                table.table
-                        thead
-                            tr
-                                th Start Date
-                                th End Date
-                                th Location
-                                th #{targetUser.name.first}'s Rank
-                        tbody
-                            each c in workshops
-                                tr
-                                    td= moment(c.startDate).format("MMMM Do YYYY")
-                                    td= moment(c.endDate).format("MMMM Do YYYY")
-                                    td
-                                        a(href="/locations/" + c.location._id)= c.location.name
-                                    td.rank= helpers.getRankFromWorkshop(c, targetUser)
-                                    td
-                                        a.btn.btn-default(href="/workshops/" + c._id) Workshop Details
-            else
-                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
+    //- .row
+    //-     .col-xs-12
+    //-         .page-header
+    //-             h2 All Workshops
+    //-                 small.right #{workshops.length} total
+    //-         if workshops.length > 0
+    //-             table.table
+    //-                     thead
+    //-                         tr
+    //-                             th Start Date
+    //-                             th End Date
+    //-                             th Location
+    //-                             th #{targetUser.name.first}'s Rank
+    //-                     tbody
+    //-                         each c in workshops
+    //-                             tr
+    //-                                 td= moment(c.startDate).format("MMMM Do YYYY")
+    //-                                 td= moment(c.endDate).format("MMMM Do YYYY")
+    //-                                 td
+    //-                                     a(href="/locations/" + c.location._id)= c.location.name
+    //-                                 td.rank= helpers.getRankFromWorkshop(c, targetUser)
+    //-                                 td
+    //-                                     a.btn.btn-default(href="/workshops/" + c._id) Workshop Details
+    //-         else
+    //-             p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
+
     .row
         .col-xs-12
             hr
             a.btn.btn-lg.btn-primary.right(href="mailto:" + targetUser.email) Email #{targetUser.name.first}
     
             if user.admin
-                if user._id != targetUser._id
-                    a.btn.btn-lg.btn-info(href="/loginas?email=" + targetUser.email) Login as #{targetUser.name.first}
+                if user.id !== targetUser.id
+                    a.btn.btn-lg.btn-info(href="/loginas?id=" + targetUser.id) Login as #{targetUser.name.first}
                 a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}
