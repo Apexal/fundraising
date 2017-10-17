@@ -21,7 +21,7 @@ module.exports = (User) => {
     passport.use(new SlackStrategy(config, 
         (req, token, refreshToken, profile, done) => {
             console.log(profile);
-            
+
             // Make sure user is in Kids Tales Slack team 
             if (profile.team.id !== config.teamID) return done(null, false, { message: 'You must be on the Kids Tales Slack team!' });
 

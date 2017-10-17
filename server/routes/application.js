@@ -109,7 +109,8 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
         })
         .then(user => {
             req.user = user;
-            req.flash('info', `Your application has been submitted. It will be reviewed shortly.`);
+            req.flash('info', `Your application has been submitted. It will be reviewed shortly. Please check your email for updates.`);
+            sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', user);
             return res.redirect('/application');
             //return req.db.User.findById(user.superior).exec();
         })
