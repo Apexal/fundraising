@@ -21,7 +21,7 @@ block content
         if search
             h3 Search Results
         
-        table.table.table-hover
+        table.table.table-striped
             thead
                 tr
                     th Rank
@@ -29,16 +29,14 @@ block content
                     th Email
                     th Phone Number
                     th Location
-                    th Actions
             tbody
                 each u in users
-                    tr(class=(u.admin ? "danger" : ""))
+                    tr
                         td
                             b= helpers.cap(u.rank)
-                        td= u.name.full
+                        td
+                            a(href="/users/" + u.email)= u.name.full
                         td
                             a(href="mailto:" + u.email)= u.email
                         td= u.phoneNumber
                         td= u.location
-                        td
-                            a.btn.btn-default(href="/users/" + u.email) View Profile
