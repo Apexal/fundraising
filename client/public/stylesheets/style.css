@@ -51,6 +51,9 @@ textarea {
     color: white;
     padding: 10px; }
 
+.admin-updates img.media-object {
+  width: 70px; }
+
 .navbar-top .profilepicture > img {
   height: 50px; }
 .navbar-top .profilepicture {

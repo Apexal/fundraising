@@ -19,6 +19,22 @@ block content
                         +icon('slack', 'Slack')
                 a.github(href="https://github.com/KidsTales/kt-web/issues", target="_blank")
                     +icon('github', 'Website Issues')
+    .row
+        .col-xs-12
+            hr
+            .panel.panel-info.admin-updates
+                .panel-heading
+                    h3.panel-title Admin Updates
+                .panel-body
+                    .media
+                        .media-left
+                            // TODO: add link
+                            a(href="/users/" )
+                                img.media-object(src="/images/default.png")
+                        .media-body
+                            h4.media-heading Admin Name
+                            | text
+                            a.btn.btn-primary.right Past Updates                        
 
     if user.verified
         if user.rank == 'teacher'
