@@ -83,14 +83,17 @@ router.get('/:locationId', (req, res, next) => {
             
             res.locals.pageTitle = `Location ${location.name}`;
 
-            return location.findWorkshops();
+            res.locals.apiKey = require('../../config').googleAuth.apiKey;
+            return res.render('locations/location');
+
+            /*return location.findWorkshops();
         }).then(workshops => {
             res.locals.workshops = workshops;
             res.locals.activeWorkshops = workshops.filter(w => w.active);
             res.locals.inactiveWorkshops = workshops.filter(w => !w.active);
             
             res.locals.apiKey = require('../../config').googleAuth.apiKey;
-            res.render('locations/location');
+            res.render('locations/location');*/
         })
         .catch(next);
 });
@@ -120,7 +123,7 @@ router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
             
             return location.save();
         }).then(location => {
-            req.flash('success', `Saved edits to location #{location.name}`);
+            req.flash('success', `Saved edits to location ${location.name}.`);
             res.redirect('/locations/' + location._id);
         })
         .catch(next);
