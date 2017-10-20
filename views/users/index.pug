@@ -6,8 +6,7 @@ block content
             .page-header
                 include /includes/pagination
                 h1 User List
-                    +help("users")
-                    small  #{users.length} total
+                    small   #{users.length} total
     .row
         .col-xs-12.user-search
             form
@@ -20,23 +19,23 @@ block content
     .row.user-list
         if search
             h3 Search Results
-        
-        table.table.table-striped
-            thead
-                tr
-                    th Rank
-                    th Name
-                    th Email
-                    th Phone Number
-                    th Location
-            tbody
-                each u in users
+        .col-xs-12
+            table.table.table-striped
+                thead
                     tr
-                        td
-                            b= helpers.cap(u.rank)
-                        td
-                            a(href="/users/" + u.email)= u.name.full
-                        td
-                            a(href="mailto:" + u.email)= u.email
-                        td= u.phoneNumber
-                        td= u.location
+                        th Rank
+                        th Name
+                        th Email
+                        th Phone Number
+                        th Location
+                tbody
+                    each u in users
+                        tr
+                            td
+                                b= helpers.cap(u.rank)
+                            td
+                                a(href="/users/" + u.email)= u.name.full
+                            td
+                                a(href="mailto:" + u.email)= u.email
+                            td= u.phoneNumber
+                            td= u.location

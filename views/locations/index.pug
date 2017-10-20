@@ -3,41 +3,49 @@ extends /layout
 block content
     .row
         .col-xs-12
-            .jumbotron.clearfix
-                h1 Locations
-                    small.right #{locations.length} total
-                p= helpers.getHelpInfo('locations')
-
-                //- Only program directors, ambassadors, and admins of any rank can add new locations
-                if user.rank != 'teacher' || user.admin
-                    a.btn.btn-danger(href='/locations/new') New Location
-
-                a.btn.btn-primary.right(href="/locations/list") All Locations
-        hr
-    .row
-        .col-xs-12
             .page-header
-                h1 Active Locations
-                    +help('active-locations')
-                    small.right #{activeLocations.length} total
-        
-        if activeLocations.length > 0
-            each l in activeLocations
-                .col-xs-12.col-md-6.col-lg-4
-                    .panel.panel-primary
-                        .panel-heading
-                            span.right= l.address
-                            h1.panel-title
-                                a(href='/locations/' + l._id)= l.name
-                        .panel-body
-                            // Nasty I know
-                            b Workshops 
-                                small.text-muted (Starting Date) &nbsp;&nbsp;
-                            each workshop in l.workshops
-                                a.btn.btn-info(href='/workshops/' + workshop._id) #{moment(workshop.startDate).format('dddd, MMMM Do YY')}
-                           
-                        .panel-footer
-                            a.btn.btn-primary(href="/locations/" + l._id) Location Overview
-                            
-        else
-            p.text-muted.text-center There are no #[b active locations].
+                include /includes/pagination
+                h1 All Locations
+                    small  #{locations.length} total
+
+    .row
+        .col-xs-12.user-search
+            form
+                .input-group
+                    input.form-control.criteria(type="text", name="search", placeholder="Search for locations by name, address, or description.", value=search)
+                    span.input-group-btn
+                        button.btn.btn-default Search
+            hr
+
+    .row.location-list
+        if search
+            h3 Search Results
+        .col-xs-12
+            if locations.length > 0
+                table.table.table-striped
+                    thead
+                        tr
+                            th Name
+                            th Address
+                            th Date Added
+                    tbody
+                        each l in locations
+                            tr
+                                td
+                                    a(href="/locations/" + l.id)= l.name
+                                td= l.address
+                                td= moment(l.dateAdded).fromNow()
+            else
+                p.text-muted.text-center
+                    if search
+                        | No results for search.
+                    else
+                        | There are currently no existing #[b locations].
+
+    if user.rank != 'teacher' || user.admin
+        .row
+            .col-xs-12
+                //- Only program directors, ambassadors, and admins of any rank can add new locations
+                hr
+                a.btn.btn-danger(href='/locations/new') New Location
+                

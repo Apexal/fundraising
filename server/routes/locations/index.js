@@ -4,41 +4,29 @@ const moment = require('moment');
 
 router.use(requireVerified);
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-    res.locals.pageTitle = 'Locations';
-
-    req.db.Location.find()
-        .exec()
-        .then(locations => {
-            res.locals.locations = locations;
-
-            // Determine active locations by getting all active Workshops and taking the locations
-            return req.db.Workshop.find({ endDate: { "$gt": moment().startOf('day').toDate() }});
-        })
-        .then(activeWorkshops => {
-            res.locals.activeWorkshops = activeWorkshops;
-            res.locals.activeLocations = res.locals.locations.filter(l => activeWorkshops.filter(w => w.location == l.id).length > 0);
-            
-            res.locals.activeLocations.forEach(l => l.workshops = activeWorkshops.filter(w => w.location.equals(l._id)));
-
-            res.render('locations/index');
-        })
-        .catch(next);
-});
-
 /* LIST all locations (paginated) and allow filtering */
-router.get('/list', (req, res, next) => {
+router.get('/', (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     if (page < 1) return res.redirect('/locations/list?page=1');
 
-    req.db.Location.paginate({}, { page, limit: 10, sort: { dateAdded: -1 } })
+    const s = req.query.search;
+    const query = {
+        $or: [
+            { name: { $regex: s, $options: 'i' } },
+            { location: { $regex: s, $options: 'i' } },
+            { description: { $regex: s, $options: 'i' } }
+        ]
+    };
+
+    req.db.Location.paginate((s ? query : {}), { page, limit: 10, sort: { dateAdded: -1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
             res.locals.locations = result.docs;
 
-            res.render('locations/list');
+            if (s) res.locals.search = s;
+
+            res.render('locations/index');
         })
         .catch(next);
 });
