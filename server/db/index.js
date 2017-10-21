@@ -44,4 +44,25 @@ models.User.findOneAndUpdate({ email: 'the.frankmatranga@gmail.com' }, fakeTeach
     // do something with the document
 });
 
+const fakeDirector = {
+    email: 'thefrankmatr.anga@gmail.com',
+    age: 21,
+    grade: 15,
+    phoneNumber: '8888888888',
+    location: 'Space',
+    name: {
+        full: 'Dir Ector',
+        first: 'Dir',
+        last: 'Ector'
+    },
+    rank: 'director',
+    admin: false,
+    verified: true
+};
+models.User.findOneAndUpdate({ email: 'thefrankmatr.anga@gmail.com' }, fakeDirector, options, function(error, result) {
+    if (error) return console.error(error);
+    console.log(result);
+    // do something with the document
+});
+
 module.exports = models;
