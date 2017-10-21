@@ -161,6 +161,9 @@ a.location-name {
 .rank-summary {
   margin-bottom: 10px; }
 
+.workshop-team img {
+  height: 80px; }
+
 /* FUNDRAISING PAGE */
 .fundraising-well {
   margin-bottom: 0; }

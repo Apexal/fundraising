@@ -1,0 +1,31 @@
+mixin user(u)
+    .panel.panel-default
+        .panel-body
+            .media
+                .media-left
+                    a(href="/users/" + u.email)
+                        img(src="/images/" + u.profileImageName, alt=u.name.first + "'s profile picture.'", title=u.name.full)
+                .media-body
+                    h4.media-heading= u.name.full
+                        if u.id == user.id
+                            b  | You
+                    a(href="mailto:" + u.email)= u.email
+                    br
+                    span= u.phoneNumber
+
+.workshop-team
+    // From high to low
+    .list-group
+        // Ambassador
+        h3 Ambassador
+        +user(workshop.ambassador)
+        
+        // Director
+        h3 Director
+        +user(workshop.director)
+        
+        // Teachers
+        h3 Teachers
+            small  #{workshop.teachers.length} total
+        each t in workshop.teachers
+            +user(t)

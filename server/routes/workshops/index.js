@@ -152,71 +152,13 @@ const hasRank = (workshop, user) => {
     return workshop.teachers.map(t => t._id).includes(user._id) || (!!workshop.director && workshop.director._id == user.id) || (!!workshop.ambassador && workshop.ambassador._id == user.id);
 }
 
+/* GET info for one workshop and display its public page */
 router.get('/:workshopId', (req, res, next) => {
-    // CHECK IF NEEDS TO ASSING TO CAMP
     res.locals.recentFunds = req.recentFunds;
-    res.locals.apiKey = require('../../config').googleAuth.apiKey;
-    res.locals.ofUser = (req.user.admin); // If its the teacher or program director's location
-
-    if (req.query.assign) {
-        if (!req.workshop.active) return next(new Error('This workshop in inactive.'));
-
-        const rank = req.query.assign;
-        return helpers.assignRank(req.workshop, req.user, rank)
-            .then(req.workshop.save)
-            .then(workshop => {
-                req.flash('success', 'You have become ' + rank + '.');
-
-                // Send emails
-                try {
-                    if (rank === 'teacher') {
-                        sendEmail(req.workshop.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> assigned themselves as a <b>Teacher</b> to <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> which you are the Program Director of.`);
-                    } else if (rank === 'director') {
-                        sendEmail(req.workshop.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> assigned themselves as <b>Program Director</b> to <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> which you are the Ambassador of.`);
-                    }
-                } catch(err) {
-
-                }
-
-                res.redirect('/workshops/' + workshop._id);
-            })
-            .catch(next);
-    } else if (req.query.unassign) {
-        // For unassign make sure they are the rank before removing it
-        const rank = req.query.unassign;
-
-        if(rank === 'teacher') {
-            req.workshop.teachers = req.workshop.teachers.filter(t => t._id != req.user._id);
-        } else if (rank == 'director' && req.workshop.director._id == req.user._id) {
-            req.workshop.director = undefined;
-        } else if (rank == 'ambassador' && req.workshop.ambassador._id == req.user._id) {
-            req.workshop.ambassador = undefined;
-        } else {
-            req.flash('error', 'Invalid rank to unassign!');
-        }
-
-        return req.workshop.save()
-            .then(workshop => {
-                req.flash('success', 'You are no longer ' + rank + '.');
-
-                // Send emails
-                try {
-                    if (rank === 'teacher') {
-                        sendEmail(req.workshop.director.email, 'Teacher Left', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> is no longer a <b>Teacher</b> at <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> which you are the Program Director of.`);
-                    } else if (rank === 'director') {
-                        sendEmail(req.workshop.ambassador.email, 'Director Left', `<b><a href='http://localhost:3000/users/${req.user.email}'>${req.user.name.full}</a></b> is no longer <b>Program Director</b> of <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> which you are the Ambassador of.`);
-                    }
-                } catch(err) {
-
-                }
-
-                res.redirect('/workshops/' + workshop._id);
-            })
-            .catch(next);
-    }
 
     res.locals.workshop = req.workshop;
     res.locals.pageTitle = `Workshop ${req.workshop.location.name}`;
+
     return res.render('workshops/workshop');
 });
 

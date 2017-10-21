@@ -25,15 +25,14 @@ block content
         .col-xs-12
             .well.well-sm(class=(!workshop.active ? 'text-muted' : ''))
                 h3.workshop-dates.text-center Running from 
-                    b= moment(workshop.startDate).format("dddd, MMMM Do YY")
+                    b(title=moment(workshop.startDate).fromNow())= moment(workshop.startDate).format("dddd, MMMM Do YY")
                     |  to 
-                    b= moment(workshop.endDate).format("dddd, MMMM Do YY")
-                    
+                    b(title=moment(workshop.endDate).fromNow())= moment(workshop.endDate).format("dddd, MMMM Do YY")
             hr
         br
-        include ranks
-        .col-xs-12.col-lg-7
-            iframe.location-iframe(width="600", height="450", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + workshop.location.address, allowfullscreen)
+    .row
+        .col-xs-12.col-sm-6.col-md-4
+            include team
     if workshop.active && workshop.ready
         .row
             .col-xs-12.col-lg-5
@@ -42,7 +41,7 @@ block content
     .row
         .col-xs-12.actions
             hr
-            a.btn.btn-info.right(class=(!workshop.ready ? 'disabled' : ''), title=(workshop.ready ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!workshop.ready, href="/workshops/" + workshop._id + "/fundraising")= ((user.admin || helpers.isInvolved(activeInvolvements, workshop)) ? "Manage" : "View") + " Fundraising"
+            a.btn.btn-info.right(class=(!workshop.ready ? 'disabled' : ''), title=(workshop.ready ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!workshop.ready, href="/workshops/" + workshop._id + "/fundraising")= (user.admin ? "Manage" : "View") + " Fundraising"
             a.btn.btn-warning.right(class=(helpers.isHigherUp(workshop, user) && workshop.active ? '' : 'disabled'), href="/workshops/" + workshop._id + "/applicants") Review Applicants 
                 span.badge= workshop.applicants.length
             if user.admin
