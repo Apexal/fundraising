@@ -30,14 +30,19 @@ block content
                     b(title=moment(workshop.endDate).fromNow())= moment(workshop.endDate).format("dddd, MMMM Do YY")
             hr
         br
+
     .row
-        .col-xs-12.col-sm-6.col-md-4
+        .col-xs-12.col-sm-6
             include team
+        .col-xs-12.col-sm-6
+            include info
+
     if workshop.active && workshop.ready
         .row
             .col-xs-12.col-lg-5
                 hr
                 include fundraising/recentfunds
+
     .row
         .col-xs-12.actions
             hr

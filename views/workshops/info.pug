@@ -1,0 +1,18 @@
+mixin row(val, index)
+    tr
+        if index == 'contact'
+            td Contact
+            td= val.name + " @ " + val.contactInfo
+        else
+            td= index
+            td= val
+
+.workshop-info
+    table.table
+        thead
+            tr
+                th Info
+                th Value
+        tbody
+            each val, index in workshopInfo
+                +row(val, index)

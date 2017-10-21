@@ -84,6 +84,12 @@
     height: 80px;
 }
 
+.workshop-info {
+    tr td:first-child {
+        text-transform: capitalize;
+    }
+}
+
 /* FUNDRAISING PAGE */
 
 .fundraising-well {

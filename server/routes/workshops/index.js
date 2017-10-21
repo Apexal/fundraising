@@ -157,6 +157,7 @@ router.get('/:workshopId', (req, res, next) => {
     res.locals.recentFunds = req.recentFunds;
 
     res.locals.workshop = req.workshop;
+    res.locals.workshopInfo = req.workshop.info.toObject();
     res.locals.pageTitle = `Workshop ${req.workshop.location.name}`;
 
     return res.render('workshops/workshop');
