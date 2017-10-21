@@ -9,9 +9,9 @@ router.use(requireVerified);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    res.locals.pageTitle = 'Workshops';
+    res.locals.pageTitle = 'Workshop Overview';
 
-    req.db.Workshop.find({ endDate: { "$gt": moment().startOf('day').toDate() }})
+    req.db.Workshop.find({ active: true })
         .populate('location')
         .populate('ambassador')
         .populate('director')
@@ -27,14 +27,25 @@ router.get('/', (req, res, next) => {
 
 /* LIST all workshops (paginated) and allow filtering */
 router.get('/list', (req, res, next) => {
+    res.locals.pageTitle = 'Workshops';
+
     const page = parseInt(req.query.page) || 1;
     if (page < 1) return res.redirect('/workshops/list?page=1');
 
-    req.db.Workshop.paginate({}, { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { dateAdded: -1 } })
+    const s = req.query.search;
+    const query = {
+        $or: [
+            { 'contact.name': { $regex: s, $options: 'i' } }
+        ]
+    };
+
+    req.db.Workshop.paginate((s ? query : {}), { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { dateAdded: -1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
             res.locals.workshops = result.docs;
+
+            if (s) res.locals.search = s;
 
             res.render('workshops/list');
         })

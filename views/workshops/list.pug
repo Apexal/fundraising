@@ -11,5 +11,48 @@ block content
             .page-header
                 include /includes/pagination
                 h1 All Workshops
+
     .row
+        .col-xs-12.user-search
+            form
+                .input-group
+                    input.form-control.criteria(type="text", name="search", placeholder="Search for workshops by name, location, or description.", value=search)
+                    span.input-group-btn
+                        button.btn.btn-default Search
+            hr
+
+    .row.workshop-list
+        if search
+            h3 Search Results
         .col-xs-12
+            if workshops.length > 0
+                table.table.table-striped
+                    thead
+                        tr
+                            th Location
+                            th Start Date
+                            th End Date
+                            th Director
+                    tbody
+                        each w in workshops
+                            tr
+                                td
+                                    b
+                                        a(href="/workshops/" + w.id)= w.location.name
+                                td= moment(w.startDate).format("ddd, MMM Do YY")
+                                td= moment(w.endDate).format("ddd, MMM Do YY")
+                                td
+                                    a(href="/users/" + w.director.email)= w.director.name.full
+            else
+                p.text-muted.text-center
+                    if search
+                        | No results for search.
+                    else
+                        | There are currently no existing #[b workshops].
+
+    if user.rank != 'teacher' || user.admin
+        .row
+            .col-xs-12
+                //- Only program directors, ambassadors, and admins of any rank can schedule new workshops
+                hr
+                a.btn.btn-danger(href='/workshops/new') Schedule New Workshop

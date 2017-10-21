@@ -6,8 +6,10 @@ router.use(requireVerified);
 
 /* LIST all locations (paginated) and allow filtering */
 router.get('/', (req, res, next) => {
+    res.locals.pageTitle = 'Locations';
+
     const page = parseInt(req.query.page) || 1;
-    if (page < 1) return res.redirect('/locations/list?page=1');
+    if (page < 1) return res.redirect('/locations?page=1');
 
     const s = req.query.search;
     const query = {
