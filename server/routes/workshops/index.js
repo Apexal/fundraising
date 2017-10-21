@@ -82,7 +82,7 @@ router.post('/new', (req, res, next) => {
     // Validate
     if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
-    const newWorkshop = new req.db.Workshop({
+    let data = {
         location: locationId,
         startDate: startDate.toDate(),
         endDate: endDate.toDate(),
@@ -100,7 +100,11 @@ router.post('/new', (req, res, next) => {
             extra
         },
         dateAdded: new Date()
-    });
+    };
+
+    if (['director', 'ambassador'].includes(req.user.rank)) data[req.user.rank] = req.user.id;
+
+    const newWorkshop = new req.db.Workshop(data);
 
     newWorkshop.save().then(workshop => {
         req.flash('success', `Scheduled new workshop on ${startDate.format('dddd, MMMM Do YYYY')}.`);

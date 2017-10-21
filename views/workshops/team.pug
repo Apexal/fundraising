@@ -16,13 +16,15 @@ mixin user(u)
 .workshop-team
     // From high to low
     .list-group
-        // Ambassador
-        h3 Ambassador
-        +user(workshop.ambassador)
+        if workshop.ambassador
+            // Ambassador
+            h3 Ambassador
+            +user(workshop.ambassador)
         
-        // Director
-        h3 Director
-        +user(workshop.director)
+        if workshop.director
+            // Director
+            h3 Director
+            +user(workshop.director)
         
         // Teachers
         h3 Teachers

@@ -7,9 +7,9 @@ const workshopSchema = new Schema({
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    teachers: [{ type: Number, ref: 'User' }],
-    director: { type: Number, ref: 'User' },
-    ambassador: { type: Number, ref: 'User' },
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    director: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    ambassador: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     info: {
         studentCount: { type: Number, min: 0, max: 100, required: true },
         studentAgeRange: { type: String, trim: true, required: true },
