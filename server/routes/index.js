@@ -30,17 +30,18 @@ const upload = multer({
 
 /* Determine which homepage to show based on whether logged in and verified or not */
 router.get('/', (req, res, next) => {
-    
-    // TODO: make customizable
-    res.locals.latestNews = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit justo in orci auctor rhoncus. Sed vitae odio dignissim, suscipit lacus eget, laoreet dolor.";
-    
     // Not logged in users get shown the info page
     if (!req.isAuthenticated()) return res.render('index/info');
-    
-    // Unverified users get sent to the application
-    if (!req.user.verified) return res.redirect('/application');
 
-    return res.render('index/homepage');
+    req.db.Update.findOne()
+        .populate('author')
+        .exec()
+        .then(update => {
+            res.locals.latestUpdate = update;
+
+            return res.render('index/homepage');
+        })
+        .catch(next);
 });
 
 /* Show login form page */

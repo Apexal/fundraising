@@ -28,12 +28,11 @@ block content
                 .panel-body
                     .media
                         .media-left
-                            // TODO: add link
-                            a(href="/users/" )
-                                img.media-object(src="/images/default.png")
+                            a(href="/users/" + latestUpdate.author.email)
+                                img.media-object(src="/images/" + latestUpdate.author.profileImageName)
                         .media-body
-                            h4.media-heading Admin Name
-                            | text
+                            h4.media-heading= latestUpdate.author.name.full
+                            | #{latestUpdate.content}
                             a.btn.btn-primary.right Past Updates                        
 
     if user.verified
