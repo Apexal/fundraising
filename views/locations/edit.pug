@@ -16,6 +16,11 @@ block content
                     label(for="edit-location-address") Location Address
                     input.form-control#edit-location-address(type="text", name="address", value=location.address, required)
                 .form-group
+                    label(for="edit-location-link")
+                        +icon("link", "Location Website")
+                        small.text-muted  (Optional)
+                    input.form-control#edit-location-link(name="link", type="text", maxlength="50", value=location.link, placeholder="Does this location have a website?")
+                .form-group
                     label(for="edit-location-description") Location Description
                         small.text-muted  (Optional)
                     textarea.form-control#edit-location-description(name="description", placeholder="Add any important information here!", rows="5")= location.description

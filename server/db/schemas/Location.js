@@ -5,7 +5,8 @@ const mongoosePaginate = require('mongoose-paginate');
 const locationSchema = new Schema({
     name: { type: String, trim: true, unique: true, required: true, maxlength: 30 },
     address: { type: String, trim: true, unique: true, required: true, maxlength: 50 },
-    description: { type: String, trim: true, maxlength: 650 },
+    link: { type: String, trim: true, unique: true, maxlength: 50 },
+    description: { type: String, trim: true, maxlength: 2000 },
     dateAdded: { type: Date, required: true }
 });
 

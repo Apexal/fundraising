@@ -12,6 +12,10 @@ block content
             iframe.location-iframe(width="650", height="450", frameborder="0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
         .col-xs-12.col-lg-5
             h3 Location Description
+            if location.link
+                a(href=location.link, target="new")
+                    +icon("link", "Location Website")
+                br
             p= location.description
     
 

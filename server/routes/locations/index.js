@@ -47,12 +47,14 @@ router.post('/new', (req, res, next) => {
 
     const name = req.body.name;
     const address = req.body.address;
-    const description = req.body.description;
+    const description = req.body.description; // Optional
+    const link = req.body.link; // Optional
 
     const newLocation = new req.db.Location({
         name,
         address,
         description,
+        link,
         dateAdded: new Date()
     });
 
@@ -107,7 +109,8 @@ router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
             location.name = req.body.name;
             location.address = req.body.address;
             location.description = req.body.description;
-            
+            location.link = req.body.link;
+
             return location.save();
         }).then(location => {
             req.flash('success', `Saved edits to location ${location.name}.`);

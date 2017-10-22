@@ -19,9 +19,9 @@ const workshopSchema = new Schema({
             name: { type: String, trim: true, required: true, maxlength: 50 },
             contactInfo: { type: String, trim: true, required: true, maxlength: 50 }
         },
-        preparation: { type: String, trim: true, maxlength: 250 },
+        preparation: { type: String, trim: true, maxlength: 1000 },
         language: { type: String, trim: true, default: 'English', maxlength: 30 },
-        extra: { type: String, trim: true, maxlength: 650 }
+        extra: { type: String, trim: true, maxlength: 2000 }
     },
     claimed: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
