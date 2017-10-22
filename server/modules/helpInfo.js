@@ -16,8 +16,8 @@ helpInfo['teachers'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 helpInfo['latest-news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
 helpInfo['workshops'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
-helpInfo['active-workshops'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
-helpInfo['inactive-workshops'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['active-workshops'] = "Active workshops are starting soon, in progress, or have very recently ended.";
+helpInfo['inactive-workshops'] = "Inactive workshops have finished and have been archived. Their info cannot be changed.";
 
 helpInfo['funds'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['fundraising-goals'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
@@ -26,8 +26,6 @@ helpInfo['fundraising-goals'] = "Lorem ipsum dolor sit amet, consectetur adipisc
 helpInfo['locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['active-locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['inactive-locations'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
-
-helpInfo['active-involvements'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
 helpInfo['unverified-users'] = "New users that login are restricted from doing anything until an Administrator verifies them.";
 

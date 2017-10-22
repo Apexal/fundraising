@@ -6,7 +6,7 @@ const userSchema = new Schema({
     slackId: { type: String },
     profileImageName: { type: String, default: 'default.png' },
     email: { type: String, trim: true, unique: true, required: true, maxlength: 70 },
-    age: { type: Number, min: 10, max: 100 },
+    age: { type: Number, min: 10, max: 19 },
     grade: { type: Number, min: 8, max: 12 },
     phoneNumber: { type: String, trim: true, maxlength: 20 },
     location: { type: String, trim: true, maxlength: 40 },

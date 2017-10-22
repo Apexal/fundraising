@@ -1,6 +1,6 @@
 {
   "name": "kidstales",
-  "version": "0.8.0",
+  "version": "0.8.5",
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
