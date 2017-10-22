@@ -1,5 +1,15 @@
 extends /layout
 
+mixin comment(c)
+    .media.location-comment.list-group-item
+        .media-left
+            a(href="/users/" + c.author.email)
+                img(src="/images/" + c.author.profileImageName)
+        .media-body
+            h4.media-heading= c.author.name.full
+                small.text-muted.right posted #{moment(c.dateAdded).fromNow()}
+            | #{c.content}
+
 block content
     .row
         .col-xs-12
@@ -61,6 +71,19 @@ block content
                                         span.text-muted None
             else
                 p.text-muted.text-center No workshops have been completed at this location yet.
+    .row
+        .col-xs-12
+            .page-header
+                h3 Comments
+                    small.right #{location.comments.length} total
+        .col-xs-12
+            form.form(method="POST", action="/locations/" + location.id + "/comment")
+                textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
+                button.btn.btn-success Add Comment
+        .col-xs-12
+            .list-group
+                each c in location.comments
+                    +comment(c)
 
     if user.admin
         .row

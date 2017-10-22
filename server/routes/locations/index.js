@@ -68,6 +68,7 @@ router.post('/new', (req, res, next) => {
 
 router.get('/:locationId', (req, res, next) => {
     req.db.Location.findById(req.params.locationId)
+        .populate('comments.author')
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
@@ -83,6 +84,18 @@ router.get('/:locationId', (req, res, next) => {
             res.locals.inactiveWorkshops = workshops.filter(w => !w.active);
             
             res.render('locations/location');
+        })
+        .catch(next);
+});
+
+router.post('/:locationId/comment', (req, res, next) => {
+    const comment = { author: req.user._id, content: req.body.comment, dateAdded: new Date() };
+
+    req.db.Location.update({ _id: req.params.locationId }, { $push: { comments: comment } })
+        .exec()
+        .then(location => {
+            req.flash('success', 'Added comment.');
+            res.redirect('back');
         })
         .catch(next);
 });
