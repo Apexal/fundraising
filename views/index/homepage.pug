@@ -12,27 +12,31 @@ block content
 
         .col-xs-12
             nav.important-links
-                a.kidstales(href="http://kidstales.org/", target="_blank")
+                a.kidstales(href="http://kidstales.org/", target="new")
                     +icon('external-link', 'Kids Tales Site')
-                a.slack(href="#", target="_blank")
+                a.slack(href="https://kids-tales.slack.com/", target="new")
                     +icon('slack', 'Slack')
-                a.github(href="https://github.com/KidsTales/kt-web/issues", target="_blank")
+                a.github(href="https://github.com/KidsTales/kt-web/issues", target="new")
                     +icon('github', 'Website Issues')
-    .row
-        .col-xs-12
             hr
+    .row
+        .col-xs-12.col-sm-6.col-md-5
+            
             .panel.panel-info.admin-updates
                 .panel-heading
                     h3.panel-title Admin Updates
                 .panel-body
-                    .media
-                        .media-left
-                            a(href="/users/" + latestUpdate.author.email)
-                                img.media-object(src="/images/" + latestUpdate.author.profileImageName)
-                        .media-body
-                            h4.media-heading= latestUpdate.author.name.full
-                            | #{latestUpdate.content}
-                            a.btn.btn-primary.right Past Updates                        
+                    if latestUpdate
+                        .media
+                            .media-left
+                                a(href="/users/" + latestUpdate.author.email)
+                                    img.media-object(src="/images/" + latestUpdate.author.profileImageName)
+                            .media-body
+                                h4.media-heading= latestUpdate.author.name.full
+                                | #{latestUpdate.content}
+                                a.btn.btn-primary.right Past Updates
+                    else
+                        p.text-center.text-muted There have been no updates from admins.
 
     if user.rank == 'teacher'
         span Coming soon...

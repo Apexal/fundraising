@@ -4,6 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const easyimg = require('easyimage');
 const fs = require('fs');
+const config = require('config');
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png'];
 
@@ -55,12 +56,15 @@ router.get('/login', (req, res) => {
 });
 
 /* Allow admins to login as any user based on email */
-router.get('/loginas', /*requireAdmin,*/ (req, res, next) => {
-    //if (!req.query.email) return next(new Error('Invalid user email.'));
+router.get('/loginas', (req, res, next) => {
+    if (!req.query.id) return next(new Error('Invalid user id.'));
+    if (config.util.getEnv('NODE_ENV') != 'development') return next(new Error('Not in development mode!'));
 
-    req.db.User.findById(req.query.id)//One({ email: req.query.email })
+    req.db.User.findById(req.query.id)
         .exec()
         .then(user => {
+            if(!user) throw new Error('Invalid user!');
+
             return req.logIn(user, err => {
                 if (err) throw err;
 
