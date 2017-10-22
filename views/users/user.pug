@@ -33,11 +33,6 @@ block content
                 p= targetUser.application.why
                 footer= targetUser.name.full
         .col-xs-12.col-sm-6.col-lg-7
-                .page-header
-                    h2 #{targetUser.rankName} Info
-
-    .row
-        .col-xs-12
             .page-header
                 h2 Active Workshops
                     small.right #{activeWorkshops.length} total
@@ -60,7 +55,7 @@ block content
                                     td
                                         a.btn.btn-default(href="/workshops/" + w._id) Workshop Details
             else
-                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
+                p.text-center.text-muted #[b= targetUser.name.first] is currently not involved in any workshops.
 
     .row
         .col-xs-12
