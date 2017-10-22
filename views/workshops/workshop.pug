@@ -32,9 +32,16 @@ block content
         br
 
     .row
-        .col-xs-12.col-sm-6
+        ul.nav.nav-tabs
+            li.active(role="presentation")
+                a(data-toggle="tab", href="#team") Team
+            li(role="presentation")
+                a(data-toggle="tab", href="#info") Info
+
+    .row.tab-content
+        #team.col-xs-12.col-sm-6.tab-pane.fade.in.active
             include team
-        .col-xs-12.col-sm-6
+        #info.col-xs-12.col-sm-6.tab-pane.fade
             include info
 
     if workshop.active && workshop.ready
