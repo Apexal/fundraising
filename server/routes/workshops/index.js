@@ -131,6 +131,10 @@ router.all(['/:workshopId', '/:workshopId/*'], (req, res, next) => {
             if (!workshop) throw new Error('Failed to find workshop. It may not exist.');
             req.workshop = workshop;
 
+            res.locals.involvedRank = helpers.getRankFromWorkshop(workshop, req.user);
+            res.locals.isInvolved = !!res.locals.involvedRank;
+            res.locals.isWorkshopHigherUp = res.locals.isInvolved && helpers.isHigherUpInWorkshop(workshop, req.user);
+
             if (!req.workshop.active) req.flash('warning', 'This workshop has ended so the following information and fundraising data cannot be edited.');
 
             return req.db.Funds.find({ workshop: req.workshop._id })
