@@ -134,7 +134,7 @@ router.all(['/:workshopId', '/:workshopId/*'], (req, res, next) => {
             if (!workshop) throw new Error('Failed to find workshop. It may not exist.');
             req.workshop = workshop;
 
-            if (!req.workshop.active) req.flash('warning', 'This workshop is has ended so the following information and fundraising data cannot be edited.');
+            if (!req.workshop.active) req.flash('warning', 'This workshop has ended so the following information and fundraising data cannot be edited.');
 
             return req.db.Funds.find({ workshop: req.workshop._id })
                 .limit(10)
