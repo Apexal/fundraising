@@ -37,6 +37,13 @@ block content
                 .form-group
                     label(for="why") Why Kids Tales?
                     textarea#why.form-control(name="why", rows="5", placeholder="What makes you eager to volunteer for us?", maxlength="650", required)= user.application.why
+                
+                hr
+
+                .form-group
+                    label(for="recommender") Recommender
+                        small.text-muted  (Optional)
+                    input.form-control#recommender(type="text", name="recommender", placeholder="Did someone recommend you?", maxlength="50")
 
                 .form-group
                     label(for="writing-sample") Sample of Your Writing

@@ -27,5 +27,7 @@ ul.nav.navbar-nav.navbar-right
                     a(href='/logout') Logout
 
     else
+        li(class=helpers.activeLink('/application', pagePath))
+            a(href='/application') Apply
         li
             a(href='/login') Login
