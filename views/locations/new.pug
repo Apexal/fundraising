@@ -24,6 +24,8 @@ block content
                         +icon("image", "Location Image Link")
                         small.text-muted  (Optional)
                     input.form-control#new-location-img-url(name="imageUrl", type="text", maxlength="500", placeholder="Link to image for location.")
+                    img.thumbnail#preview.location-image(alt="Loading image...")
+
                 .form-group
                     label(for="new-location-description") Location Description
                         small.text-muted  (Optional)
@@ -31,3 +33,13 @@ block content
 
                 hr
                 button.btn.btn-success.right Add Location
+    
+    script.
+        var previewImg = $("#preview");
+        var input = $("#new-location-img-url");
+
+        var update = function () {
+            previewImg.attr("src", input.val());
+        };
+        input.keyup(update);
+        update();

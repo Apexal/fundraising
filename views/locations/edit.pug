@@ -25,8 +25,19 @@ block content
                         +icon("image", "Location Image Link")
                         small.text-muted  (Optional)
                     input.form-control#edit-location-img-url(name="imageUrl", type="text", maxlength="500", value=location.imageUrl, placeholder="Link to image for location.")
+                    img.thumbnail#preview.location-image(alt="Loading image...")
                 .form-group
                     label(for="edit-location-description") Location Description
                         small.text-muted  (Optional)
                     textarea.form-control#edit-location-description(name="description", placeholder="Add any important information here!", rows="5")= location.description
                 button.btn.btn-primary Save Location
+
+    script.
+        var previewImg = $("#preview");
+        var input = $("#edit-location-img-url");
+
+        var update = function () {
+            previewImg.attr("src", input.val());
+        };
+        input.keyup(update);
+        update();
