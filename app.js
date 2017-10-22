@@ -121,7 +121,7 @@ app.get('/auth/slack/callback',
             
             return res.redirect(redir);
         } else {
-            return res.redirect('/management');
+            return res.redirect('/');
         }
     });
 
