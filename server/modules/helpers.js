@@ -25,10 +25,14 @@ h.getRankFromWorkshop = (workshop, user) => {
     return rank;
 };
 
-h.isHigherUp = (workshop, user) => {
+h.isHigherUpInWorkshop = (workshop, user) => {
     if (user.admin) return true;
     if (['ambassador', 'director'].includes(h.getRankFromWorkshop(workshop, user))) return true;
     return false;
+}
+
+h.workshopRanksFilled = workshop => {
+    return (workshop.ambassador && workshop.director && workshop.teachers.length > 0);
 }
 
 h.getHelpInfo = label => {

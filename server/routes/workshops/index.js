@@ -245,7 +245,7 @@ router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
 });
 
 router.get('/:workshopId/fundraising', (req, res, next) => {
-    if (!req.workshop.ready) {
+    if (!helpers.workshopRanksFilled(req.workshop)) {
         req.flash('error', 'Once a workshop\'s ranks are filled fundraising will become available.');
         return res.redirect('/workshops/' + req.workshop._id);
     }
@@ -287,7 +287,7 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
 
 router.post('/:workshopId/addfunds', (req, res, next) => {
     // Check permissions
-    if (!req.user.admin && !helpers.getRankFromWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
+    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
 
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
@@ -323,6 +323,8 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
 });
 
 router.post('/:workshopId/removefunds', (req, res, next) => {
+    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to remove this.'));
+
     req.db.Funds.findById(req.query.fundsId)
         .exec()
         .then(funds => {
@@ -331,8 +333,7 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
 
             // Check permissions
             if (!req.user.admin) {
-                const rank = helpers.getRankFromWorkshop(req.workshop, req.user);
-                if (!rank || (rank == 'teacher' && !funds.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the funds to remove this.');
+                if (!funds.submittedBy.equals(req.user.id)) throw new Error('You must be an admin, a higher up in the workshop, or the teacher who added the funds to remove this.');
             }
 
             return funds.remove();
@@ -346,7 +347,7 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
 
 /* FUNDRAISING GOALS */
 router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
-    if (!req.user.admin && !helpers.getRankFromWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
+    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
 
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;

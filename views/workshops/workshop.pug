@@ -46,8 +46,8 @@ block content
     .row
         .col-xs-12.actions
             hr
-            a.btn.btn-info.right(class=(!workshop.ready ? 'disabled' : ''), title=(workshop.ready ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!workshop.ready, href="/workshops/" + workshop._id + "/fundraising")= (user.admin ? "Manage" : "View") + " Fundraising"
-            a.btn.btn-warning.right(class=(helpers.isHigherUp(workshop, user) && workshop.active ? '' : 'disabled'), href="/workshops/" + workshop._id + "/applicants") Review Applicants 
+            a.btn.btn-info.right(class=(helpers.workshopRanksFilled(workshop) ? '' : 'disabled'), title=(helpers.workshopRanksFilled(workshop) ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!helpers.workshopRanksFilled(workshop), href="/workshops/" + workshop._id + "/fundraising")= (user.admin ? "Manage" : "View") + " Fundraising"
+            a.btn.btn-warning.right(class=(helpers.isHigherUpInWorkshop(workshop, user) && workshop.active ? '' : 'disabled'), href="/workshops/" + workshop._id + "/applicants") Review Applicants 
                 span.badge= workshop.applicants.length
             if user.admin
                 form(action="/workshops/" + workshop._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this workshop?');")
