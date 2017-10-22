@@ -43,7 +43,7 @@ userSchema.pre('save', function(next) {
     next();
 });
 
-userSchema.methods.getActiveWorkshops = function() {
+userSchema.methods.getWorkshops = function() {
     return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
 }
 

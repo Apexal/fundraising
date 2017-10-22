@@ -43,6 +43,11 @@ router.get('/:email', (req, res, next) => {
             res.locals.targetUser = user;
             res.locals.pageTitle = `${user.rankName} ${user.name.full}`;
 
+            return user.getWorkshops();
+        })
+        .then(workshops => {
+            res.locals.activeWorkshops = workshops.filter(w => w.active);
+            res.locals.inactiveWorkshops = workshops.filter(w => !w.active);
             return res.render('users/user');
         })
         .catch(next);

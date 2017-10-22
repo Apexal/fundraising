@@ -27,10 +27,10 @@ h.rank = (involvements, workshop) => {
 
 h.getRankFromWorkshop = (workshop, user) => {
     let rank = null;
-    // I can use ._id == ._id becauses User ID's are Numbers not ObjectID's
-    if (workshop.ambassador && (workshop.ambassador == user._id || workshop.ambassador._id == user._id)) rank = 'ambassador';
-    if (workshop.director && (workshop.director == user._id || workshop.director._id == user._id)) rank = 'director';
-    if (workshop.teachers.includes(user._id) || workshop.teachers.map(t => t._id).includes(user._id)) rank = 'teacher';
+    
+    if (workshop.ambassador && (workshop.ambassador == user.id || workshop.ambassador.id == user.id)) rank = 'ambassador';
+    if (workshop.director && (workshop.director == user.id || workshop.director.id == user.id)) rank = 'director';
+    if (workshop.teachers.includes(user.id) || workshop.teachers.map(t => t.id).includes(user.id)) rank = 'teacher';
     return rank;
 };
 

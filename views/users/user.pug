@@ -36,31 +36,55 @@ block content
                 .page-header
                     h2 #{targetUser.rankName} Info
 
-    //- .row
-    //-     .col-xs-12
-    //-         .page-header
-    //-             h2 All Workshops
-    //-                 small.right #{workshops.length} total
-    //-         if workshops.length > 0
-    //-             table.table
-    //-                     thead
-    //-                         tr
-    //-                             th Start Date
-    //-                             th End Date
-    //-                             th Location
-    //-                             th #{targetUser.name.first}'s Rank
-    //-                     tbody
-    //-                         each c in workshops
-    //-                             tr
-    //-                                 td= moment(c.startDate).format("MMMM Do YYYY")
-    //-                                 td= moment(c.endDate).format("MMMM Do YYYY")
-    //-                                 td
-    //-                                     a(href="/locations/" + c.location._id)= c.location.name
-    //-                                 td.rank= helpers.getRankFromWorkshop(c, targetUser)
-    //-                                 td
-    //-                                     a.btn.btn-default(href="/workshops/" + c._id) Workshop Details
-    //-         else
-    //-             p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
+    .row
+        .col-xs-12
+            .page-header
+                h2 Active Workshops
+                    small.right #{activeWorkshops.length} total
+            if activeWorkshops.length > 0
+                table.table
+                        thead
+                            tr
+                                th Start Date
+                                th End Date
+                                th Location
+                                th #{targetUser.name.first}'s Rank
+                        tbody
+                            each w in activeWorkshops
+                                tr
+                                    td= moment(w.startDate).format("MMMM Do YYYY")
+                                    td= moment(w.endDate).format("MMMM Do YYYY")
+                                    td
+                                        a(href="/locations/" + w.location._id)= w.location.name
+                                    td.rank= helpers.getRankFromWorkshop(w, targetUser)
+                                    td
+                                        a.btn.btn-default(href="/workshops/" + w._id) Workshop Details
+            else
+                p.text-center.text-muted #{targetUser.name.first} has not yet been involved in any workshops.
+
+    .row
+        .col-xs-12
+            .page-header
+                h2 Past Workshops
+                    small.right #{inactiveWorkshops.length} total
+            if inactiveWorkshops.length > 0
+                table.table
+                        thead
+                            tr
+                                th Start Date
+                                th End Date
+                                th Location
+                                th #{targetUser.name.first}'s Rank
+                        tbody
+                            each w in inactiveWorkshops
+                                tr
+                                    td= moment(w.startDate).format("MMMM Do YYYY")
+                                    td= moment(w.endDate).format("MMMM Do YYYY")
+                                    td
+                                        a(href="/locations/" + w.location._id)= w.location.name
+                                    td.rank= helpers.getRankFromWorkshop(w, targetUser)
+            else
+                p.text-center.text-muted #[b= targetUser.name.first] has not yet been involved in any finished workshops.
 
     .row
         .col-xs-12
