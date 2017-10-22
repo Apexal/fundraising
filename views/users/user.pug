@@ -86,12 +86,9 @@ block content
             else
                 p.text-center.text-muted #[b= targetUser.name.first] has not yet been involved in any finished workshops.
 
-    .row
-        .col-xs-12
+    if user.admin
+        .row
             hr
-            a.btn.btn-lg.btn-primary.right(href="mailto:" + targetUser.email) Email #{targetUser.name.first}
-
-        if user.admin
             if user.id !== targetUser.id
                 a.btn.btn-lg.btn-info(href="/loginas?id=" + targetUser.id) Login as #{targetUser.name.first}
             a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}
