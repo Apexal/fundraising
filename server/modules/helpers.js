@@ -1,4 +1,4 @@
-// All helper methods for all views.
+// All helper methods
 var helpInfo = require('./helpInfo.js');
 var h = {}
 
@@ -15,15 +15,6 @@ h.limit = (string, maxLength) => {
 };
 
 h.cap = string => { return string.charAt(0).toUpperCase() + string.slice(1); };
-
-h.isTeacher = (workshop, user) => workshop.teachers.map(t => t.id).includes(user.id);
-
-h.isInvolved = (involvements, workshop) => involvements.map(i => i.workshop.id).includes(workshop.id); // Not sure why I need toString() but I do
-
-h.rank = (involvements, workshop) => {
-    const possible = involvements.filter(i => i.workshop.id == workshop.id);
-    return (possible.length > 0 ? possible[0].rank : null);
-};
 
 h.getRankFromWorkshop = (workshop, user) => {
     let rank = null;
@@ -46,25 +37,6 @@ h.getHelpInfo = label => {
     } else {
         return 'No help info found!'
     }
-};
-
-h.assignRank = (workshop, user, rank) => {
-    // Make sure no rank already
-    if (h.getRankFromWorkshop(workshop, user)) throw new Error('User already has a rank!');
-
-    if(rank === 'teacher') {
-        workshop.teachers.push(user._id);
-    } else if (rank === 'director') {
-        if (workshop.director && !workshop.director.equals(user.id)) throw new Error('Director rank is already taken.');
-        workshop.director = user._id;
-    } else if (rank === 'ambassador') {
-        if (workshop.ambassador && !workshop.ambassador.equals(user.id)) throw new Error('Ambassador rank is already taken.');
-        workshop.ambassador = user._id;
-    } else {
-        throw new Error('Invalid rank to assign.');
-    }
-
-    return workshop.save();
 };
 
 module.exports = h;

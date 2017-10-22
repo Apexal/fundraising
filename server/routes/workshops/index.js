@@ -53,9 +53,7 @@ router.get('/list', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/new', (req, res, next) => {
-    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
-
+router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
 
     req.db.Location.find()
@@ -67,9 +65,7 @@ router.get('/new', (req, res, next) => {
         .catch(next);
 });
 
-router.post('/new', (req, res, next) => {
-    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
-
+router.post('/new', requireHigherUp, (req, res, next) => {
     // Location info
     const locationId = req.body.locationId;
     const startDate = moment(req.body.startDate, "YYYY-MM-DD");
@@ -164,10 +160,6 @@ router.post('/:workshopId/delete', requireAdmin, (req, res, next) => {
         .catch(next);
 });
 
-const hasRank = (workshop, user) => {
-    return workshop.teachers.map(t => t._id).includes(user._id) || (!!workshop.director && workshop.director._id == user.id) || (!!workshop.ambassador && workshop.ambassador._id == user.id);
-}
-
 /* GET info for one workshop and display its public page */
 router.get('/:workshopId', (req, res, next) => {
     res.locals.recentFunds = req.recentFunds;
@@ -179,24 +171,13 @@ router.get('/:workshopId', (req, res, next) => {
     return res.render('workshops/workshop');
 });
 
-router.get('/:workshopId/applicants', (req, res, next) => {
-    // Ensure admin, ambassador, or program director
-    if (!helpers.isHigherUp(req.workshop, req.user)) {
-        req.flash('warning', 'Only admininstrators, ambassadors, and program directors can view applicants.');
-        return res.redirect('/workshops/' + req.workshop._id);
-    }
-    
+router.get('/:workshopId/applicants', requireHigherUp, (req, res, next) => {
     res.locals.workshop = req.workshop;
     res.locals.pageTitle = `Workshop ${req.workshop.location.name} Applicants`;
     return res.render('workshops/applicants');
 });
 
-router.post('/:workshopId/verify/:email', (req, res, next) => {
-    if (!helpers.isHigherUp(req.workshop, req.user)) {
-        req.flash('warning', 'Only admininstrators, ambassadors, and program directors can verify applicants.');
-        return res.redirect('/workshops/' + req.workshop._id);
-    }
-
+router.post('/:workshopId/verify/:email', requireHigherUp, (req, res, next) => {
     if (!req.workshop.active) {
         req.flash('warning', 'This workshop has already ended. Applications for it are unavailable.');
         return res.redirect('/workshops/' + req.workshop._id);

@@ -9,7 +9,7 @@ const fs = require('fs');
 const moment = require('moment');
 const recursiveReadSync = require('recursive-readdir-sync');
 const session = require('express-session');
-const config = require('./server/config.js');
+const config = require('config');
 const packageInfo = require('./package.json');
 const mongodb = require('./server/db');
 const slack = require('./server/modules/slack');
@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-    secret: config.secret,
+    secret: config.get('secret'),
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 * 5 }
@@ -60,6 +60,8 @@ app.use((req, res, next) => {
     req.db = mongodb;
     
     if (req.user) res.locals.user = req.user; // To access in views
+
+    res.locals.env = config.util.getEnv('NODE_ENV'); // To let views know if in dev or prod
 
     // For convenience
     res.locals.loggedIn = req.isAuthenticated();
@@ -91,6 +93,13 @@ requireVerified = function(req, res, next) {
     debug(req.originalUrl);
     debug(req.session);
     req.flash('error', 'You must be logged in and verified to view that page.');
+    return res.redirect('/');
+}
+
+requireHigherUp = function(req, res, next) {
+    if (req.user.rank !== 'teacher' || req.user.admin) return next();
+    req.session.redirect = req.originalUrl;
+    req.flash('error', 'You must be logged in to view that page.');
     return res.redirect('/');
 }
 

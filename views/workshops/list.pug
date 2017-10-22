@@ -42,7 +42,10 @@ block content
                                 td= moment(w.startDate).format("ddd, MMM Do YY")
                                 td= moment(w.endDate).format("ddd, MMM Do YY")
                                 td
-                                    a(href="/users/" + w.director.email)= w.director.name.full
+                                    if w.director
+                                        a(href="/users/" + w.director.email)= w.director.name.full
+                                    else
+                                        span.text-muted Not Chosen Yet
             else
                 p.text-muted.text-center
                     if search

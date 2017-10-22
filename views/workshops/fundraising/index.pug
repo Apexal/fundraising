@@ -10,7 +10,7 @@ block content
                 br
                 a.btn.btn-lg.btn-primary.right(href="/workshops/" + workshop._id) Workshop Details
 
-    if user.admin || helpers.isInvolved(activeInvolvements, workshop)
+    if user.admin
         hr
         if workshop.active
             .row

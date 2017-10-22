@@ -35,17 +35,13 @@ router.get('/', (req, res, next) => {
 });
 
 /* Show page with form for adding a new location */
-router.get('/new', (req, res, next) => {
-    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
-
+router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'New Location';
     res.render('locations/new');
 });
 
 /* Add a new location (if allowed to) */
-router.post('/new', (req, res, next) => {
-    if (req.user.rank == 'teacher' && !req.user.admin) return next(new Error('Teachers cannot add locations.'));
-
+router.post('/new', requireHigherUp, (req, res, next) => {
     const name = req.body.name;
     const address = req.body.address;
     const description = req.body.description; // Optional

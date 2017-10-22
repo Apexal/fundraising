@@ -3,6 +3,7 @@ while message = flash.shift()
         b #{message.type.toUpperCase()} 
         span= message.message
 
-//.alert.alert-danger(role='alert')
-//    b WARNING 
-//    span This website is undergoing major revisions right now. It will not work properly.
+if env == 'development'
+    .alert.alert-danger(role='alert')
+        b WARNING 
+        span This is the development. Everything here is subject to change and/or break.
