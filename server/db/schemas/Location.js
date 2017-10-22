@@ -11,7 +11,7 @@ const locationSchema = new Schema({
 
 locationSchema.plugin(mongoosePaginate);
 
-locationSchema.methods.findWorkshop = function() {
+locationSchema.methods.getWorkshops = function() {
     return this.model('Workshop').find({ location: this._id })
         .populate('location')
         .populate('ambassador')

@@ -72,18 +72,15 @@ router.get('/:locationId', (req, res, next) => {
             res.locals.location = location;
             
             res.locals.pageTitle = `Location ${location.name}`;
-
             res.locals.apiKey = require('../../config').googleAuth.apiKey;
-            return res.render('locations/location');
 
-            /*return location.findWorkshops();
+            return location.getWorkshops();
         }).then(workshops => {
             res.locals.workshops = workshops;
             res.locals.activeWorkshops = workshops.filter(w => w.active);
             res.locals.inactiveWorkshops = workshops.filter(w => !w.active);
             
-            res.locals.apiKey = require('../../config').googleAuth.apiKey;
-            res.render('locations/location');*/
+            res.render('locations/location');
         })
         .catch(next);
 });

@@ -13,49 +13,51 @@ block content
         .col-xs-12.col-lg-5
             h3 Location Description
             p= location.description
-        //- .col-xs-12.col-lg-5
-        //-     .page-header.active-workshops
-        //-         h3 Active Workshops
-        //-             +help('active-workshops')
-        //-             small.right #{activeWorkshops.length} total
-        //-     if activeWorkshops.length > 0
-        //-         each c in activeWorkshops
-        //-             +workshop-panel(c)
-        //-     else
-        //-         p.text-muted.text-center There are currently no #[b active workshops].
-        //- .col-xs-12
-    //- .row
-    //-     .col-xs-12
-    //-         .page-header
-    //-             h3 Inactive Workshops
-    //-                 +help('inactive-workshops')
-    //-                 small.right #{inactiveWorkshops.length} total
-    //-     .col-xs-12
-    //-         if inactiveWorkshops.length > 0
-    //-             table.table
-    //-                 thead
-    //-                     tr
-    //-                         th End Date
-    //-                         th Ambassador
-    //-                         th Program Director
-    //-                 tbody
-    //-                     each c in inactiveWorkshops
-    //-                         tr
-    //-                             td= moment(c.endDate).format("dddd, MMMM Do YY")
-    //-                             td
-    //-                                 if c.ambassador
-    //-                                     a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
-    //-                                 else
-    //-                                     span.text-muted None
-    //-                             td
-    //-                                 if c.director
-    //-                                     a(href="/users/" + c.director._id)= c.director.name.full
-    //-                                 else
-    //-                                     span.text-muted None
-    //-                             td
-    //-                                 a.btn.btn-default(href='/workshops/' + c._id) Workshop Details
-    //-         else
-    //-             p.text-muted.text-center There are currently no #[b inactive workshops].
+    
+
+        .col-xs-12.col-lg-5
+            .page-header.active-workshops
+                h3 Active Workshops
+                    +help('active-workshops')
+                    small.right #{activeWorkshops.length} total
+            if activeWorkshops.length > 0
+                each c in activeWorkshops
+                    +workshop-panel(c)
+            else
+                p.text-muted.text-center There are currently no #[b active workshops].
+        .col-xs-12
+
+    .row
+        .col-xs-12
+            .page-header
+                h3 Past Workshops
+                    +help('inactive-workshops')
+                    small.right #{inactiveWorkshops.length} total
+        .col-xs-12
+            if inactiveWorkshops.length > 0
+                table.table
+                    thead
+                        tr
+                            th End Date
+                            th Ambassador
+                            th Program Director
+                    tbody
+                        each c in inactiveWorkshops
+                            tr
+                                td= moment(c.endDate).format("dddd, MMMM Do YY")
+                                td
+                                    if c.ambassador
+                                        a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
+                                    else
+                                        span.text-muted None
+                                td
+                                    if c.director
+                                        a(href="/users/" + c.director._id)= c.director.name.full
+                                    else
+                                        span.text-muted None
+            else
+                p.text-muted.text-center No workshops have been completed at this location yet.
+
     if user.admin
         .row
             .col-xs-12
