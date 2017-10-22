@@ -312,17 +312,27 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
 
     newFunds.save()
         .then(funds => {
-        // Email program director
-        const message = `<h3>Teacher ${req.user.name.full} Added Funds to Workshop ${req.workshop.location.name}</h3><p>${req.user.name.first} just added <b>$${amount} in ${form}</b> by <b>${method}</b></p><a href="http://localhost:3000/workshops/${req.workshop._id}/fundraising">View Fundraising</a>`;
+        // Email higher ups
+        const data = {
+            rank: req.user.rank,
+            fullName: req.user.name.full,
+            firstName: req.user.name.first,
+            locationName: req.workshop.location.name,
+            amount,
+            form,
+            source,
+            method,
+            workshopId: req.workshop.id
+        };
 
-        if (req.workshop.ambassador) sendEmail(req.workshop.ambassador.email, "New Funds", message);
-        if (req.workshop.director) sendEmail(req.workshop.director.email, "New Funds", message);
+        if (req.workshop.ambassador) sendEmail(req.workshop.ambassador.email, 'New Funds', 'newFunds',  data);
+        if (req.workshop.director) sendEmail(req.workshop.director.email, 'New Funds', 'newFunds', data);
         
         /*
         const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/workshops/${workshopId}|Workshop ${funds.workshop}>`;
         return request({ method: 'POST', uri: config.get('slack.webhookUrl'), body: { mrkdwn: true, text }, json: true });
-    }).then(body => {
-        req.flash('success', 'Added new funds for workshop.');*/
+    }).then(body => {*/
+        req.flash('success', 'Added new funds for workshop.');
         return res.redirect(`/workshops/${req.workshop._id}/fundraising`);
     }).catch(next);
 });
