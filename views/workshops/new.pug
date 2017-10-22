@@ -18,12 +18,15 @@ block content
                 hr
                 
                 h3 Location Info
-                i New Location? #[a(href="/locations/new") Add it here first].
-                .form-group
-                    label(for='location') Location
-                    select.form-control#location(name='locationId')
-                        each l in locations
-                            option(value=l._id) #{l.name} | #{l.address}
+                if locations.length > 0
+                    i New Location? #[a(href="/locations/new") Add it here first].
+                    .form-group
+                        label(for='location') Location
+                        select.form-control#location(name='locationId')
+                            each l in locations
+                                option(value=l._id) #{l.name} | #{l.address}
+                else
+                    i No locations are available yet! #[a(href="/locations/new") Add one here first!]
 
                 .form-group
                     label(for='language') Language
@@ -31,7 +34,7 @@ block content
                         option English
 
                 .checkbox
-                    label #[input(type='checkbox')] Classroom Available?
+                    label #[input(type='checkbox', checked)] Classroom Available?
 
                 hr
                 h3 Workshop Contact
