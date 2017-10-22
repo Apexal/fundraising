@@ -113,9 +113,11 @@ router.post('/profile', requireLogin, upload.single('profileImage'), (req, res, 
         const imgPath = path.join(__dirname, '..', '..', 'client', 'public', 'images', req.file.filename);
 
         // Resize image to roughly 200 by 250 (keeps ratio so may not be perfect)
-        return easyimg.resize({
+        return easyimg.rescrop({
             src: imgPath, dst: imgPath,
             width: 200, height: 250,
+            fill: true,
+            gravity: 'Center'
         })
         .then(image => {
             const newPath = imgPath.replace('.' + imgPath.split('.')[1], '.jpg');
