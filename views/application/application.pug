@@ -6,6 +6,7 @@ block content
             .jumbotron
                 h1 Kids Tales Teacher Application
                 p= helpers.getHelpInfo('application')
+                p For more information about our organization, please visit #[a(href="http://kidstales.org/", target="new") kidstales.org]
 
         .col-xs-12
             form.application-form(method="POST", enctype="multipart/form-data", action="/application")

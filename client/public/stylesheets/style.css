@@ -12,7 +12,9 @@ body {
   margin-top: 0; }
 
 textarea {
+  min-width: 100%;
   max-width: 100%;
+  min-height: 50px;
   max-height: 200px; }
 
 .help-icon {
