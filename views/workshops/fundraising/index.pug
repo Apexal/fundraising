@@ -22,24 +22,29 @@ block content
             h3.text-muted.text-center This workshop has ended so no more fundraising data can be added.
 
     .row
+        hr
         .col-xs-12
-            .page-header
-                h1 Goals
-                    +help('fundraising-goals')
-                    small.right #{workshop.fundraisingGoals.length} total
-        .col-xs-12
+            ul.nav.nav-tabs
+                li.active(role="presentation")
+                    a(data-toggle="tab", href="#goals") Goals 
+                        span.badge= workshop.fundraisingGoals.length
+                li(role="presentation")
+                    a(data-toggle="tab", href="#all-funds") All Funds 
+                        span.badge= funds.length
+                li(role="presentation")
+                    a(data-toggle="tab", href="#charts") Charts
+
+
+    .row.tab-content
+        br
+        #goals.col-xs-12.tab-pane.fade.in.active
             if workshop.fundraisingGoals.length > 0
                 each goal in workshop.fundraisingGoals
                     p goal
             else
                 p.text-center.text-muted There are currently no fundraising goals.
 
-    .row
-        .col-xs-12
-            .page-header
-                h2 All Funds
-                    +help('funds')
-                    small.right #{funds.length} total
+        #all-funds.col-xs-12.tab-pane.fade
             if funds.length > 0
                 table.table
                     thead
@@ -66,5 +71,5 @@ block content
                                     b $#{total} Total
             else
                 p.text-muted.text-center There are currently no #[b funds].
-
-    include charts
+        #charts.tab-pane.fade
+            include charts

@@ -1,44 +1,43 @@
-.row
-    .col-xs-12.col-sm-6
-        .page-header
-            h2 Fund Forms
-        canvas#funds-pie-chart(width="200", height="200")
-    
-    .col-xs-12.col-sm-6
-        .page-header
-            h2 Users Amount Submitted
-        canvas#users-pie-chart(width="200", height="200")
-        p.text-center.text-muted Coming soon...
+.col-xs-12.col-sm-6
+    .page-header
+        h2 Fund Forms
+    canvas#funds-pie-chart(width="200", height="200")
 
-    script.
-        var config = {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [
-                        #{fundsTypes['Cash']},
-                        #{fundsTypes['Check']},
-                        #{fundsTypes['Other']}
-                    ],
-                    backgroundColor: [
-                        window.chartColors.red,
-                        window.chartColors.orange,
-                        window.chartColors.yellow,
-                        window.chartColors.green,
-                        window.chartColors.blue,
-                    ],
-                    label: 'Dataset 1'
-                }],
-                labels: [
-                    "Cash",
-                    "Check",
-                    "Other"
-                ]
-            }
-        };
+.col-xs-12.col-sm-6
+    .page-header
+        h2 Users Amount Submitted
+    canvas#users-pie-chart(width="200", height="200")
+    p.text-center.text-muted Coming soon...
 
-        window.onload = function() {
-
-            var ctx = document.getElementById("funds-pie-chart").getContext("2d");
-            window.myPie = new Chart(ctx, config);
+script.
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [
+                    #{fundsTypes['Cash']},
+                    #{fundsTypes['Check']},
+                    #{fundsTypes['Other']}
+                ],
+                backgroundColor: [
+                    window.chartColors.red,
+                    window.chartColors.orange,
+                    window.chartColors.yellow,
+                    window.chartColors.green,
+                    window.chartColors.blue,
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                "Cash",
+                "Check",
+                "Other"
+            ]
         }
+    };
+
+    window.onload = function() {
+
+        var ctx = document.getElementById("funds-pie-chart").getContext("2d");
+        window.myPie = new Chart(ctx, config);
+    }
