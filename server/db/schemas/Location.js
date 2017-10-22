@@ -6,6 +6,7 @@ const locationSchema = new Schema({
     name: { type: String, trim: true, unique: true, required: true, maxlength: 30 },
     address: { type: String, trim: true, unique: true, required: true, maxlength: 50 },
     link: { type: String, trim: true, unique: true, maxlength: 50 },
+    imageUrl: { type: String, trim: true, unique: true, maxlength: 500 },
     description: { type: String, trim: true, maxlength: 2000 },
     comments: [{
         author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

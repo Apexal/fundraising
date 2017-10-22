@@ -20,6 +20,11 @@ block content
                         small.text-muted  (Optional)
                     input.form-control#new-location-link(name="link", type="text", maxlength="50", placeholder="Does this location have a website?")
                 .form-group
+                    label(for="new-location-img-url")
+                        +icon("image", "Location Image Link")
+                        small.text-muted  (Optional)
+                    input.form-control#new-location-img-url(name="imageUrl", type="text", maxlength="500", placeholder="Link to image for location.")
+                .form-group
                     label(for="new-location-description") Location Description
                         small.text-muted  (Optional)
                     textarea.form-control#new-location-description(name="description", maxlength="650", placeholder="Add any important information here.", rows="5")

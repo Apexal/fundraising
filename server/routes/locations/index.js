@@ -46,12 +46,14 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     const address = req.body.address;
     const description = req.body.description; // Optional
     const link = req.body.link; // Optional
+    const imageUrl = req.body.imageUrl; // Optional
 
     const newLocation = new req.db.Location({
         name,
         address,
         description,
         link,
+        imageUrl,
         dateAdded: new Date()
     });
 
@@ -120,6 +122,7 @@ router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
             location.address = req.body.address;
             location.description = req.body.description;
             location.link = req.body.link;
+            location.imageUrl = req.body.imageUrl;
 
             return location.save();
         }).then(location => {
