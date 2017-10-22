@@ -25,6 +25,12 @@ h.getRankFromWorkshop = (workshop, user) => {
     return rank;
 };
 
+h.isInvolvedInWorkshop = (workshop, user) => {
+    if (user.admin) return true;
+    if (!!h.getRankFromWorkshop(workshop, user)) return true;
+    return false;
+}
+
 h.isHigherUpInWorkshop = (workshop, user) => {
     if (user.admin) return true;
     if (['ambassador', 'director'].includes(h.getRankFromWorkshop(workshop, user))) return true;

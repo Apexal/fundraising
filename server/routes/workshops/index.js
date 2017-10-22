@@ -291,7 +291,7 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
 
 router.post('/:workshopId/addfunds', (req, res, next) => {
     // Check permissions
-    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
+    if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
 
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
@@ -317,17 +317,18 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
 
         if (req.workshop.ambassador) sendEmail(req.workshop.ambassador.email, "New Funds", message);
         if (req.workshop.director) sendEmail(req.workshop.director.email, "New Funds", message);
-
+        
+        /*
         const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/workshops/${workshopId}|Workshop ${funds.workshop}>`;
         return request({ method: 'POST', uri: config.get('slack.webhookUrl'), body: { mrkdwn: true, text }, json: true });
     }).then(body => {
-        req.flash('success', 'Added new funds for workshop.');
-        res.redirect(`/workshops/${req.workshop._id}/fundraising`);
+        req.flash('success', 'Added new funds for workshop.');*/
+        return res.redirect(`/workshops/${req.workshop._id}/fundraising`);
     }).catch(next);
 });
 
 router.post('/:workshopId/removefunds', (req, res, next) => {
-    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to remove this.'));
+    if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to remove this.'));
 
     req.db.Funds.findById(req.query.fundsId)
         .exec()
@@ -336,8 +337,9 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
             if (funds.workshop != req.workshop.id) throw new Error('Those funds are not associated with that workshop!');
 
             // Check permissions
-            if (!req.user.admin) {
-                if (!funds.submittedBy.equals(req.user.id)) throw new Error('You must be an admin, a higher up in the workshop, or the teacher who added the funds to remove this.');
+            // If user is not an admin, not a higher up, and not the person who added the funds...
+            if (!req.user.admin && !helpers.isHigherUpInWorkshop(req.workshop, req.user) && !funds.submittedBy.equals(req.user.id)) {
+                throw new Error('You must be an admin, a higher up in the workshop, or the teacher who added the funds to remove this.');
             }
 
             return funds.remove();
