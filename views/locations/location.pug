@@ -45,8 +45,8 @@ block content
                         span.badge #{location.comments.length}
 
     .row.tab-content
+        br
         #active-workshops.tab-pane.active.col-xs-12
-            p.text-muted.text-center= helpers.getHelpInfo('active-workshops')
             if activeWorkshops.length > 0
                 each c in activeWorkshops
                     +workshop-panel(c)
