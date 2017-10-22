@@ -14,9 +14,8 @@ block content
             nav.important-links
                 a.kidstales(href="http://kidstales.org/", target="_blank")
                     +icon('external-link', 'Kids Tales Site')
-                if user.verified
-                    a.slack(href="#", target="_blank")
-                        +icon('slack', 'Slack')
+                a.slack(href="#", target="_blank")
+                    +icon('slack', 'Slack')
                 a.github(href="https://github.com/KidsTales/kt-web/issues", target="_blank")
                     +icon('github', 'Website Issues')
     .row
@@ -35,13 +34,9 @@ block content
                             | #{latestUpdate.content}
                             a.btn.btn-primary.right Past Updates                        
 
-    if user.verified
-        if user.rank == 'teacher'
-            span Coming soon...
-        else if user.rank == 'director'
-            span Coming soon...
-        else if user.rank == 'ambassador'
-            span Coming soon...
-    else
-        .col-xs-12.text-center
-            h3.text-muted Once you are verified you will be able to view updates from the administrators and access your current workshop involvements.
+    if user.rank == 'teacher'
+        span Coming soon...
+    else if user.rank == 'director'
+        span Coming soon...
+    else if user.rank == 'ambassador'
+        span Coming soon...

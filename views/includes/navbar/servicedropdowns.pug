@@ -1,58 +1,42 @@
-// FUNDRAISING
-if user.verified
-    li.dropdown(class=helpers.activeLink('/management', pagePath))
+// Administrator actions (if admin)
+if user.admin
+    li.dropdown(class=helpers.activeLink('/administration', pagePath))
         a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            +icon('cogs', 'Management') 
-            span.caret
+            span.visible-sm Admin 
+                span.caret
+            span.hidden-sm  Administration 
+                span.caret
         ul.dropdown-menu
             li
-                a(href='/management') Overview
+                a(href='/administration') Overview
             li.divider(role='separator')
-            li(class=helpers.activeLink('/management/applicants', pagePath))
-                a(href='/management/applicants') Applicants
-  
-    // Administrator actions (if admin)
-    if user.admin
-        li.dropdown(class=helpers.activeLink('/administration', pagePath))
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                span.visible-sm Admin 
-                    span.caret
-                span.hidden-sm  Administration 
-                    span.caret
-            ul.dropdown-menu
-                li
-                    a(href='/administration') Overview
-                li.divider(role='separator')
-                li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
-                    a(href='/administration/fundraising') Overall Fundraising
-    
-    li.dropdown.hidden-lg
-        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') View
-            span.caret
-        ul.dropdown-menu
-            if user.verified
-                li(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
-                    a(href='/workshops')
-                        +icon('map-marker', 'Workshops')
+            li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
+                a(href='/administration/fundraising') Overall Fundraising
 
-                li(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
-                    a(href='/locations')
-                        +icon('globe', 'Locations')
+li.dropdown.hidden-lg
+    a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') View
+        span.caret
+    ul.dropdown-menu
+        li(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
+            a(href='/workshops')
+                +icon('map-marker', 'Workshops')
 
-                li(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
-                    a(href='/users') 
-                        +icon('address-book', 'Users')
-    
-    li.visible-lg(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
-        a(href='/workshops')
-            +icon('map-marker', 'Workshops')
+        li(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
+            a(href='/locations')
+                +icon('globe', 'Locations')
 
-    li.visible-lg(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
-        a(href='/locations')
-            +icon('globe', 'Locations')
+        li(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
+            a(href='/users') 
+                +icon('address-book', 'Users')
 
-    li.visible-lg(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
-        a(href='/users') 
-            +icon('address-book', 'Users')
-else
-    i.navbar-text You will be able to use services once verified.
+li.visible-lg(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
+    a(href='/workshops')
+        +icon('map-marker', 'Workshops')
+
+li.visible-lg(class=helpers.activeLink('/locations', pagePath), title='View the list of all locations used for workshops past and present and see details.')
+    a(href='/locations')
+        +icon('globe', 'Locations')
+
+li.visible-lg(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
+    a(href='/users') 
+        +icon('address-book', 'Users')
