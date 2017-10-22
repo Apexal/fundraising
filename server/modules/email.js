@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('config');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
@@ -14,8 +14,8 @@ templateNames.map(fileName => {
 let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: config.googleAuth.email,
-        pass: config.googleAuth.password
+        user: config.get('googleAuth.email'),
+        pass: config.get('googleAuth.password')
     }
 });
 
@@ -34,7 +34,7 @@ module.exports = (to, subject, template, data) => {
     // Render template
     const html = renderTemplate(templates[template+'.html'], data);
 
-    transporter.sendMail({ from: `Kids Tales <${config.googleAuth.email}>`, to, subject, html }, (error, info) => {
+    transporter.sendMail({ from: `Kids Tales <${config.get('googleAuth.email')}>`, to, subject, html }, (error, info) => {
         if (error) {
             console.log(error);
             return error;

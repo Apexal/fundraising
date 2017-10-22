@@ -1,11 +1,11 @@
 const fs = require('fs');
-const config = require('../config.js');
+const config = require('config');
 const path = require('path');
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const dbURL = `mongodb://${config.database.host}:${config.database.port}/${config.database.name}`;
+const dbURL = `mongodb://${config.get('database.host')}:${config.get('database.port')}/${config.get('database.name')}`;
 // const basename = path.basename(module.filename);
 
 let models = {};

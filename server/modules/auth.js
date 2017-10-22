@@ -1,7 +1,6 @@
 const passport = require('passport');
 const SlackStrategy = require('passport-slack').Strategy;
-const config = require('../config').slack;
-const slack = require('./slack');
+const config = require('config');
 
 module.exports = (User) => {
     passport.serializeUser((user, done) => {
@@ -18,12 +17,12 @@ module.exports = (User) => {
         .catch(done);
     });
 
-    passport.use(new SlackStrategy(config, 
+    passport.use(new SlackStrategy(config.get('slack'),
         (req, token, refreshToken, profile, done) => {
             console.log(profile);
 
             // Make sure user is in Kids Tales Slack team 
-            if (profile.team.id !== config.teamID) return done(null, false, { message: 'You must be on the Kids Tales Slack team!' });
+            if (profile.team.id !== config.get('slack.teamID')) return done(null, false, { message: 'You must be on the Kids Tales Slack team!' });
 
             const email = profile.user.email;
 

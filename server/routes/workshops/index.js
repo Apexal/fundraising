@@ -4,6 +4,7 @@ const moment = require('moment');
 const request = require('request-promise');
 const fs = require('fs');
 const path = require('path');
+const config = require('config');
 
 router.use(requireVerified);
 
@@ -333,7 +334,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
         if (req.workshop.director) sendEmail(req.workshop.director.email, "New Funds", message);
 
         const text = `<http://localhost:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://localhost:3000/workshops/${workshopId}|Workshop ${funds.workshop}>`;
-        return request({ method: 'POST', uri: require('../../config').slack.webhookUrl, body: { mrkdwn: true, text }, json: true });
+        return request({ method: 'POST', uri: config.get('slack.webhookUrl'), body: { mrkdwn: true, text }, json: true });
     }).then(body => {
         req.flash('success', 'Added new funds for workshop.');
         res.redirect(`/workshops/${req.workshop._id}/fundraising`);

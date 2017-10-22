@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
+const config = require('config');
 
 router.use(requireVerified);
 
@@ -75,7 +76,7 @@ router.get('/:locationId', (req, res, next) => {
             res.locals.location = location;
             
             res.locals.pageTitle = `Location ${location.name}`;
-            res.locals.apiKey = require('../../config').googleAuth.apiKey;
+            res.locals.apiKey = config.get('googleAuth.apiKey');
 
             return location.getWorkshops();
         }).then(workshops => {

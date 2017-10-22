@@ -1,4 +1,3 @@
-const config = require('../../config').slack;
-
+const config = require('config');
 
 module.exports = {};
