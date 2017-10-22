@@ -68,6 +68,8 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
     const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
     const why = req.body.why;
 
+    const recommender = req.body.recommender;
+
     // Get/create user
     const user = {
         email,
@@ -84,7 +86,7 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
         application: {
             rank,
             superior: superiorId,
-            //recommender: { type: Number, ref: 'User' },
+            recommender,
             why,
             updatedAt: new Date()
         }

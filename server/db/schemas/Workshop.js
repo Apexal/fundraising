@@ -12,16 +12,16 @@ const workshopSchema = new Schema({
     ambassador: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     info: {
         studentCount: { type: Number, min: 0, max: 100, required: true },
-        studentAgeRange: { type: String, trim: true, required: true },
+        studentAgeRange: { type: String, trim: true, required: true, maxlength: 20 },
         teacherMin: { type: Number, min: 0, max: 100, required: true },
         classRoomAvailable: { type: Boolean, required: true },
         contact: {
-            name: { type: String, trim: true, required: true },
-            contactInfo: { type: String, trim: true, required: true }
+            name: { type: String, trim: true, required: true, maxlength: 50 },
+            contactInfo: { type: String, trim: true, required: true, maxlength: 50 }
         },
-        preparation: { type: String, trim: true },
-        language: { type: String, trim: true, default: 'English' },
-        extra: { type: String, trim: true }
+        preparation: { type: String, trim: true, maxlength: 250 },
+        language: { type: String, trim: true, default: 'English', maxlength: 30 },
+        extra: { type: String, trim: true, maxlength: 650 }
     },
     claimed: { type: Boolean, default: false },
     active: { type: Boolean, default: true },

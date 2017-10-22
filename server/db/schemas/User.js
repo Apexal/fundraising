@@ -5,11 +5,11 @@ const mongoosePaginate = require('mongoose-paginate');
 const userSchema = new Schema({
     slackId: { type: String },
     profileImageName: { type: String, default: 'default.png' },
-    email: { type: String, trim: true, unique: true, required: true },
+    email: { type: String, trim: true, unique: true, required: true, maxlength: 70 },
     age: { type: Number, min: 10, max: 100 },
     grade: { type: Number, min: 8, max: 12 },
-    phoneNumber: { type: String, trim: true },
-    location: { type: String, trim: true },
+    phoneNumber: { type: String, trim: true, maxlength: 20 },
+    location: { type: String, trim: true, maxlength: 40 },
     name: {
         full: { type: String, required: true, trim: true },
         first: { type: String, required: true, trim: true },
@@ -19,8 +19,8 @@ const userSchema = new Schema({
     application: {
         rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
         superior: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        recommender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        why: { type: String, trim: true },
+        recommender: { type: String, trim: true, maxlength: 50},
+        why: { type: String, trim: true, maxlength: 650 },
         writingFileName: { type: String, trim: true },
         updatedAt: { type: Date }
     },
