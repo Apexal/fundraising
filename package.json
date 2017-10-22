@@ -12,6 +12,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "~1.15.2",
     "compression": "^1.6.2",
+    "config": "^1.27.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "easyimage": "^2.1.0",

@@ -49,3 +49,6 @@ tests/testBookCompile.js
 sendgrid.env
 
 .sass-cache/
+
+server/config/production.json
+server/config/development.json

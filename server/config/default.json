@@ -1,0 +1,26 @@
+{
+    "port": 8080,
+    "database":{
+        "host":"localhost",
+        "name":"kidstales",
+        "port":"27017"
+    },
+    "googleAuth":{
+        "clientID":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+        "clientSecret":"XXXXXXXXXXXXXXXXXXX",
+        "callbackURL":"http://localhost:8080/auth/google/callback",
+        "passReqToCallback":true,
+        "apiKey":"xxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "email":"xxxxxxxxxxx@gmail.com",
+        "password":"xxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "secret":"app secret",
+    "slack":{
+        "teamID":"XXXXXXX",
+        "commandToken":"XXXXXXXXXXXXXXXXXXX",
+        "botToken":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "clientID":"XXXXXXXXXXXXXXXXX",
+        "clientSecret":"XXXXXXXXXXXXXXXXXX",
+        "webhookUrl":"https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+}
