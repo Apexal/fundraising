@@ -28,26 +28,32 @@ block content
                 br
             p= location.description
     
+    .row
+        .col-xs-12
+            hr
+            ul.nav.nav-tabs.nav-justified
+                li.active(role="presentation", title=helpers.getHelpInfo('active-workshops'))
+                    a(data-toggle="tab", href="#active-workshops") Active Workshops 
+                        span.badge #{activeWorkshops.length}
 
-        .col-xs-12.col-lg-5
-            .page-header.active-workshops
-                h3 Active Workshops
-                    +help('active-workshops')
-                    small.right #{activeWorkshops.length} total
+                li(role="presentation", title=helpers.getHelpInfo('inactive-workshops'))
+                    a(data-toggle="tab", href="#inactive-workshops") Past Workshops 
+                        span.badge #{inactiveWorkshops.length}
+
+                li(role="presentation", title=helpers.getHelpInfo('comments'))
+                    a(data-toggle="tab", href="#comments") Comments 
+                        span.badge #{location.comments.length}
+
+    .row.tab-content
+        #active-workshops.tab-pane.active.col-xs-12
+            p.text-muted.text-center= helpers.getHelpInfo('active-workshops')
             if activeWorkshops.length > 0
                 each c in activeWorkshops
                     +workshop-panel(c)
             else
                 p.text-muted.text-center There are currently no #[b active workshops].
-        .col-xs-12
 
-    .row
-        .col-xs-12
-            .page-header
-                h3 Past Workshops
-                    +help('inactive-workshops')
-                    small.right #{inactiveWorkshops.length} total
-        .col-xs-12
+        #inactive-workshops.tab-pane.col-xs-12
             if inactiveWorkshops.length > 0
                 table.table
                     thead
@@ -71,19 +77,16 @@ block content
                                         span.text-muted None
             else
                 p.text-muted.text-center No workshops have been completed at this location yet.
-    .row
-        .col-xs-12
-            .page-header
-                h3 Comments
-                    small.right #{location.comments.length} total
-        .col-xs-12
-            form.form(method="POST", action="/locations/" + location.id + "/comment")
-                textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
-                button.btn.btn-success Add Comment
-        .col-xs-12
-            .list-group
-                each c in location.comments
-                    +comment(c)
+
+        #comments.tab-pane
+            .col-xs-12
+                form.form(method="POST", action="/locations/" + location.id + "/comment")
+                    textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
+                    button.btn.btn-success Add Comment
+            .col-xs-12
+                .list-group
+                    each c in location.comments
+                        +comment(c)
 
     if user.admin
         .row
