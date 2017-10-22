@@ -25,17 +25,25 @@ block content
                         br
                         a.email(href="mailto:" + targetUser.email)= targetUser.email
 
-    .row
         .col-xs-12.col-sm-6.col-lg-5
-            .page-header
-                h2 Why Kids Tales?
             blockquote.why
                 p= targetUser.application.why
-                footer= targetUser.name.full
-        .col-xs-12.col-sm-6.col-lg-7
-            .page-header
-                h2 Active Workshops
-                    small.right #{activeWorkshops.length} total
+                footer "Why Kids Tales?"
+    .row
+        hr
+        .col-xs-12
+            ul.nav.nav-tabs
+                li.active(role="presentation")
+                    a(href="#active-workshops", data-toggle="tab") Active Workshops 
+                        span.badge= activeWorkshops.length
+                li(role="presentation")
+                    a(href="#inactive-workshops", data-toggle="tab") Inactive Workshops 
+                        span.badge= inactiveWorkshops.length
+
+    
+    .row.tab-content
+        br
+        #active-workshops.col-xs-12.tab-pane.active.fade.in
             if activeWorkshops.length > 0
                 table.table
                         thead
@@ -57,11 +65,8 @@ block content
             else
                 p.text-center.text-muted #[b= targetUser.name.first] is currently not involved in any workshops.
 
-    .row
-        .col-xs-12
-            .page-header
-                h2 Past Workshops
-                    small.right #{inactiveWorkshops.length} total
+
+        #inactive-workshops.col-xs-12.tab-pane.fade
             if inactiveWorkshops.length > 0
                 table.table
                         thead
@@ -85,8 +90,8 @@ block content
         .col-xs-12
             hr
             a.btn.btn-lg.btn-primary.right(href="mailto:" + targetUser.email) Email #{targetUser.name.first}
-    
-            if user.admin
-                if user.id !== targetUser.id
-                    a.btn.btn-lg.btn-info(href="/loginas?id=" + targetUser.id) Login as #{targetUser.name.first}
-                a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}
+
+        if user.admin
+            if user.id !== targetUser.id
+                a.btn.btn-lg.btn-info(href="/loginas?id=" + targetUser.id) Login as #{targetUser.name.first}
+            a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit") Edit #{targetUser.name.first}
