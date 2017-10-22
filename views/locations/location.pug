@@ -46,14 +46,14 @@ block content
 
     .row.tab-content
         br
-        #active-workshops.tab-pane.active.col-xs-12
+        #active-workshops.tab-pane.fade.in.active.col-xs-12
             if activeWorkshops.length > 0
                 each c in activeWorkshops
                     +workshop-panel(c)
             else
                 p.text-muted.text-center There are currently no #[b active workshops].
 
-        #inactive-workshops.tab-pane.col-xs-12
+        #inactive-workshops.tab-pane.fade.col-xs-12
             if inactiveWorkshops.length > 0
                 table.table
                     thead
@@ -78,7 +78,7 @@ block content
             else
                 p.text-muted.text-center No workshops have been completed at this location yet.
 
-        #comments.tab-pane
+        #comments.tab-pane.fade
             .col-xs-12
                 form.form(method="POST", action="/locations/" + location.id + "/comment")
                     textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
