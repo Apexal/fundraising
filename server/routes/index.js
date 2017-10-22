@@ -81,14 +81,14 @@ router.get('/logout', function(req, res){
     res.redirect('/');
 });
 
-router.get('/profile', requireVerified, (req, res, next) => {
+router.get('/profile', requireLogin, (req, res, next) => {
     res.locals.pageTitle = 'Your Profile';
 
     res.render('users/profile');
 });
 
 /* Update logged in user's profile */
-router.post('/profile', requireVerified, upload.single('profileImage'), (req, res, next) => {
+router.post('/profile', requireLogin, upload.single('profileImage'), (req, res, next) => {
     // Gather form data
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;

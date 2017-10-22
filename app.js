@@ -84,22 +84,10 @@ requireNotLogin = function(req, res, next) {
     return next(new Error('You are logged in!'));
 }
 
-// To be used by routes
-// When used as a middleware on a route, if user is not logged in or is not verified it redirects home
-requireVerified = function(req, res, next) {
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated() && req.user.verified) return next();
-    req.session.redirect = req.originalUrl;
-    debug(req.originalUrl);
-    debug(req.session);
-    req.flash('error', 'You must be logged in and verified to view that page.');
-    return res.redirect('/');
-}
-
 requireHigherUp = function(req, res, next) {
     if (req.user.rank !== 'teacher' || req.user.admin) return next();
     req.session.redirect = req.originalUrl;
-    req.flash('error', 'You must be logged in to view that page.');
+    req.flash('error', 'You must be a higher up to view that page.');
     return res.redirect('/');
 }
 

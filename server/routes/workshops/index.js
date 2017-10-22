@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('config');
 
-router.use(requireVerified);
+router.use(requireLogin);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

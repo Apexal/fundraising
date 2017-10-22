@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const config = require('config');
 
-router.use(requireVerified);
+router.use(requireLogin);
 
 /* LIST all locations (paginated) and allow filtering */
 router.get('/', (req, res, next) => {
