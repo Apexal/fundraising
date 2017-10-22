@@ -56,9 +56,11 @@ router.get('/login', (req, res) => {
 });
 
 /* Allow admins to login as any user based on email */
+/* Allows anyone to do it if in dev mode */
 router.get('/loginas', (req, res, next) => {
     if (!req.query.id) return next(new Error('Invalid user id.'));
-    if (config.util.getEnv('NODE_ENV') != 'development') return next(new Error('Not in development mode!'));
+    
+    if (config.util.getEnv('NODE_ENV') !== 'development' && !req.user.admin) return next(new Error('Not admin or in development mode!'));
 
     req.db.User.findById(req.query.id)
         .exec()
