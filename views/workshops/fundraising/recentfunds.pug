@@ -7,7 +7,7 @@
             li.list-group-item.text-muted No recent funds for #[b= workshop.location.name]
         else
             each f in recentFunds
-                a.list-group-item(href="/workshops/" + workshop._id + "/fundraising")
+                a.list-group-item(href=isInvolved ? ("/workshops/" + workshop._id + "/fundraising") : '#')
                     b #{moment(f.dateAdded).fromNow()} | 
                     | $#{f.amount} #{f.form}
                     span.text-muted.right submitted by #{f.submittedBy.name.first}

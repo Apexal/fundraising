@@ -53,31 +53,8 @@
     text-transform: capitalize;
 }
 
-.rank {
-    text-transform: capitalize;
-
-    h4 {
-        margin-top: 0;
-        
-        text-align: center;
-    }
-
-    img.ambassador {
-        border: 5px solid #F2DEDE;
-    }
-
-    img.director {
-        border: 3px solid #F2DEDE;
-    }
-    
-    img.teacher {
-        height: 60px;
-        vertical-align: bottom;
-    }
-}
-
-.rank-summary {
-    margin-bottom: 10px;
+.location-image.big {
+    max-width: 400px;
 }
 
 .workshop-team img {

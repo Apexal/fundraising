@@ -43,8 +43,21 @@ block content
             include team
         #info.col-xs-12.col-sm-6.tab-pane.fade
             include info
+        .col-xs-12.col-sm-6
+            br
+            if workshop.location.imageUrl
+                a(href="/locations/" + workshop.location.id)
+                    img.location-image.big.thumbnail(src=workshop.location.imageUrl, alt='Invalid url for location image!')
+            
+            .panel.panel-default
+                .panel-body.text-center
+                    b Contact Name 
+                    span= workshop.info.contact.name
+                    br
+                    b Contact Info 
+                    span= workshop.info.contact.contactInfo
 
-    if workshop.active && workshop.ready
+    if workshop.active
         .row
             .col-xs-12.col-lg-5
                 hr

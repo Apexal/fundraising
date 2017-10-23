@@ -158,21 +158,8 @@ a.location-name {
 .rank-name {
   text-transform: capitalize; }
 
-.rank {
-  text-transform: capitalize; }
-  .rank h4 {
-    margin-top: 0;
-    text-align: center; }
-  .rank img.ambassador {
-    border: 5px solid #F2DEDE; }
-  .rank img.director {
-    border: 3px solid #F2DEDE; }
-  .rank img.teacher {
-    height: 60px;
-    vertical-align: bottom; }
-
-.rank-summary {
-  margin-bottom: 10px; }
+.location-image.big {
+  max-width: 400px; }
 
 .workshop-team img {
   height: 80px; }
