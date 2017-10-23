@@ -24,5 +24,5 @@ block content
                 .form-group
                     label(for="edit-workshop-info") Workshop Info
                         small.text-muted  (Optional)
-                    textarea.form-control#edit-workshop-description(name="info", placeholder="Add any important information here.", rows="5")= workshop.info
+                    textarea.form-control#edit-workshop-description(name="extra", placeholder="Add any important information here.", rows="5")= workshop.info.extra
                 button.btn.btn-primary Save Workshop

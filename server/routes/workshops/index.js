@@ -238,7 +238,7 @@ router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
     req.workshop.location = req.body.locationId;
     req.workshop.startDate = moment(req.body.startDate, "YYYY-MM-DD").toDate();
     req.workshop.endDate = moment(req.body.endDate, "YYYY-MM-DD").toDate();
-    //req.workshop.info = req.body.info;
+    req.workshop.info.extra = req.body.extra;
 
     req.workshop.save()
         .then(workshop => {
