@@ -38,7 +38,10 @@ block content
                             tr
                                 td
                                     b
-                                        a(href="/workshops/" + w.id)= w.location.name
+                                        if w.active
+                                            a(href="/workshops/" + w.id)= w.location.name
+                                        else
+                                            +icon("lock", w.location.name)
                                 td= moment(w.startDate).format("ddd, MMM Do YY")
                                 td= moment(w.endDate).format("ddd, MMM Do YY")
                                 td
