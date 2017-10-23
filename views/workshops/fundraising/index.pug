@@ -10,16 +10,13 @@ block content
                 br
                 a.btn.btn-lg.btn-primary.right(href="/workshops/" + workshop._id) Workshop Details
 
-    if isInvolved
+    if isInvolved && workshop.active
         hr
-        if workshop.active
-            .row
-                .col-xs-12.col-md-6
-                    include addfunds
-                .col-xs-12.col-md-6
-                    include recentfunds
-        else
-            h3.text-muted.text-center This workshop has ended so no more fundraising data can be added.
+        .row
+            .col-xs-12.col-md-6
+                include addfunds
+            .col-xs-12.col-md-6
+                include recentfunds
 
     .row
         hr
@@ -33,7 +30,6 @@ block content
                         span.badge= funds.length
                 li(role="presentation")
                     a(data-toggle="tab", href="#charts") Charts
-
 
     .row.tab-content
         br
@@ -62,7 +58,7 @@ block content
                                 td= f.method
                                 td(title=f.submittedBy.email)
                                     a(href="/users/" + f.submittedBy.email) #{f.submittedBy.name.full}
-                                if isWorkshopHigherUp || f.submittedBy.id == user.id
+                                if workshop.active && (isWorkshopHigherUp || f.submittedBy.id == user.id)
                                     td
                                         form(action="/workshops/" + workshop._id + "/removefunds?fundsId=" + f._id, method="POST", onsubmit="return confirm('Are you sure you want to remove these funds?');")
                                             button.btn.btn-danger.right Remove
