@@ -292,6 +292,7 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
 router.post('/:workshopId/addfunds', (req, res, next) => {
     // Check permissions
     if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
+    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
 
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
@@ -339,6 +340,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
 
 router.post('/:workshopId/removefunds', (req, res, next) => {
     if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to remove this.'));
+    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
 
     req.db.Funds.findById(req.query.fundsId)
         .exec()
@@ -364,6 +366,7 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
 /* FUNDRAISING GOALS */
 router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
     if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
+    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
 
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
@@ -398,6 +401,8 @@ router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
 });
 
 router.post('/:workshopId/removefundraisinggoal', (req, res, next) => {
+    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
+
     req.db.FundraisingGoal.findById(req.query.fundraisingGoalId)
         .exec()
         .then(goal => {
