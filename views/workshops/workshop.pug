@@ -29,14 +29,17 @@ block content
                     |  to 
                     b(title=moment(workshop.endDate).fromNow())= moment(workshop.endDate).format("dddd, MMMM Do YY")
             hr
-        br
+            if workshop.info.extra
+                p= workshop.info.extra
+                hr
 
     .row
-        ul.nav.nav-tabs
-            li.active(role="presentation")
-                a(data-toggle="tab", href="#team") Team
-            li(role="presentation")
-                a(data-toggle="tab", href="#info") Info
+        .col-xs-12
+            ul.nav.nav-tabs
+                li.active(role="presentation")
+                    a(data-toggle="tab", href="#team") Team
+                li(role="presentation")
+                    a(data-toggle="tab", href="#info") Info
 
     .row.tab-content
         #team.col-xs-12.col-sm-6.tab-pane.fade.in.active

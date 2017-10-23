@@ -14,5 +14,7 @@ mixin row(val, index)
                 th Info
                 th Value
         tbody
+            - delete workshopInfo['contact']
+            - delete workshopInfo['extra']
             each val, index in workshopInfo
                 +row(val, index)
