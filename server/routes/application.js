@@ -187,17 +187,21 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
 
             // Remove writing sample
             const p = path.join(__dirname, '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
-            fs.unlinkSync(p, err => {
-                if (err) console.error(err);
-            });
+            try {
+                fs.unlinkSync(p, err => {
+                    if (err) console.error(err);
+                });
+            } catch(e) {}
 
             // INVITE TO SLACK
             return slack.inviteToTeam(applicant.name.first, applicant.email);
         })
         .then(data => {
+            data = JSON.parse(data);
+            
             console.log(data);
-            if (data.ok) {
-                req.flash('Application accepted! They have been invited to the Slack team and can now login to the website.');
+            if (data.ok || data.error == "already_in_team") {
+                req.flash("Application accepted!" + (data == "already_in_team" ? '' : " They have been invited to the Slack team and can now login to the website."));
 
                 return res.redirect('back');
             } else { throw new Error("Failed to invite to Slack but everything else worked! Maybe they are already on Slack?"); }

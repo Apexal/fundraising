@@ -3,7 +3,7 @@ extends /layout
 mixin application(a)
     .panel.panel-default.applicant-panel
         .panel-body
-            form.form(action="/application/verify?aId=" + a.id, method="POST")
+            form.form(action="/application/verify?userId=" + a.id, method="POST", onsubmit="return confirm('Are you sure you want to accept " + a.name.first + "'s application?');")
                 h2= a.name.full
                     small.right(title=moment(a.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(a.registeredDate).fromNow()
                 hr
