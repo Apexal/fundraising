@@ -79,7 +79,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
             first: firstName,
             last: lastName
         },
-        rank: 'teacher', // placeholder
+        rank,
         application: {
             rank,
             superior: superiorId,
@@ -129,10 +129,10 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
 });
 
 /* Non-teacher members can manage applicants under them  */
-router.get('/applicants', requireHigherUp, (req, res, next) => {
+router.get('/applicants', requireLogin, requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Your Applicants';
 
-    req.db.find({ 'application.superior': req.user._id })
+    req.db.User.find({ 'application.superior': req.user._id })
         .exec()
         .then(applicants => {
             res.locals.applicants = applicants;
