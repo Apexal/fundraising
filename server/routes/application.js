@@ -157,18 +157,31 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             if (!applicant) throw new Error("Invalid user id.");
 
             applicant.verified = true; // VITAL - ALLOWS LOGIN
+            applicant.applying = false;
             applicant.rank = applicant.application.rank;
 
             if (applicant.application.rank == 'teacher') {
-
-                return applicant.save();
+                // Try to find active workshop of director to assign to
+                req.db.Workshop.findOne({ director: applicant.application.superior, active: true})
+                    .populate('location')
+                    .exec()
+                    .then(workshop => {
+                        workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
+                        req.flash('info', `Assigned ${applicant.name.first} as a teacher to your workshop at ${workshop.location.name}`);
+                        
+                        workshop.save();
+                    })
+                    .catch(err => {
+                        // Could not find workshop to add applicant to
+                    });
+                    return applicant.save();
             } else if (applicant.application.rank == 'director') {
 
                 return applicant.save();
             }
         })
         .then(applicant => {
-            sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.rank}</b> has been accepted.`);
+            //sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.rank}</b> has been accepted.`);
 
             // Remove writing sample
             const p = path.join(__dirname, '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
