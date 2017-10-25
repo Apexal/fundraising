@@ -1,5 +1,50 @@
 extends /layout
 
+mixin application(a)
+    .panel.panel-default.applicant-panel
+        .panel-body
+            form.form(action="/application/verify?aId=" + a.id, method="POST")
+                h2= a.name.full
+                    small.right(title=moment(a.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(a.registeredDate).fromNow()
+                hr
+                .applicant-info
+                    .form-group
+                        label Email
+                        input.form-control#email(type="text", value=a.email, disabled)
+                    .form-group
+                        label(for="location") Location
+                        input#location.form-control(type="text", value=a.location, placeholder="Where do you live? Relative to major city is fine.", disabled)
+                    .form-group
+                        label(for="phone-number") Personal Phone Number
+                            small.text-muted  This will be available to all Kids Tales members.
+                        input#phone-number.form-control(type="text", placeholder="xxx-xxx-xxxx", value=a.phoneNumber, disabled)
+                    .form-group
+                        label(for="age") Age
+                        input#age.form-control(type="number", placeholder="How old are you?", value=a.age, disabled)
+                    .form-group
+                        label(for="grade") Grade
+                        input#grade.form-control(ype="number", placeholder="What grade are you in?", value=a.grade, disabled)
+
+                    hr
+                    .form-group
+                        label(for="why") Why Kids Tales?
+                        textarea#why.form-control(disabled)= a.application.why
+                    
+                    hr
+
+                    .form-group
+                        label(for="recommender") Recommender
+                            small.text-muted  (Optional)
+                        input.form-control#recommender(type="text", placeholder="Did someone recommend you?", disabled)
+
+                    .form-group
+                        label(for="writing-sample") Sample of Writing 
+                        a(href='/writingsamples/' + a.application.writingFileName, target='new')
+                            +icon('link', 'Link')
+                button.btn.btn-success Accept
+                button.btn.btn-danger.right(type="button") Deny
+    hr
+
 block content
     .row
         .col-xs-12
@@ -8,9 +53,6 @@ block content
     
     .row
         .col-xs-12
-            ul
-                each a in applicants
-                    li
-                        form.form(action="/application/verify?userId=" + a.id, method="POST")
-                            span= a
-                            button.btn.btn-success Accept
+
+            each a in applicants
+                +application(a)
