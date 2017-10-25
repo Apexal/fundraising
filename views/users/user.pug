@@ -86,7 +86,7 @@ block content
             else
                 p.text-center.text-muted #[b= targetUser.name.first] has not yet been involved in any finished workshops.
 
-    if user.admin
+    if user.admin || env == 'development'
         .row
             hr
             if user.id !== targetUser.id
