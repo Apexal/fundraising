@@ -25,11 +25,8 @@ const upload = multer({
     }
 });
 
-/* Users must be at least logged in to access ANY routes here */
-router.use(requireNotLogin);
-
 /* GET application. */
-router.get('/', (req, res, next) => {
+router.get('/', requireNotLogin, (req, res, next) => {
     res.locals.pageTitle = 'Application';
     res.locals.user = {
         email: '',
@@ -54,7 +51,7 @@ router.get('/', (req, res, next) => {
 });
 
 /* Save application data and alert higher ups */
-router.post('/', upload.single('writingSample'), (req, res, next) => {
+router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, next) => {
     // Get form data
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -114,7 +111,6 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
             req.flash('info', `Your application has been submitted. It will be reviewed shortly. Please check your email for updates.`);
             sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', user);
             return res.redirect('/application');
-            //return req.db.User.findById(user.superior).exec();
         })
         /*.then(superior => {
             if (newSuperior) {
@@ -129,6 +125,23 @@ router.post('/', upload.single('writingSample'), (req, res, next) => {
 
             res.redirect('/application');
         })*/
+        .catch(next);
+});
+
+/* Non-teacher members can manage applicants under them  */
+router.get('/applicants', requireHigherUp, (req, res, next) => {
+    res.locals.pageTitle = 'Your Applicants';
+
+    req.db.find({ 'application.superior': req.user._id })
+        .exec()
+        .then(applicants => {
+            res.locals.applicants = applicants;
+
+            res.locals.newApplicants = applicants.filter(a => !a.verified); // People new to Kids Tales
+            res.locals.memberApplicants = applicants.filter(a => a.verified); // Existing members
+
+            res.render('application/applicants');
+        })
         .catch(next);
 });
 
