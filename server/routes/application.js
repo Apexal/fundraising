@@ -84,6 +84,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         },
         rank,
         application: {
+            applying: true,
             rank,
             superior: superiorId,
             recommender,
@@ -135,9 +136,10 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
 router.get('/applicants', requireLogin, requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Your Applicants';
 
-    req.db.User.find({ 'application.superior': req.user._id })
+    req.db.User.find({ 'application.superior': req.user._id, 'application.applying': true })
         .exec()
         .then(applicants => {
+            req.session.applicantCount = applicants.length;
             res.locals.applicants = applicants;
 
             res.locals.newApplicants = applicants.filter(a => !a.verified); // People new to Kids Tales
@@ -157,7 +159,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             if (!applicant) throw new Error("Invalid user id.");
 
             applicant.verified = true; // VITAL - ALLOWS LOGIN
-            applicant.applying = false;
+            applicant.application.applying = false;
             applicant.rank = applicant.application.rank;
 
             if (applicant.application.rank == 'teacher') {

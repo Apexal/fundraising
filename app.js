@@ -65,6 +65,7 @@ app.use((req, res, next) => {
 
     // For convenience
     res.locals.loggedIn = req.isAuthenticated();
+    res.locals.applicantCount = req.session.applicantCount;
 
     next();
 });
@@ -110,16 +111,22 @@ app.get('/auth/slack/callback',
         failureFlash: true
     }),
     (req, res) => {
-        if (req.session.redirect !== undefined) {
-            // Redirect to page after login if specified
-            const redir = req.session.redirect;
-
-            delete req.session.redirect;
+        req.db.User.find({ 'application.superior': req.user._id, applying: false })
+            .exec()
+            .then(applicants => {
+                req.session.applicantCount = res.locals.applicantCount = applicants.length;
             
-            return res.redirect(redir);
-        } else {
-            return res.redirect('/');
-        }
+                if (req.session.redirect !== undefined) {
+                    // Redirect to page after login if specified
+                    const redir = req.session.redirect;
+        
+                    delete req.session.redirect;
+                    
+                    return res.redirect(redir);
+                } else {
+                    return res.redirect('/');
+                }
+            });
     });
 
 // Dynamically load routes

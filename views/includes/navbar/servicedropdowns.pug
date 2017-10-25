@@ -13,7 +13,9 @@ if user.admin
             li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
                 a(href='/administration/fundraising') Overall Fundraising
             li(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
-                a(href='/application/applicants') Applicants
+                a(href='/application/applicants') Applicants 
+                    if applicantCount > 0
+                        span.badge= applicantCount
 
 li.dropdown.hidden-lg
     a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') View
@@ -46,4 +48,6 @@ li.visible-lg(class=helpers.activeLink('/users', pagePath), title='View the list
 if user.rank !== 'teacher'
     li.visible-lg(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
         a(href='/application/applicants') 
-            +icon('user-plus', 'Applicants')
+            +icon('user-plus', 'Applicants ')
+            if applicantCount > 0
+                span.badge= applicantCount

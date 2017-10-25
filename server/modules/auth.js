@@ -2,7 +2,7 @@ const passport = require('passport');
 const SlackStrategy = require('passport-slack').Strategy;
 const config = require('config');
 
-module.exports = (User) => {
+module.exports = User => {
     passport.serializeUser((user, done) => {
         done(null, user._id);
     });
