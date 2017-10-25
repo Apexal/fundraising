@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const slack = require('../modules/slack');
 
 const DOC_TYPES = ['.txt', '.doc', '.docx'];
 
@@ -144,5 +147,48 @@ router.get('/applicants', requireLogin, requireHigherUp, (req, res, next) => {
         })
         .catch(next);
 });
+
+router.post('/verify', requireHigherUp, (req, res, next) => {
+    
+    // IF APPLY FOR TEACHER
+    req.db.User.findById(req.query.userId)
+        .exec()
+        .then(applicant => {
+            if (!applicant) throw new Error("Invalid user id.");
+
+            applicant.verified = true; // VITAL - ALLOWS LOGIN
+            applicant.rank = applicant.application.rank;
+
+            if (applicant.application.rank == 'teacher') {
+
+                return applicant.save();
+            } else if (applicant.application.rank == 'director') {
+
+                return applicant.save();
+            }
+        })
+        .then(applicant => {
+            sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.rank}</b> has been accepted.`);
+
+            // Remove writing sample
+            const p = path.join(__dirname, '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
+            fs.unlinkSync(p, err => {
+                if (err) console.error(err);
+            });
+
+            // INVITE TO SLACK
+            return slack.inviteToTeam(applicant.name.first, applicant.email);
+        })
+        .then(data => {
+            console.log(data);
+            if (data.ok) {
+                req.flash('Application accepted! They have been invited to the Slack team and can now login to the website.');
+
+                return res.redirect('back');
+            } else { throw new Error("Failed to invite to Slack but everything else worked! Maybe they are already on Slack?"); }
+        })
+        .catch(next);
+});
+
 
 module.exports = router;

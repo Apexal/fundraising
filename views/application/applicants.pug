@@ -10,4 +10,7 @@ block content
         .col-xs-12
             ul
                 each a in applicants
-                    li= a
+                    li
+                        form.form(action="/application/verify?userId=" + a.id, method="POST")
+                            span= a
+                            button.btn.btn-success Accept

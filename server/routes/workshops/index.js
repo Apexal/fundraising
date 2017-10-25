@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
-const request = require('request-promise');
 const fs = require('fs');
 const path = require('path');
+const slack = require('../../modules/slack');
 const config = require('config');
 
 router.use(requireLogin);
@@ -179,46 +179,6 @@ router.get('/:workshopId/applicants', requireHigherUp, (req, res, next) => {
     res.locals.workshop = req.workshop;
     res.locals.pageTitle = `Workshop ${req.workshop.location.name} Applicants`;
     return res.render('workshops/applicants');
-});
-
-router.post('/:workshopId/verify/:email', requireHigherUp, (req, res, next) => {
-    if (!req.workshop.active) {
-        req.flash('warning', 'This workshop has already ended. Applications for it are unavailable.');
-        return res.redirect('/workshops/' + req.workshop._id);
-    }
-
-    req.db.User.findOne({ email: req.params.email })
-        .exec()
-        .then(applicant => {
-            if (!applicant) throw new Error('Applicant does not exist!');
-            req.applicant = applicant;
-
-            applicant.verified = true;
-            applicant.application.role = ['teacher', 'director'].includes(req.body.role) ? req.body.role : 'teacher';
-
-            return applicant.save()
-                .then(helpers.assignRank(req.workshop, applicant, applicant.application.role));
-        }).then(applicant => {
-            sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.application.role}</b> for <b>Workshop ${req.workshop.location.name}</b> has been accepted.`);
-
-            try {
-                if (applicant.application.role === 'teacher') {
-                    sendEmail(req.workshop.director.email, 'New Teacher', `<b><a href='http://localhost:3000/users/${req.user.email}'>${applicant.name.full}</a></b>'s application for <b>Teacher</b> to <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> (which you are the Program Director of) has been accepted.`);
-                } else if (applicant.application.role === 'director') {
-                    sendEmail(req.workshop.ambassador.email, 'New Director', `<b><a href='http://localhost:3000/users/${req.user.email}'>${applicant.name.full}</a></b>'s application for <b>Program Director</b> to <b><a href='http://localhost:3000/workshops/${req.workshop._id}'>Workshop ${req.workshop.location.name}</a></b> (which you are the Ambassador of) has been accepted.`);
-                }
-            } catch(err) {}
-
-            req.flash('success', `${req.applicant.name.full} has been verified and assigned as ${req.applicant.application.role}.`)
-            res.redirect('/workshops/' + req.workshop._id + '/applicants');
-
-            const p = path.join(__dirname, '..', '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
-
-            fs.unlinkSync(p, err => {
-                if (err) console.error(err);
-            });
-        })
-        .catch(next);
 });
 
 router.get('/:workshopId/edit', requireAdmin, (req, res, next) => {
