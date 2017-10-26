@@ -69,14 +69,12 @@ block content
                 table.table
                         thead
                             tr
-                                th Start Date
                                 th End Date
                                 th Location
                                 th #{targetUser.name.first}'s Rank
                         tbody
                             each w in inactiveWorkshops
                                 tr
-                                    td= moment(w.startDate).format("MMMM Do YYYY")
                                     td= moment(w.endDate).format("MMMM Do YYYY")
                                     td
                                         a(href="/locations/" + w.location._id)= w.location.name

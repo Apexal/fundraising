@@ -30,7 +30,7 @@ li(class=helpers.activeLink('/users', pagePath), title='View the list of all use
         +navicon('address-book', 'Users')
 
 if user.rank !== 'teacher'
-    li.visible-lg(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
+    li(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
         a(href='/application/applicants') 
             +navicon('user-plus', 'Applicants ')
             if applicantCount > 0
