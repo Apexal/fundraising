@@ -30,7 +30,7 @@ block content
                         th Location
                 tbody
                     each u in users
-                        tr
+                        tr(class=u.admin ? 'danger' : '')
                             td
                                 b= helpers.cap(u.rank)
                             td

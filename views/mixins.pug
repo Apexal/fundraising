@@ -9,7 +9,7 @@ mixin navicon(name, text)
         span.hidden-sm.hidden-md  #{text}
 
 mixin help(label)
-    i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, title=helpers.getHelpInfo(label))
+    i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, data-toggle="tooltip", title=helpers.getHelpInfo(label))
 
 mixin workshop-panel(c)
     .panel.workshop-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-workshop-status=(c.ongoing ? 'ongoing' : 'future'))

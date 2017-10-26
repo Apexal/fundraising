@@ -6,14 +6,14 @@ block content
             .page-header
                 h1 
                     if !workshop.active
-                        b(title="This workshop has ended.")
+                        b(title="This workshop has ended.", data-toggle="tooltip")
                             +icon('lock', 'Inactive ') 
                     span
                         if workshop.ongoing
                             b Ongoing 
                         | Workshop at 
                         b
-                            a.location-name(href="/locations/" + workshop.location._id, title=workshop.location.address)= workshop.location.name
+                            a.location-name(href="/locations/" + workshop.location._id, title=workshop.location.address, data-toggle="tooltip")= workshop.location.name
                     if workshop.ongoing
                         small.right Started 
                             b= moment(workshop.startDate).fromNow()
@@ -25,9 +25,9 @@ block content
         .col-xs-12
             .well.well-sm(class=(!workshop.active ? 'text-muted' : ''))
                 h3.workshop-dates.text-center Running from 
-                    b(title=moment(workshop.startDate).fromNow())= moment(workshop.startDate).format("dddd, MMMM Do YY")
+                    b(title=moment(workshop.startDate).fromNow(), data-toggle="tooltip")= moment(workshop.startDate).format("dddd, MMMM Do YY")
                     |  to 
-                    b(title=moment(workshop.endDate).fromNow())= moment(workshop.endDate).format("dddd, MMMM Do YY")
+                    b(title=moment(workshop.endDate).fromNow(), data-toggle="tooltip")= moment(workshop.endDate).format("dddd, MMMM Do YY")
             hr
             if workshop.info.extra
                 blockquote
@@ -76,9 +76,8 @@ block content
     .row
         .col-xs-12.actions
             hr
-            a.btn.btn-info.right(class=(helpers.workshopRanksFilled(workshop) ? '' : 'disabled'), title=(helpers.workshopRanksFilled(workshop) ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!helpers.workshopRanksFilled(workshop), href="/workshops/" + workshop._id + "/fundraising")= (isInvolved ? "Manage" : "View") + " Fundraising"
-            a.btn.btn-warning.right(class=(helpers.isHigherUpInWorkshop(workshop, user) && workshop.active ? '' : 'disabled'), href="/workshops/" + workshop._id + "/applicants") Review Applicants 
-                span.badge= workshop.applicants.length
+            a.btn.btn-info.right(class=(helpers.workshopRanksFilled(workshop) ? '' : 'disabled'), title=(helpers.workshopRanksFilled(workshop) ? 'View/Manage this workshop\'s finances.' : 'Fundraising is only available once all roles are filled.'), disabled=!helpers.workshopRanksFilled(workshop), href="/workshops/" + workshop._id + "/fundraising", data-toggle="tooltip")= (isInvolved ? "Manage" : "View") + " Fundraising"
+
             if user.admin
                 form(action="/workshops/" + workshop._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this workshop?');")
                     button.btn.btn-danger Delete Workshop
