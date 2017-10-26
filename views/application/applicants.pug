@@ -50,9 +50,16 @@ block content
         .col-xs-12
             .page-header
                 h1 Your Applicants
-    
+            form.form(method="POST", action="/application/invite")
+                .input-group
+                    input.form-control(type="text", name="email", placeholder="Invite people by email to apply under you. Separate emails with commas.", required)
+                    span.input-group-btn
+                        button.btn.btn-default Send Invite(s)
     .row
         .col-xs-12
-
-            each a in applicants
-                +application(a)
+            hr
+            if applicants.length > 0
+                each a in applicants
+                    +application(a)
+            else
+                p.text-center.text-muted There are currently no pending applicants under you.
