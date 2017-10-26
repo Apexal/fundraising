@@ -3,6 +3,11 @@ mixin icon(name, text)
     if text
         |  #{text}
 
+mixin navicon(name, text)
+    i.fa(class="fa-" + name, aria-hidden="true")
+    if text
+        span.hidden-sm.hidden-md  #{text}
+
 mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, title=helpers.getHelpInfo(label))
 
