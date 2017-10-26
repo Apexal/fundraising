@@ -28,8 +28,11 @@ block content
                 if location.link
                     a(href=location.link, target="new")
                         +icon("link", "Location Website")
-            hr
-            p= location.description
+            
+            if location.description
+                hr
+                blockquote
+                    p= location.description
     
     .row
         .col-xs-12
