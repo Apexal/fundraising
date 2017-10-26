@@ -168,7 +168,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                     .populate('location')
                     .exec()
                     .then(workshop => {
-                        workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
+                        if (!workshop.teachers.include(applicant._id)) workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
                         req.flash('info', `Assigned ${applicant.name.first} as a teacher to your workshop at ${workshop.location.name}`);
                         
                         workshop.save();
