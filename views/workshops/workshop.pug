@@ -30,7 +30,8 @@ block content
                     b(title=moment(workshop.endDate).fromNow())= moment(workshop.endDate).format("dddd, MMMM Do YY")
             hr
             if workshop.info.extra
-                p= workshop.info.extra
+                blockquote
+                    p= workshop.info.extra
                 hr
 
     .row
@@ -40,19 +41,25 @@ block content
                     a(data-toggle="tab", href="#team") Team
                 li(role="presentation")
                     a(data-toggle="tab", href="#info") Info
+                li(role="presentation")
+                    a(data-toggle="tab", href="#curriculum") Curriculum
+                
 
     .row.tab-content
-        #team.col-xs-12.col-sm-6.tab-pane.fade.in.active
-            include team
-        #info.col-xs-12.col-sm-6.tab-pane.fade
-            include info
-        .col-xs-12.col-sm-6
+        #team.col-xs-12.col-md-7.tab-pane.fade.in.active
+            include tabs/team
+        #info.col-xs-12.col-md-7.tab-pane.fade
+            include tabs/info
+        #curriculum.col-xs-12.col-md-7.tab-pane.fade
+            include tabs/curriculum
+            
+        .col-xs-12.col-md-5
             br
             if workshop.location.imageUrl
                 a(href="/locations/" + workshop.location.id)
                     img.location-image.big.thumbnail(src=workshop.location.imageUrl, alt='Invalid url for location image!')
             
-            .panel.panel-default
+            .panel.location-image
                 .panel-body.text-center
                     b Contact Name 
                     span= workshop.info.contact.name

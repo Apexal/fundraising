@@ -16,7 +16,7 @@
     },
     "secret":"app secret",
     "slack":{
-        "teamName": "kidstales",
+        "teamName": "XXXXXXX",
         "teamID":"XXXXXXX",
         "commandToken":"XXXXXXXXXXXXXXXXXXX",
         "botToken":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
