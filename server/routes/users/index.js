@@ -54,7 +54,7 @@ router.get('/:email', (req, res, next) => {
 });
 
 router.get('/:email/edit', requireAdmin, (req, res, next) => {
-    if (req.params.email == req.user.email) return res.redirect('/setup');
+    if (req.params.email == req.user.email) return res.redirect('/profile');
 
     req.db.User.findOne({ email: req.params.email, verified: true })
         .exec()
