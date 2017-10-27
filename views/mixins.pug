@@ -11,6 +11,28 @@ mixin navicon(name, text)
 mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, data-toggle="tooltip", title=helpers.getHelpInfo(label))
 
+mixin workshop-modal(w)
+    .modal.workshop-team-modal.fade(tabindex="-1", role="dialog", id="workshop-team-modal-" + w.id)
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                    h4.modal-title Workshop Team at #[b= w.location.name]
+                .modal-body
+                    .row
+                        .col-xs-12.ranks
+                            if w.ambassador
+                                a(href="/users/" + w.ambassador.email)
+                                    img.ambassador(src="/images/" + w.ambassador.profileImageName, title="Ambassador " + w.ambassador.name.full, data-toggle="tooltip")
+                            if w.director
+                                a(href="/users/" + w.director.email)
+                                    img.director(src="/images/" + w.director.profileImageName, title="Program Director " + w.director.name.full, data-toggle="tooltip")
+                            each t in w.teachers
+                                a(href="/users/" + t.email)
+                                    img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
+                .modal-footer
+                    button.btn.btn-danger(type="button", data-dismiss="modal") Close
+                    a.btn.btn-info(href="/workshops/" + w.id) Workshop Overview
+
 mixin workshop-panel(c)
     .panel.workshop-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-workshop-status=(c.ongoing ? 'ongoing' : 'future'))
         .panel-heading
@@ -23,19 +45,17 @@ mixin workshop-panel(c)
                     b Ongoing at 
                 | #{c.location.name}
         .panel-body
-            if c.ready
-                .rank-summary.clearfix
-                    .ambassador.col-xs-12.col-sm-5.col-md-12
-                        b Ambassador - 
-                        a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
-                    .director.col-xs-12.col-sm-5.col-md-12
-                        b Program Director - 
-                        a(href='/users/' + c.director.email)= c.director.name.full
-                    .teachers.col-xs-12.col-sm-2.col-md-12
-                        b Teachers - 
-                        span #{c.teachers.length}
-            else
-                .alert.alert-warning #[b Missing Ranks] Join now on details page.
+            .rank-summary.clearfix
+                .ambassador.col-xs-12.col-sm-5.col-md-12
+                    b Ambassador - 
+                    a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
+                .director.col-xs-12.col-sm-5.col-md-12
+                    b Program Director - 
+                    a(href='/users/' + c.director.email)= c.director.name.full
+                .teachers.col-xs-12.col-sm-2.col-md-12
+                    b Teachers - 
+                    span #{c.teachers.length}
+
             
             //- if c.info
             //-     .well.well-sm

@@ -1,0 +1,26 @@
+table.table
+    thead
+        tr
+            th Location
+            th Start Date
+            th End Date
+            th Director
+    tbody
+        each w in activeWorkshops
+            +workshop-modal(w)
+            tr
+                td
+                    b
+                        if w.active
+                            a(href="/workshops/" + w.id)= w.location.name
+                        else
+                            +icon("lock", w.location.name)
+                td= moment(w.startDate).format("ddd, MMM Do YY")
+                td= moment(w.endDate).format("ddd, MMM Do YY")
+                td
+                    if w.director
+                        a(href="/users/" + w.director.email)= w.director.name.full
+                    else
+                        span.text-muted Not Chosen Yet
+                td
+                    button.btn.btn-default(role="button", data-toggle="modal" data-target="#workshop-team-modal-" + w.id) Team

@@ -171,4 +171,10 @@ a.location-name {
 .fundraising-well h3 {
   margin: 10px; }
 
+/* MODAL */
+.workshop-team-modal .ranks {
+  text-align: center; }
+.workshop-team-modal img {
+  height: 100px; }
+
 /*# sourceMappingURL=style.css.map */
