@@ -27,14 +27,14 @@ block content
                         tr
                             th Name
                             th Address
-                            th Date Added
+                            th.hidden-xs Date Added
                     tbody
                         each l in locations
                             tr
                                 td
                                     a(href="/locations/" + l.id)= l.name
                                 td= l.address
-                                td= moment(l.dateAdded).fromNow()
+                                td.hidden-xs= moment(l.dateAdded).fromNow()
             else
                 p.text-muted.text-center
                     if search
