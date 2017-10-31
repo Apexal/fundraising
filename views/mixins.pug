@@ -12,11 +12,16 @@ mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, data-toggle="tooltip", title=helpers.getHelpInfo(label))
 
 mixin workshop-modal(w)
-    .modal.workshop-team-modal.fade(tabindex="-1", role="dialog", id="workshop-team-modal-" + w.id)
+    .modal.workshop-modal.fade(tabindex="-1", role="dialog", id="workshop-modal-" + w.id)
         .modal-dialog(role="document")
             .modal-content
                 .modal-header
-                    h4.modal-title Workshop Team at #[b= w.location.name]
+                    h4.modal-title 
+                        if !w.active
+                            b Past 
+                        | Workshop at 
+                        a(href='/locations/' + w.location.id)
+                            b= w.location.name
                 .modal-body
                     .row
                         .col-xs-12.ranks
@@ -26,12 +31,14 @@ mixin workshop-modal(w)
                             if w.director
                                 a(href="/users/" + w.director.email)
                                     img.director(src="/images/" + w.director.profileImageName, title="Program Director " + w.director.name.full, data-toggle="tooltip")
+                            br
                             each t in w.teachers
                                 a(href="/users/" + t.email)
                                     img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
                 .modal-footer
                     button.btn.btn-danger(type="button", data-dismiss="modal") Close
-                    a.btn.btn-info(href="/workshops/" + w.id) Workshop Overview
+                    if w.active
+                        a.btn.btn-info(href="/workshops/" + w.id) Workshop Overview
 
 mixin workshop-panel(c)
     .panel.workshop-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-workshop-status=(c.ongoing ? 'ongoing' : 'future'))

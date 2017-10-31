@@ -78,11 +78,15 @@
 }
 
 /* MODAL */
-.workshop-team-modal {
+.workshop-modal-toggle { cursor: pointer; }
+.workshop-modal {
     .ranks {
         text-align: center;
     }
     img {
-        height: 100px;
+        height: 70px;
+    }
+    .modal-title b {
+        color: initial;
     }
 }
