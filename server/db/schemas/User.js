@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
 const userSchema = new Schema({
+    region: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true },
     slackId: { type: String },
     profileImageName: { type: String, default: 'default.png' },
     email: { type: String, trim: true, unique: true, required: true, maxlength: 70 },

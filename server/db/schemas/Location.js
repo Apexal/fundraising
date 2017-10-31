@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
 const locationSchema = new Schema({
+    region: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true },
     name: { type: String, trim: true, unique: true, required: true, maxlength: 30 },
     address: { type: String, trim: true, unique: true, required: true, maxlength: 50 },
     link: { type: String, trim: true, unique: true, maxlength: 50 },
