@@ -26,29 +26,7 @@ block content
             h3 Search Results
         .col-xs-12
             if workshops.length > 0
-                table.table
-                    thead
-                        tr
-                            th Location
-                            th Start Date
-                            th End Date
-                            th Director
-                    tbody
-                        each w in workshops
-                            tr
-                                td
-                                    b
-                                        if w.active
-                                            a(href="/workshops/" + w.id)= w.location.name
-                                        else
-                                            +icon("lock", w.location.name)
-                                td= moment(w.startDate).format("ddd, MMM Do YY")
-                                td= moment(w.endDate).format("ddd, MMM Do YY")
-                                td
-                                    if w.director
-                                        a(href="/users/" + w.director.email)= w.director.name.full
-                                    else
-                                        span.text-muted Not Chosen Yet
+                include /workshops/table
             else
                 p.text-muted.text-center
                     if search

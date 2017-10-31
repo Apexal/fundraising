@@ -6,21 +6,21 @@ table.table
             th End Date
             th Director
     tbody
-        each w in activeWorkshops
+        each w in workshops
             +workshop-modal(w)
             tr
                 td
-                    b
+                    b.workshop-modal-toggle(data-toggle="modal" data-target="#workshop-modal-" + w.id)
                         if w.active
-                            a(href="/workshops/" + w.id)= w.location.name
+                            a(href='#')= w.location.name
                         else
                             +icon("lock", w.location.name)
-                td= moment(w.startDate).format("ddd, MMM Do YY")
-                td= moment(w.endDate).format("ddd, MMM Do YY")
+                td
+                    span(title=moment(w.startDate).fromNow(), data-toggle="tooltip")= moment(w.startDate).format("ddd, MMM Do YY")
+                td
+                    span(title=moment(w.endDate).fromNow(), data-toggle="tooltip")= moment(w.endDate).format("ddd, MMM Do YY")
                 td
                     if w.director
                         a(href="/users/" + w.director.email)= w.director.name.full
                     else
                         span.text-muted Not Chosen Yet
-                td
-                    button.btn.btn-default(role="button", data-toggle="modal" data-target="#workshop-team-modal-" + w.id) Team

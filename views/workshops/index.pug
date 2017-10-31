@@ -29,6 +29,7 @@ block content
             p.text-muted.text-center= helpers.getHelpInfo('active-workshops')
 
             if activeWorkshops.length > 0
+                - var workshops = activeWorkshops
                 include /workshops/table
             else
                 p.text-muted.text-center There are currently no #[b ongoing workshops].

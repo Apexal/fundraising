@@ -172,9 +172,14 @@ a.location-name {
   margin: 10px; }
 
 /* MODAL */
-.workshop-team-modal .ranks {
+.workshop-modal-toggle {
+  cursor: pointer; }
+
+.workshop-modal .ranks {
   text-align: center; }
-.workshop-team-modal img {
-  height: 100px; }
+.workshop-modal img {
+  height: 70px; }
+.workshop-modal .modal-title b {
+  color: initial; }
 
 /*# sourceMappingURL=style.css.map */
