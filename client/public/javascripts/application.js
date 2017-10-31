@@ -15,10 +15,6 @@ $(function () {
             rankLabel.text('Ambassador');
             directorsSelect.hide();
             ambassadorsSelect.show();
-        } else {
-            rankLabel.hide();
-            directorsSelect.hide();
-            ambassadorsSelect.hide();
         }
     });
 });

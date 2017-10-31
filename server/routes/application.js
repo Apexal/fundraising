@@ -96,13 +96,13 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
     if (req.file) user.application.writingFileName = req.file.filename;
 
-    if (['teacher', 'director', 'ambassador'].includes(rank)) {
+    if (['teacher', 'director'].includes(rank)) {
         user.application.rank = rank;
     } else {
         return next(new Error('Invalid rank!'));
     }
 
-    if (['teacher', 'director'].includes(rank)) user.application.superior = superiorId;
+    user.application.superior = superiorId;
 
     req.db.User.findOneAndUpdate({ email }, user, { upsert: true, new: true, setDefaultsOnInsert: true })
         .exec()
