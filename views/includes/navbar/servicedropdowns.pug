@@ -10,12 +10,10 @@ if user.admin
             li
                 a(href='/administration') Overview
             li.divider(role='separator')
+            li(class=helpers.activeLink('/regions', pagePath), title='Manage major regions and ambassadors.')
+                a(href='/regions') Regions
             li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
                 a(href='/administration/fundraising') Overall Fundraising
-            li(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
-                a(href='/application/applicants') Applicants 
-                    if applicantCount > 0
-                        span.badge= applicantCount
 
 li(class=helpers.activeLink('/workshop', pagePath), title='View the list of all workshops active and inactive and see details.')
     a(href='/workshops')

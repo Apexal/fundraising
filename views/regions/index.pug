@@ -1,0 +1,27 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .jumbotron.clearfix
+                h1 Regions
+                p Lorem ipsum doror...
+                a.btn.btn-primary(href="/regions/new") New Region
+
+    .row
+        .col-xs-12
+            table.table
+                thead
+                    tr
+                        th Name
+                        th Ambassador
+                tbody
+                    each r in regions
+                        tr
+                            td
+                                a(href="/regions/" + r.id)= r.name
+                            td
+                                if r.ambassador
+                                    img(src="/images/" + r.ambassador.profileImageName)
+                                else
+                                    span.text-muted No Ambassador
