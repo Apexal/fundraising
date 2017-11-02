@@ -35,6 +35,7 @@ router.get('/list', (req, res, next) => {
 
     const s = req.query.search;
     const query = {
+        region: req.user.region.id,
         $or: [
             { 'contact.name': { $regex: s, $options: 'i' } }
         ]
@@ -56,7 +57,7 @@ router.get('/list', (req, res, next) => {
 router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
 
-    req.db.Location.find()
+    req.db.Location.find({region: req.user.region.id})
         .exec()
         .then(locations => {
             res.locals.locations = locations;
