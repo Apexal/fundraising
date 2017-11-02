@@ -86,18 +86,22 @@ block content
 
         #comments.tab-pane.fade
             .col-xs-12
-                form.form(method="POST", action="/locations/" + location.id + "/comment")
-                    textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
-                    button.btn.btn-success Add Comment
+                .panel.panel-default
+                    .panel-body
+                        form.form(method="POST", action="/locations/" + location.id + "/comment")
+                            textarea.form-control(name="comment", placeholder="Add comment about the location.", required)
+                            br
+                            button.btn.btn-success.right Add Comment
             .col-xs-12
                 .list-group
                     each c in location.comments
                         +comment(c)
 
-    if user.admin
-        .row
-            .col-xs-12
-                hr
+    .row
+        .col-xs-12
+            hr
+            a.btn.btn-default.left(href="/locations") All Locations 
+            if user.admin
                 form(action="/locations/" + location._id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this location (AND ALL ASSOCIATED CAMPS)?');")
                     button.btn.btn-danger Delete Location
                     a.btn.btn-primary(href="/locations/" + location._id + "/edit") Edit Location
