@@ -10,7 +10,7 @@ table.table
             +workshop-modal(w)
             tr
                 td
-                    b.workshop-modal-toggle(data-toggle="modal" data-target="#workshop-modal-" + w.id)
+                    b.workshop-modal-toggle(data-toggle="modal", data-target="#workshop-modal-" + w.id)
                         if w.active
                             a(href='#')= w.location.name
                         else

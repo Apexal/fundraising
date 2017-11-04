@@ -46,7 +46,12 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.methods.getWorkshops = function() {
-    return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }]).populate('location').exec();   
+    return this.model('Workshop').find({ active: true }).or([{ ambassador: this._id }, { director: this._id}, { teachers: this._id }])
+        .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
+        .exec();   
 }
 
 userSchema.virtual('rankName').get(function() { 

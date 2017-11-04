@@ -46,20 +46,19 @@ block content
                 table.table
                         thead
                             tr
+                                th Location
                                 th Start Date
                                 th End Date
-                                th Location
                                 th #{targetUser.name.first}'s Rank
                         tbody
                             each w in activeWorkshops
+                                +workshop-modal(w)
                                 tr
+                                    td
+                                        a(href="#", data-toggle="modal", data-target="#workshop-modal-" + w.id)= w.location.name
                                     td= moment(w.startDate).format("MMMM Do YYYY")
                                     td= moment(w.endDate).format("MMMM Do YYYY")
-                                    td
-                                        a(href="/locations/" + w.location._id)= w.location.name
                                     td.rank= helpers.getRankFromWorkshop(w, targetUser)
-                                    td
-                                        a.btn.btn-default(href="/workshops/" + w._id) Workshop Details
             else
                 p.text-center.text-muted #[b= targetUser.name.first] is currently not involved in any workshops.
 
@@ -69,15 +68,16 @@ block content
                 table.table
                         thead
                             tr
-                                th End Date
                                 th Location
+                                th End Date
                                 th #{targetUser.name.first}'s Rank
                         tbody
                             each w in inactiveWorkshops
+                                +workshop-modal(w)
                                 tr
-                                    td= moment(w.endDate).format("MMMM Do YYYY")
                                     td
-                                        a(href="/locations/" + w.location._id)= w.location.name
+                                        a(href="#", data-toggle="modal", data-target="#workshop-modal-" + w.id)= w.location.name
+                                    td= moment(w.endDate).format("MMMM Do YYYY")
                                     td.rank= helpers.getRankFromWorkshop(w, targetUser)
             else
                 p.text-center.text-muted #[b= targetUser.name.first] has not yet been involved in any finished workshops.
