@@ -14,6 +14,7 @@ router.get('/', (req, res, next) => {
 
     const s = req.query.search;
     const query = {
+        region: req.user.region,
         $or: [
             { name: { $regex: s, $options: 'i' } },
             { location: { $regex: s, $options: 'i' } },
@@ -21,7 +22,7 @@ router.get('/', (req, res, next) => {
         ]
     };
 
-    req.db.Location.paginate((s ? query : {}), { page, limit: 10, sort: { dateAdded: -1 } })
+    req.db.Location.paginate((s ? query : {region: req.user.region}), { page, limit: 10, sort: { dateAdded: -1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
@@ -49,6 +50,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     const imageUrl = req.body.imageUrl; // Optional
 
     const newLocation = new req.db.Location({
+        region: req.user.region, 
         name,
         address,
         description,
@@ -71,6 +73,8 @@ router.get('/:locationId', (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
+            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+
             res.locals.location = location;
             
             res.locals.pageTitle = `Location ${location.name}`;
@@ -90,7 +94,7 @@ router.get('/:locationId', (req, res, next) => {
 router.post('/:locationId/comment', (req, res, next) => {
     const comment = { author: req.user._id, content: req.body.comment, dateAdded: new Date() };
 
-    req.db.Location.update({ _id: req.params.locationId }, { $push: { comments: comment } })
+    req.db.Location.update({ _id: req.params.locationId, region: req.user.region }, { $push: { comments: comment } })
         .exec()
         .then(location => {
             req.flash('success', 'Added comment.');
@@ -104,7 +108,8 @@ router.get('/:locationId/edit', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
-            
+            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+
             res.locals.location = location;
             res.locals.pageTitle = `Edit Location ${location.name}`;
             res.render('locations/edit');
@@ -117,7 +122,8 @@ router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');    
-            
+            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+
             location.name = req.body.name;
             location.address = req.body.address;
             location.description = req.body.description;
@@ -137,7 +143,8 @@ router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
-            
+            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+
             return location.remove();
         })
         .then(location => {
