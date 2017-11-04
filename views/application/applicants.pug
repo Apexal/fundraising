@@ -39,7 +39,7 @@ mixin application(a)
 
                     .form-group
                         label(for="writing-sample") Sample of Writing 
-                        a(href='/writingsamples/' + a.application.writingFileName, target='new')
+                        a(href='/writingsamples/' + a.application.writingFileName, target="_blank")
                             +icon('link', 'Link')
                 button.btn.btn-success Accept
                 button.btn.btn-danger.right(type="button") Deny
