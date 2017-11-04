@@ -10,11 +10,12 @@ module.exports = User => {
     // Get user by ID
     passport.deserializeUser((id, done) => {
         User.findById(id)
-        .exec()
-        .then(user => {
-            done(null, user);
-        })
-        .catch(done);
+            .populate('region')
+            .exec()
+            .then(user => {
+                done(null, user);
+            })
+            .catch(done);
     });
 
     passport.use(new SlackStrategy(config.get('slack'),
@@ -28,6 +29,7 @@ module.exports = User => {
 
             // Find user
             User.findOne({ email, verified: true })
+                .populate('region')
                 .exec()
                 .then(user => {
                     if (!user) throw new Error('You must apply first!');
@@ -36,6 +38,7 @@ module.exports = User => {
                         // First login
                         sendEmail(user.email, 'Welcome to Kids Tales', 'newUser', { firstName: user.name.first });
                         user.slackId = profile.id;
+                        user.region = user.region._id;
 
                         user.save()
                             .then(u => {

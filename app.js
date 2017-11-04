@@ -60,9 +60,10 @@ app.use((req, res, next) => {
     req.db = mongodb;
     
     if (req.user) res.locals.user = req.user; // To access in views
+    
 
     res.locals.env = config.util.getEnv('NODE_ENV'); // To let views know if in dev or prod
-
+    
     // For convenience
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.applicantCount = req.session.applicantCount;

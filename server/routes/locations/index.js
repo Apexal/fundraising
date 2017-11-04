@@ -73,7 +73,7 @@ router.get('/:locationId', (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
-            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+            if (!location.region.equals(req.user.region._id)) throw new Error('Location is not in your region.');
 
             res.locals.location = location;
             
@@ -108,7 +108,7 @@ router.get('/:locationId/edit', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
-            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+            if (!location.region.equals(req.user.region._id)) throw new Error('Location is not in your region.');
 
             res.locals.location = location;
             res.locals.pageTitle = `Edit Location ${location.name}`;
@@ -122,7 +122,7 @@ router.post('/:locationId/edit', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');    
-            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+            if (!location.region.equals(req.user.region._id)) throw new Error('Location is not in your region.');
 
             location.name = req.body.name;
             location.address = req.body.address;
@@ -143,7 +143,7 @@ router.post('/:locationId/delete', requireAdmin, (req, res, next) => {
         .exec()
         .then(location => {
             if (!location) throw new Error('Location does not exist!');
-            if (!location.region.equals(req.user.region)) throw new Error('Location is not in your region.');
+            if (!location.region.equals(req.user.region._id)) throw new Error('Location is not in your region.');
 
             return location.remove();
         })
