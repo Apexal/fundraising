@@ -7,7 +7,11 @@ $(function () {
 
     regionSelect.on('change', function() {
         const regionId = this.value;
-        $('#after-region').show();
+        if (regionId == "none") {
+            $('#after-region').hide();
+        } else {
+            $('#after-region').show();
+        }
 
         // Un-select both
         directorsSelect.val([]);

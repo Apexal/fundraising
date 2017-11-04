@@ -20,7 +20,7 @@ block content
                 .form-group
                     label(for="region") Your Region
                     select.form-control#region-select(name="region", required)
-                        option Choose One
+                        option(value="none") Choose One
                         each r in regions
                             option(value=r.id)= r.name
 
