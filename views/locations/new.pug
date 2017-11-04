@@ -5,9 +5,11 @@ block content
         .col-xs-12
             .page-header
                 h1 New Location
+                    if forNewWorkshop
+                        small  for New Workshop
     .row
         .col-xs-12
-            form.from.new-location-form(action="/locations/new", method="POST")
+            form.from.new-location-form(action="/locations/new" + (forNewWorkshop ? '?from=new_workshop' : ''), method="POST")
                 .form-group
                     label(for="new-location-name") Location Name
                     input.form-control#new-location-name(name="name", type="text", maxlength="75", required)

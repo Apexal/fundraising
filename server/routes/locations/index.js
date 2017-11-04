@@ -38,6 +38,8 @@ router.get('/', (req, res, next) => {
 /* Show page with form for adding a new location */
 router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'New Location';
+    res.locals.forNewWorkshop = (req.query.from == 'new_workshop');
+
     res.render('locations/new');
 });
 
@@ -61,6 +63,8 @@ router.post('/new', requireHigherUp, (req, res, next) => {
 
     newLocation.save()
         .then(l => {
+            if (req.query.from == 'new_workshop') return res.redirect('/workshops/new?locationId=' + l.id);
+
             req.flash(`New location ${l.name} added.`);
             res.redirect('/locations');
         })

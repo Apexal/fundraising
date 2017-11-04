@@ -56,6 +56,7 @@ router.get('/list', (req, res, next) => {
 
 router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
+    res.locals.fromNewLocation = req.query.locationId;
 
     req.db.Location.find({region: req.user.region.id})
         .exec()

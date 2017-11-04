@@ -33,7 +33,7 @@ locationSchema.pre('remove', function(next) {
     console.log('removing workshops...');
     
     // Delete one at a time so Fund data is also deleted
-    this.findWorkshops()
+    this.getWorkshops()
         .then(workshops => {
             workshops.forEach(w => w.remove());
             next();
