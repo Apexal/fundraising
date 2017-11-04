@@ -21,7 +21,6 @@ block content
             hr
     .row
         .col-xs-12.col-sm-6.col-md-5
-            
             .panel.panel-info.admin-updates
                 .panel-heading
                     h3.panel-title Admin Updates
@@ -37,10 +36,6 @@ block content
                                 a.btn.btn-primary.right Past Updates
                     else
                         p.text-center.text-muted There have been no updates from admins.
-
-    if user.rank == 'teacher'
-        span Coming soon...
-    else if user.rank == 'director'
-        span Coming soon...
-    else if user.rank == 'ambassador'
-        span Coming soon...
+        .col-xs-12.col-sm-6.col-md-7
+            #homepage-calendar
+            script(src="/javascripts/calendar.js")
