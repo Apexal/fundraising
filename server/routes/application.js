@@ -48,6 +48,10 @@ router.get('/', requireNotLogin, (req, res, next) => {
             res.locals.directors = superiors.filter(s => s.rank == 'director');
             res.locals.ambassadors = superiors.filter(s => s.rank == 'ambassador');
 
+            return req.db.Region.find();
+        })
+        .then(regions => {
+            res.locals.regions = regions;
             return res.render('application/application');
         })
         .catch(next);
@@ -56,6 +60,8 @@ router.get('/', requireNotLogin, (req, res, next) => {
 /* Save application data and alert higher ups */
 router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, next) => {
     // Get form data
+    const regionId = req.body.region;
+
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -72,6 +78,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
 
     // Get/create user
     const user = {
+        region: regionId,
         email,
         age,
         grade,
