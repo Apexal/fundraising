@@ -4,6 +4,7 @@ const moment = require('moment');
 const mongoosePaginate = require('mongoose-paginate');
 
 const workshopSchema = new Schema({
+    region: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true },
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },

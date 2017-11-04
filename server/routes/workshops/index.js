@@ -12,7 +12,7 @@ router.use(requireLogin);
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Workshop Overview';
 
-    req.db.Workshop.find({ active: true })
+    req.db.Workshop.find({ active: true, region: req.user.region })
         .populate('location')
         .populate('ambassador')
         .populate('director')
@@ -35,13 +35,13 @@ router.get('/list', (req, res, next) => {
 
     const s = req.query.search;
     const query = {
-        region: req.user.region.id,
+        region: req.user.region,
         $or: [
             { 'contact.name': { $regex: s, $options: 'i' } }
         ]
     };
 
-    req.db.Workshop.paginate((s ? query : {}), { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { dateAdded: -1 } })
+    req.db.Workshop.paginate((s ? query : {region: req.user.region}), { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { dateAdded: -1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
@@ -92,6 +92,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
     let data = {
+        region: req.user.region._id,
         location: locationId,
         startDate: startDate.toDate(),
         endDate: endDate.toDate(),
@@ -115,10 +116,12 @@ router.post('/new', requireHigherUp, (req, res, next) => {
 
     const newWorkshop = new req.db.Workshop(data);
 
-    newWorkshop.save().then(workshop => {
-        req.flash('success', `Scheduled new workshop on ${startDate.format('dddd, MMMM Do YYYY')}.`);
-        res.redirect(`/workshops/${workshop._id}`);
-    }).catch(next);
+    newWorkshop
+        .save()
+        .then(workshop => {
+            req.flash('success', `Scheduled new workshop on ${startDate.format('dddd, MMMM Do YYYY')}.`);
+            res.redirect(`/workshops/${workshop._id}`);
+        }).catch(next);
 });
 
 router.all(['/:workshopId', '/:workshopId/*'], (req, res, next) => {
@@ -130,6 +133,8 @@ router.all(['/:workshopId', '/:workshopId/*'], (req, res, next) => {
         .exec()
         .then(workshop => {
             if (!workshop) throw new Error('Failed to find workshop. It may not exist.');
+            if (!workshop.region.equals(req.user.region._id)) throw new Error('Workshop is not in your region.');
+
             req.workshop = workshop;
 
             res.locals.involvedRank = helpers.getRankFromWorkshop(workshop, req.user);
