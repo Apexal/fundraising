@@ -2,7 +2,7 @@ table.table
     thead
         tr
             th Location
-            th Start Date
+            th.hidden-xs Start Date
             th End Date
             th Director
     tbody
@@ -15,7 +15,7 @@ table.table
                             a(href='#')= w.location.name
                         else
                             +icon("lock", w.location.name)
-                td
+                td.hidden-xs
                     span(title=moment(w.startDate).fromNow(), data-toggle="tooltip")= moment(w.startDate).format("ddd, MMM Do YY")
                 td
                     span(title=moment(w.endDate).fromNow(), data-toggle="tooltip")= moment(w.endDate).format("ddd, MMM Do YY")
