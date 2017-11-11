@@ -54,8 +54,28 @@ block content
         br
         #active-workshops.tab-pane.fade.in.active.col-xs-12
             if activeWorkshops.length > 0
-                each c in activeWorkshops
-                    +workshop-panel(c)
+                table.table
+                    thead
+                        tr
+                            th Start Date
+                            th End Date
+                            th Ambassador
+                            th Program Director
+                    tbody
+                        each w in activeWorkshops
+                            tr
+                                td= moment(w.startDate).format("dddd, MMMM Do YY")
+                                td= moment(w.endDate).format("dddd, MMMM Do YY")
+                                td
+                                    if w.ambassador
+                                        a(href="/users/" + w.ambassador.email)= w.ambassador.name.full
+                                    else
+                                        span.text-muted None
+                                td
+                                    if w.director
+                                        a(href="/users/" + w.director.email)= w.director.name.full
+                                    else
+                                        span.text-muted None
             else
                 p.text-muted.text-center There are currently no #[b active workshops].
 
@@ -73,12 +93,12 @@ block content
                                 td= moment(c.endDate).format("dddd, MMMM Do YY")
                                 td
                                     if c.ambassador
-                                        a(href="/users/" + c.ambassador._id)= c.ambassador.name.full
+                                        a(href="/users/" + c.ambassador.email)= c.ambassador.name.full
                                     else
                                         span.text-muted None
                                 td
                                     if c.director
-                                        a(href="/users/" + c.director._id)= c.director.name.full
+                                        a(href="/users/" + c.director.email)= c.director.name.full
                                     else
                                         span.text-muted None
             else

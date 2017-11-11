@@ -49,34 +49,3 @@ mixin workshop-modal(w)
                     button.btn.btn-danger(type="button", data-dismiss="modal") Close
                     if w.active
                         a.btn.btn-info(href="/workshops/" + w.id) Workshop Overview
-
-mixin workshop-panel(c)
-    .panel.workshop-panel(class=(c.ongoing ? 'panel-success' : 'panel-primary'), data-workshop-status=(c.ongoing ? 'ongoing' : 'future'))
-        .panel-heading
-            if c.ongoing
-                span.text-muted.right Ends #{moment(c.endDate).fromNow()}
-            else
-                span.text-muted.right Starts #{moment(c.startDate).fromNow()}
-            h1.panel-title(title=c.location.address)
-                if c.ongoing
-                    b Ongoing at 
-                | #{c.location.name}
-        .panel-body
-            .rank-summary.clearfix
-                .ambassador.col-xs-12.col-sm-5.col-md-12
-                    b Ambassador - 
-                    a(href='/users/' + c.ambassador.email)= c.ambassador.name.full
-                .director.col-xs-12.col-sm-5.col-md-12
-                    b Program Director - 
-                    a(href='/users/' + c.director.email)= c.director.name.full
-                .teachers.col-xs-12.col-sm-2.col-md-12
-                    b Teachers - 
-                    span #{c.teachers.length}
-
-            
-            //- if c.info
-            //-     .well.well-sm
-            //-         b Workshop Info
-            //-         p= helpers.limit(c.info, 50)
-        
-            a.btn.right(class=(c.ongoing ? 'btn-success' : 'btn-primary'), href="/workshops/" + c._id) Workshop Overview
