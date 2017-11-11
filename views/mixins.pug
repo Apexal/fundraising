@@ -24,17 +24,27 @@ mixin workshop-modal(w)
                             b= w.location.name
                 .modal-body
                     .row
-                        .col-xs-12.ranks
-                            if w.ambassador
-                                a(href="/users/" + w.ambassador.email)
-                                    img.ambassador(src="/images/" + w.ambassador.profileImageName, title="Ambassador " + w.ambassador.name.full, data-toggle="tooltip")
-                            if w.director
-                                a(href="/users/" + w.director.email)
-                                    img.director(src="/images/" + w.director.profileImageName, title="Program Director " + w.director.name.full, data-toggle="tooltip")
-                            br
-                            each t in w.teachers
-                                a(href="/users/" + t.email)
-                                    img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
+                        .col-xs-12
+                            .well.well-sm(class=(!w.active ? 'text-muted' : ''))
+                                h5.workshop-dates.text-center #{w.active ? 'Running' : 'Ran'} from 
+                                    b(title=moment(w.startDate).fromNow(), data-toggle="tooltip")= moment(w.startDate).format("dddd, MMMM Do YY")
+                                    |  to 
+                                    b(title=moment(w.endDate).fromNow(), data-toggle="tooltip")= moment(w.endDate).format("dddd, MMMM Do YY")
+                            .ranks
+                                if w.ambassador
+                                    a(href="/users/" + w.ambassador.email)
+                                        img.ambassador(src="/images/" + w.ambassador.profileImageName, title="Ambassador " + w.ambassador.name.full, data-toggle="tooltip")
+                                if w.director
+                                    a(href="/users/" + w.director.email)
+                                        img.director(src="/images/" + w.director.profileImageName, title="Program Director " + w.director.name.full, data-toggle="tooltip")
+                                br
+                                each t in w.teachers
+                                    a(href="/users/" + t.email)
+                                        img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
+                    .row
+                        .col-xs-12
+                            hr
+                            
                 .modal-footer
                     button.btn.btn-danger(type="button", data-dismiss="modal") Close
                     if w.active
