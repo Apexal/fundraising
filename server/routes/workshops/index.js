@@ -215,6 +215,19 @@ router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
         .catch(next);
 });
 
+router.post('/:workshopId/archive', (req, res, next) => {
+    if (!res.locals.isWorkshopHigherUp) return next(new Error('You must be a higher up of the workshop to archive it.'));
+
+    req.workshop.active = false;
+
+    req.workshop.save()
+        .then(workshop => {
+            req.flash('success', `Successfully archived workshop.`);
+            res.redirect('/workshops/' + workshop._id);
+        })
+        .catch(next);
+});
+
 router.get('/:workshopId/fundraising', (req, res, next) => {
     if (!helpers.workshopRanksFilled(req.workshop)) {
         req.flash('error', 'Once a workshop\'s ranks are filled fundraising will become available.');
