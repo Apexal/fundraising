@@ -58,9 +58,10 @@ app.use((req, res, next) => {
     res.locals.pageTitle = app.locals.defaultTitle; // Default page title is passed down
     res.locals.pagePath = req.path; // To access in views and helpers
     req.db = mongodb;
-    
+
+    req.isAPI = req.path.startsWith('/api');
+
     if (req.user) res.locals.user = req.user; // To access in views
-    
 
     res.locals.env = config.util.getEnv('NODE_ENV'); // To let views know if in dev or prod
     
@@ -157,17 +158,20 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.error(err);
 
+    res.status(err.status || 500);
+
     if (req.app.get('env') === 'development') {
         // set locals, only providing error in development
         res.locals.message = err.message;
         res.locals.error = err;
 
         // render the error page
-        res.status(err.status || 500);
+        if (req.isAPI) return res.json({error: err, message: err.message});
         res.render('error');
     } else {
         req.flash('error', 'An error occurred! Please try again later.');
-        res.status(err.status || 500);
+
+        if (req.isAPI) return res.json({error: false, message: 'An error occured! Please try again later.'});
         res.redirect('/');
     }
 });
