@@ -181,6 +181,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                         workshop.save();
                     })
                     .catch(err => {
+                        console.log('No workshop found for ' + applicant.name.full);
                         // Could not find workshop to add applicant to
                     });
                     return applicant.save();
