@@ -1,7 +1,12 @@
 // All helper methods
-var helpInfo = require('./helpInfo.js');
-var h = {}
+const helpInfo = require('./helpInfo.js');
+const mongodb = require('../db');
 
+let h = {}
+
+h.logActivity = (user, action, description) => {
+    return new mongodb.Activity({user, action, description, dateAdded: new Date()}).save();
+}
 
 h.activeLink = (href, current) => {
     current = (current == '/home' ? '/' : current);

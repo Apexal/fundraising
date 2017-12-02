@@ -46,7 +46,7 @@ module.exports = User => {
                             });
                     }
                     console.log(`Logging in ${email}...`);
-
+                    log(user, 'login', `${user.name.full} (${user.email}) logged in with Slack.`);
                     return done(null, user);
                 })
                 .catch(err => {

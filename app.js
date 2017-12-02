@@ -49,6 +49,7 @@ sendEmail = require('./server/modules/email.js');
 
 // Make helpers available in views
 app.locals.helpers = helpers;
+log = helpers.logActivity
 
 // ALL REQUESTS PASS THROUGH HERE FIRST
 app.locals.moment = moment;
