@@ -247,7 +247,7 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
             let total = 0;
             fundsList.forEach(f => total += f.amount);
             res.locals.total = total;
-                        
+
             // For charts
             res.locals.fundsTypes = {};
             ['Cash', 'Check', 'Other'].forEach(t => {
