@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const fs = require('fs');
 const path = require('path');
-const slack = require('../../modules/slack');
+const slack = require('../modules/slack');
 const config = require('config');
 
 router.use(requireLogin);
