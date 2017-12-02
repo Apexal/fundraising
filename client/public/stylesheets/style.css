@@ -53,8 +53,9 @@ textarea {
     color: white;
     padding: 10px; }
 
-.admin-updates img.media-object {
-  width: 70px; }
+.admin-activities .action {
+  text-transform: uppercase;
+  margin-right: 5px; }
 
 .navbar-top .profilepicture > img {
   height: 50px; }

@@ -20,20 +20,17 @@ block content
                     +icon('github', 'Website Issues')
             hr
     .row
-        .col-xs-12.col-sm-6.col-md-5
-            .panel.panel-info.admin-updates
-                .panel-heading
-                    h3.panel-title Admin Updates
-                .panel-body
-                    if latestUpdate
-                        .media
-                            .media-left
-                                a(href="/users/" + latestUpdate.author.email)
-                                    img.media-object(src="/images/" + latestUpdate.author.profileImageName)
-                            .media-body
-                                h4.media-heading= latestUpdate.author.name.full
-                                | #{latestUpdate.content}
-                                a.btn.btn-primary.right Past Updates
+        if admin
+            .col-xs-12.col-sm-6.col-md-5
+                .panel.panel-info.admin-activities
+                    .panel-heading
+                        h3.panel-title Recent User Actions
+                    if recentActivities.length > 0
+                        ul.list-group
+                            each a in recentActivities
+                                li.list-group-item(title=moment(a.dateAdded).format("dddd, MMMM Do YYYY, h:mm a"))
+                                    b.action= a.action
+                                    span.description= a.description
                     else
                         p.text-center.text-muted There have been no updates from admins.
         .col-xs-12.col-sm-6.col-md-7

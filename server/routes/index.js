@@ -34,12 +34,11 @@ router.get('/', (req, res, next) => {
     // Not logged in users get shown the info page
     if (!req.isAuthenticated()) return res.render('index/info');
 
-    req.db.Update.findOne()
-        .populate('author')
+    req.db.Activity.find()
+        .limit(10)
         .exec()
-        .then(update => {
-            res.locals.latestUpdate = update;
-
+        .then(recentActivities => {
+            res.locals.recentActivities = recentActivities;
             return res.render('index/homepage');
         })
         .catch(next);
