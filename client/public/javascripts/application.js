@@ -9,8 +9,13 @@ $(function () {
         const regionId = this.value;
         if (regionId == "none") {
             $('#after-region').hide();
+            $('#new-region').hide();
+        } else if (regionId == "new") {
+            $('#new-region').show();
+            $('#after-region').hide();
         } else {
             $('#after-region').show();
+            $('#new-region').hide();
         }
 
         // Un-select both

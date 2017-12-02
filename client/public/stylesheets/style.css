@@ -67,7 +67,7 @@ textarea {
   margin-left: 5px;
   font-size: 1em !important; }
 
-#after-region {
+#after-region, #new-region {
   display: none; }
 
 /* APPLICANT LIST */

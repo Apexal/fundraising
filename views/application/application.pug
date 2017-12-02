@@ -23,6 +23,8 @@ block content
                         option(value="none") Choose One
                         each r in regions
                             option(value=r.id)= r.name
+                        option(disabled) ──────────
+                        option(value="new") Not Listed
 
                 #after-region
                     .form-group
@@ -41,6 +43,12 @@ block content
                         select#ambassadors.form-control(name="ambassadorId", style=(user.application.rank == 'director' ? '' : 'display: none'))
                             each a in ambassadors
                                 option(value=a._id, data-region=a.region, selected=(user.application.superior == a.id))= a.name.full
+
+                #new-region
+                    .form-group
+                        label(for="newRegionName") Suggest New Region
+                        input.form-control#newRegionName(name="newRegionName", placeholder="Name of location (relative to major city)")
+
                 hr
                 .form-group
                     label(for="why") Why Kids Tales?
