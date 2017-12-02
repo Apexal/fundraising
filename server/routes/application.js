@@ -216,5 +216,15 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
         .catch(next);
 });
 
+router.post('/invite', (req, res, next) => {
+    const link = `https://kidstales.ddns.net:3000/application?${req.user.rank}Id=${req.user._id}`;
+    const emails = req.body.name.split(', ');
+
+    req.flash('info', `Invitations have been sent out.`);
+
+    emails.forEach(e => sendEmail(e, 'Kids Tales Invite', 'invite', { superiorName: req.user.name.full, link }));
+
+    return res.redirect('/application/applicants');
+});
 
 module.exports = router;
