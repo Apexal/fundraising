@@ -14,7 +14,9 @@ block content
     .row
         .col-xs-12
             .page-header
-                h1 Location 
+                h1 
+                    b= user.region.name
+                    |  Location 
                     b #{location.name}
                     small.right added #{moment(location.dateAdded).fromNow()}
     .row

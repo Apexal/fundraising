@@ -162,6 +162,8 @@ a.location-name {
 .location-image.big {
   max-width: 400px; }
 
+.workshop-team .panel {
+  margin-bottom: 0; }
 .workshop-team img {
   height: 80px; }
 

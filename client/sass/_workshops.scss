@@ -57,10 +57,15 @@
     max-width: 400px;
 }
 
-.workshop-team img {
-    height: 80px;
-}
+.workshop-team {
+    .panel {
+        margin-bottom: 0;
+    }
 
+    img {
+        height: 80px;
+    }
+}
 .workshop-info {
     tr td:first-child {
         text-transform: capitalize;
