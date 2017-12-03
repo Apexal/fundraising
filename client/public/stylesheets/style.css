@@ -113,8 +113,8 @@ a.location-name {
   padding-right: 20px; }
 
 /* USER INDEX/LIST PAGE */
-.user-list .user-panel .profileimage {
-  height: 100px; }
+.user-list .profile-image {
+  height: 50px; }
 
 /* USER PROFILE PAGE */
 .user-info .summary > .profilepicture {

@@ -23,6 +23,7 @@ block content
             table.table
                 thead
                     tr
+                        th 
                         th Current Rank
                         th Name
                         th Email
@@ -31,6 +32,9 @@ block content
                 tbody
                     each u in users
                         tr(class=u.admin ? 'danger' : '')
+                            td
+                                a(href="/users/" + u.email)
+                                    img.profile-image(src="/images/" + u.profileImageName)
                             td
                                 b= helpers.cap(u.rank)
                             td
