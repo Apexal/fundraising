@@ -10,6 +10,8 @@ if user.admin
             li
                 a(href='/administration') Overview
             li.divider(role='separator')
+            li(class=helpers.activeLink('/administration/activities', pagePath), title='View user activity.')
+                a(href='/administration/activities') User Activity
             li(class=helpers.activeLink('/regions', pagePath), title='Manage major regions and ambassadors.')
                 a(href='/regions') Regions
             li(class=helpers.activeLink('/administration/fundraising', pagePath), title='Manage overall fundraising efforts.')
