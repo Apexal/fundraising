@@ -1,0 +1,41 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                include /includes/pagination
+                h1 User Activity
+                    small   #{activities.length} total
+    .row
+        .col-xs-12.user-search
+            form
+                .input-group
+                    input.form-control.criteria(type="text", name="search", placeholder="Search for activities by action or description.", value=search)
+                    span.input-group-btn
+                        button.btn.btn-default Search
+            hr
+
+    .row.user-list
+        if search
+            h3 Search Results
+        .col-xs-12
+            table.table.activites-table
+                thead
+                    tr
+                        th User
+                        th Action
+                        th Description
+                        th When
+                tbody
+                    each a in activities
+                        tr
+                            td
+                                if a.user
+                                    a(href="/users/" + a.user.email)= a.user.email
+                                else
+                                    span.text-muted None
+                            td.action
+                                a(href="/administration/activities?search=" + a.action) #[b= a.action]
+                            td= a.description
+                            td.text-muted(title=moment(a.dateAdded).format("dddd, MMMM Do YYYY, h:mm a"))= moment(a.dateAdded).fromNow()

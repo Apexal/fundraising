@@ -21,7 +21,7 @@ router.get('/:email', (req, res, next) => {
         .populate('region')
         .exec()
         .then(user => {
-            if (!user) return next(new Error('Failed to find user.'));
+            if (!user) throw new Error('Failed to find user.');
             res.locals.targetUser = user;
             return user.getWorkshops();
         })

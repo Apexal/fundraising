@@ -39,7 +39,7 @@ router.get('/:email', (req, res, next) => {
     req.db.User.findOne({ email: req.params.email, region: req.user.region, verified: true })
         .exec()
         .then(user => {
-            if (!user) return next(new Error('Failed to find user.'));
+            if (!user) throw new Error('Failed to find user.');
 
             res.locals.targetUser = user;
             res.locals.pageTitle = `${user.rankName} ${user.name.full}`;

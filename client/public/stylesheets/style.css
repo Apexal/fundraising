@@ -186,4 +186,7 @@ a.location-name {
 .workshop-modal .modal-title b {
   color: initial; }
 
+.activites-table td.action {
+  text-transform: capitalize; }
+
 /*# sourceMappingURL=style.css.map */
