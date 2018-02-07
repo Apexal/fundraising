@@ -52,3 +52,23 @@ mixin workshop-modal(w)
 
 mixin admin-star
     i.fa.fa-star.admin-star(data-toggle="tooltip", title="Board Member")
+
+mixin feedback-modal
+    .modal.fade#feedback-modal
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h5.modal-title Feedback
+                .modal-body
+                    form#feedback-form(action="/feedback/add", method="POST")
+                        
+                        .form-group
+                            label(for="feedback-path") Page
+                            input.form-control#feedback-path(type="text", name="feedback-path", value=pagePath, required, disabled)
+                        
+                        .form-group
+                            label(for="feedback-path") Comment
+                            textarea.form-control(placeholder="Comment about the page or website.", minlength=5, maxlength=1000, required)
+                        
+                .modal-footer
+                    input.btn.btn-danger(type="submit", form="feedback-form", value="Submit Feedback")

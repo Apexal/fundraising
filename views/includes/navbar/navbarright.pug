@@ -2,7 +2,7 @@ ul.nav.navbar-nav.navbar-right
     if loggedIn
         // Logged in indicator with user actions
         li
-            a(href="#", onclick="alert('Coming soon...')", title="Offer feedback on the website.")
+            a(href="#", data-toggle="modal" data-target="#feedback-modal", title="Offer feedback on the website.")
                 i.fa.fa-comments
         li.hidden-xs
             a.profilepicture(href="/profile")
