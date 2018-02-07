@@ -121,6 +121,8 @@ a.location-name {
 /* USER INDEX/LIST PAGE */
 .user-list .profile-image {
   height: 50px; }
+.user-list tr td:first-child {
+  width: 20px; }
 
 /* USER PROFILE PAGE */
 .user-info .summary > .profilepicture {
