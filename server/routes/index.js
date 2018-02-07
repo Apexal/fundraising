@@ -40,22 +40,12 @@ router.get('/', (req, res, next) => {
             .exec()
             .then(recentActivities => {
                 res.locals.recentActivities = recentActivities;
-
-                return req.user.getWorkshops();
-            })
-            .then(involvements => {
-                res.locals.involvements = involvements;
                 return res.render('index/homepage');
             })
             .catch(next);
     }
 
-    return req.user.getWorkshops()
-        .then(involvements => {
-            res.locals.involvements = involvements;
-            return res.render('index/homepage');
-        })
-        .catch(next);
+    return res.render('index/homepage');
 });
 
 /* Show login form page */

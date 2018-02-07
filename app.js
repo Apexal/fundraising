@@ -70,7 +70,16 @@ app.use((req, res, next) => {
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.applicantCount = req.session.applicantCount;
 
-    next();
+    if (req.user) {
+        return req.user.getWorkshops()
+            .then(involvements => {
+                res.locals.involvements = involvements;
+                return next();
+            })
+            .catch(next);
+    } else {
+        return next();
+    }
 });
 
 // To be used by routes

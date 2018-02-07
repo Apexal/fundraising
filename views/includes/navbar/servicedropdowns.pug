@@ -1,15 +1,15 @@
 // Administrator actions (if admin)
-if user.admin
-    li.dropdown(class=helpers.activeLink('/administration', pagePath))
-        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            span.visible-sm Admin 
-                span.caret
-            span.hidden-sm  Administration 
-                span.caret
-        ul.dropdown-menu
+li.dropdown(class=helpers.activeLink('/administration', pagePath))
+    a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+        b You
+        span.caret
+    ul.dropdown-menu
+        for w in involvements
             li
-                a(href='/administration') Overview
+                a(href='/workshops/' + w.id)= w.location.name
+        if user.admin
             li.divider(role='separator')
+            li.dropdown-header Administration
             li(class=helpers.activeLink('/administration/activities', pagePath), title='View user activity.')
                 a(href='/administration/activities') User Activity
             li(class=helpers.activeLink('/regions', pagePath), title='Manage major regions and ambassadors.')
