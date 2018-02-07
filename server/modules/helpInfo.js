@@ -17,7 +17,7 @@ helpInfo['latest-news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing el
 
 helpInfo['workshops'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['active-workshops'] = "Active workshops are starting soon, in progress, or have very recently ended.";
-helpInfo['inactive-workshops'] = "Inactive workshops have finished and have been archived. Their info cannot be changed.";
+helpInfo['inactive-workshops'] = "Past workshops have finished and have been archived. Their info cannot be changed.";
 
 helpInfo['funds'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['fundraising-goals'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
