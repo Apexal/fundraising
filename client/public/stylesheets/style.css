@@ -11,6 +11,10 @@ body {
 .pagination {
   margin-top: 0; }
 
+.admin-star {
+  color: gold;
+  cursor: pointer; }
+
 textarea {
   min-width: 100%;
   max-width: 100%;

@@ -8,6 +8,8 @@ ul.nav.navbar-nav.navbar-right
         
         li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                if user.admin
+                    i.fa.fa-star.admin-star  
                 b= user.rankName
                 |  #{user.name.full}
                 span.caret
