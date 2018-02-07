@@ -49,3 +49,6 @@ mixin workshop-modal(w)
                     button.btn.btn-danger(type="button", data-dismiss="modal") Close
                     if w.active
                         a.btn.btn-info(href="/workshops/" + w.id) Workshop Overview
+
+mixin admin-star
+    i.fa.fa-star.admin-star(title="Board Member")

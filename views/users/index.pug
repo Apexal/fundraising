@@ -31,11 +31,13 @@ block content
                         th Location
                 tbody
                     each u in users
-                        tr(class=u.admin ? 'danger' : '')
+                        tr
                             td
                                 a(href="/users/" + u.email)
                                     img.profile-image(src="/images/" + u.profileImageName)
                             td
+                                if u.admin
+                                    +admin-star 
                                 b= helpers.cap(u.rank)
                             td
                                 a(href="/users/" + u.email)= u.name.full
