@@ -279,7 +279,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
     const amount = req.body.amount;
     const method = req.body.method;
     const form = req.body.form;
-    const source = req.body.source;
+    const donor = req.body.donor;
 
     const newFunds = new req.db.Funds({
         workshop: workshopId,
@@ -287,7 +287,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
         amount,
         method,
         form,
-        source,
+        donor,
         dateAdded: new Date()
     });
 
@@ -301,7 +301,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
             locationName: req.workshop.location.name,
             amount,
             form,
-            source,
+            donor,
             method,
             workshopId: req.workshop.id
         };
