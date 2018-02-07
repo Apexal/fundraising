@@ -20,7 +20,21 @@ block content
                     +icon('github', 'Website Issues')
             hr
     .row
-        if admin
+        .col-xs-12.col-sm-6.col-md-5
+            h3 Current Involvements
+            for i in involvements
+                details(open)
+                    summary #[b RANK] at #[a(href="/locations/"+i.location.id)= i.location.name]
+                    p Ending #[b= moment(i.endDate).fromNow()]
+                    hr
+        
+        .col-xs-12.col-sm-6.col-md-7
+            #homepage-calendar
+            script(src="/javascripts/calendar.js")
+
+    if user.admin
+        .row
+            hr
             .col-xs-12.col-sm-6.col-md-5
                 .panel.panel-info.admin-activities
                     .panel-heading
@@ -33,6 +47,3 @@ block content
                                     span.description= a.description
                     else
                         p.text-center.text-muted There have been no updates from admins.
-        .col-xs-12.col-sm-6.col-md-7
-            #homepage-calendar
-            script(src="/javascripts/calendar.js")

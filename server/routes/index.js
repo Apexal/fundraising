@@ -34,11 +34,25 @@ router.get('/', (req, res, next) => {
     // Not logged in users get shown the info page
     if (!req.isAuthenticated()) return res.render('index/info');
 
-    req.db.Activity.find()
-        .limit(10)
-        .exec()
-        .then(recentActivities => {
-            res.locals.recentActivities = recentActivities;
+    if (req.user.admin) {
+        return req.db.Activity.find()
+            .limit(10)
+            .exec()
+            .then(recentActivities => {
+                res.locals.recentActivities = recentActivities;
+
+                return req.user.getWorkshops();
+            })
+            .then(involvements => {
+                res.locals.involvements = involvements;
+                return res.render('index/homepage');
+            })
+            .catch(next);
+    }
+
+    return req.user.getWorkshops()
+        .then(involvements => {
+            res.locals.involvements = involvements;
             return res.render('index/homepage');
         })
         .catch(next);
