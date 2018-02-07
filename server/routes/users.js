@@ -5,7 +5,7 @@ router.use(requireLogin);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    res.locals.pageTitle = 'Users';
+    res.locals.pageTitle = 'Volunteers';
 
     const page = parseInt(req.query.page) || 1;
     if (page < 1) return res.redirect('/users?page=1');

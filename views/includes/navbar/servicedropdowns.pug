@@ -27,7 +27,7 @@ li(class=helpers.activeLink('/locations', pagePath), title='View the list of all
 
 li(class=helpers.activeLink('/users', pagePath), title='View the list of all users and see profiles.')
     a(href='/users') 
-        +navicon('address-book', 'Users')
+        +navicon('address-book', 'Volunteers')
 
 if user.rank !== 'teacher'
     li(class=helpers.activeLink('/application/applicants', pagePath), title='Manage users who apply to be under you.')
