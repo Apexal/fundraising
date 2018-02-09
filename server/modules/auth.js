@@ -32,7 +32,7 @@ module.exports = User => {
                 .populate('region')
                 .exec()
                 .then(user => {
-                    if (!user) throw new Error('You must apply first!');
+                    if (!user) throw new Error('on_slack_but_didnt_apply');
 
                     if (user.slackId !== profile.id) {
                         // First login
