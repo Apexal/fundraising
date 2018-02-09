@@ -7,6 +7,13 @@ block content
                 h1 Major Region #[b= region.name]
     
     .row
+        .col-xs-12.col-md-6
+            blockquote.region-description
+                p= region.description
+        .col-xs-12.col-md-6
+            h6 Volunteers
+            p.text-center.text-muted Coming soon...
+    .row
         .col-xs-12
             hr
             a.btn.btn-primary(href="/regions") All Regions
