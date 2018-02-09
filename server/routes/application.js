@@ -206,7 +206,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
         })
         .then(data => {
             data = JSON.parse(data);
-            
+
             console.log(data);
             if (data.ok || data.error == "already_in_team") {
                 req.flash("Application accepted!" + (data == "already_in_team" ? '' : " They have been invited to the Slack team and can now login to the website."));

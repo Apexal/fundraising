@@ -65,7 +65,7 @@ app.use((req, res, next) => {
     if (req.user) res.locals.user = req.user; // To access in views
 
     res.locals.env = config.util.getEnv('NODE_ENV'); // To let views know if in dev or prod
-    
+
     // For convenience
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.applicantCount = req.session.applicantCount;
@@ -131,7 +131,7 @@ app.get('/auth/slack/callback',
                 if (req.session.redirect !== undefined) {
                     // Redirect to page after login if specified
                     const redir = req.session.redirect;
-        
+
                     delete req.session.redirect;
                     
                     return res.redirect(redir);
