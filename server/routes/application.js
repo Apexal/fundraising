@@ -120,7 +120,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         .then(user => {
             req.user = user;
             req.flash('info', `Your application has been submitted. It will be reviewed shortly. Please check your email for updates.`);
-            sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', user);
+            sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', { firstName: req.user.name.first, rank: rank });
             return res.redirect('/application');
         })
         /*.then(superior => {
