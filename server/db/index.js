@@ -23,6 +23,7 @@ console.log('Loaded schemas...');
 
 const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
+/*
 const fakeTeacher = {
     email: 'the.frankmatranga@gmail.com',
     age: 17,
@@ -60,6 +61,28 @@ const fakeDirector = {
     verified: true
 };
 models.User.findOneAndUpdate({ email: 'thefrankmatr.anga@gmail.com' }, fakeDirector, options, function(error, result) {
+    if (error) return console.error(error);
+    console.log(result);
+    // do something with the document
+});
+*/
+
+const admin = {
+    email: 'the.frankmatranga@gmail.com',
+    age: 18,
+    grade: 12,
+    phoneNumber: '8888888888',
+    location: 'Bronx',
+    name: {
+        full: 'Admin Account',
+        first: 'Admin',
+        last: 'Account'
+    },
+    rank: 'ambassador',
+    admin: true,
+    verified: true
+};
+models.User.findOneAndUpdate({ email: 'the.frankmatranga@gmail.com' }, admin, options, function(error, result) {
     if (error) return console.error(error);
     console.log(result);
     // do something with the document
