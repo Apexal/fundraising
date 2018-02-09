@@ -48,6 +48,17 @@ router.get('/', (req, res, next) => {
     return res.render('index/homepage');
 });
 
+/* Send me and email with feedback */
+router.post('/feedback', (req, res, next) => {
+    const path = req.body.feedbackPath;
+    const comment = req.body.feedbackComment;
+
+    sendEmail('thefrankmatranga@gmail.com', 'Kids Tales Volunteer Feedback', 'feedbackSubmitted', { path, comment });
+
+    req.flash('success', 'Thank you for your feedback! It\'s been sent to the developer immediately.');
+    res.redirect('back');
+});
+
 /* Show login form page */
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
