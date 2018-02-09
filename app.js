@@ -171,13 +171,10 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
 
     if (err.message == 'on_slack_but_didnt_apply') {
-        // set locals, only providing error in development
-        res.locals.message = 'You are somehow on the Kids Tales Slack but have not yet applied and been accepted on the website yet! Make sure you apply first.';
-        res.locals.error = "On Slack but Didn't Apply";
+        req.flash('error', 'You are somehow on the Kids Tales Slack but have not yet applied and been accepted on the website yet! Make sure you apply first.');
 
-        // render the error page
-        if (req.isAPI) return res.json({error: err, message: err.message});
-        return res.render('error');
+        if (req.isAPI) return res.json({error: false, message: 'You are somehow on the Kids Tales Slack but have not yet applied and been accepted on the website yet! Make sure you apply first.'});
+        return res.redirect('/');
     }
 
     if (req.app.get('env') === 'development') {
