@@ -120,6 +120,8 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     newWorkshop
         .save()
         .then(workshop => {
+            log(req.user, 'workshop_delete', `${req.user.name.full} (${req.user.email}) scheduled new workshop ${workshop.location} (${workshop.startDate}).`);
+
             req.flash('success', `Scheduled new workshop on ${startDate.format('dddd, MMMM Do YYYY')}.`);
             res.redirect(`/workshops/${workshop._id}`);
         }).catch(next);
