@@ -170,7 +170,7 @@ app.use((err, req, res, next) => {
 
     res.status(err.status || 500);
 
-    if (err == 'on_slack_but_didnt_apply') {
+    if (err.message == 'on_slack_but_didnt_apply') {
         // set locals, only providing error in development
         res.locals.message = 'You are somehow on the Kids Tales Slack but have not yet applied and been accepted on the website yet! Make sure you apply first.';
         res.locals.error = "On Slack but Didn't Apply";
