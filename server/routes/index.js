@@ -54,6 +54,7 @@ router.post('/feedback', (req, res, next) => {
     const comment = req.body.feedbackComment;
 
     sendEmail('thefrankmatranga@gmail.com', 'Kids Tales Volunteer Feedback', 'feedbackSubmitted', { path: fPath, comment });
+    log(req.user, 'feedback', `${req.user.name.full} (${req.user.email}) submitted feedback on page ${fPath}.`);
 
     req.flash('success', 'Thank you for your feedback! It\'s been sent to the developer immediately.');
     res.redirect('back');
