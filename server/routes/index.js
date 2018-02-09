@@ -50,10 +50,10 @@ router.get('/', (req, res, next) => {
 
 /* Send me and email with feedback */
 router.post('/feedback', (req, res, next) => {
-    const path = req.body.feedbackPath;
+    const fPath = req.body.feedbackPath;
     const comment = req.body.feedbackComment;
 
-    sendEmail('thefrankmatranga@gmail.com', 'Kids Tales Volunteer Feedback', 'feedbackSubmitted', { path, comment });
+    sendEmail('thefrankmatranga@gmail.com', 'Kids Tales Volunteer Feedback', 'feedbackSubmitted', { path: fPath, comment });
 
     req.flash('success', 'Thank you for your feedback! It\'s been sent to the developer immediately.');
     res.redirect('back');
