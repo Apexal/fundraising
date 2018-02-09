@@ -64,10 +64,10 @@ mixin feedback-modal
                         
                         .form-group
                             label(for="feedback-path") Page
-                            input.form-control#feedback-path(type="text", name="feedback-path", value=pagePath, required, disabled)
+                            input.form-control#feedback-path(type="text", name="feedbackPath", value=pagePath, required, disabled)
                         
                         .form-group
                             label(for="feedback-path") Comment
-                            textarea.form-control(placeholder="Comment about the page or website.", name="feedback-comment", minlength=5, maxlength=1000, required)
+                            textarea.form-control(placeholder="Comment about the page or website.", name="feedbackComment", minlength=5, maxlength=1000, required)
                 .modal-footer
                     input.btn.btn-danger(type="submit", form="feedback-form", value="Submit Feedback")
