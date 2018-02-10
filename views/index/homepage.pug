@@ -21,13 +21,13 @@ block content
             hr
     .row
         .col-xs-12.col-sm-6.col-md-5
-            h3 Current Involvements
+            h1(style="margin-top: 0px;") Current Involvements
             for i in involvements
                 details.involvement-details(open)
                     summary #[b= helpers.getRankFromWorkshop(i, user)] at #[b= i.location.name]
                     p Ending #[b= moment(i.endDate).fromNow()] | #[b= moment(i.endDate).format("dddd, MMMM Do YYYY")]
                     hr
-        
+
         .col-xs-12.col-sm-6.col-md-7
             #homepage-calendar
             script(src="/javascripts/calendar.js")

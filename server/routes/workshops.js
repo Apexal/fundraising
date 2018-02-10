@@ -69,7 +69,9 @@ router.get('/new', requireHigherUp, (req, res, next) => {
 
 router.post('/new', requireHigherUp, (req, res, next) => {
     // Location info
-    const locationId = req.body.locationId;
+    let locationId = req.body.locationId;
+    if (!locationId)
+        locationId = req.query.locationId;
     const startDate = moment(req.body.startDate, "YYYY-MM-DD");
     const endDate = moment(req.body.endDate, "YYYY-MM-DD");
     const language = req.body.language;
