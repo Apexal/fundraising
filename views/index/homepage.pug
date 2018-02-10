@@ -23,9 +23,9 @@ block content
         .col-xs-12.col-sm-6.col-md-5
             h3 Current Involvements
             for i in involvements
-                details(open)
-                    summary #[b RANK] at #[a(href="/locations/"+i.location.id)= i.location.name]
-                    p Ending #[b= moment(i.endDate).fromNow()]
+                details.involvement-details(open)
+                    summary #[b= helpers.getRankFromWorkshop(i, user)] at #[b= i.location.name]
+                    p Ending #[b= moment(i.endDate).fromNow()] | #[b= moment(i.endDate).format("dddd, MMMM Do YYYY")]
                     hr
         
         .col-xs-12.col-sm-6.col-md-7
