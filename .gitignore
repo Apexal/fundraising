@@ -53,3 +53,7 @@ sendgrid.env
 config/production.json
 config/development.json
 config/debug.json
+nohup.out
+start
+stderr.txt
+stdout.txt

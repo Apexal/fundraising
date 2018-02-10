@@ -22,6 +22,7 @@ block content
                                 a(href="/regions/" + r.id)= r.name
                             td
                                 if r.ambassador
+                                    a(href="/users/" + r.ambassador.email)= r.name.full
                                     img(src="/images/" + r.ambassador.profileImageName)
                                 else
                                     span.text-muted Coming soon...

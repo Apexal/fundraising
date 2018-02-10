@@ -8,6 +8,7 @@ router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Regions';
 
     req.db.Region.find()
+        .populate('ambassador')
         .exec()
         .then(regions => {
             res.locals.regions = regions;
