@@ -19,7 +19,7 @@ const userSchema = new Schema({
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
     application: {
         applying: { type: Boolean, default: true },
-        rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
+        rank: { type: 'String', default: 'teacher', enum: ['teacher', 'director', 'ambassador'] },
         superior: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         recommender: { type: String, trim: true, maxlength: 50},
         why: { type: String, trim: true, maxlength: 650 },
