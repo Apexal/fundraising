@@ -69,8 +69,6 @@ textarea {
 .involvement-details summary {
   font-size: 1.6em; }
 
-.involvement-details summary b {
-    text-transform: capitalize; }
 .navbar-top .profilepicture > img {
   height: 50px; }
 .navbar-top .profilepicture {
@@ -125,6 +123,9 @@ a.location-name {
 /* LOCATION INDEX PAGE */
 .location-list > .location-item {
   padding-right: 20px; }
+
+.region-table .profile-image {
+  width: 70px; }
 
 /* USER INDEX/LIST PAGE */
 .user-list .profile-image {
