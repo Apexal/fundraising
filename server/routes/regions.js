@@ -60,4 +60,24 @@ router.get('/:regionId', (req, res, next) => {
         .catch(next);
 });
 
+router.post('/:regionId/approve', (req, res, next) => {
+    req.db.Region.update({ _id: req.params.regionId, approved: false }, { $set: { approved: true } })
+        .exec()
+        .then(region => {
+            req.flash('success', `Approved region ${region.name}.`);
+            res.redirect('back');
+        })
+        .catch(next);
+});
+
+router.post('/:regionId/deny', (req, res, next) => {
+    req.db.Region.remove({ _id: req.params.regionId, approved: false })
+        .exec()
+        .then(region => {
+            req.flash('success', `Denied region ${region.name}.`);
+            res.redirect('back');
+        })
+        .catch(next);
+});
+
 module.exports = router;
