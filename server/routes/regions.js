@@ -60,6 +60,31 @@ router.get('/:regionId', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/:regionId/edit', (req, res, next) => {
+    res.locals.pageTitle = 'Edit Region';
+
+    req.db.Region.findById(req.params.regionId)
+        .exec()
+        .then(region => {
+            if (!region) throw new Error('Region doesn\'t exist!');
+            if (!region.approved) throw new Error('Region is not yet approved!');
+
+            res.locals.region = region;
+            res.render('regions/edit');
+        })
+        .catch(next);
+});
+
+router.post('/:regionId/edit', (req, res, next) => {
+    req.db.Region.update({ _id: req.params.regionId, approved: false }, { $set: { approved: true } })
+        .exec()
+        .then(region => {
+            req.flash('success', `Approved region ${region.name}.`);
+            res.redirect('back');
+        })
+        .catch(next);
+});
+
 router.post('/:regionId/approve', (req, res, next) => {
     req.db.Region.update({ _id: req.params.regionId, approved: false }, { $set: { approved: true } })
         .exec()

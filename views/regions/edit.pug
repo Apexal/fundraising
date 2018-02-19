@@ -1,0 +1,27 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 Edit Major Region
+                    small.right(title=moment(region.registeredDate).format("dddd, MMMM Do YYYY"), data-toggle="tooltip") added #{moment(region.dateAdded).fromNow()}
+    
+    form(method="POST")
+        .row
+            .col-xs-12.col-md-6
+                .form-group
+                    label(for="region-name") Region Name
+                    input.form-control#region-name(value=region.name, name="regionName")
+            .col-xs-12.col-md-6
+                .form-group
+                    label(for="region-description") Region Description
+                    textarea.form-control#region-description(placeholder="Give a description of the region.")= region.description
+        .row
+            a.btn.btn-primary Save
+            a.btn.btn-danger(href="/regions/" + region.id) Cancel
+
+    .row
+        .col-xs-12
+            hr
+            a.btn.btn-primary(href="/regions") All Regions

@@ -24,7 +24,7 @@ block content
     .row
         .col-xs-12
             hr
-            a.btn.btn-warning(href="/" + region.id + "/edit") Edit Region
-            form.inline(action="/" + region.id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this region and all associated data???')")
-                button.btn.btn-danger(href="/" + region.id + "/delete") Delete Region
+            a.btn.btn-warning(href="/regions/" + region.id + "/edit") Edit Region
+            form.inline(action="/regions/" + region.id + "/delete", method="POST", onsubmit="return confirm('Are you sure you want to delete this region and all associated data???')")
+                button.btn.btn-danger Delete Region
             a.btn.btn-primary(href="/regions") All Regions
