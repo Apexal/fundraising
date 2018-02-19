@@ -60,14 +60,23 @@ router.get('/', requireNotLogin, (req, res, next) => {
 /* Save application data and alert higher ups */
 router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, next) => {
     // Get form data
+    let rank = req.body.rank;
+
     let regionId = req.body.region;
     // New region?
     if (req.body.region == 'new' && !!req.body.newRegionName) {
+        // If requesting new region, they will become ambassador of it if accepted
         const newRegion = new req.db.Region({ name: req.body.newRegionName, approved: false, dateAdded: new Date() });
         newRegion.save();
         regionId = newRegion.id;
-        req.flash('info', `Submitted new region ${newRegion.name}. Your application will be reviewed once the new region is accepted.`);
+
+        rank = 'ambassador';
+
+        req.flash('info', `Your application to become ambassador of new region '${newRegion.name}' has been submitted. It will be reviewed shortly. Please check your email for updates.`);
+
         log(null, 'Region Request', `New region request for ${newRegion.name}.`);
+    } else {
+        req.flash('info', `Your application to become a ${rank} has been submitted. It will be reviewed shortly. Please check your email for updates.`);
     }
 
     const email = req.body.email;
@@ -78,7 +87,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
     const phoneNumber = req.body.phoneNumber;
     const location = req.body.location;
 
-    const rank = req.body.rank;
+    
     const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
     const why = req.body.why;
 
@@ -111,13 +120,13 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
     if (req.file) user.application.writingFileName = req.file.filename;
 
-    if (['teacher', 'director'].includes(rank)) {
+    if (['teacher', 'director'].includes(rank) || (rank == 'ambassador' && region == 'new')) {
         user.application.rank = rank;
     } else {
         return next(new Error('Invalid rank!'));
     }
 
-    user.application.superior = superiorId;
+    user.application.superior = superiorId; // Can be null
 
     req.db.User.findOneAndUpdate({ email }, user, { upsert: true, new: true, setDefaultsOnInsert: true })
         .exec()
@@ -128,31 +137,34 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         })
         .then(user => {
             req.user = user;
-            req.flash('info', `Your application has been submitted. It will be reviewed shortly. Please check your email for updates.`);
-            sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', { firstName: req.user.name.first, rank: rank });
-            return res.redirect('/application');
-        })
-        /*.then(superior => {
-            if (newSuperior) {
-                sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.rank });
-                sendEmail(req.user.email, 'Application Updated', 'applicationUpdated', { firstName: req.user.name.first, superiorFirstName: superior.name.first });
+
+            // TODO: RETURN SUPERIOR FOR EMAILS
+            if (!!user.application.superior) {
+                return req.db.User.findOne({_id: superiorId});
             }
+            return done();
+        })
+        .then(superior => {
+            sendEmail(superior.email, 'New Applicant', 'newApplicant', { fullName: req.user.name.full, rankName: req.user.rank });
 
-
-
-            const message = (newRank ? `Your application has been submitted! ${superior.name.full} has been alerted and will review your application soon. You will be emailed when it is accepted.` : `Your application has been updated. It will be submitted once you choose a rank and superior.`);
-            req.flash('info', message);
-
-            res.redirect('/application');
-        })*/
+            return done();
+        })
         .catch(next);
+
+    const done = () => {
+        sendEmail(user.email, 'Application Submitted', 'applicationSubmitted', { firstName: req.user.name.first, rank: rank });
+        return res.redirect('/application');
+    }
 });
 
 /* Non-teacher members can manage applicants under them  */
 router.get('/applicants', requireLogin, requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Your Applicants';
 
-    req.db.User.find({ 'application.superior': req.user._id, 'application.applying': true })
+    let query = { 'application.applying': true };
+    if (req.user.rank != 'ambassador') query['application.superior'] = req.user._id;
+ 
+    req.db.User.find(query)
         .exec()
         .then(applicants => {
             req.session.applicantCount = applicants.length;
@@ -178,7 +190,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             applicant.application.applying = false;
             applicant.rank = applicant.application.rank;
             
-            log(user, 'User Verified', `User was verified to be ${applicant.rank}.`);
+            log(applicant, 'User Verified', `User was verified to be ${applicant.rank}.`);
 
             if (applicant.application.rank == 'teacher') {
                 // Try to find active workshop of director to assign to
@@ -197,7 +209,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                         // Could not find workshop to add applicant to
                     });
                     return applicant.save();
-            } else if (applicant.application.rank == 'director') {
+            } else {
 
                 return applicant.save();
             }
