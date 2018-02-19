@@ -5,13 +5,21 @@ block content
         .col-xs-12
             .page-header
                 h1 Major Region #[b= region.name]
+                    small.right(title=moment(region.registeredDate).format("dddd, MMMM Do YYYY"), data-toggle="tooltip") added #{moment(region.dateAdded).fromNow()}
     
     .row
         .col-xs-12.col-md-6
             blockquote.region-description
                 p= region.description
+    
         .col-xs-12.col-md-6
-            h6 Volunteers
+            h2 Ambassador
+            image(width="200", height="250", src="", alt="Coming soon...")
+    .row
+        .col-xs-12
+            hr
+            h2 Volunteers
+                small.text-muted  0 total
             p.text-center.text-muted Coming soon...
     .row
         .col-xs-12
