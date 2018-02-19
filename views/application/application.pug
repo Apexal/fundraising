@@ -23,6 +23,8 @@ block content
                         option(value="none") Choose One
                         each r in regions
                             option(value=r.id)= r.name
+                                if !r.approved
+                                    |  (Awaiting Approval)
                         option(disabled) ──────────
                         option(value="new") Not Listed
 

@@ -60,7 +60,15 @@ router.get('/', requireNotLogin, (req, res, next) => {
 /* Save application data and alert higher ups */
 router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, next) => {
     // Get form data
-    const regionId = req.body.region;
+    let regionId = req.body.region;
+    // New region?
+    if (req.body.region == 'new' && !!req.body.newRegionName) {
+        const newRegion = new req.db.Region({ name: req.body.newRegionName, approved: false, dateAdded: new Date() });
+        newRegion.save();
+        regionId = newRegion.id;
+        req.flash('info', `Submitted new region ${newRegion.name}. Your application will be reviewed once the new region is accepted.`);
+        log(null, 'Region Request', `New region request for ${newRegion.name}.`);
+    }
 
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -115,6 +123,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         .exec()
         .then(user => {
             console.log(user);
+            log(user, 'application', `New application for ${user.name.full}.`);
             return user.save();
         })
         .then(user => {
@@ -168,6 +177,8 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             applicant.verified = true; // VITAL - ALLOWS LOGIN
             applicant.application.applying = false;
             applicant.rank = applicant.application.rank;
+            
+            log(user, 'User Verified', `User was verified to be ${applicant.rank}.`);
 
             if (applicant.application.rank == 'teacher') {
                 // Try to find active workshop of director to assign to
@@ -178,6 +189,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                         if (!workshop.teachers.include(applicant._id)) workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
                         req.flash('info', `Assigned ${applicant.name.first} as a teacher to your workshop at ${workshop.location.name}`);
                         
+
                         workshop.save();
                     })
                     .catch(err => {
