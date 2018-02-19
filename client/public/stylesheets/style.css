@@ -205,6 +205,8 @@ a.location-name {
   height: 70px; }
 .workshop-modal .modal-title b {
   color: initial; }
+.workshop-modal .fundraising h3 {
+  margin: 0; }
 
 .activites-table td.action {
   text-transform: capitalize; }

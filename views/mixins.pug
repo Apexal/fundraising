@@ -41,10 +41,12 @@ mixin workshop-modal(w)
                                 each t in w.teachers
                                     a(href="/users/" + t.email)
                                         img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
-                    .row
+                    .row.fundraising
                         .col-xs-12
                             hr
-                            
+                            h3.text-muted.right $0 total | Rank #1
+                            h3 Fundraising
+
                 .modal-footer
                     button.btn.btn-danger(type="button", data-dismiss="modal") Close
                     if w.active
