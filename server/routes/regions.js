@@ -57,13 +57,20 @@ router.get('/:regionId', (req, res, next) => {
     res.locals.pageTitle = 'Region';
 
     req.db.Region.findById(req.params.regionId)
+        .populate('ambassador')
         .exec()
         .then(region => {
             if (!region) throw new Error('Region doesn\'t exist!');
             if (!region.approved) throw new Error('Region is not yet approved!');
 
             res.locals.region = region;
-            res.render('regions/region');
+
+            return req.db.User.find({ region: region._id, verified: true }).exec();
+        })
+        .then(users => {
+            res.locals.users = users;
+
+            return res.render('regions/region');
         })
         .catch(next);
 });
