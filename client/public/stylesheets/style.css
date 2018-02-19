@@ -68,7 +68,6 @@ textarea {
 
 .involvement-details summary b {
     text-transform: capitalize; }
-
 .navbar-top .profilepicture > img {
   height: 50px; }
 .navbar-top .profilepicture {
@@ -205,3 +204,5 @@ a.location-name {
 
 .activites-table td.action {
   text-transform: capitalize; }
+
+/*# sourceMappingURL=style.css.map */

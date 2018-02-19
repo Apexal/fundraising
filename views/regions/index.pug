@@ -15,6 +15,7 @@ block content
                     tr
                         th Name
                         th Ambassador
+                        th Volunteer Count
                 tbody
                     each r in regions
                         tr
@@ -26,3 +27,28 @@ block content
                                     img(src="/images/" + r.ambassador.profileImageName)
                                 else
                                     span.text-muted Coming soon...
+                            td.text-muted Coming soon...
+    .row
+        .col-xs-12
+            hr
+            h2 Pending Regions
+            p.text-muted These are regions suggested by applicants when applying. Their application is not complete until they choose an existing region or their suggestion is approved here.
+        .col-xs-12
+            table.table
+                thead
+                    tr
+                        th Name
+                        th Date Submitted
+                        th Approve
+                        th Deny
+                tbody
+                    each r in unapprovedRegions
+                        tr
+                            td= r.name
+                            td= moment(r.dateAdded).fromNow() + " | " + moment(r.dateAdded).format("dddd, MMMM Do YYYY")
+                            td
+                                form(action="/regions/" + r.id + "/approve", method="POST")
+                                    button.btn.btn-success Approve
+                            td
+                                form(action="/regions/" + r.id + "/deny", method="POST")
+                                    button.btn.btn-danger Deny
