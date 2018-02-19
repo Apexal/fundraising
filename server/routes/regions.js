@@ -84,11 +84,18 @@ router.get('/:regionId/edit', (req, res, next) => {
 });
 
 router.post('/:regionId/edit', (req, res, next) => {
-    req.db.Region.update({ _id: req.params.regionId, approved: false }, { $set: { approved: true } })
+    req.db.Region.findById(req.params.regionId)
         .exec()
         .then(region => {
-            req.flash('success', `Approved region ${region.name}.`);
-            res.redirect('back');
+            if (!region) throw new Error('Region doesn\'t exist!');
+            if (!region.approved) throw new Error('Region is not yet approved!');
+
+            region.name = req.body.regionName;
+            region.description = req.body.regionDescription;
+            return region.save();
+        }).then(region => {
+            req.flash('success', `Updated region ${region.name}.`);
+            res.redirect('/regions/' + region.id);
         })
         .catch(next);
 });

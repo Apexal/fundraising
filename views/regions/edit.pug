@@ -16,12 +16,9 @@ block content
             .col-xs-12.col-md-6
                 .form-group
                     label(for="region-description") Region Description
-                    textarea.form-control#region-description(placeholder="Give a description of the region.")= region.description
+                    textarea.form-control#region-description(placeholder="Give a description of the region.", name="regionDescription")= region.description
         .row
-            a.btn.btn-primary Save
-            a.btn.btn-danger(href="/regions/" + region.id) Cancel
-
-    .row
-        .col-xs-12
-            hr
-            a.btn.btn-primary(href="/regions") All Regions
+            .col-xs-12
+                hr
+                button.btn.btn-primary Save
+                a.btn.btn-danger(href="/regions/" + region.id) Cancel
