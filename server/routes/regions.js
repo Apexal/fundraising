@@ -13,7 +13,15 @@ router.get('/', (req, res, next) => {
         .then(regions => {
             res.locals.regions = regions.filter(r => r.approved);
             res.locals.unapprovedRegions = regions.filter(r => !r.approved);
+            
+            let regionQuery =  { $in: [res.locals.unapprovedRegions.map(r => r._id)] };
+            if (res.locals.unapprovedRegions.length == 0) regionQuery = null;
 
+            return req.db.User.find({ 'application.applying': true, verified: false, region: regionQuery })
+                .populate('region')
+                .exec();
+        }).then(newAmbassadors => {
+            res.locals.newAmbassadors = newAmbassadors;
             res.render('regions/index');
         })
         .catch(next);

@@ -71,3 +71,48 @@ mixin feedback-modal
                             textarea.form-control(placeholder="Comment about the page or website.", name="feedbackComment", minlength=5, maxlength=1000, required)
                 .modal-footer
                     input.btn.btn-danger(type="submit", form="feedback-form", value="Submit Feedback")
+
+mixin application(a)
+    .panel.panel-default.applicant-panel
+        .panel-body
+            form.form(action="/application/verify?userId=" + a.id, method="POST", onsubmit="return confirm('Are you sure you want to accept " + a.name.first + "'s application?');")
+                h2= a.name.full
+                    small.right(title=moment(a.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(a.registeredDate).fromNow()
+                hr
+                .applicant-info
+                    .form-group
+                        label Email
+                        input.form-control#email(type="text", value=a.email, disabled)
+                    .form-group
+                        label(for="location") Location
+                        input#location.form-control(type="text", value=a.location, placeholder="Where do you live? Relative to major city is fine.", disabled)
+                    .form-group
+                        label(for="phone-number") Personal Phone Number
+                            small.text-muted  This will be available to all Kids Tales members.
+                        input#phone-number.form-control(type="text", placeholder="xxx-xxx-xxxx", value=a.phoneNumber, disabled)
+                    .form-group
+                        label(for="age") Age
+                        input#age.form-control(type="number", placeholder="How old are you?", value=a.age, disabled)
+                    .form-group
+                        label(for="grade") Grade
+                        input#grade.form-control(ype="number", placeholder="What grade are you in?", value=a.grade, disabled)
+
+                    hr
+                    .form-group
+                        label(for="why") Why Kids Tales?
+                        textarea#why.form-control(disabled)= a.application.why
+                    
+                    hr
+
+                    .form-group
+                        label(for="recommender") Recommender
+                            small.text-muted  (Optional)
+                        input.form-control#recommender(type="text", placeholder="Did someone recommend you?", disabled)
+
+                    .form-group
+                        label(for="writing-sample") Sample of Writing 
+                        a(href='/writingsamples/' + a.application.writingFileName, target="_blank")
+                            +icon('link', 'Link')
+                button.btn.btn-success Accept
+                button.btn.btn-danger.right(type="button") Deny
+    hr

@@ -187,11 +187,13 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
         .exec()
         .then(applicant => {
             if (!applicant) throw new Error("Invalid user id.");
-
+            
             applicant.verified = true; // VITAL - ALLOWS LOGIN
             applicant.application.applying = false;
             applicant.rank = applicant.application.rank;
             
+            req.applicant = applicant;
+
             log(applicant, 'User Verified', `User was verified to be ${applicant.rank}.`);
 
             if (applicant.application.rank == 'teacher') {
@@ -226,9 +228,16 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                     if (err) console.error(err);
                 });
             } catch(e) {}
+            
+            return req.db.Region.findOneAndUpdate({_id: applicant.region }, { approved: true }).exec(); 
+            
+        })
+        .then(region => {
+            // Only alert if the region wasn't already approved
+            if (!region.approved) req.flash('info', `Approved new region ${region.name} with Ambassador ${req.applicant.name.full}.`);
 
             // INVITE TO SLACK
-            return slack.inviteToTeam(applicant.name.first, applicant.email);
+            return slack.inviteToTeam(req.applicant.name.first, req.applicant.email);
         })
         .then(data => {
             data = JSON.parse(data);

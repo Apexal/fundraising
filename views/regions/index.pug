@@ -30,25 +30,14 @@ block content
                             td.text-muted Coming soon...
     .row
         .col-xs-12
-            hr
-            h2 Pending Regions
-            p.text-muted These are regions suggested by applicants when applying. Their application is not complete until they choose an existing region or their suggestion is approved here.
-        .col-xs-12
-            table.table
-                thead
-                    tr
-                        th Name
-                        th Date Submitted
-                        th Approve
-                        th Deny
-                tbody
-                    each r in unapprovedRegions
-                        tr
-                            td= r.name
-                            td= moment(r.dateAdded).fromNow() + " | " + moment(r.dateAdded).format("dddd, MMMM Do YYYY")
-                            td
-                                form(action="/regions/" + r.id + "/approve", method="POST")
-                                    button.btn.btn-success Approve
-                            td
-                                form(action="/regions/" + r.id + "/deny", method="POST")
-                                    button.btn.btn-danger Deny
+            .page-header
+                h1 New Region Requests
+            p.text-muted.text-center Applicants who select "New Region" are shown here. Accepting a new region here assigns the applicant as the ambassador of the new region.
+            if newAmbassadors.length == 0
+                
+            else
+                each a in newAmbassadors
+                    .col-xs-12
+                        h2 New Region Request #[b= a.region.name]
+                        +application(a)
+                        hr
