@@ -39,9 +39,11 @@ router.get('/', requireNotLogin, (req, res, next) => {
 
     ['rank', 'directorId', 'ambassadorId'].forEach(prop => res.locals.user.application[prop] = req.query[prop] ); // Prefill rank and/or superior from link
 
-    // Get open workshops
+    // Get possbile superiors
     req.db.User
         .where('rank').ne('teacher')
+        .where('verified', true)
+        .where('application.applying', false)
         .exec()
         .then(superiors => {
             res.locals.superiors = superiors;
