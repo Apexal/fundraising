@@ -64,7 +64,7 @@ textarea {
   margin-right: 5px; }
 
 .involvement-details summary {
-  font-size: 4em; }
+  font-size: 1.6em; }
 
 .navbar-top .profilepicture > img {
   height: 50px; }
@@ -202,3 +202,5 @@ a.location-name {
 
 .activites-table td.action {
   text-transform: capitalize; }
+
+/*# sourceMappingURL=style.css.map */

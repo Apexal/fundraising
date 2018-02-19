@@ -11,7 +11,9 @@ router.get('/', (req, res, next) => {
         .populate('ambassador')
         .exec()
         .then(regions => {
-            res.locals.regions = regions;
+            res.locals.regions = regions.filter(r => r.approved);
+            res.locals.unapprovedRegions = regions.filter(r => !r.approved);
+
             res.render('regions/index');
         })
         .catch(next);
@@ -27,6 +29,7 @@ router.post('/new', (req, res, next) => {
     const description = req.body.description;
 
     const newRegion = new req.db.Region({
+        approved: true,
         name,
         description,
         dateAdded: new Date()
@@ -49,6 +52,7 @@ router.get('/:regionId', (req, res, next) => {
         .exec()
         .then(region => {
             if (!region) throw new Error('Region doesn\'t exist!');
+            if (!region.approved) throw new Error('Region is not yet approved!');
 
             res.locals.region = region;
             res.render('regions/region');

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
+    "dev": "NODE_ENV=development node ./bin/www",
     "debug": "DEBUG=express:* node ./bin/www",
     "sass": "sass --watch client/sass/:client/public/stylesheets/"
   },
