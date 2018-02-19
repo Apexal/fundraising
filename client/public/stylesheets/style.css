@@ -69,6 +69,8 @@ textarea {
 .involvement-details summary {
   font-size: 1.6em; }
 
+.involvement-details summary b {
+    text-transform: capitalize; }
 .navbar-top .profilepicture > img {
   height: 50px; }
 .navbar-top .profilepicture {

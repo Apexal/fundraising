@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../../config');
+/*const config = require('../../config');
 
 const verifyFromSlack = (req, res, next) => {
     if (req.body.token !== config.slack.commandToken) {
@@ -11,9 +11,10 @@ const verifyFromSlack = (req, res, next) => {
     return next();
 }
 
-router.post('/', /*verifyFromSlack,*/ (req, res, next) => {
+router.post('/', (req, res, next) => {
     console.log(JSON.parse(req.body.payload));
     res.end('It works!');
 });
 
+*/
 module.exports = router;

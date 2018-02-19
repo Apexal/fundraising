@@ -242,8 +242,9 @@ router.post('/:workshopId/archive', (req, res, next) => {
 
 router.get('/:workshopId/fundraising', (req, res, next) => {
     if (!helpers.workshopRanksFilled(req.workshop)) {
-        req.flash('error', 'Once a workshop\'s ranks are filled fundraising will become available.');
-        return res.redirect('/workshops/' + req.workshop._id);
+        // TODO: UNCOMMENT AFTER TESTING
+        //req.flash('error', 'Once a workshop\'s ranks are filled fundraising will become available.');
+        //return res.redirect('/workshops/' + req.workshop._id);
     }
 
     res.locals.workshop = req.workshop;
