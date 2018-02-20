@@ -222,13 +222,15 @@ router.post('/:workshopId/unassign', (req, res, next) => {
         .then(user => {
             if (!user) throw new Error("Invalid user!");
 
+            const rank = helpers.getRankFromWorkshop(req.workshop, user);
+
             req.removed = user;
 
-            if (res.locals.involvedRank == 'ambassador') {
+            if (rank == 'ambassador') {
                 throw new Error("Cannot remove ambassador from team.");
-            } else if (res.locals.involvedRank == 'director') {
+            } else if (rank == 'director') {
                 req.workshop.director = null;
-            } else if (res.locals.involvedRank == 'teacher') {
+            } else if (rank == 'teacher') {
                 req.workshop.teachers = req.workshop.teachers.filter(t => !t.equals(user));
             } else {
                 throw new Error("User is not on workshop team.");
