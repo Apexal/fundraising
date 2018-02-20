@@ -64,9 +64,9 @@ mixin feedback-modal
                 .modal-body
                     form#feedback-form(action="/feedback", method="POST")
                         
-                        .form-group
+                        .form-group.hidden
                             label(for="feedback-path") Page
-                            input.form-control#feedback-path(type="text", name="feedbackPath", value=pagePath, required, disabled)
+                            input.form-control#feedback-path(type="text", name="feedbackPath", value=pagePath, required)
                         
                         .form-group
                             label(for="feedback-path") Comment

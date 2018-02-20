@@ -12,21 +12,21 @@ block content
         .col-xs-12.col-lg-4
             .panel.panel-info
                 .panel-heading
-                    h1.panel-title Info Here
+                    h1.panel-title Teachers
                 .panel-body
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    button.btn.btn-info.right Action
+                    p= helpers.getHelpInfo('teachers')
+                    a.btn.btn-info.right(href="/application") Apply
         .col-xs-12.col-lg-4
-            .panel.panel-info
+            .panel.panel-warning
                 .panel-heading
-                    h1.panel-title Info Here
+                    h1.panel-title Program Directors
                 .panel-body
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    button.btn.btn-info.right Action
+                    p= helpers.getHelpInfo('director')
+                    a.btn.btn-warning.right(href="/application") Apply
         .col-xs-12.col-lg-4
-            .panel.panel-info
+            .panel.panel-danger
                 .panel-heading
-                    h1.panel-title Info Here
+                    h1.panel-title Ambassadors
                 .panel-body
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    button.btn.btn-info.right Action
+                    p= helpers.getHelpInfo('ambassador')
+                    a.btn.btn-danger.right(href="/application") Apply

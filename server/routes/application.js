@@ -163,10 +163,11 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
 router.get('/applicants', requireLogin, requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Your Applicants';
 
-    let query = { 'application.applying': true };
-    if (req.user.rank != 'ambassador') query['application.superior'] = req.user._id;
- 
-    req.db.User.find(query)
+    let q = { 'application.applying': true };
+    if (req.user.rank != 'ambassador') q['application.superior'] = req.user._id;
+    console.log(q);
+    
+    req.db.User.find(q)
         .exec()
         .then(applicants => {
             req.session.applicantCount = applicants.length;
