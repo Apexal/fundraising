@@ -31,6 +31,9 @@ mixin user(u)
         
         // Teachers
         h3 Teachers
+            if user.rank == 'teacher' && !isInvolved
+                form.right(action="/workshops/" + workshop.id + "/apply", method="POST")
+                    button.btn.btn-success Apply as Teacher
             small  #{workshop.teachers.length} total
         each t in workshop.teachers
             +user(t)
