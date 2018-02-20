@@ -195,6 +195,8 @@ router.get('/:workshopId', (req, res, next) => {
 /* UNASSIGN team member and remove their contributions */
 router.post('/:workshopId/unassign', (req, res, next) => {
     const userId = req.query.userId;
+    if (!req.workshop.active) return next(new Error("Workshop is inactive so team cannot be changed."));
+
     req.db.User.findById(userId)
         .exec()
         .then(user => {
