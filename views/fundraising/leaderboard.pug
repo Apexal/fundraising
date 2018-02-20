@@ -1,0 +1,24 @@
+extends /layout
+
+block content
+    .row
+        .col-xs-12
+            .page-header
+                h1 #[b= user.region.name] Fundraising Leaderboard
+    
+    .row
+        .col-xs-12
+            .page-header
+                h2 Active Workshops
+                    small  0 total
+
+    .row
+        .col-xs-12
+            .page-header
+                h2 All Workshops
+                    small  0 total
+
+    .row
+        .col-xs-12
+            a.btn.btn-primary(href="/workshops") All #{user.region.name} Workshops
+    

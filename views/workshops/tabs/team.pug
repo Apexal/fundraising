@@ -6,6 +6,9 @@ mixin user(u)
                     a(href="/users/" + u.email)
                         img(src="/images/" + u.profileImageName, alt=u.name.first + "'s profile picture.'", title=u.name.full)
                 .media-body
+                    if isWorkshopHigherUp && helpers.getRankFromWorkshop(workshop, u) == 'teacher'
+                        form(action="/workshops/" + workshop.id + "/unassign?userId=" + u.id, method="POST", onsubmit="return confirm('Are you sure you want to remove " + u.name.full + " from the team?');")
+                            button.fa.fa-close.text-muted.right
                     h4.media-heading= u.name.full
                         if u.id == user.id
                             b  | You

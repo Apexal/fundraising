@@ -192,6 +192,37 @@ router.get('/:workshopId', (req, res, next) => {
     return res.render('workshops/workshop');
 });
 
+/* UNASSIGN team member and remove their contributions */
+router.post('/:workshopId/unassign', (req, res, next) => {
+    const userId = req.query.userId;
+    req.db.User.findById(userId)
+        .exec()
+        .then(user => {
+            if (!user) throw new Error("Invalid user!");
+
+            req.removed = user;
+
+            if (res.locals.involvedRank == 'ambassador') {
+                throw new Error("Cannot remove ambassador from team.");
+            } else if (res.locals.involvedRank == 'director') {
+                req.workshop.director = null;
+            } else if (res.locals.involvedRank == 'teacher') {
+                req.workshop.teachers = req.workshop.teachers.filter(t => !t.equals(user));
+            } else {
+                throw new Error("User is not on workshop team.");
+            }
+
+            // TODO: REMOVE CONTRIBUTIONS (funds, etc)
+
+            return req.workshop.save();
+        })
+        .then(workshop => {
+            req.flash('success', `Successfully removed volunteer ${req.removed.name.full} from team.`);
+            res.redirect('back');
+        })
+        .catch(next);
+});
+
 router.get('/:workshopId/applicants', requireHigherUp, (req, res, next) => {
     res.locals.workshop = req.workshop;
     res.locals.pageTitle = `Workshop ${req.workshop.location.name} Applicants`;
