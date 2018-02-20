@@ -195,7 +195,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             
             req.applicant = applicant;
 
-            log(applicant, 'User Verified', `User was verified to be ${applicant.rank}.`);
+            log(applicant, 'Application Accepted', `User was accepted to be ${applicant.rank}.`);
 
             if (applicant.application.rank == 'teacher') {
                 // Try to find active workshop of director to assign to
@@ -203,13 +203,17 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                     .populate('location')
                     .exec()
                     .then(workshop => {
-                        if (!workshop.teachers.include(applicant._id)) workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
-                        req.flash('info', `Assigned ${applicant.name.first} as a teacher to your workshop at ${workshop.location.name}`);
-                        
+                        if (!workshop.teachers.includes(applicant._id)) {
+                            workshop.teachers.push(applicant._id); // Add applicant (teacher) to workshop
+                            workshop.save();
+                            
+                            req.flash('info', `Assigned ${applicant.name.first} as a teacher to your workshop at ${workshop.location.name}`);
 
-                        workshop.save();
+                            sendEmail(applicant.email, 'Application Accepted', 'applicationAccepted', {applicantFirstName: applicant.name.first, location: workshop.location.name, rank: applicant.rank});
+                        }
                     })
                     .catch(err => {
+                        console.error(err);
                         console.log('No workshop found for ' + applicant.name.full);
                         // Could not find workshop to add applicant to
                     });
@@ -220,8 +224,6 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
             }
         })
         .then(applicant => {
-            //sendEmail(applicant.email, 'Application Accepted', `<h2>Congratulations!</h2><p>Your application to become a Kids Tales <b>${applicant.rank}</b> has been accepted.`);
-
             // Remove writing sample
             const p = path.join(__dirname, '..', '..', 'client', 'public', 'writingsamples', applicant.application.writingFileName);
             try {
@@ -230,8 +232,7 @@ router.post('/verify', requireHigherUp, (req, res, next) => {
                 });
             } catch(e) {}
             
-            return req.db.Region.findOneAndUpdate({_id: applicant.region }, { approved: true }).exec(); 
-            
+            return req.db.Region.findOneAndUpdate({_id: applicant.region }, { approved: true }).exec();
         })
         .then(region => {
             // Only alert if the region wasn't already approved

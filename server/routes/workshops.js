@@ -192,6 +192,26 @@ router.get('/:workshopId', (req, res, next) => {
     return res.render('workshops/workshop');
 });
 
+/* currently logged in user (teacher) APPLIES for workshop */
+router.post('/:workshopId/apply', (req, res, next) => {
+    // Check current user is a teacher
+    if (req.user.rank !== 'teacher') return next(new Error('You are not a teacher so cannot apply to workshops.'));
+
+    // Check not already involved in workshop
+    if (res.locals.isInvolved) return next(new Error('You already are involved in this workshop.'));
+
+    // Set applying
+    req.user.application.applying = true;
+    req.user.application.rank = 'teacher';
+    req.user.application.superior = req.workshop.director;
+
+    req.user.save()
+        .then(user => {
+            req.flash('success', 'You applied to be a teacher of this workshop. The Program Director will review your application.');
+            return res.redirect('back');
+        });
+});
+
 /* UNASSIGN team member and remove their contributions */
 router.post('/:workshopId/unassign', (req, res, next) => {
     const userId = req.query.userId;
