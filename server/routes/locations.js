@@ -63,7 +63,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
 
     newLocation.save()
         .then(l => {
-            log(req.user, 'new_location', `${req.user.name.full} (${req.user.email}) created new location ${l.name}.`);
+            log(req.user, 'Location Add', `${req.user.name.full} (${req.user.email}) created new location ${l.name}.`);
 
             if (req.query.from == 'new_workshop') return res.redirect('/workshops/new?locationId=' + l.id);
             

@@ -45,7 +45,7 @@ router.post('/new', (req, res, next) => {
 
     newRegion.save()
         .then(region => {
-            log(req.user, 'new_region', `${req.user.name.full} (${req.user.email}) created new region ${region.name}.`);
+            log(req.user, 'Region Add', `${req.user.name.full} (${req.user.email}) created new region ${region.name}.`);
 
             req.flash('success', `Added Region ${region.name}.`);
             res.redirect('/regions');
