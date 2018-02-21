@@ -30,6 +30,7 @@ block content
                     details.involvement-details(open)
                         summary #[b.rank= helpers.getRankFromWorkshop(i, user)] at #[b= i.location.name]
                         p Ending #[b= moment(i.endDate).fromNow()] | #[b= moment(i.endDate).format("dddd, MMMM Do YYYY")]
+                        button.btn.btn-primary.workshop-modal-toggle.right(data-toggle="modal", data-target="#workshop-modal-" + i.id) Overview
                         .volunteers
                             if i.ambassador
                                 a(href="/users/" + i.ambassador.email)
@@ -41,7 +42,7 @@ block content
                                 a(href="/users/" + t.email)
                                     img(src="/images/" + t.profileImageName, data-toggle="tooltip", title="Teacher " + t.name.full, alt="Teacher " + t.name.full)
                         
-                        button.btn.btn-primary.workshop-modal-toggle(data-toggle="modal", data-target="#workshop-modal-" + i.id) Overview
+                        
                         hr
             else
                 p.text-muted.text-center You are not currently involved in any #[b ongoing workshops].#[br]Apply for a position on the #[a(href="/workshops") workshop page].
