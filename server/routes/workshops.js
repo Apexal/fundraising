@@ -225,6 +225,10 @@ router.post('/:workshopId/unassign', (req, res, next) => {
 
             const rank = helpers.getRankFromWorkshop(req.workshop, user);
 
+            // Make sure logged in user is a higher up
+            // If they aren't they can only be removing themselves
+            if (!res.locals.isWorkshopHigherUp && req.user.id != userId) throw new Error("You cannot remove anyone but yourself!");
+
             req.removed = user;
 
             if (rank == 'ambassador') {
