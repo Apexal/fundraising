@@ -6,7 +6,7 @@ block content
             .page-header
                 h1 
                     if targetUser.admin
-                        i.fa.fa-star(title="This user is an admin.", data-toggle="tooltip")
+                        i.fa.fa-star.admin-star(title="Board Member", data-toggle="tooltip")
                     | #[b= targetUser.rankName] #{targetUser.name.full}
                     small.text-muted.right(title=moment(targetUser.registeredDate).format("dddd, MMMM Do YYYY"), data-toggle="tooltip") registered #{moment(targetUser.registeredDate).fromNow()}
     .row.user-info
