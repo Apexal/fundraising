@@ -59,20 +59,18 @@ block content
                 table.table
                     thead
                         tr
+                            th View
                             th Start Date
                             th End Date
-                            th Ambassador
                             th Program Director
                     tbody
                         each w in activeWorkshops
+                            +workshop-modal(w)
                             tr
+                                td
+                                    button.btn.btn-primary.workshop-modal-toggle(data-toggle="modal", data-target="#workshop-modal-" + w.id) Overview
                                 td= moment(w.startDate).format("dddd, MMMM Do YY")
                                 td= moment(w.endDate).format("dddd, MMMM Do YY")
-                                td
-                                    if w.ambassador
-                                        a(href="/users/" + w.ambassador.email)= w.ambassador.name.full
-                                    else
-                                        span.text-muted None
                                 td
                                     if w.director
                                         a(href="/users/" + w.director.email)= w.director.name.full
@@ -86,18 +84,14 @@ block content
                 table.table
                     thead
                         tr
+                            th Start Date
                             th End Date
-                            th Ambassador
                             th Program Director
                     tbody
                         each c in inactiveWorkshops
                             tr
+                                td= moment(c.startDate).format("dddd, MMMM Do YY")
                                 td= moment(c.endDate).format("dddd, MMMM Do YY")
-                                td
-                                    if c.ambassador
-                                        a(href="/users/" + c.ambassador.email)= c.ambassador.name.full
-                                    else
-                                        span.text-muted None
                                 td
                                     if c.director
                                         a(href="/users/" + c.director.email)= c.director.name.full

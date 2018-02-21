@@ -84,7 +84,8 @@ block content
 
     if user.admin || env == 'development'
         .row
-            hr
-            if user.id !== targetUser.id
-                a.btn.btn-lg.btn-info(href="/loginas?id=" + targetUser.id, title="Login as them for administrative purposes. USE CAREFULLY", data-toggle="tooltip") Login as #{targetUser.name.first}
-            a.btn.btn-lg.btn-danger(href="/users/" + targetUser.email + "/edit", title="Edit user's profile data.", data-toggle="tooltip") Edit #{targetUser.name.first}
+            .col-xs-12
+                hr
+                if user.id !== targetUser.id
+                    a.btn.btn-info(href="/loginas?id=" + targetUser.id, title="Login as them for administrative purposes. USE CAREFULLY", data-toggle="tooltip") Login as #{targetUser.name.first}
+                a.btn.btn-danger(href="/users/" + targetUser.email + "/edit", title="Edit user's profile data.", data-toggle="tooltip") Edit #{targetUser.name.first}
