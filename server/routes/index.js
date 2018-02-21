@@ -36,7 +36,9 @@ router.get('/', (req, res, next) => {
 
     if (req.user.admin) {
         return req.db.Activity.find()
-            .limit(10)
+            .sort('-dateAdded')
+            .limit(5)
+            .populate('user')
             .exec()
             .then(recentActivities => {
                 res.locals.recentActivities = recentActivities;

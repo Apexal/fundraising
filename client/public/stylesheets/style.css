@@ -65,6 +65,8 @@ textarea {
 .admin-activities .action {
   text-transform: uppercase;
   margin-right: 5px; }
+.admin-activities a {
+  margin-right: 5px; }
 
 .involvement-details .rank {
   text-transform: capitalize; }
