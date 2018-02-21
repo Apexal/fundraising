@@ -30,14 +30,16 @@ mixin workshop-modal(w)
                                     b(title=moment(w.startDate).fromNow(), data-toggle="tooltip")= moment(w.startDate).format("dddd, MMMM Do YY")
                                     |  to 
                                     b(title=moment(w.endDate).fromNow(), data-toggle="tooltip")= moment(w.endDate).format("dddd, MMMM Do YY")
+                            hr
                             .ranks
+                                h3.text-center Workshop Team
+                                    small  #{2 + w.teachers.length} total
                                 if w.ambassador
                                     a(href="/users/" + w.ambassador.email)
                                         img.ambassador(src="/images/" + w.ambassador.profileImageName, title="Ambassador " + w.ambassador.name.full, data-toggle="tooltip")
                                 if w.director
                                     a(href="/users/" + w.director.email)
                                         img.director(src="/images/" + w.director.profileImageName, title="Program Director " + w.director.name.full, data-toggle="tooltip")
-                                br
                                 each t in w.teachers
                                     a(href="/users/" + t.email)
                                         img.teacher(src="/images/" + t.profileImageName, title="Teacher " + t.name.full, data-toggle="tooltip")
