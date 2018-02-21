@@ -54,7 +54,7 @@ router.post('/feedback', (req, res, next) => {
     const comment = req.body.feedbackComment;
 
     sendEmail('thefrankmatranga@gmail.com', 'Kids Tales Volunteer Feedback', 'feedbackSubmitted', { path: fPath, comment });
-    log(req.user, 'feedback', `${req.user.name.full} (${req.user.email}) submitted feedback on page ${fPath}.`);
+    log(req.user, 'Feedback Submit', `${req.user.name.full} (${req.user.email}) submitted feedback on page ${fPath}.`);
 
     req.flash('success', 'Thank you for your feedback! It\'s been sent to the developer immediately.');
     res.redirect('back');
@@ -93,7 +93,10 @@ router.get('/loginas', (req, res, next) => {
 });
 
 router.get('/logout', function(req, res){
+    log(req.user, 'Logout', `Manually logged out.`);
+    
     req.logout();
+    
     req.flash('info', 'Successful logout.');
     res.redirect('/');
 });
@@ -161,6 +164,8 @@ router.post('/profile', requireLogin, upload.single('profileImage'), (req, res, 
     // Called if no profile picture was uploaded
     return req.user.save()
         .then(user => {
+            log(req.user, 'Profile Edit', `Edited their own profile.`);
+
             req.flash('success', 'Successfully updated profile.');
             res.redirect('/profile');
         })

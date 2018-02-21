@@ -99,6 +99,8 @@ router.post('/:email/edit', requireAdmin, (req, res, next) => {
             return user.save();
         })
         .then(user => {
+            log(req.user, 'User Edit', `Edited profile of ${user.name.full}.`);
+
             req.flash('success', `Updated ${user.name.full}.`);
             res.redirect('/users/' + user.email);
         })
