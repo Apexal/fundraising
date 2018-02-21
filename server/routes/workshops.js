@@ -126,7 +126,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     newWorkshop
         .save()
         .then(workshop => {
-            log(req.user, 'Workshop Schedule', `${req.user.name.full} (${req.user.email}) scheduled new workshop ${workshop.location} (${workshop.startDate}).`);
+            log(req.user, 'Workshop Schedule', `${req.user.name.full} (${req.user.email}) scheduled new workshop ${workshop.location.name} (${workshop.startDate}).`);
 
             req.flash('success', `Scheduled new workshop on ${startDate.format('dddd, MMMM Do YYYY')}.`);
             res.redirect(`/workshops/${workshop._id}`);
@@ -173,7 +173,7 @@ router.all(['/:workshopId', '/:workshopId/*'], (req, res, next) => {
 router.post('/:workshopId/delete', requireAdmin, (req, res, next) => {
     req.workshop.remove()
         .then(workshop => {
-            log(req.user, 'Workshop Delete', `${req.user.name.full} (${req.user.email}) deleted workshop ${workshop.location} (${workshop.startDate}).`);
+            log(req.user, 'Workshop Delete', `${req.user.name.full} (${req.user.email}) deleted workshop ${workshop.location.name} (${workshop.startDate}).`);
 
             req.flash('success', `Deleted workshop and funds at ${workshop.location.name}.`);
             res.redirect('/workshops');
@@ -208,6 +208,7 @@ router.post('/:workshopId/apply', (req, res, next) => {
     req.user.save()
         .then(user => {
             req.flash('success', 'You applied to be a teacher of this workshop. The Program Director will review your application.');
+            log(req.user, 'Workshop Apply', `Applied to be teacher of workshop ${req.workshop.location.name} (${req.workshop.startDate}).`);
             return res.redirect('back');
         });
 });
@@ -242,6 +243,7 @@ router.post('/:workshopId/unassign', (req, res, next) => {
         })
         .then(workshop => {
             req.flash('success', `Successfully removed volunteer ${req.removed.name.full} from team.`);
+            log(req.user, 'Workshop Unassign', `Unassigned ${req.removed.name.full} from workshop ${req.workshop.location.name} (${req.workshop.startDate}).`);
             res.redirect('back');
         })
         .catch(next);
@@ -274,7 +276,7 @@ router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
 
     req.workshop.save()
         .then(workshop => {
-            log(req.user, 'Workshop Edit', `${req.user.name.full} (${req.user.email}) edited workshop ${req.workshop.location} (${req.workshop.startDate}).`);
+            log(req.user, 'Workshop Edit', `${req.user.name.full} (${req.user.email}) edited workshop ${req.workshop.location.name} (${req.workshop.startDate}).`);
             req.flash('success', `Saved edits to workshop.`);
             res.redirect('/workshops/' + workshop._id);
         })
@@ -288,7 +290,7 @@ router.post('/:workshopId/archive', (req, res, next) => {
 
     req.workshop.save()
         .then(workshop => {
-            log(req.user, 'Workshop Archive', `${req.user.name.full} (${req.user.email}) archived workshop ${req.workshop.location} (${req.workshop.startDate}).`);
+            log(req.user, 'Workshop Archive', `${req.user.name.full} (${req.user.email}) archived workshop ${req.workshop.location.name} (${req.workshop.startDate}).`);
             req.flash('success', `Successfully archived workshop.`);
             res.redirect('/workshops/' + workshop._id);
         })
@@ -374,7 +376,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
             workshopId: req.workshop.id
         };
 
-        log(req.user, 'Funds Add', `${req.user.name.full} (${req.user.email}) added funds to workshop ${req.workshop.location} (${req.workshop.startDate}).`);
+        log(req.user, 'Funds Add', `${req.user.name.full} (${req.user.email}) added funds to workshop ${req.workshop.location.name} (${req.workshop.startDate}).`);
 
         if (req.workshop.ambassador) sendEmail(req.workshop.ambassador.email, 'New Funds', 'newFunds',  data);
         if (req.workshop.director) sendEmail(req.workshop.director.email, 'New Funds', 'newFunds', data);
@@ -407,7 +409,7 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
             return funds.remove();
         })
         .then(funds => {
-            log(req.user, 'Funds Remove', `${req.user.name.full} (${req.user.email}) removed funds from ${req.workshop.location} (${req.workshop.startDate}).`);
+            log(req.user, 'Funds Remove', `${req.user.name.full} (${req.user.email}) removed funds from ${req.workshop.location.name} (${req.workshop.startDate}).`);
 
             req.flash('success', 'Removed funds for workshop.');
             res.redirect('/workshops/' + req.workshop._id + '/fundraising');
@@ -447,7 +449,7 @@ router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
         const text = `<http://kidstales.ddns.net:3000/users/${req.user.email}|${req.user.name.full}> added **$${amount}** in ${form} to <http://kidstales.ddns.net/workshops/${workshopId}|Workshop ${req.workshop.location.name}>`;
         //return slack.sendMessage(text);
     }).then(body => {
-        log(req.user, 'Funds Goal Add', `${req.user.name.full} (${req.user.email}) added a fundraising goal to ${req.workshop.location} (${req.workshop.startDate}).`);
+        log(req.user, 'Funds Goal Add', `${req.user.name.full} (${req.user.email}) added a fundraising goal to ${req.workshop.location.name} (${req.workshop.startDate}).`);
 
         req.flash('success', 'Added new fundraising goal for workshop.');
         res.redirect(`/workshops/${req.workshop._id}/fundraising`);
@@ -472,7 +474,7 @@ router.post('/:workshopId/removefundraisinggoal', (req, res, next) => {
             return goal.remove();
         })
         .then(funds => {
-            log(req.user, 'Funds Goal Remove', `${req.user.name.full} (${req.user.email}) added a fundraising goal to ${req.workshop.location} (${req.workshop.startDate}).`);
+            log(req.user, 'Funds Goal Remove', `${req.user.name.full} (${req.user.email}) added a fundraising goal to ${req.workshop.location.name} (${req.workshop.startDate}).`);
 
             req.flash('success', 'Removed fundraising goal for workshop.');
             res.redirect('/workshops/' + req.workshop._id + '/fundraising');
