@@ -22,25 +22,29 @@ block content
     .row
         .col-xs-12.col-sm-6.col-md-5
             h1(style="margin-top: 0px;") Current Involvements
-            for i in involvements
-                +workshop-modal(i)
-                details.involvement-details(open)
-                    summary #[b.rank= helpers.getRankFromWorkshop(i, user)] at #[b= i.location.name]
-                    p Ending #[b= moment(i.endDate).fromNow()] | #[b= moment(i.endDate).format("dddd, MMMM Do YYYY")]
-                    .volunteers
-                        if i.ambassador
-                            a(href="/users/" + i.ambassador.email)
-                                img(src="/images/" + i.ambassador.profileImageName, data-toggle="tooltip", title="Ambassador " +i.ambassador.name.full, alt="Ambassador " +i.ambassador.name.full)
-                        if i.director
-                            a(href="/users/" + i.director.email)
-                                img(src="/images/" + i.director.profileImageName, data-toggle="tooltip", title="Program Director " +i.director.name.full, alt="Program Director " +i.director.name.full)
-                        each t in i.teachers
-                            a(href="/users/" + t.email)
-                                img(src="/images/" + t.profileImageName, data-toggle="tooltip", title="Teacher " + t.name.full, alt="Teacher " + t.name.full)
-                    
-                    button.btn.btn-primary.workshop-modal-toggle(data-toggle="modal", data-target="#workshop-modal-" + i.id) Overview
-                    hr
-
+                small  #{involvements.length} total
+            
+            if involvements.length > 0
+                for i in involvements
+                    +workshop-modal(i)
+                    details.involvement-details(open)
+                        summary #[b.rank= helpers.getRankFromWorkshop(i, user)] at #[b= i.location.name]
+                        p Ending #[b= moment(i.endDate).fromNow()] | #[b= moment(i.endDate).format("dddd, MMMM Do YYYY")]
+                        .volunteers
+                            if i.ambassador
+                                a(href="/users/" + i.ambassador.email)
+                                    img(src="/images/" + i.ambassador.profileImageName, data-toggle="tooltip", title="Ambassador " +i.ambassador.name.full, alt="Ambassador " +i.ambassador.name.full)
+                            if i.director
+                                a(href="/users/" + i.director.email)
+                                    img(src="/images/" + i.director.profileImageName, data-toggle="tooltip", title="Program Director " +i.director.name.full, alt="Program Director " +i.director.name.full)
+                            each t in i.teachers
+                                a(href="/users/" + t.email)
+                                    img(src="/images/" + t.profileImageName, data-toggle="tooltip", title="Teacher " + t.name.full, alt="Teacher " + t.name.full)
+                        
+                        button.btn.btn-primary.workshop-modal-toggle(data-toggle="modal", data-target="#workshop-modal-" + i.id) Overview
+                        hr
+            else
+                p.text-muted.text-center You are not currently involved in any #[b ongoing workshops].#[br]Apply for a position on the #[a(href="/workshops") workshop page].
         .col-xs-12.col-sm-6.col-md-7
             #homepage-calendar
             script(src="/javascripts/calendar.js")
