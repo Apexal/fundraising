@@ -192,7 +192,8 @@ a.location-name {
 .workshop-team .panel {
   margin-bottom: 0; }
 .workshop-team img {
-  height: 80px; }
+  height: 80px;
+  border-radius: 4px; }
 
 .workshop-info tr td:first-child {
   text-transform: capitalize; }
