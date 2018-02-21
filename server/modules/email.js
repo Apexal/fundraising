@@ -25,6 +25,9 @@ const renderTemplate = (template, data) => {
         template = template.replace(new RegExp(`{{${d}}}`, 'g'), data[d]);
     }
 
+    // Fill in links to the proper url depending on environment
+    template = template.replace(new RegExp(`{{url}}`, 'g'), config.get('url'));
+
     return template;
 }
 
