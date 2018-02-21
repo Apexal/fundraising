@@ -30,7 +30,24 @@
 }
 
 .involvement-details {
+    .rank {
+        text-transform: capitalize;
+    }
+
     summary {
         font-size: 1.6em;
+    }
+
+    .volunteers img {
+        border: 2px solid #222;
+        height: 70px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+
+    hr {
+        margin-top: 0.9em;
     }
 }
