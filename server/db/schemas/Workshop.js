@@ -24,7 +24,6 @@ const workshopSchema = new Schema({
         language: { type: String, trim: true, default: 'English', maxlength: 30 },
         extra: { type: String, trim: true, maxlength: 2000 }
     },
-    claimed: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
     dateAdded: { type: Date, required: true }
 }, {

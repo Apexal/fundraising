@@ -43,9 +43,9 @@ router.get('/events', (req, res, next) => {
                 if (!w.active) bgColor = 'grey';
 
                 const event = {
-                    title: w.location.name + (w.director ? (' | ' + w.director.name.full) : ''),
+                    title: w.location.name + (w.director ? ' | ' + w.director.name.full : ''),
                     start: w.startDate,
-                    end: w.endDate,
+                    end: moment(w.endDate).endOf('day').toDate(),
                     url: w.active ? ('/workshops/' + w.id) : undefined,
                     backgroundColor: bgColor,
                     workshop: w

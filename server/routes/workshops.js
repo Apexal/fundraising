@@ -76,7 +76,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     const endDate = moment(req.body.endDate, "YYYY-MM-DD");
     const language = req.body.language;
     const classRoomAvailable = ('classRoomAvailable' in req.body);
-    
+
     // Contact Info
     const contactName = req.body.contactName;
     const contactInfo = req.body.contactInfo;

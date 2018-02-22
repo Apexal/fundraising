@@ -6,6 +6,7 @@ $(function() {
             left:   'title',
             center: '',
             right:  'today prev,next'
-        }
+        },
+        timezone: 'local'
     });
 });
