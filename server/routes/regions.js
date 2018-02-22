@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const config = require('config');
 
 router.use(requireAdmin);
 
@@ -62,7 +63,8 @@ router.get('/:regionId', (req, res, next) => {
         .then(region => {
             if (!region) throw new Error('Region doesn\'t exist!');
             if (!region.approved) throw new Error('Region is not yet approved!');
-
+            
+            res.locals.apiKey = config.get('googleAuth.apiKey');
             res.locals.region = region;
 
             return req.db.User.find({ region: region._id, verified: true }).exec();

@@ -141,6 +141,11 @@ a.location-name {
 .region-table .profile-image {
   width: 70px; }
 
+.region-marker-window h1, .region-marker-window h2, .region-marker-window h3, .region-marker-window h4, .region-marker-window h5, .region-marker-window h6 {
+  margin: initial; }
+.region-marker-window hr {
+  margin: 3px; }
+
 /* USER INDEX/LIST PAGE */
 .user-list .profile-image {
   height: 50px;
