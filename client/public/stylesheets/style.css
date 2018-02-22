@@ -85,6 +85,9 @@ textarea {
 .navbar-top .profilepicture {
   margin: 0 !important;
   padding: 0 !important; }
+.navbar-top .navbar-brand {
+  margin-right: 0px;
+  padding-right: 5px; }
 
 /* APPLICATION PAGE */
 .application-form .help-icon {
