@@ -55,8 +55,6 @@ router.post('/new', (req, res, next) => {
 });
 
 router.get('/:regionId', (req, res, next) => {
-    res.locals.pageTitle = 'Region';
-
     req.db.Region.findById(req.params.regionId)
         .populate('ambassador')
         .exec()
@@ -64,6 +62,8 @@ router.get('/:regionId', (req, res, next) => {
             if (!region) throw new Error('Region doesn\'t exist!');
             if (!region.approved) throw new Error('Region is not yet approved!');
             
+            res.locals.pageTitle = 'Region ' + region.name;
+
             res.locals.apiKey = config.get('googleAuth.apiKey');
             res.locals.region = region;
 

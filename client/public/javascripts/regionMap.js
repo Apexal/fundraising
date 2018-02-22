@@ -1,19 +1,48 @@
 function initMap() {
-    var uluru = {lat: 40.783060, lng: -73.971249};
-    var map = new google.maps.Map(document.getElementById('region-map'), {
-        zoom: 10,
-        center: uluru
-    });
-    var marker = new google.maps.Marker({
-        position: {lat: 40.779332, lng: -73.959009},
-        map: map,
-        title: 'Regis High School'
+    const geocoder = new google.maps.Geocoder();
+    const regionName = document.title.split(' | ')[0].split(' ')[1];
+
+    // Geocode region center
+    geocode(regionName, g => {
+        var center = g[0].geometry.location;
+        var map = new google.maps.Map(document.getElementById('region-map'), {
+            zoom: 10,
+            center
+        });
+
+        let marker;
+        $.getJSON('/api/locations', data => {
+            data.forEach(l => {
+                geocode(l.address, g => {
+                    if (!g) return;
+
+                    let marker = new google.maps.Marker({
+                        position: g[0].geometry.location,
+                        map: map,
+                        title: l.name
+                    });
+
+                    let infoWindow = new google.maps.InfoWindow({
+                        content: `<div class='region-marker-window'><h4>${l.name}</h4><hr><span class="address"><a href="/locations/${l._id}">${l.address}</a></div>`
+                    });
+                    marker.addListener('click', () => {
+                        infoWindow.open(map, marker);
+                    });
+                });
+            });
+        });
     });
 
-    var infoWindow = new google.maps.InfoWindow({
-        content: `<div class='region-marker-window'><h4>Location Name</h4><hr><span class="address"><a href="/locations">Location Address</a></div>`
-    });
-    marker.addListener('click', () => {
-        infoWindow.open(map, marker);
-    });
+    function geocode(address, callback) {
+        geocoder.geocode({ address }, function(results, status) {
+            console.log(status);
+            if (status == 'OK') {
+                return callback(results);
+            } else {
+                console.log(status)
+            }
+
+            return null;
+        });
+    }
 }

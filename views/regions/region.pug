@@ -12,15 +12,17 @@ block content
             blockquote.region-description
                 p= region.description
     
-        .col-xs-12.col-md-6
+    .row
+        .col-xs-12.col-sm-4.text-center
             h2 Ambassador
             if region.ambassador
                 a(href="/users/" + region.ambassador.email)
                     image.profile-image(width="200", height="250", src="/images/" + region.ambassador.profileImageName, alt="Coming soon...")
             else
                 p.text-muted None.
-        .col-xs-12.col-md-6
-            #region-map(style='width: 500px; height: 500px;')
+        .col-xs-12.col-sm-8
+            h2 All Locations
+            #region-map.right(style='width:100%; height: 500px;')
     .row
         .col-xs-12
             hr
