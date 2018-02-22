@@ -9,9 +9,9 @@ helpInfo['administrators'] = "Lorem ipsum dolor sit amet, consectetur adipiscing
 helpInfo['news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 helpInfo['latest-updates'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
-helpInfo['ambassador'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
-helpInfo['director'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
-helpInfo['teachers'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
+helpInfo['ambassador'] = "Kids Tales ambassadors are seasoned leaders who supervise the expansion of our mission and impact. Ambassadors recruit new program directors and facilitate the process of creating their workshops, ultimately spreading our unwavering passion throughout their own community.";
+helpInfo['director'] = "Kids Tales program directors are leaders that create and manage their own workshop. They are responsible for contacting an organization, coordinating operations, recruiting teachers and, of course, running the classroom.";
+helpInfo['teachers'] = "Kids Tales teachers work individually with students throughout a workshop, taking them through the process of creating their very own short story.";
 
 helpInfo['latest-news'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sollicitudin libero mollis libero dictum, non mattis urna eleifend.";
 
