@@ -41,7 +41,7 @@ router.get('/list', (req, res, next) => {
         ]
     };
 
-    req.db.Workshop.paginate((s ? query : {region: req.user.region}), { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { dateAdded: -1 } })
+    req.db.Workshop.paginate((s ? query : {region: req.user.region}), { page, limit: 10, populate: ['location', 'ambassador', 'director', 'teachers'], sort: { startDate: -1 } })
         .then(result => {
             res.locals.page = result.page;
             res.locals.pages = result.pages;
