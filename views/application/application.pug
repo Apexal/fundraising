@@ -35,6 +35,7 @@ block content
                         select#rank.form-control(name="rank", required)
                             option(value="teacher", selected=(user.application.rank == 'teacher')) Teacher
                             option(value="director", selected=(user.application.rank == 'director')) Program Director
+                            option(value="ambassador", selected=(user.application.rank == 'ambassador')) Ambassador
 
                     .form-group
                         label(for='superior', style=(user.application.rank == 'ambassador' ? 'display: none' : '')) Program Director

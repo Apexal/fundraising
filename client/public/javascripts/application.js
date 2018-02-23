@@ -42,6 +42,10 @@ $(function () {
             rankLabel.text('Ambassador');
             directorsSelect.hide();
             ambassadorsSelect.show();
+        } else if (this.value == 'ambassador') {
+            rankLabel.hide();
+            directorsSelect.hide();
+            ambassadorsSelect.hide();
         }
     });
 });
