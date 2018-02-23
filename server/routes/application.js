@@ -96,7 +96,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         req.flash('info', `Your application to become a ${rank} has been submitted. It will be reviewed shortly. Please check your email for updates.`);
     }
 
-    const superiorId;
+    let superiorId;
     if (rank == 'teacher') superiorId = req.body.directorId;
     if (rank == 'director') superiorId = req.body.ambassadorId;
 

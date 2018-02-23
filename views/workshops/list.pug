@@ -29,7 +29,7 @@ block content
                     else
                         | There are currently no existing #[b workshops].
 
-    if user.rank != 'teacher' || user.admin
+    if user.rank == 'director'
         .row
             .col-xs-12
                 //- Only program directors, ambassadors, and admins of any rank can schedule new workshops

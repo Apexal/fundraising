@@ -8,7 +8,7 @@ block content
                 p= helpers.getHelpInfo('workshops')
 
                 //- Only program directors, ambassadors, and admins of any rank can schedule new workshops
-                if user.rank != 'teacher' || user.admin
+                if user.rank == 'director'
                     a.btn.btn-danger(href='/workshops/new', title="Schedule a new workshop with all its info.", data-toggle="tooltip") New Workshop
                 a.btn.btn-primary.right(href='/workshops/list', title="View/search all current and old workshops.", data-toggle="tooltip") All #{user.region.name} Workshops
             hr
