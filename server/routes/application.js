@@ -96,7 +96,10 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         req.flash('info', `Your application to become a ${rank} has been submitted. It will be reviewed shortly. Please check your email for updates.`);
     }
 
-    const superiorId = (rank == 'teacher' ? req.body.directorId : req.body.ambassadorId);
+    const superiorId;
+    if (rank == 'teacher') superiorId = req.body.directorId;
+    if (rank == 'director') superiorId = req.body.ambassadorId;
+
     const why = req.body.why;
 
     const recommender = req.body.recommender;
@@ -118,7 +121,7 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
         application: {
             applying: true,
             rank,
-            superior: superiorId,
+            superior: superiorId, // Can be null
             recommender,
             why,
             updatedAt: new Date()
@@ -129,18 +132,16 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
     // Only set if uploaded, otherwise it would reset if nothing was uploaded
     if (req.file) user.application.writingFileName = req.file.filename;
 
-    if (['teacher', 'director'].includes(rank) || (rank == 'ambassador' && req.body.region == 'new')) {
+    if (['teacher', 'director', 'ambassador'].includes(rank)) {
         user.application.rank = rank;
     } else {
         return next(new Error('Invalid rank!'));
     }
 
-    user.application.superior = superiorId; // Can be null
-
-    req.db.User.findOneAndUpdate({ email }, user, { upsert: true, new: true, setDefaultsOnInsert: true })
+    req.db.User.findOneAndUpdate({ email, verified: false }, user, { upsert: true, new: true, setDefaultsOnInsert: true })
         .exec()
         .then(user => {
-            log(user, 'application', `New application for ${user.name.full}.`);
+            log(user, 'application', `New application for ${user.name.full} as ${rank}.`);
             return user.save();
         })
         .then(user => {
