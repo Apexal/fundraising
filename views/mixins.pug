@@ -80,7 +80,7 @@ mixin application(a)
     .panel.panel-default.applicant-panel
         .panel-body
             form.form(action="/application/verify?userId=" + a.id, method="POST", onsubmit="return confirm('Are you sure you want to accept " + a.name.first + "'s application?');")
-                h2= a.name.full
+                h2 #[b.capitalize=a.application.rank] #{a.name.full}
                     small.right(title=moment(a.registeredDate).format("dddd, MMMM Do YYYY, h:mm a"))= moment(a.registeredDate).fromNow()
                 hr
                 .applicant-info

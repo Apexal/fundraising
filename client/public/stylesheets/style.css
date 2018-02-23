@@ -31,6 +31,9 @@ textarea {
 .inline {
   display: inline; }
 
+.capitalize {
+  text-transform: capitalize; }
+
 @media only screen and (max-width: 768px) {
   .page-header h1, .page-header h2, .page-header h3 {
     text-align: center; }
