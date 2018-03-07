@@ -62,6 +62,11 @@ router.get('/new', requireHigherUp, (req, res, next) => {
         .exec()
         .then(locations => {
             res.locals.locations = locations;
+
+            return req.db.User.find({ region: req.user.region, rank: 'director', verified: true });
+        }).then(directors => {
+            res.locals.directors = directors;
+
             res.render('workshops/new');
         })
         .catch(next);
@@ -103,6 +108,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
         startDate: startDate.toDate(),
         endDate: endDate.toDate(),
         ambassador,
+        director: req.user,
         info: {
             studentCount,
             studentAgeRange,
