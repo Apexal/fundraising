@@ -20,4 +20,16 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/:locationId', (req, res, next) => {
+    req.db.Location.findById(req.params.locationId)
+        .populate('comments.author')
+        .exec()
+        .then(location => {
+            if (!location) throw new Error('Location does not exist!');
+
+            return res.json(location);
+        })
+        .catch(next);
+});
+
 module.exports = router;
