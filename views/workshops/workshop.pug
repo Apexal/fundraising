@@ -48,16 +48,16 @@ block content
                 
 
     .row.tab-content
-        #team.col-xs-12.col-md-7.tab-pane.fade.in.active
+        #team.col-xs-12.col-md-9.tab-pane.fade.in.active
             include tabs/team
-        #info.col-xs-12.col-md-7.tab-pane.fade
+        #info.col-xs-12.col-md-9.tab-pane.fade
             include tabs/info
-        #curriculum.col-xs-12.col-md-7.tab-pane.fade
+        #curriculum.col-xs-12.col-md-9.tab-pane.fade
             include tabs/curriculum
-        #fundssumary.col-xs-12.col-md-7.tab-pane.fade
+        #fundssumary.col-xs-12.col-md-9.tab-pane.fade
             include tabs/fundssummary
 
-        .col-xs-12.col-md-5
+        .col-xs-12.col-md-3
             br
             if workshop.location.imageUrl
                 a(href="/locations/" + workshop.location.id)
