@@ -99,6 +99,9 @@ router.post('/new', requireHigherUp, (req, res, next) => {
     // Region ambassador
     const ambassador = req.user.region.ambassador;
 
+    // Region director
+    const director = req.user.rank == 'ambassador' ? req.body.director : req.user;
+
     // Validate
     if (startDate.isSame(endDate, 'day') || endDate.isBefore(startDate)) return next(new Error('Invalid dates! Make sure the end date comes after the start.'));
 
@@ -108,7 +111,7 @@ router.post('/new', requireHigherUp, (req, res, next) => {
         startDate: startDate.toDate(),
         endDate: endDate.toDate(),
         ambassador,
-        director: req.user,
+        director,
         info: {
             studentCount,
             studentAgeRange,

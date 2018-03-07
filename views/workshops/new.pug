@@ -16,7 +16,17 @@ block content
                     label(for='end-date') End Date
                     input.form-control#end-date(type='date', value=moment().add(1, 'days').format("YYYY-MM-DD"), min=moment().format('YYYY-MM-DD'), max=moment().add(1, 'years').format('YYYY-MM-DD'), name='endDate', required)
                 hr
-                
+
+                if user.rank == 'ambassador'
+                    h3 Program Director
+                    .form-group
+                        select.form-control#director(name='director')
+                            option(value=user.id, selected)= user.name.full
+                            each d in directors
+                                if d.id !== user.id
+                                    option(value=d.id)= d.name.full
+                    hr
+
                 h3 Location Info
                 if locations.length > 0
                     if !fromNewLocation
