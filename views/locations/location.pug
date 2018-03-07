@@ -21,7 +21,7 @@ block content
                     small.right(title=moment(location.registeredDate).format("dddd, MMMM Do YYYY"), data-toggle="tooltip") added #{moment(location.dateAdded).fromNow()}
     .row
         .col-xs-12.col-lg-7
-            iframe.location-iframe(width="650", height="450", frameborder="0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.address, allowfullscreen)
+            iframe.location-iframe(width="650", height="450", frameborder="0", src="https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + location.geolocation[0].formattedAddress, allowfullscreen)
         .col-xs-12.col-lg-5
             if location.imageUrl
                 a(href=location.link, target="_blank")

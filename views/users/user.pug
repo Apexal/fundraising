@@ -12,18 +12,19 @@ block content
     .row.user-info
         .col-xs-12.col-sm-5.col-md-4.col-lg-3.summary
             img.profilepicture.-large(src="/images/" + targetUser.profileImageName, alt=targetUser.name.first + "'s profile picture.'", title=targetUser.name.full)
-            
-        .col-xs-12.col-sm-7.col-md-8.col-lg-9.contact
-            .panel.panel-default
-                .panel-body
-                    p.text-muted.text-center #[b= targetUser.age] years old in grade #[b= targetUser.grade] near #[b= targetUser.location]
-                        br
-                        b Phone #: 
-                        span.phonenumber= targetUser.phoneNumber
-                        br
-                        a.email(href="mailto:" + targetUser.email)= targetUser.email
 
-        .col-xs-12.col-sm-7.col-lg-9
+        .col-xs-12.col-sm-5.col-md-4.col-lg-3.contact
+            .panel.panel-default
+                .panel-heading
+                    h3.panel-title User Info
+                ul.list-group
+                    li.list-group-item #[b Age] #[span.right= targetUser.age]
+                    li.list-group-item #[b Grade] #[span.right= targetUser.grade]
+                    li.list-group-item #[b Location] #[span.right= targetUser.location]
+                    li.list-group-item #[b Phone #] #[span.right= targetUser.phoneNumber]
+                    li.list-group-item #[b Email] #[a.email.right(href="mailto:" + targetUser.email)= targetUser.email]
+
+        .col-xs-12.col-sm-7.col-lg-5
             blockquote.why
                 p= targetUser.application.why
                 footer "Why Kids Tales?"
