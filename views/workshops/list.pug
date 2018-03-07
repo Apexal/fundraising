@@ -29,9 +29,10 @@ block content
                     else
                         | There are currently no existing #[b workshops].
 
-    if user.rank == 'director'
+    if user.rank != 'teacher'
         .row
             .col-xs-12
                 //- Only program directors, ambassadors, and admins of any rank can schedule new workshops
                 hr
-                a.btn.btn-danger(href='/workshops/new') Schedule New Workshop
+                a.btn.btn-primary(href='/workshops') Workshop Overview
+                a.btn.btn-success(href='/workshops/new') New Workshop
