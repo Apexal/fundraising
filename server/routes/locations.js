@@ -3,6 +3,8 @@ const router = express.Router();
 const moment = require('moment');
 const config = require('config');
 
+const geo = require('../modules/geocoder.js');
+
 router.use(requireLogin);
 
 /* LIST all locations (paginated) and allow filtering */
@@ -61,7 +63,11 @@ router.post('/new', requireHigherUp, (req, res, next) => {
         dateAdded: new Date()
     });
 
-    newLocation.save()
+    geo.geocode(address)
+        .then(result => {
+            newLocation.geolocation = result;
+            return newLocation.save();
+        })
         .then(l => {
             log(req.user, 'Location Add', `${req.user.name.full} (${req.user.email}) created new location ${l.name}.`);
 

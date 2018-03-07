@@ -14,6 +14,7 @@ const locationSchema = new Schema({
         content: { type: String, maxlength: 650, required: true },
         dateAdded: { type: Date, required: true },
     }],
+    geolocation: Object,
     dateAdded: { type: Date, required: true }
 });
 
