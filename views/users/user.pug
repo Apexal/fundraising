@@ -60,7 +60,7 @@ block content
                                         span(title=moment(w.startDate).fromNow(), data-toggle="tooltip")= moment(w.startDate).format("dddd, MMM Do YY")
                                     td
                                         span(title=moment(w.endDate).fromNow(), data-toggle="tooltip")= moment(w.endDate).format("dddd, MMM Do YY")
-                                    td.rank= helpers.getRankFromWorkshop(w, targetUser)
+                                    td.rank.capitalize= helpers.getRankFromWorkshop(w, targetUser)
             else
                 p.text-center.text-muted #[b= targetUser.name.first] is currently not involved in any workshops.
 
@@ -79,7 +79,7 @@ block content
                                     td
                                         a(href="#", data-toggle="modal", data-target="#workshop-modal-" + w.id)= w.location.name
                                     td= moment(w.endDate).format("MMMM Do YYYY")
-                                    td.rank= helpers.getRankFromWorkshop(w, targetUser)
+                                    td.rank.capitalize= helpers.getRankFromWorkshop(w, targetUser)
             else
                 p.text-center.text-muted #[b= targetUser.name.first] has not yet been involved in any finished workshops.
 
