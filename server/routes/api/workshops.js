@@ -59,4 +59,20 @@ router.get('/events', (req, res, next) => {
         .catch(next);
 });
 
+/* GET info on one workshop by its ID */
+router.get('/:workshopId', (req, res, next) => {
+    req.db.Workshop.findById(req.params.workshopId)
+        .populate('location')
+        .populate('ambassador')
+        .populate('director')
+        .populate('teachers')
+        .exec()
+        .then(workshop => {
+            if (!workshop) throw new Error('Failed to find workshop. It may not exist.');
+
+            return res.json(workshop);
+        })
+        .catch(next);
+});
+
 module.exports = router;
