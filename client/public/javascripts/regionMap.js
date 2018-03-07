@@ -13,21 +13,17 @@ function initMap() {
         let marker;
         $.getJSON('/api/locations', data => {
             data.forEach(l => {
-                geocode(l.address, g => {
-                    if (!g) return;
+                let marker = new google.maps.Marker({
+                    position: {lat: l.geolocation[0].latitude, lng: l.geolocation[0].longitude},
+                    map: map,
+                    title: l.name
+                });
 
-                    let marker = new google.maps.Marker({
-                        position: g[0].geometry.location,
-                        map: map,
-                        title: l.name
-                    });
-
-                    let infoWindow = new google.maps.InfoWindow({
-                        content: `<div class='region-marker-window'><h4>${l.name}</h4><hr><span class="address"><a href="/locations/${l._id}">${l.address}</a></div>`
-                    });
-                    marker.addListener('click', () => {
-                        infoWindow.open(map, marker);
-                    });
+                let infoWindow = new google.maps.InfoWindow({
+                    content: `<div class='region-marker-window'><h4>${l.name}</h4><hr><span class="address"><a href="/locations/${l._id}">${l.address}</a></div>`
+                });
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
                 });
             });
         });
