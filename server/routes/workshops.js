@@ -8,6 +8,21 @@ const config = require('config');
 
 router.use(requireLogin);
 
+const requireInvolvedHigherUp = (req, res, next) => {
+    if (res.locals.isWorkshopHigherUp || req.user.admin) return next();
+    return next(new Error('You are not a higher up in that workshop!'));
+}
+
+const requireInvolved = (req, res, next) => {
+    if (res.locals.isInvolved || req.user.admin) return next();
+    return next(new Error('You are not involved in that workshop!'));
+}
+
+const requireActive = (req, res, next) => {
+    if (req.workshop.active || req.user.admin) return next();
+    return next(new Error('That workshop is not active!'));
+}
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Workshop Overview';
@@ -268,7 +283,7 @@ router.get('/:workshopId/applicants', requireHigherUp, (req, res, next) => {
     return res.render('workshops/applicants');
 });
 
-router.get('/:workshopId/edit', requireAdmin, (req, res, next) => {
+router.get('/:workshopId/edit', requireInvolvedHigherUp, (req, res, next) => {
     res.locals.workshop = req.workshop;
 
     req.db.Location.find()
@@ -276,12 +291,13 @@ router.get('/:workshopId/edit', requireAdmin, (req, res, next) => {
         .then(locations => {
             res.locals.openLocations = locations;
             res.locals.pageTitle = `Edit Workshop ${req.workshop.location.name}`;
-            res.render('workshops/edit');
+
+            return res.render('workshops/edit');
         })
         .catch(next);
 });
 
-router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
+router.post('/:workshopId/edit', requireInvolvedHigherUp, (req, res, next) => {
     req.workshop.location = req.body.locationId;
     req.workshop.startDate = moment(req.body.startDate, "YYYY-MM-DD").toDate();
     req.workshop.endDate = moment(req.body.endDate, "YYYY-MM-DD").toDate();
@@ -296,9 +312,7 @@ router.post('/:workshopId/edit', requireAdmin, (req, res, next) => {
         .catch(next);
 });
 
-router.post('/:workshopId/archive', (req, res, next) => {
-    if (!res.locals.isWorkshopHigherUp) return next(new Error('You must be a higher up of the workshop to archive it.'));
-
+router.post('/:workshopId/archive', requireInvolvedHigherUp, (req, res, next) => {
     req.workshop.active = false;
 
     req.workshop.save()
@@ -352,11 +366,7 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
 
 });
 
-router.post('/:workshopId/addfunds', (req, res, next) => {
-    // Check permissions
-    if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
-    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
-
+router.post('/:workshopId/addfunds', requireInvolved, requireActive, (req, res, next) => {
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
@@ -403,10 +413,7 @@ router.post('/:workshopId/addfunds', (req, res, next) => {
     }).catch(next);
 });
 
-router.post('/:workshopId/removefunds', (req, res, next) => {
-    if (!helpers.isInvolvedInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to remove this.'));
-    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
-
+router.post('/:workshopId/removefunds', requireInvolved, requireActive, (req, res, next) => {
     req.db.Funds.findById(req.query.fundsId)
         .exec()
         .then(funds => {
@@ -431,10 +438,7 @@ router.post('/:workshopId/removefunds', (req, res, next) => {
 });
 
 /* FUNDRAISING GOALS */
-router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
-    if (!helpers.isHigherUpInWorkshop(req.workshop, req.user)) return next(new Error('You must be an admin and/or involved in the workshop to add this.'));
-    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
-
+router.post('/:workshopId/addfundraisinggoal', requireInvolvedHigherUp, requireActive, (req, res, next) => {
     const workshopId = req.workshop._id;
     const submittedById = req.user._id;
     const amount = req.body.amount;
@@ -469,20 +473,12 @@ router.post('/:workshopId/addfundraisinggoal', (req, res, next) => {
     }).catch(next);
 });
 
-router.post('/:workshopId/removefundraisinggoal', (req, res, next) => {
-    if (!req.workshop.active) return next(new Error('This workshop is inactive. It\'s info cannot be changed.'));
-
+router.post('/:workshopId/removefundraisinggoal', requireInvolvedHigherUp, requireActive, (req, res, next) => {
     req.db.FundraisingGoal.findById(req.query.fundraisingGoalId)
         .exec()
         .then(goal => {
             if (!goal) throw new Error('Fundraising goal does not exist.');
             if (goal.workshop != req.workshop.id) throw new Error('That goal is not associated with that workshop!');
-
-            // Check permissions
-            if (!req.user.admin) {
-                const rank = helpers.getRankFromWorkshop(req.workshop, req.user);
-                if (!rank || (rank == 'teacher' && !goal.submittedBy.equals(req.user.id))) throw new Error('You must be an admin, the ambassador, director, or the teacher who added the goal to remove this.');
-            }
 
             return goal.remove();
         })
