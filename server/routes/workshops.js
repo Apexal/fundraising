@@ -363,7 +363,6 @@ router.get('/:workshopId/fundraising', (req, res, next) => {
             res.render('workshops/fundraising/index');
         })
         .catch(next);
-
 });
 
 router.post('/:workshopId/addfunds', requireInvolved, requireActive, (req, res, next) => {

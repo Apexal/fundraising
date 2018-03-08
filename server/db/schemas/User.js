@@ -17,6 +17,7 @@ const userSchema = new Schema({
         last: { type: String, required: true, trim: true }
     },
     rank: { type: 'String', enum: ['teacher', 'director', 'ambassador'] },
+    rankInfo: Object,
     application: {
         applying: { type: Boolean, default: true },
         rank: { type: 'String', default: 'teacher', enum: ['teacher', 'director', 'ambassador'] },
