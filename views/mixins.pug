@@ -12,7 +12,7 @@ mixin help(label)
     i.fa.fa-question-circle.help-icon(onclick="alert('" + helpers.getHelpInfo(label) + "');", aria-hidden="true", data-help=label, data-toggle="tooltip", title=helpers.getHelpInfo(label))
 
 mixin workshop-modal(w)
-    .modal.workshop-modal.fade(tabindex="-1", role="dialog", id="workshop-modal-" + w.id)
+    .modal.workshop-modal.fade(tabindex="-1", role="dialog", data-workshop-id=w.id,id="workshop-modal-" + w.id)
         .modal-dialog(role="document")
             .modal-content
                 .modal-header
@@ -46,7 +46,9 @@ mixin workshop-modal(w)
                     .row.fundraising
                         .col-xs-12
                             hr
-                            h3.text-muted.right $0 total | Rank #1
+                            h3.text-muted.right
+                                span.funds-total(data-workshop-id=w.id) $0 total
+                                span  | Rank ?
                             h3 Fundraising
 
                 .modal-footer
