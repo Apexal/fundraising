@@ -70,7 +70,16 @@ router.get('/:workshopId', (req, res, next) => {
         .then(workshop => {
             if (!workshop) throw new Error('Failed to find workshop. It may not exist.');
 
-            return res.json(workshop);
+            res.locals.workshop = workshop;
+
+            return req.db.Funds.find({ workshop: workshop._id })
+                .populate('submittedBy')
+                .sort('-dateAdded')
+                .exec();
+        }).then(funds => {
+            const total = funds.reduce((a, b) => a + b.amount, 0);
+
+            return res.json({workshop: res.locals.workshop, fundraising: { funds, total }});
         })
         .catch(next);
 });
