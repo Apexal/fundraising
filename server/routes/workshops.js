@@ -23,6 +23,14 @@ const requireActive = (req, res, next) => {
     return next(new Error('That workshop is not active!'));
 }
 
+const requireSurveryDone = (req, res, next) => {
+    if (req.user.rank == 'director' && !req.user.rankInfo.surveyDone) {
+        req.flash('error', 'You must complete the Program Director survey before scheduling workshops!');
+        return res.redirect('/surveys/director');
+    }
+    return next();
+}
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.locals.pageTitle = 'Workshop Overview';
@@ -69,7 +77,7 @@ router.get('/list', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/new', requireHigherUp, (req, res, next) => {
+router.get('/new', requireHigherUp, requireSurveyDone, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
     res.locals.fromNewLocation = req.query.locationId;
 
@@ -87,7 +95,7 @@ router.get('/new', requireHigherUp, (req, res, next) => {
         .catch(next);
 });
 
-router.post('/new', requireHigherUp, (req, res, next) => {
+router.post('/new', requireHigherUp, requireSurveyDone, (req, res, next) => {
     // Location info
     let locationId = req.body.locationId;
     if (!locationId)
