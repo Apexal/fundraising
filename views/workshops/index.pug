@@ -20,6 +20,8 @@ block content
                     a(data-toggle="tab", href="#active-workshops") Active Workshops 
                         span.badge= activeWorkshops.length
                 li(role="presentation")
+                    a(data-toggle="tab", href="#leaderboard") Fundraising Leaderboard
+                li(role="presentation")
                     a(data-toggle="tab", href="#workshop-statistics") Workshop Statistics
 
     .row.tab-content
@@ -32,6 +34,7 @@ block content
                 include /workshops/table
             else
                 p.text-muted.text-center There are currently no #[b ongoing workshops].
-
+        #leaderboard.col-xs-12.tab-pane.fade
+            p.text-muted.text-center Workshop leaderboard coming soon...
         #workshop-statistics.col-xs-12.tab-pane.fade
             p.text-muted.text-center Overall workshop statistics graphs coming soon...

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const slack = require('../modules/slack');
 const config = require('config');
+const async = require('async');
 
 router.use(requireLogin);
 
@@ -68,6 +69,23 @@ router.get('/list', (req, res, next) => {
         })
         .catch(next);
 });
+
+/*
+router.get('/leaderboard', (req, res, next) => {
+    res.locals.pageTitle = `${req.user.region.name} Leaderboard`;
+    const funds = {};
+
+    req.db.Workshop.find({ region: req.user.region })
+        .exec()
+        .then(workshops => {
+            return async.each(workshops, w => { return req.db.Funds.find({ workshop: w }).sort('-dateAdded').exec().then(f => { funds[w.id] = f; }); });
+        })
+        .then((res) => {
+            console.log(funds);
+        })
+        .catch(next);
+});
+*/
 
 router.get('/new', requireHigherUp, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
