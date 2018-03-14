@@ -104,6 +104,9 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
 
     const recommender = req.body.recommender;
 
+    let rankInfo;
+    if (rank == 'director') rankInfo = { surveyDone: false };
+
     // Get/create user
     const user = {
         region: regionId,
@@ -117,7 +120,8 @@ router.post('/', requireNotLogin, upload.single('writingSample'), (req, res, nex
             first: firstName,
             last: lastName
         },
-        rank,
+        //rank,
+        rankInfo,
         application: {
             applying: true,
             rank,
