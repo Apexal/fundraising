@@ -24,7 +24,7 @@ const requireActive = (req, res, next) => {
     return next(new Error('That workshop is not active!'));
 }
 
-const requireSurveryDone = (req, res, next) => {
+const requireSurveyDone = (req, res, next) => {
     if (req.user.rank == 'director' && !req.user.rankInfo.surveyDone) {
         req.flash('error', 'You must complete the Program Director survey before scheduling workshops!');
         return res.redirect('/surveys/director');
