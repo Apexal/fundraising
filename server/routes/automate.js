@@ -34,7 +34,7 @@ router.post('/transfer', (req, res, next) => {
         verified: true
     }
 
-    const matching = ['email', 'age', 'grade', 'phoneNumber', 'rank'];
+    const matching = ['email', 'age', 'grade', 'phoneNumber', 'rank', 'location'];
     for(let i = 0; i < matching.length; i++) {
        user[matching[i]] = sm[matching[i]]; 
     }
