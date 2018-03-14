@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 const ObjectId = require('mongodb').ObjectID;
-const slack = require('../modules/slack');
+const slack = require('../../modules/slack');
 
 /* Validate request */
 router.use((req, res, next) => {
@@ -62,11 +62,11 @@ router.post('/transfer', (req, res, next) => {
             } else {
                 throw new Error("Failed to invite to Slack.");
             }
+
+            // Send emails
+            sendEmail(user.email, 'Kids Tales Website', 'transferred', { fullName: user.name.full })
         })
         .catch(next);
-    
-    // Send emails
-
 });
 
 module.exports = router;

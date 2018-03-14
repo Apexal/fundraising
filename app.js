@@ -60,7 +60,7 @@ app.use((req, res, next) => {
     res.locals.pagePath = req.path; // To access in views and helpers
     req.db = mongodb;
 
-    req.isAPI = req.path.startsWith('/api') || req.path.startsWith('/automate');
+    req.isAPI = req.path.startsWith('/api');
 
     if (req.user) res.locals.user = req.user; // To access in views
 
