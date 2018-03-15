@@ -25,10 +25,11 @@ const requireActive = (req, res, next) => {
 }
 
 const requireSurveyDone = (req, res, next) => {
-    if (req.user.rank == 'director' && !req.user.rankInfo.surveyDone) {
+    /*if (req.user.rank == 'director' && !req.user.rankInfo.surveyDone) {
         req.flash('error', 'You must complete the Program Director survey before scheduling workshops!');
         return res.redirect('/surveys/director');
-    }
+    }*/
+    // TODO: REENABLE
     return next();
 }
 
@@ -95,7 +96,7 @@ router.get('/leaderboard', (req, res, next) => {
 });
 */
 
-router.get('/new', requireHigherUp, (req, res, next) => {
+router.get('/new', requireHigherUp, requireSurveyDone, (req, res, next) => {
     res.locals.pageTitle = 'Schedule New Workshop';
     res.locals.fromNewLocation = req.query.locationId;
 
