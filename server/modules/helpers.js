@@ -2,56 +2,85 @@
 const helpInfo = require('./helpInfo.js');
 const mongodb = require('../db');
 
-let h = {}
+let h = {};
 
 h.logActivity = (user, action, description) => {
-    return new mongodb.Activity({user, action, description, dateAdded: new Date()}).save();
-}
+  return new mongodb.Activity({
+    user,
+    action,
+    description,
+    dateAdded: new Date()
+  }).save();
+};
 
 h.activeLink = (href, current) => {
-    current = (current == '/home' ? '/' : current);
-    if ((href === '/' && current === href) || (href !== '/' && current.startsWith(href))) {
-        return 'active';
-    }
+  current = current == '/home' ? '/' : current;
+  if (
+    (href === '/' && current === href) ||
+    (href !== '/' && current.startsWith(href))
+  ) {
+    return 'active';
+  }
 };
 
 h.limit = (string, maxLength) => {
-    return (string.length > maxLength ? string.substring(0, maxLength) + '...' : string);
+  return string.length > maxLength
+    ? string.substring(0, maxLength) + '...'
+    : string;
 };
 
-h.cap = string => { return string.charAt(0).toUpperCase() + string.slice(1); };
+h.cap = string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 h.getRankFromWorkshop = (workshop, user) => {
-    let rank = null;
-    
-    if (workshop.ambassador && (workshop.ambassador == user.id || workshop.ambassador.id == user.id)) rank = 'ambassador';
-    if (workshop.director && (workshop.director == user.id || workshop.director.id == user.id)) rank = 'director';
-    if (workshop.teachers.includes(user.id) || workshop.teachers.map(t => t.id).includes(user.id)) rank = 'teacher';
-    return rank;
+  let rank = null;
+
+  if (
+    workshop.ambassador &&
+    (workshop.ambassador == user.id || workshop.ambassador.id == user.id)
+  )
+    rank = 'ambassador';
+  if (
+    workshop.director &&
+    (workshop.director == user.id || workshop.director.id == user.id)
+  )
+    rank = 'director';
+  if (
+    workshop.teachers.includes(user.id) ||
+    workshop.teachers.map(t => t.id).includes(user.id)
+  )
+    rank = 'teacher';
+  return rank;
 };
 
 h.isInvolvedInWorkshop = (workshop, user) => {
-    if (user.admin) return true;
-    if (!!h.getRankFromWorkshop(workshop, user)) return true;
-    return false;
-}
+  if (user.admin) return true;
+  if (!!h.getRankFromWorkshop(workshop, user)) return true;
+  return false;
+};
 
 h.isHigherUpInWorkshop = (workshop, user) => {
-    if (user.admin) return true;
-    if (['ambassador', 'director'].includes(h.getRankFromWorkshop(workshop, user))) return true;
-    return false;
-}
+  if (user.admin) return true;
+  if (
+    ['ambassador', 'director'].includes(h.getRankFromWorkshop(workshop, user))
+  )
+    return true;
+  return false;
+};
 
 h.workshopRanksFilled = workshop => {
-    return (workshop.ambassador && workshop.director && workshop.teachers.length > 0);
-}
+  return (
+    workshop.ambassador && workshop.director && workshop.teachers.length > 0
+  );
+};
 
 h.getHelpInfo = label => {
-    if (label in helpInfo) {
-        return helpInfo[label];
-    } else {
-        return 'No help info found!'
-    }
+  if (label in helpInfo) {
+    return helpInfo[label];
+  } else {
+    return 'No help info found!';
+  }
 };
 
 module.exports = h;
